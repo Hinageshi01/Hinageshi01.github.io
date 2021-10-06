@@ -1,0 +1,1083 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Hinageshi">
+  <meta name="keywords" content="">
+  
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":30,"cursorChar":"","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["_slim",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":17057737,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hinageshi的駄菓子屋</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                Links
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/backGround.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Think a little, build a little, think a little more...">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/10/06/SSR/" target="_self">
+          <img src="/img/SSR/01.png" srcset="/img/loading.gif" lazyload alt="屏幕空间反射">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/06/SSR/" target="_self">
+          屏幕空间反射
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/06/SSR/" target="_self">
+          
+          
+            
+          
+           序言
+  离线渲染的条件下，光线追踪可以处理光线在空间内的多次弹射，带来高质量的间接光照结果，那么如何在实时的条件下得到令人满意的全局光照效果呢。其中的一种做法是在做 RayTracing 时使用 DepthBuffer 判断射线与平面的相交问题，认为能被 DepthBuffer 看见得世界坐标是“位于物体外部”的坐标，看不见则在物体内部，那么一条步进的 Ray 从可见转为不可见时的位置便是某一
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-06 19:28" pubdate>
+              2021-10-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">光照模型</a>
+            
+              <a href="/tags/GLSL/">GLSL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
+            
+              <a href="/tags/JavaScript/">JavaScript</a>
+            
+              <a href="/tags/SSR/">SSR</a>
+            
+              <a href="/tags/%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7/">全局光照</a>
+            
+              <a href="/tags/DepthBuffer/">DepthBuffer</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/29/PRT/" target="_self">
+          <img src="/img/PRT/01.png" srcset="/img/loading.gif" lazyload alt="预计算辐射传递">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/29/PRT/" target="_self">
+          预计算辐射传递
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/29/PRT/" target="_self">
+          
+          
+            
+          
+           序言
+  如何计算环境光照可以近似为一个 ManyLight 的问题，在这种情况下，如果想要得知某一着色点获得的光照，需要对该点的上半球进行采样，这会是一个非常大的性能开销。使用 PRT 的做法可以使用预计算的数据，在实时的条件下实现环境光照。未实现：球谐函数的快速旋转。
+ 前置知识
+ Product Integral
+∫Ωf(x)g(x)dx)\int _\Omega f(x)g(x)dx)∫
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-29 20:35" pubdate>
+              2021-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+              <a href="/tags/%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">光照模型</a>
+            
+              <a href="/tags/PRT/">PRT</a>
+            
+              <a href="/tags/GLSL/">GLSL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E5%85%89%E7%85%A7/">环境光照</a>
+            
+              <a href="/tags/JavaScript/">JavaScript</a>
+            
+              <a href="/tags/%E7%90%83%E9%9D%A2%E8%B0%90%E6%B3%A2%E5%87%BD%E6%95%B0/">球面谐波函数</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/22/Shadow/" target="_self">
+          <img src="/img/PCSS/01.png" srcset="/img/loading.gif" lazyload alt="实时百分比近似软阴影">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/22/Shadow/" target="_self">
+          实时百分比近似软阴影
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/22/Shadow/" target="_self">
+          
+          
+            
+          
+           序言
+  若要判断当前着色点是否处于阴影之中，我们需要知到该点与光源之间的遮挡关系。一种常见的做法是 Shadow Mapping，假设从光源看向场景，就像做深度测试一样，保存一张从光源处获得的 DepthBuffer，然后比较着色点与光源之间的距离与 DepthBuffer 中对应点的深度，前者更大则代表场景中有另一物体比当前着色点更接近光源，即该着色点被遮挡。
+ Two Pass Shado
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-22 22:12" pubdate>
+              2021-09-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/GLSL/">GLSL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
+            
+              <a href="/tags/DepthBuffer/">DepthBuffer</a>
+            
+              <a href="/tags/%E9%98%B4%E5%BD%B1/">阴影</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/20/Micro/" target="_self">
+          <img src="/img/Microfacet/01.png" srcset="/img/loading.gif" lazyload alt="微表面模型">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/20/Micro/" target="_self">
+          微表面模型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/20/Micro/" target="_self">
+          
+          
+            
+          
+          
+            G项的实现会自然地带来能量不正确的衰减，在不额外添加环境光（定值）的情况下会导致结果偏黑。自遮挡项未考虑的光线在表面间多次弹射的补偿将在 Real Time PBR 中实现。
+          
+ 序言
+  所有的PBR技术都基于微表面理论。这项理论认为，达到微观尺度之后任何表面都可以用被称为微表面 (Microfacets) 的细小镜面来进行描绘。在微观尺度下，没有任
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-20 22:44" pubdate>
+              2021-09-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+              <a href="/tags/PBR/">PBR</a>
+            
+              <a href="/tags/BRDF/">BRDF</a>
+            
+              <a href="/tags/%E5%BE%AE%E8%A1%A8%E9%9D%A2%E6%A8%A1%E5%9E%8B/">微表面模型</a>
+            
+              <a href="/tags/Fresnel-Schlick/">Fresnel_Schlick</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/19/Ismism/" target="_self">
+          <img src="/img/Ismism/01.png" srcset="/img/loading.gif" lazyload alt="笔记 主义主义">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/19/Ismism/" target="_self">
+          笔记 主义主义
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/19/Ismism/" target="_self">
+          
+          
+            
+          
+           框架
+
+场域-存在论框架
+本体-存在性内容
+现象-主体性感知
+目的-目的论方向
+
+
+秩序
+冲突
+中心
+虚无
+
+ 1 实在论
+秩序、真理的自我循环，盲目扩张。
+ 1-1 科学实在论
+物理秩序等于物理实体，秩序在时空中表达了自己便成为了实体。在场域和本体论中没有丝毫主体的位置，人此时也变成了物。
+ 1-1-1 物理主义
+万事万物皆遵循物理秩序，皆为物理现象。
+ 1-1-1-1 科学独断论
+李森科。学
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-19 21:45" pubdate>
+              2021-09-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%93%B2%E5%AD%A6/">哲学</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Ismism/">Ismism</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/16/Path/" target="_self">
+          <img src="/img/Path/01.png" srcset="/img/loading.gif" lazyload alt="蒙特卡洛路径追踪">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/16/Path/" target="_self">
+          蒙特卡洛路径追踪
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/16/Path/" target="_self">
+          
+          
+            
+          
+           前言
+  我们在上一章中得到了渲染方程，在这一章中将用蒙特卡洛算法实现方程中的积分，并用俄罗斯轮盘赌算法实现间接光照中对渲染方程的递归调用。
+ 蒙特卡洛
+按一定分布对原函数进行随机采样，利用概率分布函数进行加权平均。
+∫f(x)dx=1N∑i=1Nf(Xi)p,(Xi)\int f(x){\rm d}x=\frac{1}{N}\sum^{N}_{i=1}\frac{f(X_i)}{p^,(X_i
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-16 17:30" pubdate>
+              2021-09-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+              <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+              <a href="/tags/PBR/">PBR</a>
+            
+              <a href="/tags/BRDF/">BRDF</a>
+            
+              <a href="/tags/%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">辐射度量学</a>
+            
+              <a href="/tags/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%A7%AF%E5%88%86/">蒙特卡洛积分</a>
+            
+              <a href="/tags/%E4%BF%84%E7%BD%97%E6%96%AF%E8%BD%AE%E7%9B%98%E8%B5%8C/">俄罗斯轮盘赌</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/14/Radiometry/" target="_self">
+          <img src="/img/Radi/01.png" srcset="/img/loading.gif" lazyload alt="辐射度量学基础">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/14/Radiometry/" target="_self">
+          辐射度量学基础
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/14/Radiometry/" target="_self">
+          
+          
+            
+          
+           前言
+  路径追踪的前置知识。
+ 物理量一览
+
+
+
+名称
+符号
+单位
+
+
+
+
+Radiant Energy
+Q
+J
+
+
+Radiant Flux
+ϕ\phiϕ
+W 或 lumen
+
+
+Radiant Intensity
+I
+W/sr 或 cd
+
+
+Irradiance
+E
+W/m2m^2m2 或 lux
+
+
+Radiance
+L
+W/(sr * m2m^2m2) 或 nit
+
+
+
+ Radian
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-14 19:59" pubdate>
+              2021-09-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PBR/">PBR</a>
+            
+              <a href="/tags/BRDF/">BRDF</a>
+            
+              <a href="/tags/%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">辐射度量学</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/12/Whitted/" target="_self">
+          <img src="/img/Whitted/01.png" srcset="/img/loading.gif" lazyload alt="Whitted-Style 光线追踪">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/12/Whitted/" target="_self">
+          Whitted-Style 光线追踪
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/12/Whitted/" target="_self">
+          
+          
+            
+          
+           序言
+  Whitted_Style 光线追踪的部分实现，包括射线与由重心坐标表式的三角形相交、射线与轴对齐包围盒的相交、包围盒的树形加速结构。
+ Möller-Trumbore 射线与平面（重心坐标）
+光线的定义：O⃗+tD⃗\vec{O}+t\vec{D}O+tD
+平面的定义：(1−b1−b2)P⃗0+b1P⃗1+b2P⃗2(1-b_1-b_2)\vec{P}_0+b_1\vec{P}_1+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-12 23:22" pubdate>
+              2021-09-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+              <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+              <a href="/tags/BVH/">BVH</a>
+            
+              <a href="/tags/SAH/">SAH</a>
+            
+              <a href="/tags/AABB/">AABB</a>
+            
+              <a href="/tags/%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/">光线追踪</a>
+            
+              <a href="/tags/Moller-Trumbore/">Möller_Trumbore</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/07/BulinnPhong/" target="_self">
+          <img src="/img/Phong/01.png" srcset="/img/loading.gif" lazyload alt="Blinn-Phong 光照模型">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/07/BulinnPhong/" target="_self">
+          Blinn-Phong 光照模型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/07/BulinnPhong/" target="_self">
+          
+          
+            
+          
+           序言
+  该模型将任一点的光照分为三部分：1.由光源方向与法线方向决定的漫反射、2.由光源方向法线方向与观察方向决定的高光、3.恒定的环境光。
+ getColorBilinear
+
+对贴图采样时采用双线性插值的方法以获得柔和的过度。
+12345678910111213141516171819202122232425262728Eigen::Vector3f getColorBilinear(fl
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-07 21:40" pubdate>
+              2021-09-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+              <a href="/tags/%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">光照模型</a>
+            
+              <a href="/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC/">双线性插值</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/05/SSAA/" target="_self">
+          <img src="/img/SSAA/01.png" srcset="/img/loading.gif" lazyload alt="Super Sample Anti-Aliasing">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/05/SSAA/" target="_self">
+          Super Sample Anti-Aliasing
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/05/SSAA/" target="_self">
+          
+          
+            
+          
+           序言
+  SSAA作为一种暴力的超采样手段带来的性能开销是难以接受的，但作为反走样的入门仍然有学习一下的必要。
+ insideTriangle
+判断两向量的左右关系
+假设两向量 a⃗\vec{a}a、b⃗\vec{b}b 在同一 z 轴为 0 的平面上，根据右手螺旋定则，若 a⃗×b⃗\vec{a} \times \vec{b}a×b 的 z 轴大于 0 则 b⃗\vec{b}b 在 a⃗\ve
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-05 14:52" pubdate>
+              2021-09-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+              <a href="/tags/%E7%BA%BF%E4%BB%A3/">线代</a>
+            
+              <a href="/tags/%E5%8F%8D%E8%B5%B0%E6%A0%B7/">反走样</a>
+            
+              <a href="/tags/%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/">重心坐标</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <br/> 本站内容依据 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> 许可证进行授权 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

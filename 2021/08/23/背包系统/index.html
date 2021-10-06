@@ -1,0 +1,576 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Hinageshi">
+  <meta name="keywords" content="">
+  
+  <title>背包系统 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":30,"cursorChar":"","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["_slim",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":17057737,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hinageshi的駄菓子屋</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                Links
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/backGround.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="背包系统">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-23 16:41" pubdate>
+        August 23, 2021
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">背包系统</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：September 21, 2021
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
+<p>  背包 GUI 的实现、ScriptableObject、数据的存储与读取。</p>
+<h2 id="层级结构"><a class="markdownIt-Anchor" href="#层级结构"></a> 层级结构</h2>
+<p><img src="/img/BackpackSystem/jg.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<ul>
+<li><strong>Bag</strong> 挂载 BagOnDrag 脚本</li>
+<li><strong>Grid</strong> 挂载 Grid Layout Group 组件，使其子物体（Slot）整齐地排放</li>
+<li><strong>Slot</strong> 挂载 Slot 脚本，更改其子物体（Item）以实现拖拽</li>
+<li><strong>Item</strong> 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 buttom 用于触发 Slot 中的 OnItemClicked()</li>
+<li><strong>Image和Count</strong> 负责物品图片和数量的显示</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/Manual/script-GridLayoutGroup.html">Grid Layout Group</a></p>
+<h2 id="后端"><a class="markdownIt-Anchor" href="#后端"></a> 后端</h2>
+<h3 id="物品数据"><a class="markdownIt-Anchor" href="#物品数据"></a> 物品数据</h3>
+<p>以 ScriptableObject 的方式存储每一种物品的数据。</p>
+<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs">[<span class="hljs-meta">CreateAssetMenu(fileName = <span class="hljs-meta-string">&quot;NewItem&quot;</span>,menuName = <span class="hljs-meta-string">&quot;Inventory/New Item&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">InventoryItem</span> : <span class="hljs-title">ScriptableObject</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> itemName;<br>    <span class="hljs-keyword">public</span> Sprite itemSprite;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> itemCount = <span class="hljs-number">1</span>;<br>    [<span class="hljs-meta">TextArea</span>]<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> itemInfo;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="背包数据"><a class="markdownIt-Anchor" href="#背包数据"></a> 背包数据</h3>
+<p>以 ScriptableObject 的方式存储每个背包的数据,每个背包类内维护一个 List 用于存储多个物品。</p>
+<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs">[<span class="hljs-meta">CreateAssetMenu(fileName = <span class="hljs-meta-string">&quot;NewBag&quot;</span>, menuName = <span class="hljs-meta-string">&quot;Inventory/New Bag&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">InventoryBag</span> : <span class="hljs-title">ScriptableObject</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">InventoryItem</span>&gt; itemList</span> = <span class="hljs-keyword">new</span> List&lt;InventoryItem&gt;();<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/ScriptableObject.html">Scriptable Object</a><br />
+<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/CreateAssetMenuAttribute.html">Create Asset Menu Attribute</a></p>
+<h3 id="捡起物品"><a class="markdownIt-Anchor" href="#捡起物品"></a> 捡起物品</h3>
+<p>ItemOnWorld 挂载在物品对象上，随时更新两个 SO 的数据。</p>
+<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ItemOnWorld</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">public</span> InventoryItem inventoryItem;<br>    <span class="hljs-keyword">public</span> InventoryBag inventoryBag;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnTriggerEnter2D</span>(<span class="hljs-params">Collider2D collision</span>)</span> &#123;<br>        <span class="hljs-keyword">if</span> (collision.CompareTag(<span class="hljs-string">&quot;Player&quot;</span>)) &#123;<br>            AddItemToBag();<br>            Destroy(gameObject);<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">AddItemToBag</span>(<span class="hljs-params"></span>)</span> &#123;<br>        <span class="hljs-keyword">if</span> (inventoryBag.itemList.Contains(inventoryItem)) &#123;<br>            inventoryItem.itemCount++;<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">// 背包内不存在此物品</span><br>            <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; inventoryBag.itemList.Count; i++) &#123;<br>                <span class="hljs-comment">// 顺序找到背包内第一个空余位置</span><br>                <span class="hljs-keyword">if</span> (inventoryBag.itemList[i] == <span class="hljs-literal">null</span>) &#123;<br>                    inventoryBag.itemList[i] = inventoryItem;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>                Debug.Log(<span class="hljs-string">&quot;Bag Over Flow!&quot;</span>);<br>            &#125;<br>        &#125;<br>        InventoryManager.UpdateGUI();<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="前端"><a class="markdownIt-Anchor" href="#前端"></a> 前端</h2>
+<h3 id="manager"><a class="markdownIt-Anchor" href="#manager"></a> Manager</h3>
+<p>单例模式的 InventoryManager，主要作用是提供更新 GUI 的接口 <strong>InventoryManager.UpdateGUI()</strong> 。</p>
+<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">InventoryManager</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">static</span> InventoryManager instance;<br><br>    <span class="hljs-keyword">public</span> InventoryBag bag;<br>    <span class="hljs-keyword">public</span> GameObject grid;<br>    <span class="hljs-keyword">public</span> GameObject emptySlot;<span class="hljs-comment">// 预制体Slot</span><br>    <span class="hljs-keyword">public</span> Text itemInfo;<span class="hljs-comment">// 显示在背包左下角的UI</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">GameObject</span>&gt; slotList</span> = <span class="hljs-keyword">new</span> List&lt;GameObject&gt;();<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Awake</span>(<span class="hljs-params"></span>)</span> &#123;<br>        <span class="hljs-keyword">if</span> (instance != <span class="hljs-literal">null</span>) &#123;<br>            Destroy(gameObject);<br>        &#125;<br>        instance = <span class="hljs-keyword">this</span>;<br>        UpdateGUI();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UpdateItemInfo</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> info</span>)</span> &#123;<br>        instance.itemInfo.text = info;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UpdateGUI</span>(<span class="hljs-params"></span>)</span> &#123;<br>        <span class="hljs-comment">// 先清空Grid的子物体与slotList[]</span><br>        instance.slotList.Clear();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; instance.grid.transform.childCount; i++) &#123;<br>            Destroy(instance.grid.transform.GetChild(i).gameObject);<br>        &#125;<br><br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; instance.bag.itemList.Count; i++) &#123;<br>            <span class="hljs-comment">// 将emptySlot生成为grid的子物体，然后加入slotList[]</span><br>            instance.slotList.Add(Instantiate(<br>                instance.emptySlot, instance.grid.transform, <span class="hljs-literal">false</span>));<br><br>            <span class="hljs-comment">// 用itemList[]刷新slotList[]</span><br>            instance.slotList[i].GetComponent&lt;Slot&gt;().InitSlot(instance.bag.itemList[i]);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/Object.Instantiate.html">Instantiate</a></p>
+<h3 id="slot"><a class="markdownIt-Anchor" href="#slot"></a> Slot</h3>
+<p>负责 UpdateGUI() 中针对具体 Slot 中 Item 数据的更新，以及负责 bag 中物品描述的更新。</p>
+<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Slot</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">public</span> GameObject slotItem;<br>    <span class="hljs-keyword">public</span> Image slotImage;<br>    <span class="hljs-keyword">public</span> Text slotCount;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> slotInfo;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnEnable</span>(<span class="hljs-params"></span>)</span> &#123;<br>        InventoryManager.UpdateItemInfo(<span class="hljs-string">&quot;&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnItemClicked</span>(<span class="hljs-params"></span>)</span> &#123;<br>        <span class="hljs-comment">// 在作Item中以OnClick的形式调用</span><br>        InventoryManager.UpdateItemInfo(slotInfo);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">InitSlot</span>(<span class="hljs-params">InventoryItem inventoryItem</span>)</span> &#123;<br>        <span class="hljs-comment">// 将传入的Itme信息写入该Slot的子物体</span><br>        <span class="hljs-keyword">if</span> (inventoryItem == <span class="hljs-literal">null</span>) &#123;<br>            slotItem.SetActive(<span class="hljs-literal">false</span>);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            slotImage.sprite = inventoryItem.itemSprite;<br>            slotCount.text = inventoryItem.itemCount.ToString();<br>            slotInfo = inventoryItem.itemInfo;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="背包内物品的拖拽"><a class="markdownIt-Anchor" href="#背包内物品的拖拽"></a> 背包内物品的拖拽</h3>
+<p>实现 EventSystems 中三个接口以响应鼠标的交互。<br />
+更改 Item 的父级和 Item 的位置以实现拖拽效果。</p>
+<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> UnityEngine.EventSystems;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ItemOnDrag</span> : <span class="hljs-title">MonoBehaviour</span>, <span class="hljs-title">IBeginDragHandler</span>, <span class="hljs-title">IDragHandler</span>, <span class="hljs-title">IEndDragHandler</span><br>&#123;<br>    <span class="hljs-keyword">public</span> InventoryBag bag;<br><br>    <span class="hljs-keyword">private</span> Transform originalParent;<br>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> firstIndex, secondIndex;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnBeginDrag</span>(<span class="hljs-params">PointerEventData eventData</span>)</span> &#123;<br>        firstIndex = GetIndex(transform.parent);<br>        originalParent = transform.parent;<br>        <span class="hljs-comment">// 将Item移至Canvas子集以不至于被其他UI遮挡</span><br>        transform.SetParent(transform.parent.parent.parent.parent);<br>        transform.position = eventData.position;<br>        <span class="hljs-comment">// 令所拖拽的Item本身不会遮挡鼠标射线</span><br>        GetComponent&lt;CanvasGroup&gt;().blocksRaycasts = <span class="hljs-literal">false</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnDrag</span>(<span class="hljs-params">PointerEventData eventData</span>)</span> &#123;<br>        transform.position = eventData.position;<br>        <span class="hljs-comment">// Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);</span><br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnEndDrag</span>(<span class="hljs-params">PointerEventData eventData</span>)</span> &#123;<br>        GameObject crtObject = eventData.pointerCurrentRaycast.gameObject;<br>        <span class="hljs-keyword">if</span> (crtObject == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-comment">// 拖至UI界面之外，Item复位</span><br>            transform.SetParent(originalParent);<br>            transform.position = originalParent.transform.position;<br>            GetComponent&lt;CanvasGroup&gt;().blocksRaycasts = <span class="hljs-literal">true</span>;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (crtObject.name == <span class="hljs-string">&quot;Image&quot;</span> || crtObject.name == <span class="hljs-string">&quot;Count&quot;</span>) &#123;<br>            <span class="hljs-comment">// 拖至另一Item上，交换两者</span><br>            Transform crtItem = crtObject.transform.parent;<br>            Transform crtSlot = crtItem.parent;<br>            secondIndex = GetIndex(crtSlot);<br><br>            transform.SetParent(crtSlot);<br>            transform.position = crtSlot.position;<br><br>            crtItem.SetParent(originalParent);<br>            crtItem.position = originalParent.position;<br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(crtObject.name == <span class="hljs-string">&quot;Slot(Clone)&quot;</span>) &#123;<br>            <span class="hljs-comment">// 拖至空Slot</span><br>            secondIndex = GetIndex(crtObject.transform);<br>            transform.SetParent(crtObject.transform);<br>            transform.position = crtObject.transform.position;<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">// 拖至其他UI上，Item复位</span><br>            transform.SetParent(originalParent);<br>            transform.position = originalParent.transform.position;<br>            GetComponent&lt;CanvasGroup&gt;().blocksRaycasts = <span class="hljs-literal">true</span>;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        Debug.Log(<span class="hljs-string">&quot;firstIndex: &quot;</span> + firstIndex + <span class="hljs-string">&quot; &quot;</span> + <span class="hljs-string">&quot;secondIndex: &quot;</span> + secondIndex);<br>    <br>        <span class="hljs-comment">// 更新itemList</span><br>        InventoryItem tmp = bag.itemList[firstIndex];<br>        bag.itemList[firstIndex] = bag.itemList[secondIndex];<br>        bag.itemList[secondIndex] = tmp;<br><br>        GetComponent&lt;CanvasGroup&gt;().blocksRaycasts = <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> <span class="hljs-title">GetIndex</span>(<span class="hljs-params">Transform currentSlot</span>)</span> &#123;<br>        <span class="hljs-comment">// 返回slot在grid中的顺序</span><br>        Transform grid = currentSlot.parent;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt; grid.childCount; i++) &#123;<br>            <span class="hljs-keyword">if</span> (grid.GetChild(i) == currentSlot) &#123;<br>                <span class="hljs-keyword">return</span> i;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/Manual/SupportedEvents.html">Supported Events</a></p>
+<h3 id="背包的拖拽"><a class="markdownIt-Anchor" href="#背包的拖拽"></a> 背包的拖拽</h3>
+<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BagOnDrag</span> : <span class="hljs-title">MonoBehaviour</span>, <span class="hljs-title">IDragHandler</span><br>&#123;<br>    <span class="hljs-keyword">private</span> RectTransform rectTransform;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Awake</span>(<span class="hljs-params"></span>)</span> &#123;<br>        rectTransform = GetComponent&lt;RectTransform&gt;();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnDrag</span>(<span class="hljs-params">PointerEventData eventData</span>)</span> &#123;<br>        rectTransform.anchoredPosition += eventData.delta;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/RectTransform.html">Rect Transform</a></p>
+<h2 id="存储scriptable-object"><a class="markdownIt-Anchor" href="#存储scriptable-object"></a> 存储Scriptable Object</h2>
+<p><strong>存储时</strong><br />
+Scriptable Object 通过 JsonUtility.ToJson(so) 转换为 json。<br />
+json 通过 formatter.Serialize(file, json) 写入文件。</p>
+<p><strong>读取时</strong><br />
+文件通过 formatter.Deserialize(file) 转换为 json。<br />
+json 通过 JsonUtility.FromJsonOverwrite(json, so) 写入 Scriptable Object。</p>
+<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> System.IO;<br><span class="hljs-keyword">using</span> System.Runtime.Serialization.Formatters.Binary;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SaveLoadManager</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">public</span> InventoryBag inventoryBag;<br>    <span class="hljs-keyword">public</span> InventoryItem item1;<br>    <span class="hljs-keyword">public</span> InventoryItem item2;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> PATH;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Awake</span>(<span class="hljs-params"></span>)</span> &#123;<br>        PATH = Application.persistentDataPath;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SaveGame</span>(<span class="hljs-params"></span>)</span> &#123;<br>        <span class="hljs-comment">// 在bottom中被调用</span><br>        Debug.Log(PATH);<br>        <span class="hljs-keyword">if</span> (!Directory.Exists(PATH + <span class="hljs-string">&quot;/SaveData&quot;</span>)) &#123;<br>            Directory.CreateDirectory(PATH + <span class="hljs-string">&quot;/SaveData&quot;</span>);<br>        &#125;<br><br>        SaveData(inventoryBag, <span class="hljs-keyword">nameof</span>(inventoryBag));<br>        SaveData(item1, <span class="hljs-keyword">nameof</span>(item1));<br>        SaveData(item2, <span class="hljs-keyword">nameof</span>(item2));<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SaveData</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params">T so, <span class="hljs-built_in">string</span> name</span>)</span> &#123;<br>        BinaryFormatter formatter = <span class="hljs-keyword">new</span> BinaryFormatter();<br>        FileStream file = File.Create(PATH + <span class="hljs-string">&quot;/SaveData/&quot;</span> + name + <span class="hljs-string">&quot;.bin&quot;</span>);<br>        <span class="hljs-built_in">string</span> json = JsonUtility.ToJson(so);<br>        formatter.Serialize(file, json);<br>        file.Close();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">LoadGame</span>(<span class="hljs-params"></span>)</span> &#123;<br>        <span class="hljs-comment">// 在bottom中被调用</span><br>        LodData(inventoryBag, <span class="hljs-keyword">nameof</span>(inventoryBag));<br>        LodData(item1, <span class="hljs-keyword">nameof</span>(item1));<br>        LodData(item2, <span class="hljs-keyword">nameof</span>(item2));<br><br>        InventoryManager.UpdateGUI();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">LodData</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params">T so, <span class="hljs-built_in">string</span> name</span>)</span> &#123;<br>        BinaryFormatter formatter = <span class="hljs-keyword">new</span> BinaryFormatter();<br>        <span class="hljs-keyword">if</span> (File.Exists(PATH + <span class="hljs-string">&quot;/SaveData/&quot;</span> + name + <span class="hljs-string">&quot;.bin&quot;</span>)) &#123;<br>            FileStream file = File.Open(PATH + <span class="hljs-string">&quot;/SaveData/&quot;</span> + name + <span class="hljs-string">&quot;.bin&quot;</span>, FileMode.Open);<br>            <span class="hljs-built_in">string</span> json = (<span class="hljs-built_in">string</span>)formatter.Deserialize(file);<br>            JsonUtility.FromJsonOverwrite(json, so);<br>            file.Close();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/Application-persistentDataPath.html">persistentDataPath</a><br />
+<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/Windows.Directory.html">Directory</a><br />
+<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/JsonUtility.html">JsonUtility</a><br />
+<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.runtime.serialization.formatters.binary.binaryformatter?view=net-5.0">BinaryFormatter</a></p>
+<h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
+<p><a target="_blank" rel="noopener" href="https://space.bilibili.com/370283072/channel/seriesdetail?sid=212001">原教程链接</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/UnityNote/">UnityNote</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/">功能实现</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Unity/">Unity</a>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C#</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F/">背包系统</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ScriptableObject/">ScriptableObject</a>
+                    
+                      <a class="hover-with-bg" href="/tags/GUI/">GUI</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/26/%E6%89%93%E5%87%BB%E6%84%9F/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">打击感</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/19/SunnyLand/">
+                        <span class="hidden-mobile">Sunny Land</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '8272af98d9817dfbf53e96b8a15c7d4f'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <br/> 本站内容依据 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> 许可证进行授权 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- KaTeX -->
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.10/dist/katex.min.css" />
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
