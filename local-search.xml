@@ -24,9 +24,9 @@
       
       <tag>实时</tag>
       
-      <tag>光线追踪</tag>
-      
       <tag>降噪</tag>
+      
+      <tag>光线追踪</tag>
       
       <tag>temporal</tag>
       
@@ -271,9 +271,9 @@
       
       <tag>BRDF</tag>
       
-      <tag>辐射度量学</tag>
-      
       <tag>光线追踪</tag>
+      
+      <tag>辐射度量学</tag>
       
       <tag>蒙特卡洛积分</tag>
       
@@ -467,9 +467,9 @@
       
       <tag>C#</tag>
       
-      <tag>对象池</tag>
-      
       <tag>单例模式</tag>
+      
+      <tag>对象池</tag>
       
     </tags>
     
@@ -500,9 +500,9 @@
       
       <tag>Unity</tag>
       
-      <tag>AI</tag>
-      
       <tag>C#</tag>
+      
+      <tag>AI</tag>
       
       <tag>状态机</tag>
       
@@ -721,9 +721,9 @@
       
       <tag>Unity</tag>
       
-      <tag>AI</tag>
-      
       <tag>C#</tag>
+      
+      <tag>AI</tag>
       
     </tags>
     
