@@ -192,6 +192,71 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/07/BulinnPhong/" target="_self">
+          <img src="/img/Phong/01.png" srcset="/img/loading.gif" lazyload alt="Blinn-Phong 光照模型">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/07/BulinnPhong/" target="_self">
+          Blinn-Phong 光照模型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/07/BulinnPhong/" target="_self">
+          
+          
+            
+          
+           序言
+  该模型将任一点的光照分为三部分：1.由光源方向与法线方向决定的漫反射、2.由光源方向法线方向与观察方向决定的高光、3.恒定的环境光。
+ getColorBilinear
+
+对贴图采样时采用双线性插值的方法以获得柔和的过度。
+12345678910111213141516171819202122232425262728Eigen::Vector3f getColorBilinear(fl
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-07 21:40" pubdate>
+              2021-09-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+              <a href="/tags/%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">光照模型</a>
+            
+              <a href="/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC/">双线性插值</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/09/05/SSAA/" target="_self">
           <img src="/img/SSAA/01.png" srcset="/img/loading.gif" lazyload alt="Super Sample Anti-Aliasing">
         </a>
@@ -458,9 +523,9 @@ ta
             
               <a href="/tags/Unity/">Unity</a>
             
-              <a href="/tags/AI/">AI</a>
-            
               <a href="/tags/C/">C#</a>
+            
+              <a href="/tags/AI/">AI</a>
             
               <a href="/tags/%E7%8A%B6%E6%80%81%E6%9C%BA/">状态机</a>
             
@@ -817,73 +882,6 @@ Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 butto
               <a href="/tags/Unity/">Unity</a>
             
               <a href="/tags/C/">C#</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/08/17/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" target="_self">
-          <img src="/img/Unity/dl.png" srcset="/img/loading.gif" lazyload alt="单例模式">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/17/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" target="_self">
-          单例模式
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/17/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" target="_self">
-          
-          
-            
-          
-           序言
-  为了降低偶和将 PlayerController 类上挂载的 SoundClip 及其控制逻辑交由 SoundManager 类处理。由于整个游戏只存在一个管理声音的类，使用单例模式可以大大简化调用播放声音方法的过程。
- 单例模式
-单例有且仅有一个静态的实例，可以直接通过这个实例调用方法，而无需实例化该类的对象。
- 简单实现
-123456789101112public class Ex
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-17 01:38" pubdate>
-              2021-08-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/UnityNote/">UnityNote</a>
-            
-              <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Unity/">Unity</a>
-            
-              <a href="/tags/C/">C#</a>
-            
-              <a href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
             
           </div>
         

@@ -4,6 +4,43 @@
   
   
   <entry>
+    <title>实时光线追踪</title>
+    <link href="/2021/10/14/RTRT/"/>
+    <url>/2021/10/14/RTRT/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>渲染</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CPP</tag>
+      
+      <tag>实时</tag>
+      
+      <tag>光线追踪</tag>
+      
+      <tag>降噪</tag>
+      
+      <tag>temporal</tag>
+      
+      <tag>联合双边滤波</tag>
+      
+      <tag>a-trous wavelet transform</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Kulla-Conty 微表面模型能量补偿</title>
     <link href="/2021/10/09/Kulla/"/>
     <url>/2021/10/09/Kulla/</url>
@@ -234,6 +271,8 @@
       
       <tag>BRDF</tag>
       
+      <tag>光线追踪</tag>
+      
       <tag>辐射度量学</tag>
       
       <tag>蒙特卡洛积分</tag>
@@ -296,13 +335,13 @@
       
       <tag>CPP</tag>
       
+      <tag>光线追踪</tag>
+      
       <tag>BVH</tag>
       
       <tag>SAH</tag>
       
       <tag>AABB</tag>
-      
-      <tag>光线追踪</tag>
       
       <tag>Möller-Trumbore</tag>
       
@@ -461,9 +500,9 @@
       
       <tag>Unity</tag>
       
-      <tag>AI</tag>
-      
       <tag>C#</tag>
+      
+      <tag>AI</tag>
       
       <tag>状态机</tag>
       
@@ -682,9 +721,9 @@
       
       <tag>Unity</tag>
       
-      <tag>AI</tag>
-      
       <tag>C#</tag>
+      
+      <tag>AI</tag>
       
     </tags>
     
