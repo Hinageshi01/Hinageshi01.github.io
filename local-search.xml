@@ -28,11 +28,13 @@
       
       <tag>降噪</tag>
       
+      <tag>矩阵</tag>
+      
       <tag>temporal</tag>
       
       <tag>联合双边滤波</tag>
       
-      <tag>a-trous wavelet transform</tag>
+      <tag>a-trous wavelet</tag>
       
     </tags>
     
@@ -428,11 +430,11 @@
     
     <tags>
       
+      <tag>矩阵</tag>
+      
       <tag>线代</tag>
       
       <tag>渲染管线</tag>
-      
-      <tag>MVP矩阵</tag>
       
       <tag>视口变换</tag>
       
