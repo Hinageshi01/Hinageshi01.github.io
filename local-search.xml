@@ -98,6 +98,8 @@
       
       <tag>光照模型</tag>
       
+      <tag>DepthBuffer</tag>
+      
       <tag>GLSL</tag>
       
       <tag>实时</tag>
@@ -107,8 +109,6 @@
       <tag>SSR</tag>
       
       <tag>全局光照</tag>
-      
-      <tag>DepthBuffer</tag>
       
     </tags>
     
@@ -172,11 +172,11 @@
     
     <tags>
       
+      <tag>DepthBuffer</tag>
+      
       <tag>GLSL</tag>
       
       <tag>实时</tag>
-      
-      <tag>DepthBuffer</tag>
       
       <tag>阴影</tag>
       
@@ -268,6 +268,8 @@
     <tags>
       
       <tag>CPP</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>PBR</tag>
       
@@ -376,6 +378,8 @@
       
       <tag>双线性插值</tag>
       
+      <tag>DepthBuffer</tag>
+      
     </tags>
     
   </entry>
@@ -401,7 +405,7 @@
       
       <tag>CPP</tag>
       
-      <tag>线代</tag>
+      <tag>DepthBuffer</tag>
       
       <tag>反走样</tag>
       
@@ -432,7 +436,7 @@
       
       <tag>矩阵</tag>
       
-      <tag>线代</tag>
+      <tag>NDC</tag>
       
       <tag>渲染管线</tag>
       
