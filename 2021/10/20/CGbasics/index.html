@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      1.3k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      16
+      20
        分钟
     </span>
   
@@ -326,6 +326,8 @@
 否则 (x, y) 更新为 (x + 1, y)，d 更新为 <strong>dk+2dy</strong>。</li>
 <li>画点 (x, y)，返回 3。</li>
 </ol>
+<h4 id="实现"><a class="markdownIt-Anchor" href="#实现"></a> 实现</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">BHLine</span><span class="hljs-params">(Point p0, Point p1, TGAImage&amp; image, TGAColor color)</span> </span>&#123;<br>    <span class="hljs-keyword">bool</span> steep = <span class="hljs-literal">false</span>;<br>    <span class="hljs-keyword">if</span> (std::<span class="hljs-built_in">abs</span>(p0.y - p1.y) &gt; std::<span class="hljs-built_in">abs</span>(p0.x - p1.x)) &#123;<br>        <span class="hljs-comment">// 当 k &gt; 1 时，将其转置获得 k &lt; 1 的线条，填充时需要调整为 set(y, x)</span><br>        std::<span class="hljs-built_in">swap</span>(p0.x, p0.y);<br>        std::<span class="hljs-built_in">swap</span>(p1.x, p1.y);<br>        steep = <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (p0.x &gt; p1.x) &#123;<br>        <span class="hljs-comment">/* 当线条方向为从右往左时，将两点交换，</span><br><span class="hljs-comment">        不需要进一步特殊处理，因为一条线正着画反着画是一样的。*/</span><br>        std::<span class="hljs-built_in">swap</span>(p0.x, p1.x);<br>        std::<span class="hljs-built_in">swap</span>(p0.y, p1.y);<br>    &#125;<br>    <span class="hljs-keyword">int</span> dx = p1.x - p0.x;<br>    <span class="hljs-keyword">int</span> dy = p1.y - p0.y;<br>    <span class="hljs-keyword">int</span> dy2 = std::<span class="hljs-built_in">abs</span>(dy) &lt;&lt; <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">int</span> dx2 = std::<span class="hljs-built_in">abs</span>(dx) &lt;&lt; <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">int</span> dk = dy2 - dx;<br>    <span class="hljs-keyword">int</span> y = p0.y;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x = p0.x; x &lt;= p1.x; x++) &#123;<br>        <span class="hljs-keyword">if</span> (steep) &#123;<br>            image.<span class="hljs-built_in">set</span>(y, x, color);<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            image.<span class="hljs-built_in">set</span>(x, y, color);<br>        &#125;<br>        dk += dy2;<br>        <span class="hljs-keyword">if</span> (dk &gt; <span class="hljs-number">0</span>) &#123;<br>            y += (p1.y &gt; p0.y ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>);<br>            dk -= dx2;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>
