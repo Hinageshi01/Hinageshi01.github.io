@@ -241,13 +241,13 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 12, 2021
+                  本文最后更新于：October 20, 2021
                 
               </p>
             
             <div class="markdown-body">
               <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
-<p>  离线渲染的条件下，光线追踪可以处理光线在空间内的多次弹射，带来高质量的间接光照结果，那么如何在实时的条件下得到令人满意的全局光照效果呢。其中的一种做法是在做 RayTracing 时使用 DepthBuffer 判断射线与平面的相交问题，认为能被 DepthBuffer 看见得世界坐标是“位于物体外部”的坐标，看不见则在物体内部，那么一条步进的 Ray 从可见转为不可见时的位置便是某一表面所在的坐标，这样相交的计算就转变为二维空间下的步进与查表与比较。</p>
+<p>  离线渲染的条件下，光线追踪可以处理光线在空间内的多次弹射，带来高质量的间接光照结果，那么如何在实时的条件下得到令人满意的全局光照效果呢。其中的一种做法是在做 RayTracing 时使用 DepthBuffer 判断射线与平面的相交问题，认为能被 DepthBuffer 看见得世界坐标是“位于物体外部”的坐标，看不见则在物体内部，那么一条步进的 Ray 从可见转为不可见时的位置便是某一表面所在的坐标，这样相交的计算就转变为二维空间下的步进与查表。</p>
 <h2 id="shader"><a class="markdownIt-Anchor" href="#shader"></a> Shader</h2>
 <h3 id="diffuse"><a class="markdownIt-Anchor" href="#diffuse"></a> Diffuse</h3>
 <p>EvalDiffuse(wi, wo, uv) 的返回值为 BSDF 的值。参数 wi 和 wo 为世界坐标系中的值，分别代表入射方向和出射方向，这两个方向的起点都是着色点，uv 为着色点在屏幕空间中的坐标。</p>
