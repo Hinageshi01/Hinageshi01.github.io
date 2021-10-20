@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      1.5k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      20
+      24
        分钟
     </span>
   
@@ -241,14 +241,14 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 20, 2021
+                  本文最后更新于：October 21, 2021
                 
               </p>
             
             <div class="markdown-body">
               <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
-<p>温习一下图形学基础知识。<br />
-封面源自 《fundamentals of computer graphics 4th》。</p>
+<p>整理一下之前没有提到过的图形学基础知识。<br />
+封面取自 《fundamentals of computer graphics 4th》。</p>
 <h2 id="基本图形的生成"><a class="markdownIt-Anchor" href="#基本图形的生成"></a> 基本图形的生成</h2>
 <h3 id="直线的生成"><a class="markdownIt-Anchor" href="#直线的生成"></a> 直线的生成</h3>
 <h4 id="数值微分法dda"><a class="markdownIt-Anchor" href="#数值微分法dda"></a> 数值微分法（DDA）</h4>
@@ -328,6 +328,13 @@
 </ol>
 <h4 id="实现"><a class="markdownIt-Anchor" href="#实现"></a> 实现</h4>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">BHLine</span><span class="hljs-params">(Point p0, Point p1, TGAImage&amp; image, TGAColor color)</span> </span>&#123;<br>    <span class="hljs-keyword">bool</span> steep = <span class="hljs-literal">false</span>;<br>    <span class="hljs-keyword">if</span> (std::<span class="hljs-built_in">abs</span>(p0.y - p1.y) &gt; std::<span class="hljs-built_in">abs</span>(p0.x - p1.x)) &#123;<br>        <span class="hljs-comment">// 当 k &gt; 1 时，将其转置获得 k &lt; 1 的线条，填充时需要调整为 set(y, x)</span><br>        std::<span class="hljs-built_in">swap</span>(p0.x, p0.y);<br>        std::<span class="hljs-built_in">swap</span>(p1.x, p1.y);<br>        steep = <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (p0.x &gt; p1.x) &#123;<br>        <span class="hljs-comment">/* 当线条方向为从右往左时，将两点交换，</span><br><span class="hljs-comment">        不需要进一步特殊处理，因为一条线正着画反着画是一样的。*/</span><br>        std::<span class="hljs-built_in">swap</span>(p0.x, p1.x);<br>        std::<span class="hljs-built_in">swap</span>(p0.y, p1.y);<br>    &#125;<br>    <span class="hljs-keyword">int</span> dx = p1.x - p0.x;<br>    <span class="hljs-keyword">int</span> dy = p1.y - p0.y;<br>    <span class="hljs-keyword">int</span> dy2 = std::<span class="hljs-built_in">abs</span>(dy) &lt;&lt; <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">int</span> dx2 = std::<span class="hljs-built_in">abs</span>(dx) &lt;&lt; <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">int</span> dk = dy2 - dx;<br>    <span class="hljs-keyword">int</span> y = p0.y;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x = p0.x; x &lt;= p1.x; x++) &#123;<br>        <span class="hljs-keyword">if</span> (steep) &#123;<br>            image.<span class="hljs-built_in">set</span>(y, x, color);<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            image.<span class="hljs-built_in">set</span>(x, y, color);<br>        &#125;<br>        dk += dy2;<br>        <span class="hljs-keyword">if</span> (dk &gt; <span class="hljs-number">0</span>) &#123;<br>            y += (p1.y &gt; p0.y ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>);<br>            dk -= dx2;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="光栅化"><a class="markdownIt-Anchor" href="#光栅化"></a> 光栅化</h2>
+<h3 id="line-sweeping"><a class="markdownIt-Anchor" href="#line-sweeping"></a> Line Sweeping</h3>
+<p>对于一个三角形，将三个点排序，并使用多条横线，从下至上逐行填充三角形。<br />
+<img src="/img/CGB/ls.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">triangle</span><span class="hljs-params">(Vec2i t0, Vec2i t1, Vec2i t2, TGAImage &amp;image, TGAColor color)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (t0.y == t1.y &amp;&amp; t0.y == t2.y)<br>        <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-comment">// sort t0, t1, t2</span><br>    <span class="hljs-keyword">if</span> (t0.y&gt;t1.y) std::<span class="hljs-built_in">swap</span>(t0, t1);<br>    <span class="hljs-keyword">if</span> (t0.y&gt;t2.y) std::<span class="hljs-built_in">swap</span>(t0, t2);<br>    <span class="hljs-keyword">if</span> (t1.y&gt;t2.y) std::<span class="hljs-built_in">swap</span>(t1, t2);<br><br>    <span class="hljs-keyword">int</span> totalHeight = t2.y-t0.y;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; totalHeight; i++) &#123;<br>        <span class="hljs-keyword">bool</span> second = i &gt; t1.y-t0.y || t1.y == t0.y;<br>        <span class="hljs-keyword">int</span> segmentHeight = second ? t2.y - t1.y : t1.y - t0.y;<br>        <span class="hljs-keyword">float</span> aPercent = (<span class="hljs-keyword">float</span>)i / totalHeight;<br>        <span class="hljs-keyword">float</span> bPercent  = (<span class="hljs-keyword">float</span>)(i - (second ? t1.y-t0.y : <span class="hljs-number">0</span>)) / segmentHeight;<br><br>        Vec2i A = t0 + (t2 - t0) * aPercent;<br>        Vec2i B = second ? t1 + (t2 - t1) * bPercent : t0 + (t1 - t0) * bPercent;<br><br>        <span class="hljs-comment">// 这条扫描线从左（A）画向右（B）</span><br>        <span class="hljs-keyword">if</span> (A.x &gt; B.x)<br>            std::<span class="hljs-built_in">swap</span>(A, B);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = A.x; j &lt;= B.x; j++) &#123;<br>            image.<span class="hljs-built_in">set</span>(j, t0.y + i, color);<br>            <span class="hljs-comment">// 由外层 i 的循环保证遍历每一行，而不是使用走样的 A.y</span><br>        &#125; <br>    &#125; <br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="bounding-box"><a class="markdownIt-Anchor" href="#bounding-box"></a> Bounding Box</h3>
+<p><a target="_blank" rel="noopener" href="https://hinageshi01.github.io/2021/09/05/SSAA/">Bounding Box</a></p>
 
             </div>
             <hr>
