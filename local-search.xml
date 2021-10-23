@@ -49,11 +49,11 @@
       
       <tag>CPP</tag>
       
-      <tag>实时</tag>
-      
       <tag>光线追踪</tag>
       
       <tag>降噪</tag>
+      
+      <tag>实时</tag>
       
       <tag>矩阵</tag>
       
@@ -94,9 +94,9 @@
       
       <tag>GGX</tag>
       
-      <tag>GLSL</tag>
-      
       <tag>实时</tag>
+      
+      <tag>GLSL</tag>
       
       <tag>Kulla-Conty</tag>
       
@@ -127,9 +127,9 @@
       
       <tag>DepthBuffer</tag>
       
-      <tag>GLSL</tag>
-      
       <tag>实时</tag>
+      
+      <tag>GLSL</tag>
       
       <tag>JavaScript</tag>
       
@@ -164,11 +164,11 @@
       
       <tag>光照模型</tag>
       
+      <tag>实时</tag>
+      
       <tag>PRT</tag>
       
       <tag>GLSL</tag>
-      
-      <tag>实时</tag>
       
       <tag>环境光照</tag>
       
@@ -201,9 +201,9 @@
       
       <tag>DepthBuffer</tag>
       
-      <tag>GLSL</tag>
-      
       <tag>实时</tag>
+      
+      <tag>GLSL</tag>
       
       <tag>阴影</tag>
       
