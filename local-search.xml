@@ -4,7 +4,7 @@
   
   
   <entry>
-    <title>计算机图形学基础</title>
+    <title>笔记 计算机图形学基础</title>
     <link href="/2021/10/20/CGbasics/"/>
     <url>/2021/10/20/CGbasics/</url>
     
@@ -500,9 +500,9 @@
       
       <tag>C#</tag>
       
-      <tag>单例模式</tag>
-      
       <tag>对象池</tag>
+      
+      <tag>单例模式</tag>
       
     </tags>
     
@@ -533,9 +533,9 @@
       
       <tag>Unity</tag>
       
-      <tag>C#</tag>
-      
       <tag>AI</tag>
+      
+      <tag>C#</tag>
       
       <tag>状态机</tag>
       
@@ -754,9 +754,9 @@
       
       <tag>Unity</tag>
       
-      <tag>C#</tag>
-      
       <tag>AI</tag>
+      
+      <tag>C#</tag>
       
     </tags>
     
