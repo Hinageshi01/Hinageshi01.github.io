@@ -310,9 +310,9 @@ k=(y2−y1)x2−x1k=\frac{(y_2-
             
               <a href="/tags/%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/">光线追踪</a>
             
-              <a href="/tags/%E9%99%8D%E5%99%AA/">降噪</a>
-            
               <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
+            
+              <a href="/tags/%E9%99%8D%E5%99%AA/">降噪</a>
             
               <a href="/tags/%E7%9F%A9%E9%98%B5/">矩阵</a>
             
@@ -388,9 +388,9 @@ fr(i,
             
               <a href="/tags/GGX/">GGX</a>
             
-              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
-            
               <a href="/tags/GLSL/">GLSL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
             
               <a href="/tags/Kulla-Conty/">Kulla-Conty</a>
             
@@ -453,9 +453,9 @@ fr(i,
             
               <a href="/tags/DepthBuffer/">DepthBuffer</a>
             
-              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
-            
               <a href="/tags/GLSL/">GLSL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
             
               <a href="/tags/JavaScript/">JavaScript</a>
             
@@ -526,11 +526,11 @@ fr(i,
             
               <a href="/tags/%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">光照模型</a>
             
-              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
-            
               <a href="/tags/PRT/">PRT</a>
             
               <a href="/tags/GLSL/">GLSL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
             
               <a href="/tags/%E7%8E%AF%E5%A2%83%E5%85%89%E7%85%A7/">环境光照</a>
             
@@ -596,9 +596,9 @@ fr(i,
             
               <a href="/tags/DepthBuffer/">DepthBuffer</a>
             
-              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
-            
               <a href="/tags/GLSL/">GLSL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
             
               <a href="/tags/%E9%98%B4%E5%BD%B1/">阴影</a>
             
@@ -635,7 +635,7 @@ fr(i,
             G 项的实现会自然地带来能量不正确的衰减，导致结果偏黑。自遮挡项未考虑的光线在表面间多次弹射的补偿将在 Real Time PBR 中实现。
           
  序言
-  所有的PBR技术都基于微表面理论。这项理论认为，达到微观尺度之后任何表面都可以用被称为微表面 (Microfacets) 的细小镜面来进行描绘。在微观尺度下，没有任何表面是完全光滑的。然而由于这些微
+  所有的 PBR 技术都基于微表面理论。这项理论认为，达到微观尺度之后任何表面都可以用被称为微表面 (Microfacets) 的细小镜面来进行描绘。在微观尺度下，没有任何表面是完全光滑的。然而由于这
         </a>
       </p>
 
@@ -780,11 +780,11 @@ fr(i,
             
           
            序言
-  我们在上一章中得到了渲染方程，在这一章中将用蒙特卡洛算法实现方程中的积分，并用俄罗斯轮盘赌算法实现间接光照中对渲染方程的递归调用。
+  在上一节中已经得到了最重要的渲染方程，在这一节中将使用蒙特卡洛算法实现方程中的积分，并用俄罗斯轮盘赌实现间接光照中对渲染方程的递归调用。
  蒙特卡洛
 按一定分布对原函数进行随机采样，利用概率分布函数进行加权平均。
 
-∫f(x)dx=1N∑i=1Nf(Xi)p,(Xi)\int f(x){\rm d}x=\frac{1}{N}\sum^{N}_{i=1}\frac{f(X_i)}{p^,(X_
+∫f(x)dx=1N∑i=1Nf(Xi)p,(Xi)\int f(x){\rm d}x=\frac{1}{N}\sum^{N}_{i=1}\frac{f(X_i)}{p^,
         </a>
       </p>
 
