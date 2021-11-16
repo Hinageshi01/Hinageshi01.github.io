@@ -532,9 +532,9 @@
       
       <category>UnityNote</category>
       
-      <category>设计模式</category>
-      
       <category>功能实现</category>
+      
+      <category>设计模式</category>
       
     </categories>
     
@@ -545,9 +545,9 @@
       
       <tag>C#</tag>
       
-      <tag>单例模式</tag>
-      
       <tag>对象池</tag>
+      
+      <tag>单例模式</tag>
       
     </tags>
     
@@ -567,9 +567,9 @@
       
       <category>UnityNote</category>
       
-      <category>设计模式</category>
-      
       <category>功能实现</category>
+      
+      <category>设计模式</category>
       
     </categories>
     
@@ -578,9 +578,9 @@
       
       <tag>Unity</tag>
       
-      <tag>AI</tag>
-      
       <tag>C#</tag>
+      
+      <tag>AI</tag>
       
       <tag>状态机</tag>
       
@@ -799,9 +799,9 @@
       
       <tag>Unity</tag>
       
-      <tag>AI</tag>
-      
       <tag>C#</tag>
+      
+      <tag>AI</tag>
       
     </tags>
     
