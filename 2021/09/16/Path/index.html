@@ -241,13 +241,13 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 27, 2021
+                  本文最后更新于：November 17, 2021
                 
               </p>
             
             <div class="markdown-body">
               <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
-<p>  在上一节中已经得到了最重要的渲染方程，在这一节中将使用蒙特卡洛算法实现方程中的积分，并用俄罗斯轮盘赌实现间接光照中对渲染方程的递归调用。</p>
+<p>  我们在上一章中得到了重要的渲染方程，在这一章中将使用蒙特卡洛算法实现方程中的积分，并用俄罗斯轮盘赌实现间接光照中对渲染方程的递归调用。</p>
 <h2 id="蒙特卡洛"><a class="markdownIt-Anchor" href="#蒙特卡洛"></a> 蒙特卡洛</h2>
 <p>按一定分布对原函数进行随机采样，利用概率分布函数进行加权平均。</p>
 <ul>
@@ -265,7 +265,7 @@
 <li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>E</mi><mo>=</mo><mi>P</mi><mo>∗</mo><mo stretchy="false">(</mo><msub><mi>L</mi><mi>o</mi></msub><mi mathvariant="normal">/</mi><mi>P</mi><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>P</mi><mo stretchy="false">)</mo><mo>∗</mo><mn>0</mn><mo>=</mo><msub><mi>L</mi><mi>o</mi></msub></mrow><annotation encoding="application/x-tex">E=P*(L_o/P)+(1-P)*0=L_o</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">o</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">o</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></li>
 </ul>
 <div class="note note-secondary">
-            <p>递归的期望值确实是正确的，但是根据实现的不同，或者受制于显示器色域，超过 255 的值会被截断至 255，导致结果看起来偏暗。</p>
+            <p>递归的期望值确实是正确的，但是根据实现的不同，或者受制于显示器色域，超过 255 的值可能被截断至 255，导致结果看起来偏暗。</p>
           </div>
 <h2 id="最后一个问题"><a class="markdownIt-Anchor" href="#最后一个问题"></a> 最后一个问题</h2>
 <p>在目前的算法中，从视点发射出的一根光线若直到最终都没有击中发光物体便不会返回任何 Radiance。这样在场景中光源表面积非常小的情况下便很难产生有效的递归，因为对半球内方向随机采样难以精确采样到发光物体。<br />
@@ -314,9 +314,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/CPP/">CPP</a>
-                    
                       <a class="hover-with-bg" href="/tags/%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">光照模型</a>
+                    
+                      <a class="hover-with-bg" href="/tags/CPP/">CPP</a>
                     
                       <a class="hover-with-bg" href="/tags/PBR/">PBR</a>
                     
