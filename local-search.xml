@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>笔记 C++ Primer 第一章~第七章</title>
+    <link href="/2021/11/27/CppPrimer1-7/"/>
+    <url>/2021/11/27/CppPrimer1-7/</url>
+    
+    <content type="html"><![CDATA[<h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2><p>整理一下 C++ 的基础知识。<br />封面取自 《C++ Primer 5th Edition》。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>CPP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Simple Renderer</title>
     <link href="/2021/11/08/SimpleRenderer/"/>
     <url>/2021/11/08/SimpleRenderer/</url>
@@ -22,9 +41,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光栅化</tag>
+      
+      <tag>CPP</tag>
       
       <tag>实时</tag>
       
@@ -53,13 +72,13 @@
     
     <tags>
       
-      <tag>光照模型</tag>
-      
       <tag>光栅化</tag>
       
       <tag>中点画线</tag>
       
       <tag>渲染管线</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>Bresenham</tag>
       
@@ -90,9 +109,9 @@
       
       <tag>CPP</tag>
       
-      <tag>实时</tag>
-      
       <tag>光线追踪</tag>
+      
+      <tag>实时</tag>
       
       <tag>降噪</tag>
       
@@ -127,9 +146,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -201,9 +220,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PRT</tag>
       
@@ -271,9 +290,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -335,9 +354,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -440,9 +459,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>双线性插值</tag>
       
@@ -471,11 +490,11 @@
     
     <tags>
       
+      <tag>光栅化</tag>
+      
       <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
-      
-      <tag>光栅化</tag>
       
       <tag>反走样</tag>
       
@@ -578,9 +597,9 @@
       
       <tag>Unity</tag>
       
-      <tag>C#</tag>
-      
       <tag>AI</tag>
+      
+      <tag>C#</tag>
       
       <tag>状态机</tag>
       
@@ -799,9 +818,9 @@
       
       <tag>Unity</tag>
       
-      <tag>C#</tag>
-      
       <tag>AI</tag>
+      
+      <tag>C#</tag>
       
     </tags>
     
