@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.8k 字
+      8.1k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      63
+      88
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 27, 2021
+                  本文最后更新于：November 28, 2021
                 
               </p>
             
@@ -496,6 +496,95 @@ const_cast只能改变运算对象的底层 const。<br />
 编译器不会自动地将函数返回类型当成对应的指针类型处理。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">using</span> F = <span class="hljs-built_in"><span class="hljs-keyword">int</span></span>();<br><span class="hljs-keyword">using</span> PF = <span class="hljs-built_in"><span class="hljs-keyword">int</span></span>(*)();<br><br><span class="hljs-function">PF <span class="hljs-title">f1</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// PF是指向函数的指针，fl返回指向函数的指针。</span><br><span class="hljs-function">F *<span class="hljs-title">fi</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// 显式地指定返回类型是指向函数的指针。</span><br></code></pre></div></td></tr></table></figure>
 <h1 id="第七章-类"><a class="markdownIt-Anchor" href="#第七章-类"></a> 第七章 类</h1>
+<h2 id="71-定义抽象数据类型"><a class="markdownIt-Anchor" href="#71-定义抽象数据类型"></a> 7.1 定义抽象数据类型</h2>
+<p><strong>引入 this</strong><br />
+<code>total.isbn()</code><br />
+当 isbn() 返冋 bookNo 时，实际上它隐式地返回 total.bookNo。<br />
+编译器负责把 total 的地址传递给 isbn() 的隐式形参 this，任何对类成员的直接访问都被看作this的隐式引用。<br />
+因为 this 的目的总是指向“这个”对象，所以 this 是一个常量指针。<br />
+<strong>引入 const 成员函数</strong><br />
+默认情况下，this 的类型是指向类类型非常量版本的常量指针。由于底层 const 不匹配，我们不能在一个常量对象上调用普通的成员函数。<br />
+紧跟在参数列表后面的 const 表示 this 是一个指向常量的指针，常量成员函数不能改变调用它的对象的内容。常量对象，以及常量对象的引用或指针都只能调用常量成员函数。</p>
+<h3 id="714-构造函数"><a class="markdownIt-Anchor" href="#714-构造函数"></a> 7.1.4 构造函数</h3>
+<p>构造函数不能被声明成 const 的，直到构造函数完成初始化过程，对象才能真正取得其“常量”属性。因此，构造函数在 const 对象的构造过程中可以向其写值。</p>
+<h3 id="721-友元"><a class="markdownIt-Anchor" href="#721-友元"></a> 7.2.1 友元</h3>
+<p>友元声明只能出现在类定义的内部，友元不是类的成员也不受它所在区域访问控制级别的约束。<br />
+<strong>友元的声明</strong><br />
+友元的声明仅仅指定了访问的权限，而非一个通常意义上的函数声明。如果我们希望类的用户能够调用某个友元函数，那么我们就必须在友元声明之外再专门对函数进行一次声明。</p>
+<h2 id="73-类的其他特性"><a class="markdownIt-Anchor" href="#73-类的其他特性"></a> 7.3 类的其他特性</h2>
+<h3 id="731-类成员再探"><a class="markdownIt-Anchor" href="#731-类成员再探"></a> 7.3.1 类成员再探</h3>
+<p><strong>定义_个类型成员</strong><br />
+类还可以自定义某种类型在类中的别名。由类定义的类型名字和其他成员一样存在访问限制。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassName</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">using</span> pos = std::string::size_type;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>定义在类内部的成员函数是自动 inline 的。<br />
+<strong>可变数据成员</strong><br />
+在变量的声明中加入 mutable 关键字，一个可变数据成员永远不会是 const，即使它是 const 对象的成员。因此，一个 const 成员函数可以改变一个可变成员的值。</p>
+<h3 id="732-返回-this-的成员函数"><a class="markdownIt-Anchor" href="#732-返回-this-的成员函数"></a> 7.3.2 返回 *this 的成员函数</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">ClassName &amp;<span class="hljs-title">fun1</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>返回引用的函数是左值的，所以这样的操作将在同一个对象上执行：<br />
+<code>实例.fun1().fun2().fun3()</code><br />
+如果定义的返回类型不是引用，则函数的返回值将是 *this 的副本，因此调用函数只能改变临时副本，而不能改变原实例的值。<br />
+*<em>从 const 成员函数返回 <em>this</em></em><br />
+一个 const 成员函数如果以引用的形式返回 *this，那么它的返回类里将是常量引用，因为非常量版本的函数对于常量对象是不可用的。<br />
+根据对象是否是常量重载函数，隐式传入的 this 参数同样参与函数匹配的过程。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassName</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ClassName &amp;<span class="hljs-title">fun</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">const</span> ClassName &amp;<span class="hljs-title">fun</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>    &#125;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<h3 id="733-类类型"><a class="markdownIt-Anchor" href="#733-类类型"></a> 7.3.3 类类型</h3>
+<p>在类声明之后定义之前是一个不完全类型，可以定义指向这种类型的指针或引用，也可以声明（但是不能定义）以不完全类型作为参数或者返回类型的函数。一旦一个类的名字出现后，它就被认为是声明过了。</p>
+<h3 id="734-友元再探"><a class="markdownIt-Anchor" href="#734-友元再探"></a> 7.3.4 友元再探</h3>
+<p>友元关系不存在传递性。<br />
+友元类的成员函数和友元成员函数可以访问此类包括非公有成员在内的所有成员。<br />
+如果一个类想把一组重载函数声明成它的友元，它需要对这组函数中的每一个分别声明。<br />
+<strong>友元声明和作用域</strong><br />
+当一个名字第一次出现在一个友元声明中时，我们隐式地假定该名字在当前作用域中是可见的。然而，友元本身不一定真的声明在当前作用域中。甚至就算在类的内部定义该函数，我们也必须在类的外部提供相应的声明从而使得函数可见。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassName</span> &#123;</span><br>    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <span class="hljs-built_in">ClassName</span>() &#123;<br>        <span class="hljs-built_in">fun</span>(); <span class="hljs-comment">// 错误</span><br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">a</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">b</span><span class="hljs-params">()</span></span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ClassName::a</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">fun</span>(); <span class="hljs-comment">// 错误</span><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">()</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ClassName::b</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">fun</span>(); <span class="hljs-comment">// 正确</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="74-类的作用域"><a class="markdownIt-Anchor" href="#74-类的作用域"></a> 7.4 类的作用域</h2>
+<p>在类的外部定义其成员函数时，因为返回类型出现在类名之前，所以事实上返回类型是位于类的作用域之外的。<br />
+<strong>类作用域之后，在外围的作用域中查找</strong><br />
+如果我们需要的是外层作用域中的名字，可以显式地通过作用域运算符（::）来进行请求：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> tmp)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">2</span> * ::tmp; <span class="hljs-comment">// 此时的in是最外层的全局变量</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="75-构造函数再探"><a class="markdownIt-Anchor" href="#75-构造函数再探"></a> 7.5 构造函数再探</h2>
+<h3 id="751-构造函数初姶值列表"><a class="markdownIt-Anchor" href="#751-构造函数初姶值列表"></a> 7.5.1 构造函数初姶值列表</h3>
+<p>如果没有在构造函数的初始值列表中显式地初始化成员，则该成员将在构造函数体之前执行默认初始化。<br />
+如果成员是 const、引用，或者属于某种未提供默认构造函数的类类型，我们必须通过构造函数初始值列表为这些成员提供初值。<br />
+成员的初始化顺序与它们在类定义中的出现顺序一致，构造函数初始值列表中初始值的前后位置关系不会影响实际的初始化顺序。<br />
+如果一个构造函数为所有参数都提供了默认实参，则它实际上也定义了默认构造函数。</p>
+<h3 id="754-隐式的类类型转换"><a class="markdownIt-Anchor" href="#754-隐式的类类型转换"></a> 7.5.4 隐式的类类型转换</h3>
+<p>如果构造函数只接受一个实参，则它实际上定义了转换为此类类型的隐式转换机制（转换构造函数）。在需要使用类类型的地方，我们可以使用转换构造函数的参数的类型作为替代。<br />
+只允许一步类类型转换，隐式地使用两种转换规则是错误的。比如只定义了 string 的转换构造函数却提供了一个字符串常量实参。<br />
+<strong>抑制构造函数定义的隐式转换</strong><br />
+将构造函数声明为 explicit 加以抑制隐式转换。<br />
+关键字 explicit 只对一个实参的构造函数有效。需要多个实参的构造函数不能用于执行隐式转换。只能在类内声明构造函数时使用 explicit 关键字，在类外部定义时不应重复。<br />
+显示地进行强制转换依旧可以正常地发挥转换构造函数的效果。</p>
+<h3 id="755-聚合类"><a class="markdownIt-Anchor" href="#755-聚合类"></a> 7.5.5 聚合类</h3>
+<p>当一个类满足如下条件时，我们说它是聚合的：</p>
+<ul>
+<li>所有成员都是 public 的。</li>
+<li>没有定义任何构造函数。</li>
+<li>没有类内初始值。</li>
+<li>没有基类，也没有 virtual 函数。<br />
+可以提供一个花括号括起来的成员初始值列表，并用它初始化聚合类的数据成员，初始值的顺序必须与声明的顺序一致。</li>
+</ul>
+<h3 id="756-字面值常量类"><a class="markdownIt-Anchor" href="#756-字面值常量类"></a> 7.5.6 字面值常量类</h3>
+<p>数据成员都是字面值类型的聚合类是字面值常量类。如果一个类不是聚合类，但它符合下述要求，则它也是一个字面值常量类：</p>
+<ul>
+<li>数据成员都必须是字面值类型。</li>
+<li>类必须至少含有一个 constexpr 构造函数。</li>
+<li>如果一个数据成员含有类内初始值，则内置类型成员的初始值必须是一条常量表达式；或者如果成员属于某种类类型，则初始值必须使用成员自己的 constexpr 构造函数。</li>
+<li>类必须使用析构函数的默认定义，该成员负责销毁类的对象。<br />
+<strong>constexpr 构造函数</strong><br />
+尽管构造函数不能是 const 的，但是字面值常量类的构造函数可以是 constexpr 函数，constexpr 构造函数体一般来说应该是空的，或者声明成<code>= default</code>.<br />
+constexpr 构造函数必须初始化所有数据成员.</li>
+</ul>
+<h2 id="76-类的静态成员"><a class="markdownIt-Anchor" href="#76-类的静态成员"></a> 7.6 类的静态成员</h2>
+<p>对象中不包含任何与静态数据成员有关的数据，静态成员函数不能声明成 const 的，而且我们也不能在 static 函数体内使用 this 指针。<br />
+使用作用域运算符直接访问静态成员，使用类的对象、引用或者指针的点运算符来访问静态成员。<br />
+<strong>定义静态成员</strong><br />
+当在类的外部定义静态成员时，不能重复 static 关键字，该关键字只出现在类内部的声明语句。<br />
+我们不能在类的内部初始化静态成员。相反的，必须在类的外部定义和初始化每个静态成员。<br />
+<strong>静态成员的类内初始化</strong><br />
+我们可以为静态成员提供 const 整数类型的类内初始值，不过要求静态成员必须是字面值常量类型的 constexpr。即使一个常量静态数据成员在类内部被初始化了，通常情况下也应该在类的外<br />
+部定义一下该成员。<br />
+静态数据成员可以是不完全类型。</p>
 
             </div>
             <hr>
