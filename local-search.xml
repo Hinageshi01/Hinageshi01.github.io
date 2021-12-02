@@ -150,13 +150,13 @@
       
       <tag>光照模型</tag>
       
-      <tag>PBR</tag>
-      
-      <tag>GGX</tag>
-      
       <tag>GLSL</tag>
       
       <tag>实时</tag>
+      
+      <tag>PBR</tag>
+      
+      <tag>GGX</tag>
       
       <tag>Kulla-Conty</tag>
       
@@ -564,9 +564,9 @@
       
       <tag>C#</tag>
       
-      <tag>单例模式</tag>
-      
       <tag>对象池</tag>
+      
+      <tag>单例模式</tag>
       
     </tags>
     
