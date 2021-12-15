@@ -241,27 +241,27 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 30, 2021
+                  本文最后更新于：December 15, 2021
                 
               </p>
             
             <div class="markdown-body">
               <h1 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h1>
-<p>《C++ Primer 5th Edition》前七章的读书笔记，只记录我认为重要/不熟悉的知识点，前七章刚好都属于不那么“C++”的部分，比较适合作为一个整理的节点。</p>
+<p>  《C++ Primer 5th Edition》前七章的读书笔记，只记录我认为重要/不熟悉的知识点，前七章刚好都属于不那么“C++”的部分，比较适合作为一个整理的节点。</p>
 <h1 id="第一章-开始"><a class="markdownIt-Anchor" href="#第一章-开始"></a> 第一章 开始</h1>
 <h2 id="12-初识输入输出"><a class="markdownIt-Anchor" href="#12-初识输入输出"></a> 1.2 初识输入输出</h2>
 <p><code>#include &lt;iostream&gt;</code><br />
 使用了 iostream 库，包含了 istream 类和 ostream 类，分别表示输入流和输出流。</p>
-<h3 id="向流写入数据"><a class="markdownIt-Anchor" href="#向流写入数据"></a> 向流写入数据</h3>
-<p>输出运算符（&lt;&lt;）接受两个运算对象，左侧必须是一个 ostream 对象，右侧是要打印的值，然后返回其左侧的对象。<br />
+<p><strong>向流写入数据</strong><br />
+输出运算符（&lt;&lt;）接受两个运算对象，左侧必须是一个 ostream 对象，右侧是要打印的值，然后返回其左侧的对象。<br />
 <code>std::endl</code><br />
 这是一个被称为操作符的特殊值，写入 endl 的效果是结束当前行，并将与设备关联的缓冲区中的内容刷到设备中。调试时应保证一直刷新流，避免程序崩溃时输出还留在缓冲区中。<br />
 <code>std::cerr</code><br />
 一个 ostream 对象，写到 cerr 的数据是不缓冲的。<br />
 <code>std::clog</code><br />
 一个 ostream 对象，写到 clog 的数据是被缓冲的。</p>
-<h3 id="从流读取数据"><a class="markdownIt-Anchor" href="#从流读取数据"></a> 从流读取数据</h3>
-<p>输入运算符（&gt;&gt;）接受两个运算对象，左侧必须是一个 istream 对象，右侧是要接收值的对象，然后返回其左侧的对象。</p>
+<p><strong>从流读取数据</strong><br />
+输入运算符（&gt;&gt;）接受两个运算对象，左侧必须是一个 istream 对象，右侧是要接收值的对象，然后返回其左侧的对象。</p>
 <h2 id="14-控制流"><a class="markdownIt-Anchor" href="#14-控制流"></a> 1.4 控制流</h2>
 <h3 id="143-读取数量不定的输入数据"><a class="markdownIt-Anchor" href="#143-读取数量不定的输入数据"></a> 1.4.3 读取数量不定的输入数据</h3>
 <p><code>while(std::cin &gt;&gt; value)</code><br />
@@ -607,6 +607,12 @@ constexpr 构造函数必须初始化所有数据成员.</li>
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/12/15/CppPrimer8-12/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">笔记 C++ Primer 第八章~第十二章</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
