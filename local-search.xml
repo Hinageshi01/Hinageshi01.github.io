@@ -87,9 +87,9 @@
     
     <tags>
       
-      <tag>光栅化</tag>
-      
       <tag>CPP</tag>
+      
+      <tag>光栅化</tag>
       
       <tag>实时</tag>
       
@@ -118,13 +118,13 @@
     
     <tags>
       
+      <tag>光照模型</tag>
+      
       <tag>光栅化</tag>
       
       <tag>中点画线</tag>
       
       <tag>渲染管线</tag>
-      
-      <tag>光照模型</tag>
       
       <tag>Bresenham</tag>
       
@@ -192,9 +192,9 @@
     
     <tags>
       
-      <tag>光照模型</tag>
-      
       <tag>CPP</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>PBR</tag>
       
@@ -266,9 +266,9 @@
     
     <tags>
       
-      <tag>光照模型</tag>
-      
       <tag>CPP</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>PRT</tag>
       
@@ -336,9 +336,9 @@
     
     <tags>
       
-      <tag>光照模型</tag>
-      
       <tag>CPP</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>PBR</tag>
       
@@ -400,9 +400,9 @@
     
     <tags>
       
-      <tag>光照模型</tag>
-      
       <tag>CPP</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>PBR</tag>
       
@@ -505,9 +505,9 @@
     
     <tags>
       
-      <tag>光照模型</tag>
-      
       <tag>CPP</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>双线性插值</tag>
       
@@ -536,11 +536,11 @@
     
     <tags>
       
-      <tag>光栅化</tag>
-      
       <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
+      
+      <tag>光栅化</tag>
       
       <tag>反走样</tag>
       
@@ -643,9 +643,9 @@
       
       <tag>Unity</tag>
       
-      <tag>C#</tag>
-      
       <tag>AI</tag>
+      
+      <tag>C#</tag>
       
       <tag>状态机</tag>
       
@@ -864,9 +864,9 @@
       
       <tag>Unity</tag>
       
-      <tag>C#</tag>
-      
       <tag>AI</tag>
+      
+      <tag>C#</tag>
       
     </tags>
     
