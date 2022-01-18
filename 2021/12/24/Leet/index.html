@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2k 字
+      2.5k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      32
+      38
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：January 15, 2022
+                  本文最后更新于：January 18, 2022
                 
               </p>
             
@@ -322,6 +322,28 @@ nums 中的所有整数 互不相同</p>
 <p>以一个简单的情况为例：寻找 1、2、3 中所有可能的 2 个数的组合。<br />
 <img src="/img/Leet/46/01.png" srcset="/img/loading.gif" lazyload alt="" /><br />
 当树的遍历进行到红色节点时代表：包含了到 1 为止的任一元素的所有组合已经被找到，这个节点因该被跳过。此时的循环从 crt，即上一层递归中的 （i + 1），即 3 开始。</p>
+<h2 id="198-打家劫舍动规"><a class="markdownIt-Anchor" href="#198-打家劫舍动规"></a> 198. 打家劫舍（动规）</h2>
+<h3 id="题目描述-4"><a class="markdownIt-Anchor" href="#题目描述-4"></a> 题目描述</h3>
+<p>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。<br />
+给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。</p>
+<h3 id="示例-4"><a class="markdownIt-Anchor" href="#示例-4"></a> 示例</h3>
+<p>输入：[2,7,9,3,1]<br />
+输出：12<br />
+解释：偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。<br />
+偷窃到的最高金额 = 2 + 9 + 1 = 12 。</p>
+<h3 id="提示-4"><a class="markdownIt-Anchor" href="#提示-4"></a> 提示</h3>
+<p>1 &lt;= nums.length &lt;= 100<br />
+0 &lt;= nums[i] &lt;= 400</p>
+<h3 id="动规-2"><a class="markdownIt-Anchor" href="#动规-2"></a> 动规</h3>
+<p>money[i] 代表了在前 i 个房屋的范围内可以获得金钱的最大值。money[i] 由两个状态转移而来：</p>
+<ul>
+<li>抢劫 nums[i]，则不能抢劫 nums[i - 1]，money[i] 的值为在抢劫前 (i - 2) 房屋可以获得金钱的最大值的基础上抢劫 nums[i]。</li>
+<li>不抢劫 nums[i]，money[i] 的值为抢劫前 (i - 1) 房屋可以获得金钱的最大值。</li>
+</ul>
+<p>由条件写出状态转移方程：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>y</mi><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo stretchy="false">(</mo><mi>n</mi><mi>u</mi><mi>m</mi><mi>s</mi><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo><mo>+</mo><mi>m</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>y</mi><mo stretchy="false">(</mo><mi>i</mi><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>m</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>y</mi><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">money(i)=max(nums(i) + money(i - 2), money(i))
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mord mathdefault">s</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> size;<br>    <span class="hljs-keyword">int</span> *money;<br>    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">rob</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        size = nums.<span class="hljs-built_in">size</span>();<br>        money = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[size];<br>        money[<span class="hljs-number">0</span>] = nums[<span class="hljs-number">0</span>];<br>        <span class="hljs-keyword">if</span>(size == <span class="hljs-number">1</span>) <br>            <span class="hljs-keyword">return</span> money[<span class="hljs-number">0</span>];<br>        money[<span class="hljs-number">1</span>] = <span class="hljs-built_in">max</span>(nums[<span class="hljs-number">1</span>], nums[<span class="hljs-number">0</span>]);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt; size; ++i) &#123;<br>            <span class="hljs-keyword">int</span> yes = nums[i] + money[i - <span class="hljs-number">2</span>];<br>            <span class="hljs-keyword">int</span> no = money[i - <span class="hljs-number">1</span>];<br>            money[i] = <span class="hljs-built_in">max</span>(yes, no);<br>        &#125;<br>        <span class="hljs-keyword">return</span> money[size - <span class="hljs-number">1</span>];<br>    &#125;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>
