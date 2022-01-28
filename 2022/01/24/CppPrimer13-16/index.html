@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      8.7k 字
+      13.6k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      92
+      149
        分钟
     </span>
   
@@ -272,7 +272,7 @@
 合成析构函数不会delete—个指针数据成员。因此，此类需要定义一个析构函数来释放构造函数分配的内存。</p>
 <p><strong>合成的拷贝构造函数和拷贝</strong><br />
 赋值运算符简单拷贝指针成员，这意味着多个指针可能指向相同的内存。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">HasPtr <span class="hljs-title">f</span> <span class="hljs-params">(HasPtr hp)</span> &#125; <span class="hljs-comment">// HasPtr 是传值参数，所以将被拷贝</span></span><br><span class="hljs-function">    HasPtr ret </span>= hp;	<span class="hljs-comment">// 拷贝给定的 HasPtr</span><br>    <span class="hljs-keyword">return</span> ret;	<span class="hljs-comment">// ret 和 hp 被销毁</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">HasPtr <span class="hljs-title">f</span> <span class="hljs-params">(HasPtr hp)</span> &#125; <span class="hljs-comment">// HasPtr 是传值参数，所以将被拷贝</span></span><br><span class="hljs-function">    HasPtr ret </span>= hp; <span class="hljs-comment">// 拷贝给定的 HasPtr</span><br>    <span class="hljs-keyword">return</span> ret;	<span class="hljs-comment">// ret 和 hp 被销毁</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>当 f 返回时，hp 和 ret 都被销毁。此代码会导致此指针被 delete 两次，将要发生什么是未定义的。</p>
 <p><strong>需要拷贝搡作的类也需要赋值操作，反之亦然</strong></p>
 <h3 id="1315-使用default"><a class="markdownIt-Anchor" href="#1315-使用default"></a> 13.1.5 使用=default</h3>
@@ -309,7 +309,7 @@
 <p>这两个特性意味着：使用右值引用的代码可以自由地接管所引用的对象的资源。</p>
 <p><strong>变量是左值</strong><br />
 变量表达式都是左值，所以我们不能将一个右值引用绑定到一个右值引用类型的变量上。</p>
-<p><strong>标准库move函数</strong><br />
+<p><strong>标准库 move 函数</strong><br />
 可以显式地将一个左值转换为对应的右值引用类型。<br />
 还可以通过调用一个名为 move 的新标准库函数来获得绑定到左值上的右值引用。<br />
 move 调用告诉编译器：我们有一个左值，但我们希望像一个右值一样处理它。<br />
@@ -549,6 +549,162 @@ using 只影响派生类的使用者对基类成员的访问权限，派生类�
 <p><strong>在容器中放置（智能）指针而非对象</strong><br />
 当我们希望在容器中存放具有继承关系的对象时，我们实际上存放的通常是基类的指针。</p>
 <h1 id="第十六章-模板与泛型编程"><a class="markdownIt-Anchor" href="#第十六章-模板与泛型编程"></a> 第十六章 模板与泛型编程</h1>
+<h2 id="161-定义模板"><a class="markdownIt-Anchor" href="#161-定义模板"></a> 16.1 定义模板</h2>
+<h3 id="1611-函数模板"><a class="markdownIt-Anchor" href="#1611-函数模板"></a> 16.1.1 函数模板</h3>
+<p><strong>模板类型参数</strong><br />
+类型参数前必须使用关键字 class 或 typename</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">U</span>&gt;</span> <span class="hljs-built_in">calc</span> (<span class="hljs-keyword">const</span> T&amp;, <span class="hljs-keyword">const</span> U&amp;);<br><span class="hljs-comment">// 正确：在模板参数列表中，typename 和 class 没有什么不同</span><br></code></pre></div></td></tr></table></figure>
+<p><strong>非类型模板参数</strong><br />
+当一个模板被实例化时，非类型参数被一个用户提供的或编译器推断出的值所代替。这些值必须是常量表达式。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">unsigned</span> N, <span class="hljs-keyword">unsigned</span> M&gt;</span><br><span class="hljs-function">    <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> (&amp;pl)[N], <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> (&amp;p2)[M])</span></span><br><span class="hljs-function">        <span class="hljs-keyword">return</span> <span class="hljs-title">strcrap</span><span class="hljs-params">(p1, p2)</span></span>;<br>    &#125;<br></code></pre></div></td></tr></table></figure>
+<p>当我们调用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">compare</span>(<span class="hljs-string">&quot;hi&quot;</span>, <span class="hljs-string">&quot;mom&quot;</span>)<br></code></pre></div></td></tr></table></figure>
+<p>时，编译器会使用字面常量的大小来代替 N 和 M，从而实例化模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> (&amp;pl)[<span class="hljs-number">3</span>], <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> (&amp;p2)[<span class="hljs-number">4</span>])</span></span><br></code></pre></div></td></tr></table></figure>
+<p>一个非类型参数可以是一个整型，或者是一个指向对象或函数类型的指针或（左值）引用。绑定到非类型整型参数的实参必须是一个常量表达式。绑定到指针或引用非类型参数的实参必须具有静态的生存期。针参数也可以用 nullptr 或一个值为 0 的常量表达式来实例化。</p>
+<p><strong>模板编译</strong><br />
+编译器遇到一个模板定义时，它并不生成代码。只有当我们实例化出模板的一个特定版本时，编译器才会生成代码。<br />
+函数模板和类模板成员函数的定义通常放在头文件中。</p>
+<p><strong>大多数编译错误在实例化期间报告</strong><br />
+通常，编译器会在三个阶段报告错误：</p>
+<ul>
+<li>第一个阶段是编译模板本身时。在这个阶段编译器可以检查语法错误。</li>
+<li>第二个阶段是编译器遇到模板使用时。在此阶段编译器通常会检查实参数目是否正确，它还能检查参数类型是否匹配。</li>
+<li>第三个阶段是模板实例化时，只有这个阶段才能发现类型相关的错误。依赖于编译器如何管理实例化，这类错误可能在链接时才报告。</li>
+</ul>
+<h3 id="1612-类模板"><a class="markdownIt-Anchor" href="#1612-类模板"></a> 16.1.2 类模板</h3>
+<p>编译器不能为类模板推断模板参数类型。</p>
+<p><strong>实例化类模板</strong><br />
+一个类模板的每个实例都形成一个独立的类。类型<code>Blob&lt;string&gt;</code>与任何其他 Blob 类型都没有关联。</p>
+<p><strong>在模板作用域中引用模板类型</strong><br />
+类模板的名字不是一个类型名，类模板用来实例化类型，而一个实例化的类型总是包含模板参数的。</p>
+<p><strong>类模板的成员函数</strong><br />
+定义在类模板之外的成员函数就必须以关键字 template 开始，后接类模板参数列表。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br>    ret_type class_name&lt;T&gt;::<span class="hljs-built_in">member_name</span>(parm_list)<br></code></pre></div></td></tr></table></figure>
+<p><strong>类模板成员函数的实例化</strong><br />
+对于一个实例化了的类模板，其成员只有在使用时才被实例化。</p>
+<p><strong>在类代码内简化模板类名的使用</strong><br />
+当我们使用一个类模板类型时必须提供模板实参，但是在类模板自己的作用域中，我们可以直接使用模板名而不提供实参。</p>
+<p><strong>一对一友好关系</strong><br />
+类模板与另一个（类或函数）模板间友好关系的最常见的形式是建立对应实例及其友元间的友好关系。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span>&gt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BlobPtr</span>;</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Blob</span> &#123;</span><br>    <span class="hljs-comment">//每个Blob实例将访问权限授予用相同类型实例化的BlobPtr和相等运算符</span><br>    <span class="hljs-keyword">friend</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BlobPtr</span>&lt;</span>T&gt;;<br>&#125;;<br><br>Blob&lt;<span class="hljs-keyword">char</span>&gt; ca; <span class="hljs-comment">// BlobPtr&lt;char&gt; 是本对象的友元</span><br></code></pre></div></td></tr></table></figure>
+<p>BlobPtr<char> 的成员可以访问任何其他 Blob<char> 对象的非 public 部分，但 ca 对 Blob 的任何其他实例都没有特殊访问权限。</p>
+<p><strong>通用和特定的模板友好关系</strong><br />
+一个类也可以将另一个模板的每个实例都声明为自己的友元，或者限定特定的实例为友元：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 前置声明，在将模板的一个特定实例声明为友元时要用到</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pal</span>;</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C</span> &#123;</span> <span class="hljs-comment">// C 是一个普通的非模板类</span><br>    <span class="hljs-keyword">friend</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pal</span>&lt;</span>C&gt;; <span class="hljs-comment">// 用类 C 实例化的 Pal 是 C 的一个友元</span><br>    <span class="hljs-comment">// Ра12 的所有实例都是 С 的友元，这种情况无须前置声明</span><br>    <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-keyword">friend</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pal2</span>;</span><br>&#125;;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C2</span> &#123;</span> <span class="hljs-comment">// C2 本身是一个类模板</span><br>    <span class="hljs-comment">// C2 的每个实例将相同实例化的 Pal 声明为友元</span><br>    <span class="hljs-keyword">friend</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pal</span>&lt;</span>T&gt;; <span class="hljs-comment">// Pal 的模板声明必须在作用域之内</span><br>    <span class="hljs-comment">// Pal2 的所有实例都是 C2 的每个实例的友元，不需要前置声明</span><br>    <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> X&gt; <span class="hljs-keyword">friend</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pal2</span>;</span><br>    <span class="hljs-comment">// Pal3 是一个非模板类，它是 C2 所有实例的友元</span><br>    <span class="hljs-keyword">friend</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pal3</span>;</span> <span class="hljs-comment">// 不需要 Pal3 的前置声明</span><br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p><strong>令模板自己的类型参数成为友元</strong><br />
+我们可以将模板类型参数声明为友元：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Type&gt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Bar</span> &#123;</span><br>    <span class="hljs-keyword">friend</span> Type; <span class="hljs-comment">// 将访问权限授予用来实例化Bar的类型</span><br>    <span class="hljs-comment">//...</span><br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>对于某个类型名 Name，Name 将成为 Bar<name> 的友元。</p>
+<p><strong>模板类型别名</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">typedef</span> Blob&lt;string&gt; StrBlob;<br></code></pre></div></td></tr></table></figure>
+<p>新标准允许我们为类模板定义一个类型别名:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-keyword">using</span> twin = pair&lt;T, T&gt;;<br>twin&lt;string&gt; authors; <span class="hljs-comment">// authors 是一个 pair&lt;string, string&gt;</span><br></code></pre></div></td></tr></table></figure>
+<p>当我们定义一个模板类型别名时，可以固定一个或多个模板参数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-keyword">using</span> partNo = pair&lt;T, <span class="hljs-keyword">unsigned</span>&gt;;<br>partNo&lt;string&gt; books; <span class="hljs-comment">// books 是一个 pair&lt;string, unsigned&gt;</span><br></code></pre></div></td></tr></table></figure>
+<p><strong>类模板的 static 成员</strong><br />
+每个实例都有其自己的 static 成员实例。<br />
+模板类的每个static 数据成员必须有且仅有一个定义。但是，类模板的每个实例都有一个独有的 static 对象。因此，与定义模板的成员函数类似，我们将 static 数据成员也定义为模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-keyword">size_t</span> Foo&lt;T&gt;::ctr = <span class="hljs-number">0</span>; <span class="hljs-comment">// 定义并初始化 ctr</span><br></code></pre></div></td></tr></table></figure>
+<p>为了通过类来直接访问 static 成员，我们必须引用一个特定的实例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">Foo&lt;<span class="hljs-keyword">int</span>&gt; fi; <br><span class="hljs-keyword">auto</span> ct = Foo&lt;<span class="hljs-keyword">int</span>&gt;::<span class="hljs-built_in">count</span>(); <span class="hljs-comment">// 实例化 Foo&lt;int&gt;::count</span><br>ct = fi.<span class="hljs-built_in">count</span>(); <span class="hljs-comment">// 使用 Foo&lt;int&gt;::count</span><br>ct = Foo::<span class="hljs-built_in">count</span>(); <span class="hljs-comment">// 错误</span><br></code></pre></div></td></tr></table></figure>
+<h3 id="1613-模板参数"><a class="markdownIt-Anchor" href="#1613-模板参数"></a> 16.1.3 模板参数</h3>
+<p>我们通常将类型参数命名为 T，但实际上我们可以使用任何名字。</p>
+<p><strong>模板参数与作用域</strong><br />
+模板参数会隐藏外层作用域中声明的相同名字。但是在模板内不能重用模板参数名。</p>
+<p><strong>模板声明</strong><br />
+声明中的模板参数的名字不必与定义中相同。<br />
+一个特定文件所需要的所有模板的声明通常一起放置在文件开始位置，出现于任何使用这些模板的代码之前。</p>
+<p><strong>使用类的类型成员</strong><br />
+假定 T 是一个模板类型参数，当编译器遇到类似 T::mem 这样的代码时，它不会知道 mem 是一个类型成员还是一个 static 数据成员，直至实例化时才会知道。<br />
+默认情况下，C++ 假定通过作用域运算符访问的名字不是类型。因此，如果我们希望使用一个模板类型参数的类型成员，就必须显式告诉编译器该名字是一个类型，通过使用关键字 typename 来实现这一点：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-function"><span class="hljs-keyword">typename</span> T::value_type <span class="hljs-title">top</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> T&amp; c)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">typename</span> T::<span class="hljs-built_in">value_type</span>();<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>当我们希望通知编译器一个名字表示类型时，必须使用关键字 typename，而不能使用 class。</p>
+<p><strong>默认模板实参</strong><br />
+与函数默认实参一样，对于一个模板参数，只有当它右侧的所有参数都有默认实参时, 它才可以有默认实参。</p>
+<p><strong>模板默认实参与类模板</strong><br />
+如果一个类模板为其所有模板参数都提供了默认实参，且我们希望使用这些默认实参，就必须在模板名之后跟一个空尖括号对。</p>
+<h3 id="1614-成员模板"><a class="markdownIt-Anchor" href="#1614-成员模板"></a> 16.1.4 成员模板</h3>
+<p>成员模板不能是虚函数。</p>
+<p><strong>类模板的成员模板</strong><br />
+当我们在类模板外定义一个成员模板时，必须同时为类模板和成员模板提供模板参数列表。类模板的参数列表在前，后跟成员自己的模板参数列表：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-comment">// 类的类型参数</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> It&gt; <span class="hljs-comment">// 构造函数的类型参數</span><br>    Blob&lt;T&gt;::<span class="hljs-built_in">Blob</span>(It b, It e) :<br>        <span class="hljs-built_in">data</span>(std::make_shared&lt;std::vector&lt;T&gt;&gt;(b, e)) &#123; &#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="1615-控制实例化"><a class="markdownIt-Anchor" href="#1615-控制实例化"></a> 16.1.5 控制实例化</h3>
+<p>在多个文件中实例化相同模板的额外开销可能非常严重，我们可以通过显式实例化来避免这种开销。<br />
+当编译器遇到 extern 模板声明时，它不会在本文件中生成实例化代码。将一个实例化声明为 extern 就表示承诺在程序其他位置有该实例化的一个非 extern 声明（定义）。对于一个给定的实例化版本，可能有多个 extern 声明，但必须只有一个定义。extern 声明必须出现在任何使 用此实例化版本的代码之前。<br />
+实例化文件必须为每个在其他文件中声明为 extern 的类型和函数提供一个（非extern）的定义。<br />
+当编译器遇到一个实例化定义时，它为其生成代码。<br />
+实例化定义会实例化所有成员。</p>
+<h3 id="1622-函数模板显式实参"><a class="markdownIt-Anchor" href="#1622-函数模板显式实参"></a> 16.2.2 函数模板显式实参</h3>
+<p><strong>指定显式模板实参</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 编译器无法推断T1，它未出现在函数参数列表中</span><br><span class="hljs-keyword">template</span> &lt;typeпаше Tl, <span class="hljs-keyword">typename</span> T2, <span class="hljs-keyword">typename</span> T3&gt;<br><span class="hljs-function">T1 <span class="hljs-title">sum</span><span class="hljs-params">(T2, T3)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<p>没有任何函数实参的类型可用米推断 Tl 的类型。毎次调用 sum 时调用者都必须为 T1 提供一个显式模板实参:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// T1 是显式指定的，T2 和 T3 是从函数实参类型推断而来的</span><br><span class="hljs-keyword">auto</span> val3 = sum&lt;<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>&gt;(i, lng); <span class="hljs-comment">// long long sum(int, long)</span><br></code></pre></div></td></tr></table></figure>
+<p>显式模板实参按由左至右的顺序与对应的模板参数匹配，只有尾部（最右）参数的显式模板实参才可以忽略，而且前提是它们可以从函数参数推断出来。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 糟糕的设计：用户必须指定所有三个模板参数</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Tl, <span class="hljs-keyword">typename</span> T2, <span class="hljs-keyword">typename</span> T3&gt;<br><span class="hljs-function">T3 <span class="hljs-title">alternative_sum</span><span class="hljs-params">(T2, Tl)</span></span>;<br><span class="hljs-keyword">auto</span> val2 = alternative_sum&lt;<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>, <span class="hljs-keyword">int</span>, <span class="hljs-keyword">long</span>&gt;(i, lng);<br></code></pre></div></td></tr></table></figure>
+<p><strong>正常类型转换应用于显式指定的实参</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">long</span> lng;<br><span class="hljs-built_in">compare</span> (lng, <span class="hljs-number">1024</span>); <span class="hljs-comment">// 错误：模板参数不匹配</span><br>compare&lt;<span class="hljs-keyword">long</span>&gt; (lng, <span class="hljs-number">1024</span>); <span class="hljs-comment">// 正确：实例化 compare (long, long)</span><br>compare&lt;<span class="hljs-keyword">int</span>&gt; (lng, <span class="hljs-number">1024</span>); <span class="hljs-comment">// 正确：实例化 compare (int, int)</span><br></code></pre></div></td></tr></table></figure>
+<h3 id="1623-尾置返回类型与类型转换"><a class="markdownIt-Anchor" href="#1623-尾置返回类型与类型转换"></a> 16.2.3 尾置返回类型与类型转换</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> It&gt;<br>??? &amp;<span class="hljs-built_in">fcn</span>(It beg, It end) &#123;<br>    <span class="hljs-keyword">return</span> *beg; <span class="hljs-comment">// 返回序列中一个元素的引用</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>在编译器遇到函数的参数列表之前，beg 都是不存在的。为了定义此函数，我们必须使用尾置返回类型。由于尾置返回出现在参 M 数列表之后，它可以使用函数的参数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 尾置返回允许我们在参数列表之后声明返回类型</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> It&gt;<br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">fcn</span> <span class="hljs-params">(It beg, It end)</span> -&gt; <span class="hljs-title">decltype</span><span class="hljs-params">(*beg)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> *beg; <span class="hljs-comment">// 返回序列中一个元素的引用</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><strong>进行类型转换的标准库模板类</strong><br />
+为了获得兀素类型，我们可以使用标准库的类型转换模板。remove_reference 模板有一个模板类型参数和一个名为 type 的 public 类型成员。如果我们用一个引用类型实例化 remove_reference，则 type 将表示被引用的类型。<br />
+<code>decltype(*beg)</code>返回元素类型的引用类型。<code>remove_reference::type</code>脱去引用，剩下元素类型本身。<br />
+组合使用 remove_reference、尾置返冋及 decltype，我们就可以在函数中返回元素值的拷贝：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 为了使用模板参数的成员，必须用 typename</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> It&gt;<br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">fcn2</span><span class="hljs-params">(It beg, It end)</span>-&gt;</span><br><span class="hljs-function">    <span class="hljs-keyword">typename</span> remove_reference&lt;<span class="hljs-title">decltype</span><span class="hljs-params">(*beg)</span>&gt;::type </span>&#123;<br>        <span class="hljs-keyword">return</span> *beg; <span class="hljs-comment">// 返回序列中一个元素的拷贝</span><br>    &#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="1624-函数指针和实参推断"><a class="markdownIt-Anchor" href="#1624-函数指针和实参推断"></a> 16.2.4 函数指针和实参推断</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T&amp;, <span class="hljs-keyword">const</span> T&amp;)</span></span>;<br><span class="hljs-built_in"><span class="hljs-keyword">int</span></span> (*pfl)(<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp;, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp;) = compare;<br><span class="hljs-comment">// pfl 指向实例 int compare (const int&amp;, const int&amp;)</span><br></code></pre></div></td></tr></table></figure>
+<p>pfl 中参数的类型决定了 T 的模板实参的类型。在本例中，T 的模板实参类型为 int。指针 pfl 指向 compare 的 int 版本实例。<br />
+当参数是一个函数模板实例的地址时，程序上下文必须满足：对每个模板参数，能唯一确定其类型或值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// func 的重载版本，每个版本接受一个不同的函数指针类型</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">int</span>(*)(<span class="hljs-keyword">const</span> strings, <span class="hljs-keyword">const</span> strings))</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">int</span>(*)(<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp;, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp;))</span></span>;<br><span class="hljs-built_in">func</span>(compare); <span class="hljs-comment">// 错误：使用 compare 的哪个实例？</span><br><span class="hljs-built_in">func</span>(compare&lt;<span class="hljs-keyword">int</span>&gt;); <span class="hljs-comment">// 正确：显式指出实例化哪个 compare 版本</span><br><span class="hljs-comment">// 传递 compare (const int&amp;, const int&amp;)</span><br></code></pre></div></td></tr></table></figure>
+<h3 id="1625-模板实参推断和引用"><a class="markdownIt-Anchor" href="#1625-模板实参推断和引用"></a> 16.2.5 模板实参推断和引用</h3>
+<p><strong>从左值引用函数参数推断类型</strong><br />
+当一个函数参数是模板类型参数的一个普通（左值）引用时，只能传递给它一个左值，如果实参是 const 的，则 T 将被推断为 const 类型。<br />
+如果一个函数参数的类型是 const T&amp;，当函数参数本身是 const 时，T 的类型推断的结果不会是一个 const 类型。</p>
+<p><strong>引用折叠和右值引用参数</strong><br />
+当我们将一个左值（i）传递给函数的右值引用参数，且此右值引用指向模板类型参数（T&amp;&amp;）时，编译器推断模板类型参数为实参的左值引用类型。因此，当我们调用 f3(i) 时，编译器推断 T 的类型为 int&amp;，而非 int。<br />
+这好像意味着 f3 的函数参数应该是一个类型 int&amp; 的右值引用。通常，我们不能（直接）定义一个引用的引用。但是，通过类型别名或通过模板类型参数间接定义是可以的。<br />
+如果我们间接创建一个引用的引用，则这些引用形成了“折叠”。除了右值引用的右值引用会折叠为一个右值引用，其余情况都会折叠为一个普通的左值引用类型。<br />
+这两个规则暗示，我们可以将任意类型的实参传递给 T&amp;&amp; 类型的函数参数。</p>
+<h3 id="1626-理解-stdmove"><a class="markdownIt-Anchor" href="#1626-理解-stdmove"></a> 16.2.6 理解 std::move</h3>
+<p><strong>从一个左值 static_cast 到一个右值引用是允许的</strong><br />
+可以用 static_cast 显式地将一个左值转换为一个右值引用。</p>
+<h3 id="1627-转发"><a class="markdownIt-Anchor" href="#1627-转发"></a> 16.2.7 转发</h3>
+<p><strong>定义能保持类型信息的函数参数</strong><br />
+如果一个函数参数是指向模板类型参数的右值引用（如T&amp;&amp;），它对应的实参的 const 属性和左值/右值属性将得到保持。</p>
+<p><strong>在调用中使用 std::forward 保持类型信息</strong><br />
+forward 返回该显式实参类型的右值引用即，forward<T> 的返回类型是 T&amp;&amp;。通过其返回类型上的引用折叠，forward 可以保持给定实参的左值/右值属性。<br />
+当用于一个指向模板参数类型的右值引用函数参数（T&amp;&amp;）时，forward 会保持实参类型的所有细节。</p>
+<h2 id="164-可变参数模板"><a class="markdownIt-Anchor" href="#164-可变参数模板"></a> 16.4 可变参数模板</h2>
+<p>可变数量的参数被称为参数包，我们用一个省略号来指出一个模板参数或函数参数表示一个包。<br />
+在一个模板参数列表中，class… 或 typename… 指出接下来的参数表示零个或多个类型的列表。一个类型名后面跟一个省略号表示零个或多个给定类型的非类型参数的列表。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// Args 是一个模板参数包，rest 是一个函数参数包</span><br><span class="hljs-comment">// Args 表示零个或多个模板类型参数</span><br><span class="hljs-comment">// rest 表示零个或多个函数参数</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span>... Args&gt;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> T &amp;t, <span class="hljs-keyword">const</span> Args&amp; ... rest)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<p><strong>sizeof… 运算符</strong><br />
+当我们需要知道包中有多少元素时，可以使用 sizeof… 运算符。sizeof…返回一个常量表达式，而且不会对其实参求值。</p>
+<h3 id="1641-编写可变参数函数模板"><a class="markdownIt-Anchor" href="#1641-编写可变参数函数模板"></a> 16.4.1 编写可变参数函数模板</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span>... Args&gt;<br><span class="hljs-function">ostream &amp;<span class="hljs-title">print</span><span class="hljs-params">(ostream &amp;os, <span class="hljs-keyword">const</span> T &amp;t, <span class="hljs-keyword">const</span> Args&amp;... rest)</span> </span>&#123;<br>    os « t « <span class="hljs-string">&quot;, &quot;</span>；	<span class="hljs-comment">// 打印第一个实参</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">print</span> (os, rest...);	<span class="hljs-comment">// 递归调用，打印其他实参</span><br>)<br></code></pre></div></td></tr></table></figure>
+<p>rest 中的第一个实参被绑定到 t，剩余实参形成下一个 print 调用的参数包。</p>
+<h3 id="1642-包扩展"><a class="markdownIt-Anchor" href="#1642-包扩展"></a> 16.4.2 包扩展</h3>
+<p>当扩展一个包时，我们还要提供用于每个扩展元素的模式。扩展一个包就是将它分解为构成的元素，对每个元素应用模式，获得扩展后的列表。我们通过在模式右边放一个省略号来触发扩展操作。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span>... Args&gt;<br><span class="hljs-function">ostream &amp;<span class="hljs-title">print</span><span class="hljs-params">(ostream &amp;os, <span class="hljs-keyword">const</span> T &amp;t, <span class="hljs-keyword">const</span> Args&amp;. . . rest)</span> </span>&#123; <span class="hljs-comment">// 扩展 Args</span><br>    os « t &lt;&lt; <span class="hljs-string">&quot;,&quot;</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">print</span>(os, rest...);	<span class="hljs-comment">// 扩展 rest</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>对 Args 的扩展中，编译器将模式 const Arg&amp; 应用到模板参数包 Args 中的每个元素。因此，此模式的扩展结果是一个逗号分隔的零个或多个类型的列表，每个类型都形如 const type&amp;。<br />
+第二个扩展发生在对 print 的调用中。在此情况下，模式是函数参数包的名字（即 rest)。此模式扩展出一个由包中元素组成的、逗号分隔的列表。因此，这个调用等价于：</p>
+<p><strong>理解包扩展</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">return</span> <span class="hljs-built_in">print</span>(os, <span class="hljs-built_in">debug_rep</span>(rest)...);<br></code></pre></div></td></tr></table></figure>
+<p>这个 print 调用使用了模式 debug_reg(rest)。此模式表示我们希望对函数参数包 rest 中的每个元素调用 debug_rep。扩展结果将是一个逗号分隔的 debug_rep 调用列表。即，下面调用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">errorMsg</span>(cerr, fcnName, code.<span class="hljs-built_in">num</span>(), otherData, <span class="hljs-string">&quot;other&quot;</span>, item);<br></code></pre></div></td></tr></table></figure>
+<p>就好像我们这样编写代码一样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">print</span> (cerr, <span class="hljs-built_in">debug_rep</span>(fcnName), <span class="hljs-built_in">debug_rep</span>(code.<span class="hljs-built_in">num</span>()),<br>    <span class="hljs-built_in">debug_rep</span>(otherData), <span class="hljs-built_in">debug_rep</span>(<span class="hljs-string">&quot;otherData&quot;</span>), <span class="hljs-built_in">debug_rep</span>(item));<br></code></pre></div></td></tr></table></figure>
+<h2 id="165-模板特例化"><a class="markdownIt-Anchor" href="#165-模板特例化"></a> 16.5 模板特例化</h2>
+<p>一个特例化版本就是模板的一个独立的定义，在其中一个或多个模板参数被指定为特定的类型。</p>
+<p><strong>定义函数模板特例化</strong><br />
+当我们特例化一个函数模板时，必须为原模板中的每个模板参数都提供实参。为了指出我们正在实例化一个模板，应使用关键字 template 后跟一个空尖括号对，指出我们将为原模板的所有模板参数提供实参。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// compare 的特殊版本，处理字符数组的指针</span><br><span class="hljs-keyword">template</span> &lt;&gt;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* <span class="hljs-keyword">const</span> &amp;pl, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* <span class="hljs-keyword">const</span> &amp;p2)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">strcmp</span>(pi, p2);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><strong>函数重载与模板特例化</strong><br />
+当定义函数模板的特例化版本时，我们本质上接管了编译器的工作。即，我们为原模板的一个特殊实例提供了定义。一个特例化版本本质上是一个实例，而非函数名的一个重载版本。<br />
+特例化不影响函数匹配。<br />
+为了特例化一个模板，原模板的声明必须在作用域中。而且，在任何使用模扳实例的代码之前，特例化版本的声明也必须在作用域中。</p>
 
             </div>
             <hr>
