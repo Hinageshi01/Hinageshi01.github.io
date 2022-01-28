@@ -275,7 +275,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">HasPtr <span class="hljs-title">f</span> <span class="hljs-params">(HasPtr hp)</span> &#125; <span class="hljs-comment">// HasPtr 是传值参数，所以将被拷贝</span></span><br><span class="hljs-function">    HasPtr ret </span>= hp; <span class="hljs-comment">// 拷贝给定的 HasPtr</span><br>    <span class="hljs-keyword">return</span> ret;	<span class="hljs-comment">// ret 和 hp 被销毁</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>当 f 返回时，hp 和 ret 都被销毁。此代码会导致此指针被 delete 两次，将要发生什么是未定义的。</p>
 <p><strong>需要拷贝搡作的类也需要赋值操作，反之亦然</strong></p>
-<h3 id="1315-使用default"><a class="markdownIt-Anchor" href="#1315-使用default"></a> 13.1.5 使用=default</h3>
+<h3 id="1315-使用-default"><a class="markdownIt-Anchor" href="#1315-使用-default"></a> 13.1.5 使用 =default</h3>
 <p>如果我们不希望合成的成员是内联函数，应该只对成员的类外定义使用 =default。</p>
 <h3 id="1316-阻止拷贝-delete"><a class="markdownIt-Anchor" href="#1316-阻止拷贝-delete"></a> 13.1.6 阻止拷贝 =delete</h3>
 <p>可以将拷贝构造函数和拷贝赋值运算符定义为删除的函数来阻止拷贝。我们虽然声明了删除的函数，但不能以任何方式使用它们。<br />
@@ -339,9 +339,9 @@ noexcept 是我们承诺一个函数不抛出异常的一种方法。在一个�
 移动迭代器通过改变给定迭代器的解引用运算符的行为来适配此迭代器，移动迭代器的解引用运算符生成一个右值引用。<br />
 通过调用标准库的 make_move_iterator 函数将一个普通迭代器转换为一个移动迭代器。</p>
 <h3 id="1363-右值引用和成员函数"><a class="markdownIt-Anchor" href="#1363-右值引用和成员函数"></a> 13.6.3 右值引用和成员函数</h3>
-<p><strong>右值和左值引用成员函数</strong><br />
-<code>sl + s2 = &quot;wow!&quot;</code><br />
-此处我们对两个 string 的连接结果（右值），进行了赋值。新标准库类仍然允许向右值赋值，阻止这种用法的方式是在参数列表后放置一个引用限定符。<br />
+<p><strong>右值和左值引用成员函数</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">sl + s2 = <span class="hljs-string">&quot;wow!&quot;</span><br></code></pre></div></td></tr></table></figure>
+<p>此处我们对两个 string 的连接结果（右值），进行了赋值。新标准库类仍然允许向右值赋值，阻止这种用法的方式是在参数列表后放置一个引用限定符。<br />
 引用限定符可以是 &amp; 或 &amp;&amp;，分别指出 this 可以指向一个左值或右值。类似 const 限定符, 引用限定符只能用于（非 static）成员函数，且必须同时出现在函数的声明和定义中。引用限定符必须跟随在 const 限定符之后。</p>
 <p><strong>重载和引用函数</strong><br />
 如果我们定义两个或两个以上具有相同名字和相同参数列表的成员函数，就必须对所有函数都加上引用限定符，或者所有都不加。</p>
@@ -381,13 +381,13 @@ IO 运算符通常需要读写类的非公有数据成员，所以 IO 运算符�
 <h2 id="145-下标运算符"><a class="markdownIt-Anchor" href="#145-下标运算符"></a> 14.5 下标运算符</h2>
 <p>如果一个类包含下标运算符，则它通常会定义两个版本：一个返回普通引用，另一个是类的常量成员并且返回常量引用。</p>
 <h2 id="146-递增和递减运算符"><a class="markdownIt-Anchor" href="#146-递增和递减运算符"></a> 14.6 递增和递减运算符</h2>
-<p><strong>定义前置递增/递减运算符</strong><br />
-<code>StrBlobPtrS operator++(); // 前置运算符</code></p>
+<p><strong>定义前置递增/递减运算符</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">StrBlobPtrS <span class="hljs-keyword">operator</span>++(); <span class="hljs-comment">// 前置运算符</span><br></code></pre></div></td></tr></table></figure>
 <p><strong>区分前置和后置运算符</strong><br />
-后置版本接受一个额外的（不被使用）int 类型的形参。当我们使用后置运算符时，编译器为这个形参提供一个值为 0 的实参。<br />
-<code>StrBlobPtr operator++(int); // 后置运算符</code></p>
-<p><strong>显式地调用后置运算符</strong><br />
-<code>p.operator++(0); // 调用后置版本的 operator++</code></p>
+后置版本接受一个额外的（不被使用）int 类型的形参。当我们使用后置运算符时，编译器为这个形参提供一个值为 0 的实参。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">StrBlobPtr <span class="hljs-keyword">operator</span>++(<span class="hljs-keyword">int</span>); <span class="hljs-comment">// 后置运算符</span><br></code></pre></div></td></tr></table></figure>
+<p><strong>显式地调用后置运算符</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">p.<span class="hljs-keyword">operator</span>++(<span class="hljs-number">0</span>); <span class="hljs-comment">// 调用后置版本的 operator++</span><br></code></pre></div></td></tr></table></figure>
 <h2 id="147-成员访问运算符"><a class="markdownIt-Anchor" href="#147-成员访问运算符"></a> 14.7 成员访问运算符</h2>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StrBlobPtr</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    std::strings <span class="hljs-keyword">operator</span>*() <span class="hljs-keyword">const</span> &#123;<br>        <span class="hljs-comment">//...</span><br>    &#125;<br>    std::string* <span class="hljs-keyword">operator</span>-&gt;() <span class="hljs-keyword">const</span> &#123; <span class="hljs-comment">// 将实际工作委托给解引用运算符 </span><br>        <span class="hljs-keyword">return</span> &amp; <span class="hljs-keyword">this</span>-&gt;<span class="hljs-keyword">operator</span>*();<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>箭头运算符不执行任何自己的操作，而是调用解引用运算符并返回解引用结果元素的地址。</p>
@@ -687,7 +687,7 @@ forward 返回该显式实参类型的右值引用即，forward<T> 的返回类�
 <p>rest 中的第一个实参被绑定到 t，剩余实参形成下一个 print 调用的参数包。</p>
 <h3 id="1642-包扩展"><a class="markdownIt-Anchor" href="#1642-包扩展"></a> 16.4.2 包扩展</h3>
 <p>当扩展一个包时，我们还要提供用于每个扩展元素的模式。扩展一个包就是将它分解为构成的元素，对每个元素应用模式，获得扩展后的列表。我们通过在模式右边放一个省略号来触发扩展操作。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span>... Args&gt;<br><span class="hljs-function">ostream &amp;<span class="hljs-title">print</span><span class="hljs-params">(ostream &amp;os, <span class="hljs-keyword">const</span> T &amp;t, <span class="hljs-keyword">const</span> Args&amp;. . . rest)</span> </span>&#123; <span class="hljs-comment">// 扩展 Args</span><br>    os « t &lt;&lt; <span class="hljs-string">&quot;,&quot;</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">print</span>(os, rest...);	<span class="hljs-comment">// 扩展 rest</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span>... Args&gt;<br><span class="hljs-function">ostream &amp;<span class="hljs-title">print</span><span class="hljs-params">(ostream &amp;os, <span class="hljs-keyword">const</span> T &amp;t, <span class="hljs-keyword">const</span> Args&amp;... rest)</span> </span>&#123; <span class="hljs-comment">// 扩展 Args</span><br>    os « t &lt;&lt; <span class="hljs-string">&quot;,&quot;</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">print</span>(os, rest...);	<span class="hljs-comment">// 扩展 rest</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>对 Args 的扩展中，编译器将模式 const Arg&amp; 应用到模板参数包 Args 中的每个元素。因此，此模式的扩展结果是一个逗号分隔的零个或多个类型的列表，每个类型都形如 const type&amp;。<br />
 第二个扩展发生在对 print 的调用中。在此情况下，模式是函数参数包的名字（即 rest)。此模式扩展出一个由包中元素组成的、逗号分隔的列表。因此，这个调用等价于：</p>
 <p><strong>理解包扩展</strong></p>
