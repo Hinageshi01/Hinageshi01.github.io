@@ -145,6 +145,12 @@
       
       <tag>渲染管线</tag>
       
+      <tag>透视矫正</tag>
+      
+      <tag>切线空间</tag>
+      
+      <tag>法线贴图</tag>
+      
       <tag>Bresenham</tag>
       
       <tag>数值微分法</tag>
@@ -623,9 +629,9 @@
       
       <tag>C#</tag>
       
-      <tag>对象池</tag>
-      
       <tag>单例模式</tag>
+      
+      <tag>对象池</tag>
       
     </tags>
     
