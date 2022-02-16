@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      50
+      51
        分钟
     </span>
   
@@ -373,13 +373,13 @@ nums 中的所有整数 互不相同</p>
 </ul>
 <h2 id="1091-二进制矩阵中的最短路径bsf-a"><a class="markdownIt-Anchor" href="#1091-二进制矩阵中的最短路径bsf-a"></a> 1091. 二进制矩阵中的最短路径（BSF、A*）</h2>
 <h3 id="题目描述-6"><a class="markdownIt-Anchor" href="#题目描述-6"></a> 题目描述</h3>
-<p>给你一个 n x n 的二进制矩阵 grid 中，返回矩阵中最短 畅通路径 的长度。如果不存在这样的路径，返回 -1 。<br />
-二进制矩阵中的 畅通路径 是一条从 左上角 单元格（即，(0, 0)）到 右下角 单元格（即，(n - 1, n - 1)）的路径，该路径同时满足下述要求：</p>
+<p>给你一个 n x n 的二进制矩阵 grid 中，返回矩阵中最短畅通路径的长度。如果不存在这样的路径，返回 -1 。<br />
+二进制矩阵中的畅通路径是一条从左上角单元格（即，(0, 0)）到右下角单元格（即，(n - 1, n - 1)）的路径，该路径同时满足下述要求：</p>
 <ul>
 <li>路径途经的所有单元格都的值都是 0 。</li>
-<li>路径中所有相邻的单元格应当在 8 个方向之一 上连通（即，相邻两单元之间彼此不同且共享一条边或者一个角）。<br />
-畅通路径的长度 是该路径途经的单元格总数。</li>
+<li>路径中所有相邻的单元格应当在 8 个方向之一上连通（即，相邻两单元之间彼此不同且共享一条边或者一个角）。</li>
 </ul>
+<p>畅通路径的长度是该路径途经的单元格总数。</p>
 <h3 id="示例-6"><a class="markdownIt-Anchor" href="#示例-6"></a> 示例</h3>
 <p>输入：grid = [[0,0,0],[1,1,0],[1,1,0]]<br />
 输出：4</p>
@@ -401,7 +401,9 @@ grid[i][j] 为 0 或 1</p>
 <li>欧几里得距离：实际距离。</li>
 </ul>
 <h4 id="priority_queue-与-lambda"><a class="markdownIt-Anchor" href="#priority_queue-与-lambda"></a> priority_queue 与 Lambda</h4>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> cmp = [SIZE](pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt; a, pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; b) &#123;<br>    <span class="hljs-comment">// 切比雪夫距离</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(SIZE - a.first, SIZE - a.second) &gt; <span class="hljs-built_in">max</span>(SIZE - b.first, SIZE - b.second);<br>&#125;;<br>priority_queue&lt;pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;, vector&lt;pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;&gt;, <span class="hljs-keyword">decltype</span>(cmp)&gt; <span class="hljs-built_in">q</span>(cmp);<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> SIZE = grid.<span class="hljs-built_in">size</span>();<br><span class="hljs-keyword">auto</span> cmp = [SIZE](<span class="hljs-keyword">const</span> pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt; &amp;a, <span class="hljs-keyword">const</span> pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt; &amp;b) &#123;<br>    <span class="hljs-comment">// 切比雪夫距离</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(SIZE - a.first, SIZE - a.second) &gt; <span class="hljs-built_in">max</span>(SIZE - b.first, SIZE - b.second);<br>&#125;;<br>priority_queue&lt;pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;, vector&lt;pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;&gt;, <span class="hljs-keyword">decltype</span>(cmp)&gt; <span class="hljs-built_in">q</span>(cmp);<br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/64open/p/5267678.html">lambda 与 priority_queue 以及 function 以及 bind</a><br />
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/liu2012huan/article/details/52932494">C++ priority_queue 与 lambda的结合使用</a></p>
 
             </div>
             <hr>
