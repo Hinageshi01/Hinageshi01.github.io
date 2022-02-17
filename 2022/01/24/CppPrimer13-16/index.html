@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      149
+      150
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：January 28, 2022
+                  本文最后更新于：February 17, 2022
                 
               </p>
             
@@ -319,6 +319,7 @@ move 调用告诉编译器：我们有一个左值，但我们希望像一个右
 <p>为了让我们自己的类型支持移动操作，需要为其定义移动构造函数和移动赋值运算符，它们从给定对象“窃取”资源而不是拷贝资源。<br />
 移动构造函数的第一个参数是该类类型的一个右值引用，任何额外的参数都必须有默认实参。<br />
 移动构造函数还必须确保销毁移后源对象是无害的。一旦资源完成移动，源对象必须不再指向被移动的资源。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">StrVec::<span class="hljs-built_in">StrVec</span> (StrVec &amp;&amp;s) <span class="hljs-keyword">noexcept</span><br>:<span class="hljs-built_in">elements</span>(s.elements), <span class="hljs-built_in">first_free</span>(s.first_free), <span class="hljs-built_in">cap</span>(s.cap)<br>&#123;<br>    <span class="hljs-comment">// 令 s 进入这样的状态：对其运行析构函数是安全的</span><br>    s.elements = s.first_free = s.cap = <span class="hljs-literal">nullptr</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p><strong>移动操作、标准库容器和异常</strong><br />
 除非标准库知道我们的移动构造函数不会抛出异常，否则它会认为移动我们的类对象时可能会抛出异常，并且为了处理这种可能性而做一些额外的工作。<br />
 noexcept 是我们承诺一个函数不抛出异常的一种方法。在一个构造函数中，noexcept 出现在参数列表和初始化列表开始的冒号之间。<br />
