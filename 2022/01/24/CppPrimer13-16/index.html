@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      13.6k 字
+      13.7k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      150
+      151
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：February 17, 2022
+                  本文最后更新于：February 18, 2022
                 
               </p>
             
@@ -325,6 +325,9 @@ move 调用告诉编译器：我们有一个左值，但我们希望像一个右
 noexcept 是我们承诺一个函数不抛出异常的一种方法。在一个构造函数中，noexcept 出现在参数列表和初始化列表开始的冒号之间。<br />
 如果重新分配过程使用了移动构造函数，且在移动了部分而不是全部元素后抛出了一个异常，就会产生问题：旧空间中的移动源元素已经被改变了，而新空间中未构造的元素可能尚不存在。<br />
 为了避免这种潜在问题，除非 vector 知道元素类型的移动构造函数不会抛出异常， 否则在重新分配内存的过程中，它就必须使用拷贝构造函数而不是移动构造函数。如果希望在 vector 重新分配内存这类情况下对我们自定义类型的对象进行移动而不是拷贝，就必须显式地告诉标准库我们的移动构造函数可以安全使用。我们通过将移动构造函数（及移动赋值运算符）标记为 noexcept 来做到这一点。</p>
+<p><strong>移动赋值运算符</strong><br />
+移动赋值运算符不抛出任何异常，移动赋值运算符必须正确处理自赋值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">StrVec SStrVec::<span class="hljs-keyword">operator</span>=(StrVec &amp;&amp;rhs) <span class="hljs-keyword">noexcept</span> &#123;<br>    <span class="hljs-comment">// 直接检测自賦值</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> != &amp;rhs) &#123;<br>        <span class="hljs-built_in">free</span>();<br>        elements = rhs.elements; <span class="hljs-comment">// 从 rhs 接管资源</span><br>        first_free = rhs.first_free;<br>        cap = rhs.cap;<br>        <span class="hljs-comment">// 将 rhs 置于可析构状态</span><br>        rhs.elements = rhs.first_free = rhs.cap = <span class="hljs-literal">nullptr</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p><strong>移后源对象必须可析构</strong><br />
 在移动操作之后，移后源对象必须保持有效的、可析构的状态，但是用户不能对其值进行任何假设</p>
 <p><strong>合成的移动操作</strong><br />
