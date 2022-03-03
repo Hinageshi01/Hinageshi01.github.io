@@ -18,7 +18,7 @@
   <meta name="author" content="Hinageshi">
   <meta name="keywords" content="">
   
-  <title>协程 - Hexo</title>
+  <title>Inter - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="协程">
+            <span class="h2" id="subtitle" title="Inter">
               
             </span>
 
@@ -185,8 +185,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-08-18 17:30" pubdate>
-        August 18, 2021
+      <time datetime="1899-11-30 00:00" pubdate>
+        November 30, 1899
       </time>
     </span>
   
@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      224 字
+      78 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2
+      1
        分钟
     </span>
   
@@ -237,53 +237,25 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">协程</h1>
+            <h1 style="display: none">Inter</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：March 2, 2022
+                  本文最后更新于：March 3, 2022
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
-<p>  协程就像一个函数，能够暂停执行并将控制权返还给 Unity 一段时间，可以是等待一帧，可以是等待几秒，也可以是等待另一个协程。<br />
-  当需要一个函数的内容（如一个循环）不需要在单帧内执行完成时往往会使用协程。</p>
-<h2 id="协程"><a class="markdownIt-Anchor" href="#协程"></a> 协程</h2>
-<h3 id="声明"><a class="markdownIt-Anchor" href="#声明"></a> 声明</h3>
-<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-function">IEnumerator <span class="hljs-title">Fun</span>(<span class="hljs-params"></span>)</span>&#123;<br>    DO SOMETHING;<br>    <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<span class="hljs-comment">// 暂停执行并在下一帧恢复的点</span><br>    <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSeconds</span>(<span class="hljs-params"><span class="hljs-number">.1</span>f</span>)</span>;<span class="hljs-comment">// 暂停执行并等待0.1s后恢复的点</span><br>    <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-title">StartCoroutine</span>(<span class="hljs-params">Fun2(</span>))</span>;<span class="hljs-comment">// 暂停执行并等待Fun2()返还控制权</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
-<h3 id="启用协程"><a class="markdownIt-Anchor" href="#启用协程"></a> 启用协程</h3>
-<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs">StartCoroutine(Fun());<br></code></pre></div></td></tr></table></figure>
-<h2 id="我的主菜单"><a class="markdownIt-Anchor" href="#我的主菜单"></a> 我的主菜单</h2>
-<p>间隔dt秒依次激活所有 UI。</p>
-<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MainMenu</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">public</span> GameObject titleUI, startUI, endUI;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Start</span>(<span class="hljs-params"></span>)</span> &#123;<br>        StartCoroutine(Delayed(<span class="hljs-number">0.65f</span>, titleUI, startUI, endUI));<br>    &#125;<br>    <span class="hljs-function">IEnumerator <span class="hljs-title">Delayed</span>(<span class="hljs-params"><span class="hljs-built_in">float</span> dt, <span class="hljs-keyword">params</span> GameObject[] list</span>)</span> &#123;<br>        <span class="hljs-keyword">foreach</span> (GameObject obj <span class="hljs-keyword">in</span> list) &#123;<br>            <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSeconds</span>(<span class="hljs-params">dt</span>)</span>;<br>            obj.SetActive(<span class="hljs-literal">true</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
-<p><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/Manual/Coroutines.html">Coroutines</a><br />
-<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/YieldInstruction.html">YieldInstruction</a></p>
+              <h2 id="字节跳动图形图像研发工程师-智能创作"><a class="markdownIt-Anchor" href="#字节跳动图形图像研发工程师-智能创作"></a> 字节跳动：图形/图像研发工程师-智能创作</h2>
+<h3 id="用-c-实现一个双向链表并实现3-5种相关的操作"><a class="markdownIt-Anchor" href="#用-c-实现一个双向链表并实现3-5种相关的操作"></a> 用 C++ 实现一个双向链表，并实现3-5种相关的操作</h3>
+<h3 id="一条直线将一个矩形一分为二如何判断两部分面积是否相等"><a class="markdownIt-Anchor" href="#一条直线将一个矩形一分为二如何判断两部分面积是否相等"></a> 一条直线将一个矩形一分为二，如何判断两部分面积是否相等</h3>
+<h3 id="引擎的一帧之内要完成哪些事情"><a class="markdownIt-Anchor" href="#引擎的一帧之内要完成哪些事情"></a> 引擎的一帧之内要完成哪些事情</h3>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/UnityNote/">UnityNote</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Unity/">Unity</a>
-                    
-                      <a class="hover-with-bg" href="/tags/C/">C#</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%8D%8F%E7%A8%8B/">协程</a>
-                    
-                  </div>
                 
               </div>
               
@@ -292,21 +264,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/08/19/SunnyLand/">
+                      <a href="/2021/08/05/HelloWorld/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Sunny Land</span>
+                        <span class="hidden-mobile">Hello World</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2021/08/17/Note_MakeYourFirstGame_03/">
-                        <span class="hidden-mobile">笔记 MakeYourFirstGame 03</span>
-                        <span class="visible-mobile">Next</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
@@ -328,7 +294,7 @@
         var options = Object.assign(
           {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '1a1a0d7e98b8900f9dbb95db924b0955'
+            id: 'a7ee652f5ec0a18d08dc3d151e33eb5d'
           }
         )
         var gitalk = new Gitalk(options);

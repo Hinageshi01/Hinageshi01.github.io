@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：January 29, 2022
+                  本文最后更新于：March 2, 2022
                 
               </p>
             
@@ -279,7 +279,7 @@ tie 有两个重载的版本：一个版本不带参数，返回指向输出流�
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">sstream <span class="hljs-title">strm</span><span class="hljs-params">(s)</span></span>; <span class="hljs-comment">// strm 保存 string s 的一个拷贝。</span><br>strm.<span class="hljs-built_in">str</span>(); <span class="hljs-comment">// 返回 strm 保存的 string 拷贝。</span><br>strm.<span class="hljs-built_in">str</span>(s); <span class="hljs-comment">// 将 string s 拷贝到 strm 中，返回 void。</span><br></code></pre></div></td></tr></table></figure>
 <h1 id="第九章-顺序容器"><a class="markdownIt-Anchor" href="#第九章-顺序容器"></a> 第九章 顺序容器</h1>
 <h2 id="91-顺序容器概述"><a class="markdownIt-Anchor" href="#91-顺序容器概述"></a> 9.1 顺序容器概述</h2>
-<p><strong>vector</strong>：可变大小数组。支持快速随机访问。在尾部之外的位置插入或删除元 素可能很慢。<br />
+<p><strong>vector</strong>：可变大小数组。支持快速随机访问。在尾部之外的位置插入或删除元素可能很慢。<br />
 <strong>deque</strong>：双端队列。支持快速随机访问。在头尾位置插入/删除速度很快。<br />
 <strong>list</strong>：双向链表。只支持双向顺序访问。在list中任何位置进行插入/删除 操作速度都很快。<br />
 <strong>forward_list</strong>：单向链表。只支持单向顺序访问。在链表任何位置进行插入/删除操作速度都很快。<br />
@@ -294,7 +294,7 @@ tie 有两个重载的版本：一个版本不带参数，返回指向输出流�
 <li>如果程序需要在头尾位置插入或刪除元素，但不会在中间位置进行插入或删除操作，则使用 deque。</li>
 </ul>
 <h3 id="924-容器定义和初始化"><a class="markdownIt-Anchor" href="#924-容器定义和初始化"></a> 9.2.4 容器定义和初始化</h3>
-<p><strong>标准库array具有固定大小</strong><br />
+<p><strong>标准库 array 具有固定大小</strong><br />
 当定义一个 array 时，除了指定元素类型，还要指定容器大小。<br />
 一个默认构造的 array 是非空的，它包含了与其大小一样多的元素。这些元素都被默认初始化。<br />
 如果初始值列表中的初始值数目小于 array 的大小，则它们被用来初始化 array 中靠前的元素，所有剩余元素都会进行值初始化。<br />
@@ -314,7 +314,7 @@ swap 不对任何元素进行拷贝、删除或插入操作，因此可以保证
 如果元素类型不支持所需运算符，那么保存这种元素的容器就不能使用相应的关系运算。</p>
 <h2 id="93-顺序容器操作"><a class="markdownIt-Anchor" href="#93-顺序容器操作"></a> 9.3 顺序容器操作</h2>
 <h3 id="931-向顺序容器添加元素"><a class="markdownIt-Anchor" href="#931-向顺序容器添加元素"></a> 9.3.1 向顺序容器添加元素</h3>
-<p><strong>使用 emplacce 操作</strong><br />
+<p><strong>使用 emplace 操作</strong><br />
 当调用 push 或 insert 成员函数时，我们将元素类型的对象传递给它们，这些对象被拷贝到容器中。<br />
 而当我们调用一个 emplace 成员函数时，则是将参数传递给元素类型的构造函数。emplace 成员使用这些参数在容器管理的内存空间中直接构造元素。</p>
 <h3 id="932-访问元素"><a class="markdownIt-Anchor" href="#932-访问元素"></a> 9.3.2 访问元素</h3>
@@ -396,7 +396,7 @@ arg_list 参数可能包含形如 _n 的名字。这些参数是“占位符”�
 <p>key_type：此容器类型的关键字类型。<br />
 mapped_type：每个关键字关联的类型，只适用于map。<br />
 value type：对于 set，与 key_type 相同；对于 map，为 <code>pair&lt;const key_type, mapped_type&gt;</code><br />
-关键字时 const 的。</p>
+关键字是 const 的。</p>
 <h3 id="1132-添加元素"><a class="markdownIt-Anchor" href="#1132-添加元素"></a> 11.3.2 添加元素</h3>
 <p>插入一个已存在的元素对容器没有任何影响。</p>
 <p><strong>检测insert的返回值</strong><br />
@@ -417,7 +417,8 @@ value type：对于 set，与 key_type 相同；对于 map，为 <code>pair&lt;c
 <h2 id="121-动态内存与智能指针"><a class="markdownIt-Anchor" href="#121-动态内存与智能指针"></a> 12.1 动态内存与智能指针</h2>
 <h3 id="1211-shared_ptr-类"><a class="markdownIt-Anchor" href="#1211-shared_ptr-类"></a> 12.1.1 shared_ptr 类</h3>
 <p>最安全的分配和使用动态内存的方法是调用一个名为 make_shared&lt;&gt;() 的标准库函数。此函数在动态内存中分配一个对象并初始化它，返回指向此对象 shared_ptr。<br />
-每个 shared_ptr 都有一个关联的计数器，通常称其为引用计数。一旦一个 shared_ptr 的计数器变为 0，它就会自动释放自己所管理的对象。但只要有其他 shared_ptr 也指向这块内存，它就不会被释放掉。</p>
+每个 shared_ptr 都有一个关联的计数器，通常称其为引用计数。一旦一个 shared_ptr 的计数器变为 0，它就会自动释放自己所管理的对象。但只要有其他 shared_ptr 也指向这块内存，它就不会被释放掉。<br />
+补充：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a704fef4809c">shared_ptr 导致的循环引用及其解决方法</a></p>
 <h3 id="1212-直接管理内存"><a class="markdownIt-Anchor" href="#1212-直接管理内存"></a> 12.1.2 直接管理内存</h3>
 <p><strong>使用 new 动态分配和初始化对象</strong><br />
 new 无法为其分配的对象命名，而是返回一个指向该对象的指针。动态分配的对象是默认初始化的，而类类型对象将用默认构造函数进行初始化。</p>
