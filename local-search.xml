@@ -106,11 +106,11 @@
     
     <tags>
       
+      <tag>光栅化</tag>
+      
       <tag>CPP</tag>
       
       <tag>实时</tag>
-      
-      <tag>光栅化</tag>
       
       <tag>渲染器</tag>
       
@@ -137,13 +137,13 @@
     
     <tags>
       
-      <tag>光照模型</tag>
-      
       <tag>光栅化</tag>
       
       <tag>中点画线</tag>
       
       <tag>渲染管线</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>透视矫正</tag>
       
@@ -217,9 +217,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -262,11 +262,11 @@
       
       <tag>实时</tag>
       
-      <tag>JavaScript</tag>
-      
       <tag>SSR</tag>
       
       <tag>全局光照</tag>
+      
+      <tag>JavaScript</tag>
       
     </tags>
     
@@ -291,19 +291,19 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>GLSL</tag>
       
       <tag>实时</tag>
       
+      <tag>JavaScript</tag>
+      
       <tag>PRT</tag>
       
       <tag>环境光照</tag>
-      
-      <tag>JavaScript</tag>
       
       <tag>球面谐波函数</tag>
       
@@ -361,9 +361,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -419,9 +419,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -524,9 +524,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>双线性插值</tag>
       
@@ -555,11 +555,11 @@
     
     <tags>
       
+      <tag>光栅化</tag>
+      
       <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
-      
-      <tag>光栅化</tag>
       
       <tag>反走样</tag>
       
@@ -662,9 +662,9 @@
       
       <tag>Unity</tag>
       
-      <tag>C#</tag>
-      
       <tag>AI</tag>
+      
+      <tag>C#</tag>
       
       <tag>状态机</tag>
       
@@ -883,9 +883,9 @@
       
       <tag>Unity</tag>
       
-      <tag>C#</tag>
-      
       <tag>AI</tag>
+      
+      <tag>C#</tag>
       
     </tags>
     
