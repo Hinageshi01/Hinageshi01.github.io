@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：January 29, 2022
+                  本文最后更新于：March 12, 2022
                 
               </p>
             
@@ -312,9 +312,8 @@
 <h3 id="252-auto-类型说明符"><a class="markdownIt-Anchor" href="#252-auto-类型说明符"></a> 2.5.2 auto 类型说明符</h3>
 <p>auto —般会忽略掉顶层 const 和引用，如果希望推断出的 auto 类型是一个顶层 const，需要明确指出。<br />
 <code>const auto &amp;</code>是比较常见的写法。</p>
-<h3 id="253-decltype-类型指示符"><a class="markdownIt-Anchor" href="#253-decltype-类型指示符"></a> 2.5.3 decltype 类型指示符</h3>
-<p>decltype 会忽略指针。<br />
-编译器分析表达式并得到它的类型，却不实际计算表达式的值。decltype 完整地保留参数的类型，包括 const 与引用。</p>
+<h3 id="253-decltype-类型指示"><a class="markdownIt-Anchor" href="#253-decltype-类型指示"></a> 2.5.3 decltype 类型指示</h3>
+<p>编译器分析表达式并得到它的类型，却不实际计算表达式的值。decltype 完整地保留参数的类型，包括 const 与引用。</p>
 <p><strong>decltype 和引用</strong><br />
 如果表达式的内容是解引用操作，则decltype将得到引用类型。如果给变量加上了一层或多层括号，编译器就会把它当成是一个表达式。如果表达式的求值结果是左值，decltype 得到一个引用类引用型。因为变量是一种可以作为赋值语句左值的特殊表达式，所以这样的 decltype 就会得到引用类型。<br />
 切记：<code>decltype((variaide))</code>的结果永远是引用类型。</p>

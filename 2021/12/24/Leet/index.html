@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：March 2, 2022
+                  本文最后更新于：March 12, 2022
                 
               </p>
             
@@ -449,7 +449,7 @@ grid[i][j] 为 0 或 1</p>
 <p>1 &lt;= nums.length &lt;= 10<br />
 -10 &lt;= nums[i] &lt;= 10<br />
 nums 中的所有元素 互不相同</p>
-<h3 id="01-遮罩"><a class="markdownIt-Anchor" href="#01-遮罩"></a> 01 遮罩</h3>
+<h3 id="二进制掩码"><a class="markdownIt-Anchor" href="#二进制掩码"></a> 二进制掩码</h3>
 <p>原数组中的每一个元素在子集中只有两种状态：存在与不存在，故可以用二进制的每一位表示。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">subsets</span>(vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums) &#123;<br>        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; ans;<br>        vector&lt;<span class="hljs-keyword">int</span>&gt; tmp;<br>        <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> SIZE = nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> mask = <span class="hljs-number">0</span>; mask &lt; (<span class="hljs-number">1</span> &lt;&lt; SIZE); ++mask) &#123;<br>            <span class="hljs-comment">// 长度为 n 的数组的集合中有（n ^ 2）个元素</span><br>            tmp.<span class="hljs-built_in">clear</span>();<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; SIZE; ++i) &#123;<br>                <span class="hljs-comment">// 遍历当前 mask 二进制的每一位</span><br>                <span class="hljs-keyword">if</span>((<span class="hljs-number">1</span> &lt;&lt; i) &amp; mask)<br>                    tmp.<span class="hljs-built_in">push_back</span>(nums[i]);<br>            &#125;<br>            ans.<span class="hljs-built_in">push_back</span>(tmp);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
 <h3 id="回溯-2"><a class="markdownIt-Anchor" href="#回溯-2"></a> 回溯</h3>
