@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      897 字
+      892 字
     </span>
   
 
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：March 24, 2022
+                  本文最后更新于：April 2, 2022
                 
               </p>
             
@@ -251,7 +251,7 @@
 <h2 id="two-pass-shadow-map-硬阴影"><a class="markdownIt-Anchor" href="#two-pass-shadow-map-硬阴影"></a> Two Pass Shadow Map 硬阴影</h2>
 <figure class="highlight glsl"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs glsl"><span class="hljs-type">float</span> useShadowMap(<span class="hljs-type">sampler2D</span> shadowMap, <span class="hljs-type">vec4</span> coord) &#123;<br>    <span class="hljs-type">vec4</span> closestDepthVec = <span class="hljs-built_in">texture2D</span>(shadowMap, coord.xy);<br>    <span class="hljs-type">float</span> closestDepth = unpack(closestDepthVec);<br><br>    <span class="hljs-keyword">return</span> coord.z &lt; closestDepth + <span class="hljs-number">0.011</span> ? <span class="hljs-number">1.0</span> : <span class="hljs-number">0.0</span>;<br>&#125;<br><br><span class="hljs-type">void</span> main(<span class="hljs-type">void</span>) &#123;<br>    <span class="hljs-comment">// 转换至 NDC 空间</span><br>    <span class="hljs-type">vec3</span> shadowCoord = vPositionFromLight.xyz / vPositionFromLight.w;<br>    shadowCoord = shadowCoord * <span class="hljs-number">0.5</span> + <span class="hljs-number">0.5</span>;<br><br>    <span class="hljs-comment">// 省略布林冯光照模型的实现</span><br>    <span class="hljs-type">vec3</span> phongColor = blinnPhong();<br>    <span class="hljs-comment">// 这里将可见度作为一个单独的项拆分出来</span><br>    <span class="hljs-type">float</span> visibility = <span class="hljs-number">1.0</span>;<br><br>    visibility = useShadowMap(uShadowMap, <span class="hljs-type">vec4</span>(shadowCoord, <span class="hljs-number">1.0</span>));<br>    <span class="hljs-comment">//visibility = PCF(uShadowMap, vec4(shadowCoord, 1.0));</span><br>    <span class="hljs-comment">//visibility = PCSS(uShadowMap, vec4(shadowCoord, 1.0));</span><br>    <span class="hljs-built_in">gl_FragColor</span> = <span class="hljs-type">vec4</span>(phongColor * visibility, <span class="hljs-number">1.0</span>);<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h3 id="coordz-closestdepth-10-00-的问题"><a class="markdownIt-Anchor" href="#coordz-closestdepth-10-00-的问题"></a> coord.z &lt; closestDepth ? 1.0 : 0.0 的问题</h3>
-<p>这种 artifact 也被称作 Z-fighting。问题源自于 Shadow Map 对场景走样的理解。光源对场景的离散化认为 Shadow Map 内每一个纹素对应的表面属于同一个深度，此时对于侧对光源的表面，单个纹素内无法表示表面深度剧烈的变化，Shadow Map 便会将平面理解为一个…搓衣板。<br />
+<p>这个问题源自于 Shadow Map 对场景走样/失真的理解。光源对场景的离散化认为 Shadow Map 内每一个纹素对应的表面属于同一个深度，此时对于侧对光源的表面，单个纹素内无法表示表面深度剧烈的变化，Shadow Map 便会将平面理解为一个…搓衣板。<br />
 <img src="/img/PCSS/s.png" srcset="/img/loading.gif" lazyload alt="光源与地板几乎位于同一平面上" /><br />
 <strong>解决方法</strong>：为判断条件添加一个容忍度。<br />
 <code>return coord.z &lt; (closestDepth + 0.01) ? 1.0 : 0.0;</code><br />
