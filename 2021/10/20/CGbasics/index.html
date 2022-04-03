@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.7k 字
+      2.8k 字
     </span>
   
 
@@ -369,6 +369,23 @@ Phong 模型的问题：没有考虑视线与入射光在法线同一侧的情�
 <a target="_blank" rel="noopener" href="https://hinageshi01.github.io/2021/09/07/BulinnPhong/">Blinn-Phong</a></p>
 <h3 id="gourand"><a class="markdownIt-Anchor" href="#gourand"></a> Gourand</h3>
 <p>只计算顶点的着色，三角面内的着色由重心坐标插值求得。</p>
+<h2 id="线代"><a class="markdownIt-Anchor" href="#线代"></a> 线代</h2>
+<h3 id="给定平移旋转缩放的变换矩阵如何分别解出三种变换"><a class="markdownIt-Anchor" href="#给定平移旋转缩放的变换矩阵如何分别解出三种变换"></a> 给定平移旋转缩放的变换矩阵，如何分别解出三种变换？</h3>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wickedpriest/p/14198547.html">图形学变换矩阵的分解</a></p>
+<h3 id="三角形的面积"><a class="markdownIt-Anchor" href="#三角形的面积"></a> 三角形的面积</h3>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>=</mo><mi mathvariant="normal">∣</mi><mover accent="true"><mrow><mi>A</mi><mi>B</mi></mrow><mo>⃗</mo></mover><mo>⋅</mo><mover accent="true"><mrow><mi>A</mi><mi>C</mi></mrow><mo>⃗</mo></mover><mi mathvariant="normal">∣</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">S=|\vec{AB} \cdot \vec{AC}|/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.21633em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.21633em;vertical-align:-0.25em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord">/</span><span class="mord">2</span></span></span></span></p>
 <h2 id="透视矫正插值"><a class="markdownIt-Anchor" href="#透视矫正插值"></a> 透视矫正插值</h2>
 <p>刚接触光栅化时被我完全忽略的概念，毕竟就算透视不正确效果也大差不差。<br />
 具体的推导在 <a target="_blank" rel="noopener" href="https://blog.csdn.net/n5/article/details/100148540">CSDN</a> 和 <a target="_blank" rel="noopener" href="https://www.comp.nus.edu.sg/~lowkl/publications/lowk_persp_interp_techrep.pdf">lowk_persp_interp_techrep</a> 里已经讲的很清楚了。<br />
