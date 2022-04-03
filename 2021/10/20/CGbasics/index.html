@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      40
+      41
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 3, 2022
+                  本文最后更新于：April 4, 2022
                 
               </p>
             
@@ -356,7 +356,8 @@
 <h2 id="光照模型"><a class="markdownIt-Anchor" href="#光照模型"></a> 光照模型</h2>
 <p>一些经典模型。</p>
 <h3 id="lambert"><a class="markdownIt-Anchor" href="#lambert"></a> Lambert</h3>
-<p>只考虑 Phong 模型中漫反射的部分。</p>
+<p>只考虑 Phong 模型中漫反射的部分。<br />
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/dengyibing/article/details/111659642">Lambert表面的brdf推导</a></p>
 <h3 id="phong"><a class="markdownIt-Anchor" href="#phong"></a> Phong</h3>
 <p>Specular 使用反射光与视线夹角的点乘计算。<br />
 反射光R：<br />
@@ -386,6 +387,8 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 -7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
 H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
 c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord">/</span><span class="mord">2</span></span></span></span></p>
+<h3 id="已知支线-ab-cd-不共面求两线之间最短距离"><a class="markdownIt-Anchor" href="#已知支线-ab-cd-不共面求两线之间最短距离"></a> 已知支线 AB、CD 不共面，求两线之间最短距离</h3>
+<p>叉乘得公垂向量，两线上任意取两点得向量 ab，求 ab 在公垂向量上的投影（点乘）。</p>
 <h2 id="透视矫正插值"><a class="markdownIt-Anchor" href="#透视矫正插值"></a> 透视矫正插值</h2>
 <p>刚接触光栅化时被我完全忽略的概念，毕竟就算透视不正确效果也大差不差。<br />
 具体的推导在 <a target="_blank" rel="noopener" href="https://blog.csdn.net/n5/article/details/100148540">CSDN</a> 和 <a target="_blank" rel="noopener" href="https://www.comp.nus.edu.sg/~lowkl/publications/lowk_persp_interp_techrep.pdf">lowk_persp_interp_techrep</a> 里已经讲的很清楚了。<br />
