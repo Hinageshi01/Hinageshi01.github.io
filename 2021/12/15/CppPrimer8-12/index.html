@@ -414,7 +414,7 @@ value_type：对于 set，与 key_type 相同；对于 map，为 <code>pair&lt;c
 <p><strong>在 multimap 或 multiset 中查找元素</strong><br />
 如果一个 multimap 或 multiset 中有多个元素具有给定关键字，则这些元素在容器中会相邻存储。</p>
 <h2 id="在容器中使用自定义的类"><a class="markdownIt-Anchor" href="#在容器中使用自定义的类"></a> 在容器中使用自定义的类</h2>
-<p>如果要在 map/set 中使用自定义的类，需要为类提供重载的 &lt; 运算符。<br />
+<p>如果要在 map/set 中使用自定义的类，需要提供判断 &lt; 的方法。<br />
 如果要在 unordered_map/unordered_set 中使用自定义的类，需要提供计算哈希值的方法，以及判断 == 的方法。</p>
 <ul>
 <li>使用函数指针</li>
