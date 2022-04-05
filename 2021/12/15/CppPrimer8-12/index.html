@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.8k 字
+      6.3k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      66
+      72
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：March 12, 2022
+                  本文最后更新于：April 5, 2022
                 
               </p>
             
@@ -396,11 +396,11 @@ arg_list 参数可能包含形如 _n 的名字。这些参数是“占位符”�
 <h2 id="113-关联容器的操作"><a class="markdownIt-Anchor" href="#113-关联容器的操作"></a> 11.3 关联容器的操作</h2>
 <p>key_type：此容器类型的关键字类型。<br />
 mapped_type：每个关键字关联的类型，只适用于map。<br />
-value type：对于 set，与 key_type 相同；对于 map，为 <code>pair&lt;const key_type, mapped_type&gt;</code><br />
+value_type：对于 set，与 key_type 相同；对于 map，为 <code>pair&lt;const key_type, mapped_type&gt;</code><br />
 关键字是 const 的。</p>
 <h3 id="1132-添加元素"><a class="markdownIt-Anchor" href="#1132-添加元素"></a> 11.3.2 添加元素</h3>
 <p>插入一个已存在的元素对容器没有任何影响。</p>
-<p><strong>检测insert的返回值</strong><br />
+<p><strong>检测 insert 的返回值</strong><br />
 添加单一元素的 insert 和 emplace 版本返冋一个 pair，first 成员是一个迭代器，指向具有给定关键字的元素；second 成员是一个 bool 值，指出元素是插入成功还是已经存在于容器中。</p>
 <h3 id="1134-map-的下标操作"><a class="markdownIt-Anchor" href="#1134-map-的下标操作"></a> 11.3.4 map 的下标操作</h3>
 <p>set 类型不支持下标，也不能对一个 multimap 或一个 unordered_multimap 进行下标操作。<br />
@@ -409,10 +409,29 @@ value type：对于 set，与 key_type 相同；对于 map，为 <code>pair&lt;c
 <h3 id="1135-访问元素"><a class="markdownIt-Anchor" href="#1135-访问元素"></a> 11.3.5 访问元素</h3>
 <p>c.lower_bound(k)：返回一个迭代器，指向第一个关键字不小于к的元素。<br />
 с.upper_bound(k)：返回一个迭代器，指向第一个关键字大于к的元素。<br />
-с.equal_range(к)：返回一个迭代器 pair，表示关键字等于 K 的元素的范围。若不存在，pair 的两个成员均等于 c.end()。<br />
+с.equal_range(k)：返回一个迭代器 pair，表示关键字等于 K 的元素的范围。若不存在，pair 的两个成员均等于 c.end()。<br />
 若关键字未匹配，他们都返回一个迭代器，指向不影响排序的关键字插入位置。</p>
 <p><strong>在 multimap 或 multiset 中查找元素</strong><br />
 如果一个 multimap 或 multiset 中有多个元素具有给定关键字，则这些元素在容器中会相邻存储。</p>
+<h2 id="在容器中使用自定义的类"><a class="markdownIt-Anchor" href="#在容器中使用自定义的类"></a> 在容器中使用自定义的类</h2>
+<p>如果要在 map/set 中使用自定义的类，需要为类提供重载的 &lt; 运算符。<br />
+如果要在 unordered_map/unordered_set 中使用自定义的类，需要提供计算哈希值的方法，以及判断 == 的方法。</p>
+<ul>
+<li>使用函数指针</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">std::<span class="hljs-keyword">size_t</span> <span class="hljs-title">m_hash</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> Line &amp;l)</span> </span>&#123;<br>	<span class="hljs-keyword">return</span> l.k * <span class="hljs-number">100</span> + l.b;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">m_equal</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> Line &amp;l1, <span class="hljs-keyword">const</span> Line &amp;l2)</span> </span>&#123;<br>	<span class="hljs-keyword">return</span> l1.k == l2.k &amp;&amp; l1.b == l2.b;<br>&#125;;<br><span class="hljs-comment">// 参数代表了桶的大小、哈希函数指针、相等性判断运算符函数指针</span><br><span class="hljs-function">unordered_set&lt;Line, <span class="hljs-title">decltype</span><span class="hljs-params">(m_hash)</span> *, <span class="hljs-title">decltype</span><span class="hljs-params">(m_equal)</span> *&gt; <span class="hljs-title">h_set</span><span class="hljs-params">(<span class="hljs-number">42</span>, m_hash, m_equal)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<ul>
+<li>如果我们的类重载了 == 运算符，则可以只重载哈希函数。<br />
+并且，我们可以通过重载函数调用运算符的方式提供一个函数对象。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> &#123;</span><br>    <span class="hljs-comment">// 成员与构造函数</span><br>    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span> == (<span class="hljs-keyword">const</span> Node &amp;t) <span class="hljs-keyword">const</span> &#123;<br>        <span class="hljs-keyword">return</span>  k == t.k &amp;&amp; b == t.b;<br>    &#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">NodeHash</span> &#123;</span><br>    <span class="hljs-function"><span class="hljs-keyword">size_t</span> <span class="hljs-title">operator</span> <span class="hljs-params">()</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> Node &amp;t)</span> <span class="hljs-keyword">const</span> </span>&#123;<br>        <span class="hljs-keyword">return</span>  t.k * <span class="hljs-number">100</span> + t.b;<br>    &#125;<br>&#125;;<br>unordered_set &lt;Node, NodeHash&gt; h_set;<br>unordered_map &lt;Node, string, NodeHash&gt; h_map;<br></code></pre></div></td></tr></table></figure>
+<ul>
+<li>最后，在 C<ins>20 中似乎可以用 lambda 代替这个函数对象。<br />
+C</ins>11 到 C<ins>17 里，lambda 表达式的复制运算符被删除了，这导致 lambda 表达式无法复制构造，不满足哈希函数所需的条件（是函数对象，可复制构造，可析构，调用时对相同对象返回相同哈希）。<br />
+C</ins>20 里据说无捕获的 lambda 表达式可以复制构造了。理论上这应该解决了 lambda 表达式不能做哈希的缺陷。<br />
+<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/469655331">知乎</a></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">	<span class="hljs-keyword">auto</span> hash = [](<span class="hljs-keyword">const</span> Line &amp;l) &#123;<br>		<span class="hljs-built_in"><span class="hljs-keyword">return</span></span> (<span class="hljs-keyword">size_t</span>)(l.k * <span class="hljs-number">100</span> + l.b);<br>	&#125;;<br><br>	<span class="hljs-keyword">auto</span> equal = [](<span class="hljs-keyword">const</span> Line &amp;l1, <span class="hljs-keyword">const</span> Line &amp;l2) &#123;<br>		<span class="hljs-keyword">return</span> l1.k == l2.k &amp;&amp; l1.b == l2.b;<br>	&#125;;<br><br>unordered_set&lt;Line, <span class="hljs-keyword">decltype</span>(hash), <span class="hljs-keyword">decltype</span>(equal)&gt; h_set;<br></code></pre></div></td></tr></table></figure>
 <h1 id="第十二章-动态内存"><a class="markdownIt-Anchor" href="#第十二章-动态内存"></a> 第十二章 动态内存</h1>
 <p>分配在静态或栈内存中的对象由编译器自动创建和销毁。每个程序还拥有一个内存池，这部分内存被称作自由空间或堆。程序用堆来存储动态分配的对象。</p>
 <h2 id="121-动态内存与智能指针"><a class="markdownIt-Anchor" href="#121-动态内存与智能指针"></a> 12.1 动态内存与智能指针</h2>
