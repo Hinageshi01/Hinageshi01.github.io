@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      13.7k 字
+      13.8k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      151
+      152
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 3, 2022
+                  本文最后更新于：April 5, 2022
                 
               </p>
             
@@ -650,13 +650,14 @@ using 只影响派生类的使用者对基类成员的访问权限，派生类�
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">long</span> lng;<br><span class="hljs-built_in">compare</span> (lng, <span class="hljs-number">1024</span>); <span class="hljs-comment">// 错误：模板参数不匹配</span><br>compare&lt;<span class="hljs-keyword">long</span>&gt; (lng, <span class="hljs-number">1024</span>); <span class="hljs-comment">// 正确：实例化 compare (long, long)</span><br>compare&lt;<span class="hljs-keyword">int</span>&gt; (lng, <span class="hljs-number">1024</span>); <span class="hljs-comment">// 正确：实例化 compare (int, int)</span><br></code></pre></div></td></tr></table></figure>
 <h3 id="1623-尾置返回类型与类型转换"><a class="markdownIt-Anchor" href="#1623-尾置返回类型与类型转换"></a> 16.2.3 尾置返回类型与类型转换</h3>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> It&gt;<br>??? &amp;<span class="hljs-built_in">fcn</span>(It beg, It end) &#123;<br>    <span class="hljs-keyword">return</span> *beg; <span class="hljs-comment">// 返回序列中一个元素的引用</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
-<p>在编译器遇到函数的参数列表之前，beg 都是不存在的。为了定义此函数，我们必须使用尾置返回类型。由于尾置返回出现在参 M 数列表之后，它可以使用函数的参数：</p>
+<p>在编译器遇到函数的参数列表之前，beg 都是不存在的。为了定义此函数，我们必须使用尾置返回类型。由于尾置返回出现在参数列表之后，它可以使用函数的参数：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 尾置返回允许我们在参数列表之后声明返回类型</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> It&gt;<br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">fcn</span> <span class="hljs-params">(It beg, It end)</span> -&gt; <span class="hljs-title">decltype</span><span class="hljs-params">(*beg)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> *beg; <span class="hljs-comment">// 返回序列中一个元素的引用</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p><strong>进行类型转换的标准库模板类</strong><br />
-为了获得兀素类型，我们可以使用标准库的类型转换模板。remove_reference 模板有一个模板类型参数和一个名为 type 的 public 类型成员。如果我们用一个引用类型实例化 remove_reference，则 type 将表示被引用的类型。<br />
+为了获得元素类型，我们可以使用标准库的类型转换模板。remove_reference 模板有一个模板类型参数和一个名为 type 的 public 类型成员。如果我们用一个引用类型实例化 remove_reference，则 type 将表示被引用的类型。<br />
 <code>decltype(*beg)</code>返回元素类型的引用类型。<code>remove_reference::type</code>脱去引用，剩下元素类型本身。<br />
 组合使用 remove_reference、尾置返冋及 decltype，我们就可以在函数中返回元素值的拷贝：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 为了使用模板参数的成员，必须用 typename</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> It&gt;<br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">fcn2</span><span class="hljs-params">(It beg, It end)</span>-&gt;</span><br><span class="hljs-function">    <span class="hljs-keyword">typename</span> remove_reference&lt;<span class="hljs-title">decltype</span><span class="hljs-params">(*beg)</span>&gt;::type </span>&#123;<br>        <span class="hljs-keyword">return</span> *beg; <span class="hljs-comment">// 返回序列中一个元素的拷贝</span><br>    &#125;<br></code></pre></div></td></tr></table></figure>
+<p>注意：type 是一个类的成员，而该类依赖于一个模板函数。因此我们必须在返回类型的声明中使用 typename 告知编译器，type 表示一个类型。</p>
 <h3 id="1624-函数指针和实参推断"><a class="markdownIt-Anchor" href="#1624-函数指针和实参推断"></a> 16.2.4 函数指针和实参推断</h3>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T&amp;, <span class="hljs-keyword">const</span> T&amp;)</span></span>;<br><span class="hljs-built_in"><span class="hljs-keyword">int</span></span> (*pfl)(<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp;, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp;) = compare;<br><span class="hljs-comment">// pfl 指向实例 int compare (const int&amp;, const int&amp;)</span><br></code></pre></div></td></tr></table></figure>
 <p>pfl 中参数的类型决定了 T 的模板实参的类型。在本例中，T 的模板实参类型为 int。指针 pfl 指向 compare 的 int 版本实例。<br />
