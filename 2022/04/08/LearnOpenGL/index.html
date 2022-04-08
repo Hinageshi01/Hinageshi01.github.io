@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      8 字
+      367 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      5
        分钟
     </span>
   
@@ -248,6 +248,40 @@
             <div class="markdown-body">
               <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
 <p>  OpenGL 的学习笔记。</p>
+<h2 id="模板测试与描边"><a class="markdownIt-Anchor" href="#模板测试与描边"></a> 模板测试与描边</h2>
+<h3 id="api"><a class="markdownIt-Anchor" href="#api"></a> API</h3>
+<ul>
+<li>开启模板测试<br />
+<code>glEnable(GL_STENCIL_TEST);</code></li>
+<li>清除模板缓冲<br />
+<code>glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);</code></li>
+<li>模板位掩码<br />
+<code>glStencilMask(0xFF); // 每一位写入模板缓冲时都保持原样</code><br />
+<code>glStencilMask(0x00); // 每一位在写入模板缓冲时都会变成0（禁用写入）</code></li>
+<li>模板函数<br />
+<code>glStencilFunc(GLenum func, GLint ref, GLuint mask)</code><br />
+参数分别是：行为、用于比较的值、掩码<br />
+<code>glStencilOp(GLenum sfail, GLenum dpfail, GLenum dppass)</code><br />
+参数分别是：模板测试失败时采取的行为、模板测试通过，但深度测试失败时采取的行为、模板测试和深度测试都通过时采取的行为。</li>
+</ul>
+<h3 id="轮廓"><a class="markdownIt-Anchor" href="#轮廓"></a> 轮廓</h3>
+<h4 id="步骤"><a class="markdownIt-Anchor" href="#步骤"></a> 步骤</h4>
+<ul>
+<li>将模板函数设置为 GL_ALWAYS，写入 1</li>
+<li>渲染物体</li>
+<li>关闭模板写入与深度测试，绘制轮廓时只绘制模板值不等于 1 的部分</li>
+<li>放大物体，使用一个只输出轮廓色的 Shader</li>
+<li>再次绘制物体</li>
+<li>再次启用模板写入与深度测试。</li>
+</ul>
+<h4 id="main"><a class="markdownIt-Anchor" href="#main"></a> main</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">normalShader.<span class="hljs-built_in">use</span>();<br><span class="hljs-comment">// normalShader.set</span><br><br><span class="hljs-built_in">glStencilFunc</span>(GL_ALWAYS, <span class="hljs-number">1</span>, <span class="hljs-number">0xFF</span>);<br><span class="hljs-built_in">glStencilMask</span>(<span class="hljs-number">0xFF</span>);<br>ourModel.<span class="hljs-built_in">Draw</span>(normalShader);<br><br>outLineShader.<span class="hljs-built_in">use</span>();<br><span class="hljs-comment">// outLineShader.set</span><br><br><span class="hljs-built_in">glStencilFunc</span>(GL_NOTEQUAL, <span class="hljs-number">1</span>, <span class="hljs-number">0xFF</span>);<br><span class="hljs-built_in">glStencilMask</span>(<span class="hljs-number">0x00</span>);<br><span class="hljs-built_in">glDisable</span>(GL_DEPTH_TEST);<br>ourModel.<span class="hljs-built_in">Draw</span>(outLineShader);<br><br><span class="hljs-built_in">glStencilMask</span>(<span class="hljs-number">0xFF</span>);<br><span class="hljs-built_in">glEnable</span>(GL_DEPTH_TEST);<br><span class="hljs-built_in">glStencilFunc</span>(GL_ALWAYS, <span class="hljs-number">0</span>, <span class="hljs-number">0xFF</span>);<br></code></pre></div></td></tr></table></figure>
+<h4 id="vert"><a class="markdownIt-Anchor" href="#vert"></a> vert</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#version 330 core</span><br><br><span class="hljs-built_in">layout</span> (location = <span class="hljs-number">0</span>) in vec3 aPos;<br><span class="hljs-built_in">layout</span> (location = <span class="hljs-number">1</span>) in vec3 aNormal;<br><br>uniform mat4 model;<br>uniform mat4 view;<br>uniform mat4 projection;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	vec3 Normal = <span class="hljs-built_in">normalize</span>(<span class="hljs-built_in">mat3</span>(<span class="hljs-built_in">transpose</span>(<span class="hljs-built_in">inverse</span>(model))) * aNormal);<br>	<span class="hljs-comment">// 将顶点沿着法向量移动一点</span><br>	gl_Position  = projection * view * model * <span class="hljs-built_in">vec4</span>(aPos + <span class="hljs-number">0.05</span> * Normal, <span class="hljs-number">1.0</span>);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h4 id="frag"><a class="markdownIt-Anchor" href="#frag"></a> frag</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#version 330 core</span><br><br>out vec4 FragColor;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	FragColor = <span class="hljs-built_in">vec4</span>(<span class="hljs-number">0.7</span>, <span class="hljs-number">0.8</span>, <span class="hljs-number">0.9</span>, <span class="hljs-number">1.0</span>);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="结果"><a class="markdownIt-Anchor" href="#结果"></a> 结果</h3>
+<p><img src="/img/GL/outLine.png" srcset="/img/loading.gif" lazyload alt="" /></p>
 
             </div>
             <hr>
