@@ -192,6 +192,81 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/29/PRT/" target="_self">
+          <img src="/img/PRT/01.png" srcset="/img/loading.gif" lazyload alt="GAMES202 预计算辐射传递">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/29/PRT/" target="_self">
+          GAMES202 预计算辐射传递
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/29/PRT/" target="_self">
+          
+          
+            
+          
+           序言
+  如何计算环境光照可以近似为一个 ManyLight 的问题，在这种情况下，如果想要得知某一着色点获得的光照，需要对该点的上半球进行采样，这会是一个非常大的性能开销。使用 PRT 的做法可以使用预计算的数据，在实时的条件下实现环境光照。未实现：球谐函数的快速旋转。
+ 前置知识
+ Product Integral
+
+∫Ωf(x)g(x)dx\int _\Omega f(x)g(x)dx∫Ω
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-29 20:35" pubdate>
+              2021-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+              <a href="/tags/%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">光照模型</a>
+            
+              <a href="/tags/GLSL/">GLSL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
+            
+              <a href="/tags/PRT/">PRT</a>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E5%85%89%E7%85%A7/">环境光照</a>
+            
+              <a href="/tags/JavaScript/">JavaScript</a>
+            
+              <a href="/tags/%E7%90%83%E9%9D%A2%E8%B0%90%E6%B3%A2%E5%87%BD%E6%95%B0/">球面谐波函数</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/09/22/Shadow/" target="_self">
           <img src="/img/PCSS/01.png" srcset="/img/loading.gif" lazyload alt="GAMES202 百分比近似软阴影">
         </a>
@@ -456,9 +531,9 @@
             
               <a href="/tags/BRDF/">BRDF</a>
             
-              <a href="/tags/%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">辐射度量学</a>
-            
               <a href="/tags/%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/">光线追踪</a>
+            
+              <a href="/tags/%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">辐射度量学</a>
             
               <a href="/tags/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E7%A7%AF%E5%88%86/">蒙特卡洛积分</a>
             
@@ -848,80 +923,6 @@ ta
               <a href="/tags/MVP/">MVP</a>
             
               <a href="/tags/%E8%A7%86%E5%8F%A3%E5%8F%98%E6%8D%A2/">视口变换</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/08/31/%E5%AF%B9%E8%B1%A1%E6%B1%A0/" target="_self">
-          <img src="/img/ObjectPool/01.png" srcset="/img/loading.gif" lazyload alt="对象池 &amp; 冲刺残影">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/31/%E5%AF%B9%E8%B1%A1%E6%B1%A0/" target="_self">
-          对象池 &amp; 冲刺残影
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/31/%E5%AF%B9%E8%B1%A1%E6%B1%A0/" target="_self">
-          
-          
-            
-          
-           序言
-  对于需要大量或者多次反复实例化，且需要销毁的物体（比如子弹、残影等），频繁地创建与销毁物体对于性能的开销过大。
-  故使用对象池，提前生成一定数量的空物体，在需要时取一进行启用与赋值，一段时间后进行回收，一定程度上减少了动态加载性能的消耗。
-  这里实现一个角色冲锋产生残影的效果。
- 预制体
-
- 对象池
-由一单例控制空物体的预生成、启用和回收。
-12345678910111213141
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-31 06:00" pubdate>
-              2021-08-31
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/UnityNote/">UnityNote</a>
-            
-              <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
-            
-              <a href="/categories/%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/">功能实现</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Unity/">Unity</a>
-            
-              <a href="/tags/C/">C#</a>
-            
-              <a href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
-            
-              <a href="/tags/%E5%AF%B9%E8%B1%A1%E6%B1%A0/">对象池</a>
             
           </div>
         

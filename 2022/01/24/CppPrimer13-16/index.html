@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 5, 2022
+                  本文最后更新于：April 8, 2022
                 
               </p>
             
@@ -401,10 +401,10 @@ IO 运算符通常需要读写类的非公有数据成员，所以 IO 运算符�
 <p>如果 point 是定义了 operator-&gt; 的类的一个对象，则我们使用 point.operator-&gt;() 的结果来获取 mem。其中，如果该结果是一个指针，则执行 (*point).mem。如果该结果本身含有重载的 operator-&gt;()，则重复调用当前步骤。最终，当这一过程结束时程序或者返回了所需的内容，或者返回一些表示程序错误的信息。</p>
 <h2 id="148-函数调用运算符"><a class="markdownIt-Anchor" href="#148-函数调用运算符"></a> 14.8 函数调用运算符</h2>
 <p>可以像使用函数一样使用该类的对象。函数调用运算符必须是成员函数。如果类定义了调用运算符，则该类的对象称作函数对象。</p>
-<h3 id="1481-lambda是函数对象"><a class="markdownIt-Anchor" href="#1481-lambda是函数对象"></a> 14.8.1 lambda是函数对象</h3>
-<p>当我们编写了一个 lambda 后，编译器将该表达式翻译成一个未命名类的未命名对象，在lambda表达式产生的类中含有一个重载的函数调用运算符。</p>
+<h3 id="1481-lambda-是函数对象"><a class="markdownIt-Anchor" href="#1481-lambda-是函数对象"></a> 14.8.1 lambda 是函数对象</h3>
+<p>当我们编写了一个 lambda 后，编译器将该表达式翻译成一个未命名类的未命名对象，在 lambda 表达式产生的类中含有一个重载的函数调用运算符。</p>
 <p><strong>表示 lambda 及相应捕获行为的类</strong><br />
-当一个lambda 表达式通过引用捕获变量时，编译器可以直接使用该引用而无须在 lambda 产生的类中将其存储为数据成员。<br />
+当一个 lambda 表达式通过引用捕获变量时，编译器可以直接使用该引用而无须在 lambda 产生的类中将其存储为数据成员。<br />
 相反，通过值捕获的变量被拷贝到 lambda 中，这种类必须为每个值捕获的变量建立对应的数据成员，同时创建构造函数，令其使用捕获的变量的值来初始化数据成员。<br />
 lambda 表达式产生的类不含默认构造函数、赋值运算符及默认析构函数。它是否含有默认的拷贝/移动构造函数则通常要视捕获的数据成员类型而定。</p>
 <h3 id="1483-可调用对象与-function"><a class="markdownIt-Anchor" href="#1483-可调用对象与-function"></a> 14.8.3 可调用对象与 function</h3>
@@ -716,6 +716,13 @@ forward 返回该显式实参类型的右值引用即，forward<T> 的返回类�
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/C-Primer/">C++ Primer</a>
+                    
+                  </div>
+                
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
@@ -730,6 +737,12 @@ forward 返回该显式实参类型的右值引用即，forward<T> 的返回类�
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/04/08/LearnOpenGL/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">笔记 LearnOpenGL</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
