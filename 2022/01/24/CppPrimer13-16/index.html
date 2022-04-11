@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      13.8k 字
+      14k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      152
+      155
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 8, 2022
+                  本文最后更新于：April 11, 2022
                 
               </p>
             
@@ -465,7 +465,8 @@ C++11 新标准提供了一种防止继承发生的方法，即在类名后跟�
 被调用的函数是与绑定到指针或引用上的对象的动态类型相匹配的那一个。</p>
 <p><strong>派生类中的虚函数</strong><br />
 一旦某个函数被声明成虚函数，则在所有派生类中它都是虚函数。<br />
-派生类中虚函数的返回类型必须与基类函数匹配。当类的虚函数返回类型是类本身的指针或引用时，上述规则无效。</p>
+派生类中虚函数的返回类型必须与基类函数匹配。当类的虚函数返回类型是类本身的指针或引用时，上述规则无效。<br />
+基类的虚函数在派生类中隐含的也是一个虚函数。当派生类覆盖了某个虚函数时，该函数在基类中的形参必须与派生类中的形参严格匹配。</p>
 <p><strong>final 和 override 说明符</strong><br />
 派生类如果定义了一个函数与基类中虚函数的名字相同但是形参列表不同，编译器将认为新定义的这个函数与基类中原有的函数是相互独立的。<br />
 在 C++11 新标准中我们可以使用 override 关键字来说明派生类中的虚函数，使得程序员的意图更加清晰的同时让编译器可以为我们发现一些错误。<br />
@@ -510,6 +511,10 @@ using 只影响派生类的使用者对基类成员的访问权限，派生类�
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Derived</span> :</span> Base &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">get_base_mem</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> Base::mem; &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>作用域运算符将覆盖掉原有的查找规则，并指示编译器从 Base 类的作用域开始查找 men。</p>
 <p><strong>名字查找先于类型检查</strong></p>
+<p><strong>虚函数与作用域</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">int</span> <span class="hljs-title">fun1</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">D1</span> :</span> <span class="hljs-keyword">public</span> Base &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fun1</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>; <span class="hljs-comment">// 隐藏基类的 fun1()，这个 fun1() 不是虚函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">fun2</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// 一个新的虚函数</span><br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">D2</span> :</span> <span class="hljs-keyword">public</span> D1 &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fun1</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>; <span class="hljs-comment">// 非虚函数，隐藏了 D1::fun1(int)</span><br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fun1</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// 覆盖了 Base 的虚函数 fun1()</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun2</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// 覆盖了 D1 的虚函数 fun2()</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><strong>通过基类调用隐藏的虚函数</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">D2 d2;<br>Base *p1 = &amp;d2; D1 *p2 = &amp;d2; D2 *p3 = &amp;d2;<br>p1-&gt;<span class="hljs-built_in">fun1</span>(<span class="hljs-number">42</span>); <span class="hljs-comment">// 错误，Base 中没有接受一个 int 的 fun1</span><br>p2-&gt;<span class="hljs-built_in">fun1</span>(<span class="hljs-number">42</span>); <span class="hljs-comment">// 静态绑定，调用 D1::fun1(int)</span><br>p3-&gt;<span class="hljs-built_in">fun1</span>(<span class="hljs-number">42</span>); <span class="hljs-comment">// 静态绑定，调用 D2::fun1(int)</span><br></code></pre></div></td></tr></table></figure>
 <p><strong>覆盖重载的函数</strong><br />
 如果派生类希望所有的重载版本对于它来说都是可见的，那么它就需要覆盖所有的版本，或者一个也不覆盖。<br />
 一种好的解决方案是为重载的成员提供一条 using 声明语句。using 声明语句指定一个名字而不指定形参列表，所以一条基类成员函数的 using 声明语句就可以把该函数的所有重载实例添加到派生类作用域中。此时，派生类只需要定义其特有的函数就可以了。</p>
