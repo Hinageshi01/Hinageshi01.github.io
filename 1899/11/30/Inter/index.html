@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.4k 字
+      2.7k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      33
+      37
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 11, 2022
+                  本文最后更新于：April 12, 2022
                 
               </p>
             
@@ -368,14 +368,30 @@
 </ul>
 <h2 id="剑心互娱渲染引擎开发工程师"><a class="markdownIt-Anchor" href="#剑心互娱渲染引擎开发工程师"></a> 剑心互娱：渲染引擎开发工程师</h2>
 <ul>
-<li>父类虚函数 A，子类同名非虚函数（应该指的是同名不同参的函数），子类中虚函数表中存储的是哪个函数指针？</li>
-<li>什么时候需要使用虚函数，父类的析构函数不是虚函数会怎么样？</li>
-<li>new 和 malloc 有什么区别，自由存储区是什么？</li>
-<li>内存池了解过吗？</li>
-<li>引用和指针有什么区别，引用占内存空间吗？</li>
-<li>结构体为什么要对齐，什么规则，#pragma pack() 的应用场合？</li>
-<li>模板优缺点有哪些？</li>
-<li>红黑树和平衡二叉树有什么区别，红黑树什么情况比平衡二叉树快，什么情况慢？</li>
+<li>父类虚函数 A，子类同名非虚函数（应该指的是同名不同参的函数），子类中虚函数表中存储的是哪个函数指针？<br />
+<a target="_blank" rel="noopener" href="https://hinageshi01.github.io/2022/01/24/CppPrimer13-16/#156-%E7%BB%A7%E6%89%BF%E4%B8%AD%E7%9A%84%E7%B1%BB%E4%BD%9C%E7%94%A8%E5%9F%9F">虚函数与作用域</a></li>
+<li>什么时候需要使用虚函数，父类的析构函数不是虚函数会怎么样？<br />
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/starlee/article/details/619827">C++ 中虚析构函数的作用</a></li>
+<li>new 和 malloc 有什么区别，自由存储区是什么？<br />
+<a target="_blank" rel="noopener" href="https://www.cnblogs.com/QG-whz/p/5140930.htmls">细说 new 与 malloc 的 10 点区别</a><br />
+<a target="_blank" rel="noopener" href="https://www.cnblogs.com/QG-whz/p/5060894.html">C++ 自由存储区是否等价于堆？</a></li>
+<li>内存池了解过吗？<br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/434087002">简单讲解 C++ 内存池原理与实现</a></li>
+<li>引用和指针有什么区别，引用占内存空间吗？<br />
+<a target="_blank" rel="noopener" href="https://www.cnblogs.com/heyonggang/archive/2012/12/13/2815730.html">C++ 中指针和引用的区别</a><br />
+<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ronny/p/3662556.html">你真的了解引用吗</a></li>
+<li>结构体为什么要对齐，什么规则，#pragma pack() 的应用场合？<br />
+<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/90a6eef329ec">#pragma pack 指令详解</a><br />
+关于应用场合，网上的文章清一色地表示：
+<blockquote>
+<p>在网络协议编程中，经常会处理不同协议的数据报文。一种方法是通过指针偏移的方法来得到各种信息，但这样做不仅编程复杂，而且一旦协议有变化，程序修改起来也比较麻烦。在了解了编译器对结构空间的分配原则之后，我们完全可以利用这一特性定义自己的协议结构，通过访问结构的成员来获取各种信息。这样做，不仅简化了编程，而且即使协议发生变化，我们也只需修改协议结构的定义即可，其它程序无需修改，省时省力。</p>
+</blockquote>
+</li>
+<li>模板优缺点有哪些？<br />
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/tonychan129/article/details/21346713">使用 c++ 模板的优点和缺点</a><br />
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/lijiayu2015/article/details/52650790">c++ 模板类声明和定义都放在 .h 文件的原因</a></li>
+<li>红黑树和平衡二叉树有什么区别，红黑树什么情况比平衡二叉树快，什么情况慢？<br />
+插入删除快，查找慢</li>
 </ul>
 <h2 id="好题不问出处"><a class="markdownIt-Anchor" href="#好题不问出处"></a> 好题不问出处</h2>
 <h3 id="构造-析构-异常"><a class="markdownIt-Anchor" href="#构造-析构-异常"></a> 构造、析构、异常</h3>
