@@ -18,7 +18,7 @@
   <meta name="author" content="Hinageshi">
   <meta name="keywords" content="">
   
-  <title>光栅化软渲 Simple Renderer - Hexo</title>
+  <title>笔记 Effective C++ - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="光栅化软渲 Simple Renderer">
+            <span class="h2" id="subtitle" title="笔记 Effective C++">
               
             </span>
 
@@ -185,8 +185,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-11-08 12:26" pubdate>
-        November 8, 2021
+      <time datetime="2022-03-04 17:50" pubdate>
+        March 4, 2022
       </time>
     </span>
   
@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      311 字
+      477 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      6
        分钟
     </span>
   
@@ -237,67 +237,47 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">光栅化软渲 Simple Renderer</h1>
+            <h1 style="display: none">笔记 Effective C++</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 2, 2022
+                  本文最后更新于：April 12, 2022
                 
               </p>
             
             <div class="markdown-body">
               <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
-<p>  一个用 C++ 编写的简单的光栅化软渲染器，没想好起什么名字，不如就叫他 Simple Renderer 吧。这种造轮子行为主要还是为了巩固一下图形学相关的基础知识，毕竟有很多问题不实际上手是不会遇到的。</p>
-<p>  基础库的选择：我不想将注意力放在渲染管线以外的部分上，所以数学和显示的部分直接使用了 Eigen 和 EasyX。<strong>Eigen</strong> 是一个非常优秀的线性代数数学运算库，而 <strong>EasyX</strong> 是一个足够轻便又不至于太过底层的图形库。当然，我只允许自己使用其中的 putpixel() 方法。</p>
-<h2 id="功能"><a class="markdownIt-Anchor" href="#功能"></a> 功能</h2>
+<p>  Effective C++ 的学习笔记。</p>
+<h2 id="1-让自己习惯-c"><a class="markdownIt-Anchor" href="#1-让自己习惯-c"></a> 1. 让自己习惯 C++</h2>
+<h3 id="条款-01视-c-为一个语言联邦"><a class="markdownIt-Anchor" href="#条款-01视-c-为一个语言联邦"></a> 条款 01：视 C++ 为一个语言联邦</h3>
+<p>C、Object-Oriented C++、Template C++、STL</p>
+<h3 id="条款-02尽量以-constenuminline替换-define"><a class="markdownIt-Anchor" href="#条款-02尽量以-constenuminline替换-define"></a> 条款 02：尽量以 const，enum，inline，替换 #define</h3>
 <ul>
-<li>Bresenham 画线法</li>
-<li>扫描线算法光栅化三角形</li>
-<li>重心坐标插值</li>
-<li>透视矫正插值</li>
-<li>mvp、viewport 投影矩阵</li>
-<li>深度测试</li>
-<li>背面剔除</li>
-<li>Blinn-Phong 光照模型</li>
-<li>Diffuse 贴图</li>
-<li>高光贴图</li>
-<li>法线贴图</li>
+<li>当写下 <code>#define MY_PIE 3.14</code>，名称 MY_PIE 也许从未被编译器看见，如果此常量产生了一个错误，这个错误信息也许会提到 3.14 而不是 MY_PIE，因为这个名称可能并未进入记号表。</li>
+<li>使用常量可能比使用 #define 导致较小量的码，因为编译器盲目地将 MY_PIE 替换为 3.14。</li>
+<li>当写下 <code>#define CALL_MAX(a, b) f((a) &gt; (b) ? (a) : (b))</code>，必须记住为每个实参加上小括号，即便如此依旧会产生一些问题：</li>
 </ul>
-<h2 id="结构"><a class="markdownIt-Anchor" href="#结构"></a> 结构</h2>
-<p>顶点数据封装在 Vertex 类中。投影变换在 VertexShader 类中实现。光栅化与片元着色器耦合在 Rasterizer 类中了，但是我只有一种着色模型，暂时感觉没什么分开的必要（摆了）。</p>
-<h2 id="历程"><a class="markdownIt-Anchor" href="#历程"></a> 历程</h2>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/SR/1.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/SR/2.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/SR/3.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/SR/5.png" srcset="/img/loading.gif" lazyload alt="" /></div></div><div class="group-image-row"><div class="group-image-wrap"><img src="/img/SR/7.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/SR/8.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/SR/9.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/SR/10.png" srcset="/img/loading.gif" lazyload alt="" /></div></div><div class="group-image-row"><div class="group-image-wrap"><img src="/img/SR/11.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/SR/12.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/SR/13.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/SR/14.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
-<h2 id="仓库"><a class="markdownIt-Anchor" href="#仓库"></a> 仓库</h2>
-<p><a target="_blank" rel="noopener" href="https://github.com/Hinageshi01/simpleRenderer">GitHub</a></p>
-<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
-<p><a target="_blank" rel="noopener" href="https://github.com/ssloy/tinyrenderer">tinyrenderer</a><br />
-<a target="_blank" rel="noopener" href="http://games-cn.org/forums/topic/%e4%bd%9c%e4%b8%9a3%e6%9b%b4%e6%ad%a3%e5%85%ac%e5%91%8a/">GAMES101 Assignment3</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> a = <span class="hljs-number">5</span>, b = <span class="hljs-number">0</span>;<br><span class="hljs-built_in">CALL_MAX</span>(++a, b);        <span class="hljs-comment">// a 被累加两次</span><br><span class="hljs-built_in">CALL_MAX</span>(++a, b + <span class="hljs-number">10</span>);   <span class="hljs-comment">// a 被累加一次</span><br></code></pre></div></td></tr></table></figure>
+<p>这里最好使用模板内联函数，同时保证效率和安全性。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">CALL_MAX</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T &amp;a, <span class="hljs-keyword">const</span> T &amp;b)</span></span>&#123;<br>	<span class="hljs-built_in">f</span>(a &gt; b ? a : b);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="条款-03尽可能使用-const"><a class="markdownIt-Anchor" href="#条款-03尽可能使用-const"></a> 条款 03：尽可能使用 const</h3>
+<ul>
+<li>令函数返回一个常量值，往往可以降低用户错误造成的意外，而又不至于放弃安全性和高效性。比如这么做可以避免发生 <code>a * b = c</code> 这样的错误。</li>
+<li>当 const 和 non-const 成员函数有着实质等价的实现时，令 non-const 版本调用 const 版本可以避免代码重复。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Text</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-comment">// ...</span><br>	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> &amp;<span class="hljs-keyword">operator</span>[] (std::<span class="hljs-keyword">size_t</span> pos) <span class="hljs-keyword">const</span> &#123;<br>		<span class="hljs-comment">// 一些检验和日志</span><br>		<span class="hljs-comment">// non-const 的版本要么把这些全部重写一遍，要么直接调用这个函数</span><br>		<span class="hljs-keyword">return</span> text[pos];<br>	&#125;<br><br>	<span class="hljs-keyword">char</span> &amp;<span class="hljs-keyword">operator</span>[](std::<span class="hljs-keyword">size_t</span> pos) &#123;<br>		<span class="hljs-keyword">return</span><br>			<span class="hljs-comment">// 外层去除 const 以返回 non-const 的引用</span><br>			<span class="hljs-keyword">const_cast</span>&lt;<span class="hljs-keyword">char</span> &amp;&gt;(<br>				<span class="hljs-comment">// 通过添加 const 属性调用 const 版本的重载</span><br>				<span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">const</span> Text &amp;&gt;(*<span class="hljs-keyword">this</span>)[pos]<br>			);<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-keyword">char</span> *text;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p>注：不要让 const 版本调用 non-const 的重载版本。</p>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
-                    
-                      <a class="hover-with-bg" href="/categories/Works/">Works</a>
-                    
-                  </div>
-                
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
                       <a class="hover-with-bg" href="/tags/CPP/">CPP</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%85%89%E6%A0%85%E5%8C%96/">光栅化</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%B8%B2%E6%9F%93%E5%99%A8/">渲染器</a>
                     
                   </div>
                 
@@ -308,9 +288,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/11/27/CppPrimer1-7/">
+                      <a href="/2022/04/08/LearnOpenGL/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">笔记 C++ Primer 第一章~第七章</span>
+                        <span class="hidden-mobile">笔记 LearnOpenGL</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -318,8 +298,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/10/20/CGbasics/">
-                        <span class="hidden-mobile">笔记 计算机图形学基础</span>
+                      <a href="/2022/01/24/CppPrimer13-16/">
+                        <span class="hidden-mobile">笔记 C++ Primer 第十三章~第十六章</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -344,7 +324,7 @@
         var options = Object.assign(
           {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '9b5eb12f5e2d4a7687591aa78f39e3a4'
+            id: '4336e7409c2ddca5df0bb502620bd867'
           }
         )
         var gitalk = new Gitalk(options);
