@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      707 字
+      851 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      8
+      10
        分钟
     </span>
   
@@ -276,7 +276,13 @@
 但如果以“函数调用”替换“直接访问 non-local static 对象”，就可以保证：对象在函数被调用时一定会被构造，不被调用时一定不会被构造。</li>
 </ul>
 <h2 id="2-构造析构赋值运算"><a class="markdownIt-Anchor" href="#2-构造析构赋值运算"></a> 2. 构造/析构/赋值运算</h2>
-<h3 id="了解-c-默默编写并调用哪些函数"><a class="markdownIt-Anchor" href="#了解-c-默默编写并调用哪些函数"></a> 了解 C++ 默默编写并调用哪些函数</h3>
+<h3 id="条款-05了解-c-默默编写并调用哪些函数"><a class="markdownIt-Anchor" href="#条款-05了解-c-默默编写并调用哪些函数"></a> 条款 05：了解 C++ 默默编写并调用哪些函数</h3>
+<ul>
+<li>编译器可以自动为 class 创建 default 构造函数、copy 构造函数、copy assigment 运算符以及析构函数。</li>
+<li>编译器创建的 opy 构造函数、copy assigment 运算符单纯地将来源对象的每一个 non-static 成员变量拷贝到目标对象。</li>
+<li>如果一个类有数据成员不能默认构造、拷贝、复制或销毁，则对应的成员函数将被定义为删除的。<br />
+比如含有 reference 成员、const 成员或者该类的基类将 copy 操作定义为 private 的派生类。</li>
+</ul>
 
             </div>
             <hr>

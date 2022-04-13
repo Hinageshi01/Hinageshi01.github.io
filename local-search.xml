@@ -35,7 +35,7 @@
     <link href="/2022/03/04/EffectiveCpp/"/>
     <url>/2022/03/04/EffectiveCpp/</url>
     
-    <content type="html"><![CDATA[<h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2><p>  Effective C++ 的学习笔记。</p><h2 id="1-让自己习惯-c"><a class="markdownIt-Anchor" href="#1-让自己习惯-c"></a> 1. 让自己习惯 C++</h2><h3 id="条款-01视-c-为一个语言联邦"><a class="markdownIt-Anchor" href="#条款-01视-c-为一个语言联邦"></a> 条款 01：视 C++ 为一个语言联邦</h3><p>C、Object-Oriented C++、Template C++、STL</p><h3 id="条款-02尽量以-constenuminline替换-define"><a class="markdownIt-Anchor" href="#条款-02尽量以-constenuminline替换-define"></a> 条款 02：尽量以 const，enum，inline，替换 #define</h3><ul><li>当写下 <code>#define MY_PIE 3.14</code>，名称 MY_PIE 也许从未被编译器看见，如果此常量产生了一个错误，这个错误信息也许会提到 3.14 而不是 MY_PIE，因为这个名称可能并未进入记号表。</li><li>使用常量可能比使用 #define 导致较小量的码，因为编译器盲目地将 MY_PIE 替换为 3.14。</li><li>当写下 <code>#define CALL_MAX(a, b) f((a) &gt; (b) ? (a) : (b))</code>，必须记住为每个实参加上小括号，即便如此依旧会产生一些问题：</li></ul><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> a = <span class="hljs-number">5</span>, b = <span class="hljs-number">0</span>;<br><span class="hljs-built_in">CALL_MAX</span>(++a, b);        <span class="hljs-comment">// a 被累加两次</span><br><span class="hljs-built_in">CALL_MAX</span>(++a, b + <span class="hljs-number">10</span>);   <span class="hljs-comment">// a 被累加一次</span><br></code></pre></div></td></tr></table></figure><p>这里最好使用模板内联函数，同时保证效率和安全性。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">CALL_MAX</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T &amp;a, <span class="hljs-keyword">const</span> T &amp;b)</span> </span>&#123;<br><span class="hljs-built_in">f</span>(a &gt; b ? a : b);<br>&#125;<br></code></pre></div></td></tr></table></figure><h3 id="条款-03尽可能使用-const"><a class="markdownIt-Anchor" href="#条款-03尽可能使用-const"></a> 条款 03：尽可能使用 const</h3><ul><li>令函数返回一个常量值，往往可以降低用户错误造成的意外，而又不至于放弃安全性和高效性。比如这么做可以避免发生 <code>a * b = c</code> 这样的错误。</li><li>当 const 和 non-const 成员函数有着实质等价的实现时，令 non-const 版本调用 const 版本可以避免代码重复。</li></ul><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Text</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br><span class="hljs-comment">// ...</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> &amp;<span class="hljs-keyword">operator</span>[] (std::<span class="hljs-keyword">size_t</span> pos) <span class="hljs-keyword">const</span> &#123;<br><span class="hljs-comment">// 一些检验和日志</span><br><span class="hljs-comment">// non-const 的版本要么把这些全部重写一遍，要么直接调用这个函数</span><br><span class="hljs-keyword">return</span> text[pos];<br>&#125;<br><br><span class="hljs-keyword">char</span> &amp;<span class="hljs-keyword">operator</span>[] (std::<span class="hljs-keyword">size_t</span> pos) &#123;<br><span class="hljs-keyword">return</span><br><span class="hljs-comment">// 外层去除 const 以返回 non-const 的引用</span><br><span class="hljs-keyword">const_cast</span>&lt;<span class="hljs-keyword">char</span> &amp;&gt;(<br><span class="hljs-comment">// 通过添加 const 属性调用 const 版本的重载</span><br><span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">const</span> Text &amp;&gt;(*<span class="hljs-keyword">this</span>)[pos]<br>);<br>&#125;<br><span class="hljs-keyword">private</span>:<br><span class="hljs-keyword">char</span> *text;<br>&#125;;<br></code></pre></div></td></tr></table></figure><p>注：不要让 const 版本调用 non-const 的重载版本。</p><h3 id="条款-04确定对象被使用前已先被初始化"><a class="markdownIt-Anchor" href="#条款-04确定对象被使用前已先被初始化"></a> 条款 04：确定对象被使用前已先被初始化</h3><ul><li>总是在初始化列表中列出所有成员变量，以免还须记住哪些成员变量可以无需初值。</li><li>总是以声明次序列出初始化列表，以免带有初始化次序的变量们产生错误。</li><li>将每个 non-local static 对象搬到自己专属的函数内，这些函数返回一个指向它所含对象的引用。<br />这么做是由于：C++ 对于“定义于不同编译单元内的 non-local static 对象”的初始化次序并无明确定义。<br />但如果以“函数调用”替换“直接访问 non-local static 对象”，就可以保证：对象在函数被调用时一定会被构造，不被调用时一定不会被构造。</li></ul><h2 id="2-构造析构赋值运算"><a class="markdownIt-Anchor" href="#2-构造析构赋值运算"></a> 2. 构造/析构/赋值运算</h2><h3 id="了解-c-默默编写并调用哪些函数"><a class="markdownIt-Anchor" href="#了解-c-默默编写并调用哪些函数"></a> 了解 C++ 默默编写并调用哪些函数</h3>]]></content>
+    <content type="html"><![CDATA[<h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2><p>  Effective C++ 的学习笔记。</p><h2 id="1-让自己习惯-c"><a class="markdownIt-Anchor" href="#1-让自己习惯-c"></a> 1. 让自己习惯 C++</h2><h3 id="条款-01视-c-为一个语言联邦"><a class="markdownIt-Anchor" href="#条款-01视-c-为一个语言联邦"></a> 条款 01：视 C++ 为一个语言联邦</h3><p>C、Object-Oriented C++、Template C++、STL</p><h3 id="条款-02尽量以-constenuminline替换-define"><a class="markdownIt-Anchor" href="#条款-02尽量以-constenuminline替换-define"></a> 条款 02：尽量以 const，enum，inline，替换 #define</h3><ul><li>当写下 <code>#define MY_PIE 3.14</code>，名称 MY_PIE 也许从未被编译器看见，如果此常量产生了一个错误，这个错误信息也许会提到 3.14 而不是 MY_PIE，因为这个名称可能并未进入记号表。</li><li>使用常量可能比使用 #define 导致较小量的码，因为编译器盲目地将 MY_PIE 替换为 3.14。</li><li>当写下 <code>#define CALL_MAX(a, b) f((a) &gt; (b) ? (a) : (b))</code>，必须记住为每个实参加上小括号，即便如此依旧会产生一些问题：</li></ul><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> a = <span class="hljs-number">5</span>, b = <span class="hljs-number">0</span>;<br><span class="hljs-built_in">CALL_MAX</span>(++a, b);        <span class="hljs-comment">// a 被累加两次</span><br><span class="hljs-built_in">CALL_MAX</span>(++a, b + <span class="hljs-number">10</span>);   <span class="hljs-comment">// a 被累加一次</span><br></code></pre></div></td></tr></table></figure><p>这里最好使用模板内联函数，同时保证效率和安全性。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">CALL_MAX</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T &amp;a, <span class="hljs-keyword">const</span> T &amp;b)</span> </span>&#123;<br><span class="hljs-built_in">f</span>(a &gt; b ? a : b);<br>&#125;<br></code></pre></div></td></tr></table></figure><h3 id="条款-03尽可能使用-const"><a class="markdownIt-Anchor" href="#条款-03尽可能使用-const"></a> 条款 03：尽可能使用 const</h3><ul><li>令函数返回一个常量值，往往可以降低用户错误造成的意外，而又不至于放弃安全性和高效性。比如这么做可以避免发生 <code>a * b = c</code> 这样的错误。</li><li>当 const 和 non-const 成员函数有着实质等价的实现时，令 non-const 版本调用 const 版本可以避免代码重复。</li></ul><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Text</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br><span class="hljs-comment">// ...</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> &amp;<span class="hljs-keyword">operator</span>[] (std::<span class="hljs-keyword">size_t</span> pos) <span class="hljs-keyword">const</span> &#123;<br><span class="hljs-comment">// 一些检验和日志</span><br><span class="hljs-comment">// non-const 的版本要么把这些全部重写一遍，要么直接调用这个函数</span><br><span class="hljs-keyword">return</span> text[pos];<br>&#125;<br><br><span class="hljs-keyword">char</span> &amp;<span class="hljs-keyword">operator</span>[] (std::<span class="hljs-keyword">size_t</span> pos) &#123;<br><span class="hljs-keyword">return</span><br><span class="hljs-comment">// 外层去除 const 以返回 non-const 的引用</span><br><span class="hljs-keyword">const_cast</span>&lt;<span class="hljs-keyword">char</span> &amp;&gt;(<br><span class="hljs-comment">// 通过添加 const 属性调用 const 版本的重载</span><br><span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">const</span> Text &amp;&gt;(*<span class="hljs-keyword">this</span>)[pos]<br>);<br>&#125;<br><span class="hljs-keyword">private</span>:<br><span class="hljs-keyword">char</span> *text;<br>&#125;;<br></code></pre></div></td></tr></table></figure><p>注：不要让 const 版本调用 non-const 的重载版本。</p><h3 id="条款-04确定对象被使用前已先被初始化"><a class="markdownIt-Anchor" href="#条款-04确定对象被使用前已先被初始化"></a> 条款 04：确定对象被使用前已先被初始化</h3><ul><li>总是在初始化列表中列出所有成员变量，以免还须记住哪些成员变量可以无需初值。</li><li>总是以声明次序列出初始化列表，以免带有初始化次序的变量们产生错误。</li><li>将每个 non-local static 对象搬到自己专属的函数内，这些函数返回一个指向它所含对象的引用。<br />这么做是由于：C++ 对于“定义于不同编译单元内的 non-local static 对象”的初始化次序并无明确定义。<br />但如果以“函数调用”替换“直接访问 non-local static 对象”，就可以保证：对象在函数被调用时一定会被构造，不被调用时一定不会被构造。</li></ul><h2 id="2-构造析构赋值运算"><a class="markdownIt-Anchor" href="#2-构造析构赋值运算"></a> 2. 构造/析构/赋值运算</h2><h3 id="条款-05了解-c-默默编写并调用哪些函数"><a class="markdownIt-Anchor" href="#条款-05了解-c-默默编写并调用哪些函数"></a> 条款 05：了解 C++ 默默编写并调用哪些函数</h3><ul><li>编译器可以自动为 class 创建 default 构造函数、copy 构造函数、copy assigment 运算符以及析构函数。</li><li>编译器创建的 opy 构造函数、copy assigment 运算符单纯地将来源对象的每一个 non-static 成员变量拷贝到目标对象。</li><li>如果一个类有数据成员不能默认构造、拷贝、复制或销毁，则对应的成员函数将被定义为删除的。<br />比如含有 reference 成员、const 成员或者该类的基类将 copy 操作定义为 private 的派生类。</li></ul>]]></content>
     
     
     
@@ -170,9 +170,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光栅化</tag>
+      
+      <tag>CPP</tag>
       
       <tag>实时</tag>
       
@@ -201,13 +201,13 @@
     
     <tags>
       
-      <tag>光照模型</tag>
-      
       <tag>光栅化</tag>
       
       <tag>中点画线</tag>
       
       <tag>渲染管线</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>透视矫正</tag>
       
@@ -248,11 +248,11 @@
       
       <tag>实时</tag>
       
+      <tag>光线追踪</tag>
+      
       <tag>降噪</tag>
       
       <tag>矩阵</tag>
-      
-      <tag>光线追踪</tag>
       
       <tag>temporal</tag>
       
@@ -285,15 +285,15 @@
     
     <tags>
       
+      <tag>光照模型</tag>
+      
       <tag>CPP</tag>
       
-      <tag>光照模型</tag>
+      <tag>GLSL</tag>
       
       <tag>PBR</tag>
       
       <tag>GGX</tag>
-      
-      <tag>GLSL</tag>
       
       <tag>实时</tag>
       
@@ -363,9 +363,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>GLSL</tag>
       
@@ -437,9 +437,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -497,17 +497,17 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
       <tag>BRDF</tag>
       
-      <tag>辐射度量学</tag>
-      
       <tag>光线追踪</tag>
+      
+      <tag>辐射度量学</tag>
       
       <tag>蒙特卡洛积分</tag>
       
@@ -604,9 +604,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>双线性插值</tag>
       
@@ -637,11 +637,11 @@
     
     <tags>
       
+      <tag>光栅化</tag>
+      
       <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
-      
-      <tag>光栅化</tag>
       
       <tag>反走样</tag>
       
@@ -707,9 +707,9 @@
       
       <tag>C#</tag>
       
-      <tag>对象池</tag>
-      
       <tag>单例模式</tag>
+      
+      <tag>对象池</tag>
       
     </tags>
     
