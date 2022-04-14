@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      851 字
+      969 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      11
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 13, 2022
+                  本文最后更新于：April 14, 2022
                 
               </p>
             
@@ -272,17 +272,25 @@
 <li>总是在初始化列表中列出所有成员变量，以免还须记住哪些成员变量可以无需初值。</li>
 <li>总是以声明次序列出初始化列表，以免带有初始化次序的变量们产生错误。</li>
 <li>将每个 non-local static 对象搬到自己专属的函数内，这些函数返回一个指向它所含对象的引用。<br />
-这么做是由于：C++ 对于“定义于不同编译单元内的 non-local static 对象”的初始化次序并无明确定义。<br />
-但如果以“函数调用”替换“直接访问 non-local static 对象”，就可以保证：对象在函数被调用时一定会被构造，不被调用时一定不会被构造。</li>
+这么做是由于：<br />
+C++ 对于“定义于不同编译单元内的 non-local static 对象”的初始化次序并无明确定义。<br />
+但如果以“函数调用”替换“直接访问 non-local static 对象”，就可以保证：<br />
+对象在函数被调用时一定会被构造，不被调用时一定不会被构造。</li>
 </ul>
 <h2 id="2-构造析构赋值运算"><a class="markdownIt-Anchor" href="#2-构造析构赋值运算"></a> 2. 构造/析构/赋值运算</h2>
 <h3 id="条款-05了解-c-默默编写并调用哪些函数"><a class="markdownIt-Anchor" href="#条款-05了解-c-默默编写并调用哪些函数"></a> 条款 05：了解 C++ 默默编写并调用哪些函数</h3>
 <ul>
-<li>编译器可以自动为 class 创建 default 构造函数、copy 构造函数、copy assigment 运算符以及析构函数。</li>
-<li>编译器创建的 opy 构造函数、copy assigment 运算符单纯地将来源对象的每一个 non-static 成员变量拷贝到目标对象。</li>
+<li>编译器可以自动为 class 创建 default 构造函数、copy 构造函数、copy assigment 操作符以及析构函数。只有当这些函数被调用，它们才会被编译器创建出来。</li>
+<li>编译器创建的 copy 构造函数、copy assigment 操作符单纯地将来源对象的每一个 non-static 成员变量拷贝到目标对象。</li>
 <li>如果一个类有数据成员不能默认构造、拷贝、复制或销毁，则对应的成员函数将被定义为删除的。<br />
 比如含有 reference 成员、const 成员或者该类的基类将 copy 操作定义为 private 的派生类。</li>
 </ul>
+<h3 id="条款-06若不想使用编译器自动生成的函数就该明确拒绝"><a class="markdownIt-Anchor" href="#条款-06若不想使用编译器自动生成的函数就该明确拒绝"></a> 条款 06：若不想使用编译器自动生成的函数，就该明确拒绝</h3>
+<ul>
+<li>为驳回编译器自动提供的技能，可以将相应的成员函数声明为 private 并且不予实现。</li>
+<li>或者继承同样操作的基类</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Uncopyable</span> &#123;</span><br><span class="hljs-keyword">protected</span>:<br>	<span class="hljs-built_in">Uncopyable</span>() &#123;&#125;<br>	~<span class="hljs-built_in">Uncopyable</span>() &#123;&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-built_in">Uncopyable</span>(<span class="hljs-keyword">const</span> Uncopyable&amp;);<br>	Uncopyable&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Uncopyable&amp;);<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> :</span> <span class="hljs-keyword">private</span> Uncopyable &#123;<br>	<span class="hljs-comment">// ...</span><br>&#125;;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>
