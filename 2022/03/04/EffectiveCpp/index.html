@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      969 字
+      1.3k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      11
+      14
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 14, 2022
+                  本文最后更新于：April 15, 2022
                 
               </p>
             
@@ -291,6 +291,18 @@ C++ 对于“定义于不同编译单元内的 non-local static 对象”的初�
 <li>或者继承同样操作的基类</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Uncopyable</span> &#123;</span><br><span class="hljs-keyword">protected</span>:<br>	<span class="hljs-built_in">Uncopyable</span>() &#123;&#125;<br>	~<span class="hljs-built_in">Uncopyable</span>() &#123;&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-built_in">Uncopyable</span>(<span class="hljs-keyword">const</span> Uncopyable&amp;);<br>	Uncopyable&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Uncopyable&amp;);<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> :</span> <span class="hljs-keyword">private</span> Uncopyable &#123;<br>	<span class="hljs-comment">// ...</span><br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<h3 id="条款-07为多态基类声明-virtual-析构函数"><a class="markdownIt-Anchor" href="#条款-07为多态基类声明-virtual-析构函数"></a> 条款 07：为多态基类声明 virtual 析构函数</h3>
+<ul>
+<li>带多态性质的基类应当声明一个 virtual 析构函数，因为：<br />
+当派生类对象经由一个基类指针被删除，而该基类带有一个 non-virtual 析构函数，其结果未定义。<br />
+要消除这个问题很简单：<br />
+给基类一个 virtual 析构函数，此后删除派生类对象便会销毁整个对象，包括所有的派生类成分。</li>
+<li>当类不企图被当作基类，令其析构函数为 virtual 往往是一个馊主意<br />
+虚函数表指针本身会增加类的大小，而类也不再和其他语言内的相同声明拥有一样的结构。</li>
+<li>综上所述，不要继承一个带有 non-virtual 析构函数的类，比如 STL 提供的所有容器。</li>
+<li>如果希望拥有一个抽象基类，而手上又没有 pure virtual 函数，可以将析构函数声明为  pure virtual 函数，但是必须为该函数提供一份定义，否则链接器就会报错。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">MyClass</span>() = <span class="hljs-number">0</span>;<br>&#125;<br>MyClass::~<span class="hljs-built_in">MyClass</span>() &#123;&#125;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>
