@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      1.6k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
+      18
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 15, 2022
+                  本文最后更新于：April 16, 2022
                 
               </p>
             
@@ -303,6 +303,14 @@ C++ 对于“定义于不同编译单元内的 non-local static 对象”的初�
 <li>如果希望拥有一个抽象基类，而手上又没有 pure virtual 函数，可以将析构函数声明为  pure virtual 函数，但是必须为该函数提供一份定义，否则链接器就会报错。</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">MyClass</span>() = <span class="hljs-number">0</span>;<br>&#125;<br>MyClass::~<span class="hljs-built_in">MyClass</span>() &#123;&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="条款-08别让异常逃离析构函数"><a class="markdownIt-Anchor" href="#条款-08别让异常逃离析构函数"></a> 条款 08：别让异常逃离析构函数</h3>
+<ul>
+<li>析构函数绝对不要抛出异常。如果一个被析构函数调用的函数可能抛出异常，析构函数应当捕获任何异常，然后吞下他们（不传播）或者结束程序。<br />
+对 C++ 而言，在两个异常同时存在的情况下，程序若不是结束执行，就是导致不明确行为。</li>
+<li>如果客户需要对某个操作函数运行期间抛出的异常作出反应，那么 class 应该提供一个普通函数（而非在析构函数中）执行该操作。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DBConn</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">close</span><span class="hljs-params">()</span> </span>&#123;<br>		db.<span class="hljs-built_in">close</span>(); <span class="hljs-comment">// 这个函数可能抛出异常</span><br>		closed = <span class="hljs-literal">true</span>;<br>	&#125;<br>	~<span class="hljs-built_in">DBConn</span>()<br>		<span class="hljs-keyword">if</span>(!closed) &#123;<br>			<span class="hljs-keyword">try</span> &#123;<br>				db.<span class="hljs-built_in">close</span>();<br>			&#125;<br>			<span class="hljs-built_in"><span class="hljs-keyword">catch</span></span> (...) &#123;<br>				<span class="hljs-comment">// 记录</span><br>				<span class="hljs-comment">// 接下来，要么默默吞下异常</span><br>				std::<span class="hljs-built_in">abort</span>(); <span class="hljs-comment">// 要么结束程序</span><br>			&#125;<br>		&#125;<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	DBConnection db;<br>	<span class="hljs-keyword">bool</span> closed;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>我们用一定代价（吞下异常或结束程序）保证了析构函数不会抛出异常，同时为客户提供一个提前手动处理该异常的机会。这羊一来，如果真的触发了我们的保险，用户也没有抱怨的立场。</p>
 
             </div>
             <hr>
