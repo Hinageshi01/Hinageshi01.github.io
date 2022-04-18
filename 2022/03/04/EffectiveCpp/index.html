@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2k 字
+      2.3k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      22
+      26
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 17, 2022
+                  本文最后更新于：April 18, 2022
                 
               </p>
             
@@ -321,6 +321,22 @@ C++ 对于“定义于不同编译单元内的 non-local static 对象”的初�
 一旦派生类析构函数开始执行，对象内的派生类成员变量变成现为未定义值，所以 C++ 视它们仿佛不存在。进入基类析构函数后对象就成为一个基类对象。<br />
 那么如何保证每有一个派生类对象被创建，都会调用适当版本的 virtual 函数呢，一种方案是将该 virtual 函数改为 non-virtual 函数，然后要求派生类的构造函数传递必要信息给基类构造函数。由基类的 non-virtual 函数的不同参数实现当不同的派生类对象被构造时执行适当的代码。</li>
 </ul>
+<h3 id="条款-10令-operator-返回一个-this-的引用"><a class="markdownIt-Anchor" href="#条款-10令-operator-返回一个-this-的引用"></a> 条款 10：令 operator= 返回一个 *this 的引用</h3>
+<p>为了实现“连续赋值”，赋值操作符必须返回一个指向操作符左侧实参的引用，这个协议也适用于所有赋值相关的运算。</p>
+<h3 id="调控-11在-operator-中处理自我赋值"><a class="markdownIt-Anchor" href="#调控-11在-operator-中处理自我赋值"></a> 调控 11：在 operator= 中处理“自我赋值”</h3>
+<ul>
+<li>确保对象自我赋值时 operator= 有良好的行为。<br />
+问题在于 operator= 内的 *this（赋值的目的端）和 rhs 有可能是同一个对象，此时如果 delete 成员会同时销毁当前对象和 rhs 的成员。</li>
+</ul>
+<p><strong>比较对象地址</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">ClassName &amp;ClassName::<span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> ClassName &amp;rhs) &#123;<br>	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span> == &amp;rhs)<br>		<span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>	<span class="hljs-keyword">delete</span> data;<br>	data = <span class="hljs-keyword">new</span> <span class="hljs-built_in">DataName</span>(*rhs.data);<br>	<span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><strong>调整语句顺序</strong><br />
+这样保证了“自我赋值的安全性”，但是不具备“异常安全性”：<br />
+如果 <code>new DataName()</code> 抛出异常，当前对象会持有一个指针指向一块被删除的内存。<br />
+我们只需要注意在复制 data 所指的内存之前别删除 data。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">ClassName &amp;<span class="hljs-title">ClassName::operator</span><span class="hljs-params">(<span class="hljs-keyword">const</span> ClassName &amp;rhs)</span> </span>&#123;<br>	DataName *dataOrig = data;<br>	data = <span class="hljs-keyword">new</span> <span class="hljs-built_in">DataName</span>(*rhs.data);<br>	<span class="hljs-keyword">delete</span> data;<br>	<span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><strong>copy-and-swap</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">ClassName &amp;<span class="hljs-title">ClassName::operator</span><span class="hljs-params">(<span class="hljs-keyword">const</span> ClassName &amp;rhs)</span> </span>&#123;<br>	<span class="hljs-function">DataName <span class="hljs-title">tmp</span><span class="hljs-params">(rhs)</span></span>;<br>	<span class="hljs-built_in">swap</span>(tmp); <span class="hljs-comment">// 交换 *this 和 tmp 的的数据。</span><br>	<span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>; <br>&#125;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>
