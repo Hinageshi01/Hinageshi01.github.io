@@ -170,9 +170,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光栅化</tag>
+      
+      <tag>CPP</tag>
       
       <tag>实时</tag>
       
@@ -248,11 +248,11 @@
       
       <tag>实时</tag>
       
-      <tag>光线追踪</tag>
-      
       <tag>降噪</tag>
       
       <tag>矩阵</tag>
+      
+      <tag>光线追踪</tag>
       
       <tag>temporal</tag>
       
@@ -285,9 +285,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -363,9 +363,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>GLSL</tag>
       
@@ -437,9 +437,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -497,17 +497,17 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
       <tag>BRDF</tag>
       
-      <tag>光线追踪</tag>
-      
       <tag>辐射度量学</tag>
+      
+      <tag>光线追踪</tag>
       
       <tag>蒙特卡洛积分</tag>
       
@@ -604,9 +604,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>双线性插值</tag>
       
@@ -637,9 +637,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光栅化</tag>
+      
+      <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
       
@@ -707,9 +707,9 @@
       
       <tag>C#</tag>
       
-      <tag>单例模式</tag>
-      
       <tag>对象池</tag>
+      
+      <tag>单例模式</tag>
       
     </tags>
     
