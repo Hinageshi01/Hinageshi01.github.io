@@ -8,7 +8,7 @@
     <link href="/2022/05/01/GAMES104andEStar/"/>
     <url>/2022/05/01/GAMES104andEStar/</url>
     
-    <content type="html"><![CDATA[<h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2><p>  刚好是同时开设的两门课程，都偏向概念性，就写一起来。后续可能会把 101 和 202 一些提到但是没有实践的 Topics 加进来。有一部分概念是和面经重复的，以这边为主吧，我尽量把这边整理的成体系一点。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2><p>  刚好是同时开设的两门课程，都偏向概念性，就写一起来。后续可能会把 101 和 202 一些提到但是没有实践过的 Topics 加进来。有一部分概念是和面经重复的，以这边为主吧，我尽量把这边整理的成体系一点。</p>]]></content>
     
     
     <categories>
@@ -822,9 +822,9 @@
       
       <tag>2D</tag>
       
-      <tag>打击感</tag>
-      
       <tag>游戏设计</tag>
+      
+      <tag>打击感</tag>
       
     </tags>
     
@@ -892,9 +892,9 @@
       
       <tag>Pixel</tag>
       
-      <tag>游戏设计</tag>
-      
       <tag>Platformer</tag>
+      
+      <tag>游戏设计</tag>
       
     </tags>
     
