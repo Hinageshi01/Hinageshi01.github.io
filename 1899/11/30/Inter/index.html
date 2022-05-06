@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.1k 字
+      4.3k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      55
+      56
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：May 2, 2022
+                  本文最后更新于：May 6, 2022
                 
               </p>
             
@@ -282,6 +282,7 @@
 <li>了解过线性颜色空间吗？<br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35894054">GPU Gems 3 Chapter 24</a><br />
 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/guanzz/p/7416821.html">Gamma 与线性颜色空间</a><br />
+<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27467127/answer/37602200">色彩校正中的 gamma 值是什么？</a><br />
 <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20084968">什么是线性</a><br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/21983679">Tone mapping 进化论</a></li>
 <li>读 glsl，贴图采样、性能优化、高精度浮点。</li>
@@ -451,6 +452,10 @@
 <blockquote>
 <p>But the above code is wrong, and it can cause a disaster at runtime. In particular, the code that’s called for delete p is operator delete(void*), but the code that’s called for delete[] p is operator delete<a href="void*"></a>. The default behavior for the latter is to call the former, but users are allowed to replace the latter with a different behavior (in which case they would normally also replace the corresponding new code in operator new<a href="size_t"></a>). If they replaced the delete[] code so it wasn’t compatible with the delete code, and you called the wrong one (i.e., if you said delete p rather than delete[] p), you could end up with a disaster at runtime.</p>
 </blockquote>
+<p>我并没有完全理解在这样的极端情况中具体会发生什么，这里仅记录一些测试结果。<br />
+在 VS2020 的测试中，对于基本数据类型数组来说，这么操作并不会引起内存泄漏。<br />
+对于自定义的数据类型数组，一旦为其定义了析构函数，便会报错：<code>Critical error detected c0000374</code>。<br />
+若没有定义析构函数，又在对象构造过程中发生了内存分配，便会产生内存泄漏。</p>
 </li>
 <li>
 <p>new 出来的内存可以被 free 吗?<br />
