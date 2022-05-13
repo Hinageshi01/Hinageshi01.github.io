@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.4k 字
+      3.6k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      50
+      51
        分钟
     </span>
   
@@ -298,17 +298,19 @@
 <li>在绑定到GL_FRAMEBUFFER目标之后，所有的读取和写入帧缓冲的操作将会影响当前绑定的帧缓冲。</li>
 <li>但是，现在的帧缓冲还不完整，一个完整的帧缓冲需要满足以下的条件：</li>
 <li>附加至少一个缓冲（颜色、深度或模板缓冲）。</li>
+<li>当创建一个附件的时候我们有两个选项：纹理或渲染缓冲对象(Renderbuffer Object)。</li>
 <li>至少有一个颜色附件(Attachment)。</li>
 <li>所有的附件都必须是完整的（保留了内存）。</li>
 <li>每个缓冲都应该有相同的样本数。</li>
 </ul>
 <p>检查缓冲是否完整：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span> (<span class="hljs-built_in">glCheckFramebufferStatus</span>(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;ERROR::FRAMEBUFFER:: Framebuffer is not complete!&quot;</span> &lt;&lt; std::endl;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span> (<span class="hljs-built_in">glCheckFramebufferStatus</span>(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) &#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;ERROR::FRAMEBUFFER:: Framebuffer is not complete!&quot;</span> &lt;&lt; std::endl;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h4 id="纹理附件"><a class="markdownIt-Anchor" href="#纹理附件"></a> 纹理附件</h4>
 <h5 id="为帧缓冲创建一个纹理和创建一个普通的纹理差不多"><a class="markdownIt-Anchor" href="#为帧缓冲创建一个纹理和创建一个普通的纹理差不多"></a> 为帧缓冲创建一个纹理和创建一个普通的纹理差不多：</h5>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> texture;<br><span class="hljs-built_in">glGenTextures</span>(<span class="hljs-number">1</span>, &amp;texture);<br><span class="hljs-built_in">glBindTexture</span>(GL_TEXTURE_2D, texture);<br><br><span class="hljs-built_in">glTexImage2D</span>(GL_TEXTURE_2D, <span class="hljs-number">0</span>, GL_RGB, <span class="hljs-number">800</span>, <span class="hljs-number">600</span>, <span class="hljs-number">0</span>, GL_RGB, GL_UNSIGNED_BYTE, <span class="hljs-literal">NULL</span>);<br><br><span class="hljs-built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);<br><span class="hljs-built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);<br><span class="hljs-comment">// 在使用卷积核时，纹理的环绕方式可能会影响结果</span><br><span class="hljs-built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);<br><span class="hljs-built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);<br></code></pre></div></td></tr></table></figure>
 <h5 id="附加到缓冲上"><a class="markdownIt-Anchor" href="#附加到缓冲上"></a> 附加到缓冲上：</h5>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">glFramebufferTexture2D</span>(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, <span class="hljs-number">0</span>);<br></code></pre></div></td></tr></table></figure>
+<p>参数分别是：帧缓冲的目标，附件类型，纹理类型，纹理本身，多级渐远纹理级别</p>
 <h4 id="渲染缓冲对象附件"><a class="markdownIt-Anchor" href="#渲染缓冲对象附件"></a> 渲染缓冲对象附件</h4>
 <p>与纹理附件的区别：不可以对他采样，但是写入与复制比纹理附件快。</p>
 <h5 id="创建一个渲染缓冲对象的代码和帧缓冲的代码很类似"><a class="markdownIt-Anchor" href="#创建一个渲染缓冲对象的代码和帧缓冲的代码很类似"></a> 创建一个渲染缓冲对象的代码和帧缓冲的代码很类似：</h5>
@@ -323,7 +325,8 @@
 <h3 id="后处理"><a class="markdownIt-Anchor" href="#后处理"></a> 后处理</h3>
 <h4 id="步骤-2"><a class="markdownIt-Anchor" href="#步骤-2"></a> 步骤</h4>
 <ul>
-<li>绑定我们的帧缓冲，将场景绘制到纹理上</li>
+<li>绑定我们的帧缓冲，将场景绘制到纹理上<br />
+现在这个帧缓冲就完整了，我们只需要绑定这个帧缓冲对象，让渲染到帧缓冲的缓冲中而不是默认的帧缓冲中。之后的渲染指令将会影响当前绑定的帧缓冲。所有的深度和模板操作都会从当前绑定的帧缓冲的深度和模板附件中（如果有的话）读取。</li>
 <li>绑定默认的帧缓冲</li>
 <li>绘制一个横跨整个屏幕的四边形，将帧缓冲的颜色缓冲作为它的纹理。</li>
 </ul>
