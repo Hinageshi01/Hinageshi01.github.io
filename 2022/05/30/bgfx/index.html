@@ -1,0 +1,536 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Hinageshi">
+  <meta name="keywords" content="">
+  
+  <title>笔记 bgfx - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":25,"cursorChar":"","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["_slim",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":17057737,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hinageshi的駄菓子屋</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                Links
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/backGround.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="笔记 bgfx">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-30 20:43" pubdate>
+        May 30, 2022
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      681 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      8
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">笔记 bgfx</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：May 31, 2022
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
+<p>  <a target="_blank" rel="noopener" href="https://github.com/bkaradzic/bgfx">bgfx</a> 是一个跨平台的渲染框架。它将 DX、GL、VK 等图形 API 封装成了统一的接口，抹除了这些 API 之间的差异性。这样我们在写渲染逻辑的时候就只需要调用这层 RHI 提供的 API 就好，而不需要关心程序实际上使用的是什么图形 API 了。</p>
+<p>bgfx 的使用通常可以从实现 <code>entry::AppI</code> 接口中</p>
+<ul>
+<li><code>virtual void init(int32_t _argc, const char* const* _argv, uint32_t _width, uint32_t _height)</code></li>
+<li><code>virtual int shutdown()</code></li>
+<li><code>virtual bool update()</code></li>
+</ul>
+<p>这三个纯虚函数开始。</p>
+<h2 id="init"><a class="markdownIt-Anchor" href="#init"></a> init</h2>
+<h3 id="bgfxinit-的声明"><a class="markdownIt-Anchor" href="#bgfxinit-的声明"></a> bgfx::init() 的声明</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// @param[in] _init 初始化参数</span><br><span class="hljs-comment">// @returns 初始化是否成功</span><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Init&amp; _init = &#123;&#125;)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<p>该函数会在设置了初始化参数之后调用 <code>bool Context::init(const Init&amp; _init)</code> 完成真正的初始化，这之后是一些错误处理工作。</p>
+<h4 id="init-结构体的声明"><a class="markdownIt-Anchor" href="#init-结构体的声明"></a> Init 结构体的声明</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Init</span> &#123;</span><br>	<span class="hljs-built_in">Init</span>();<br><br>	<span class="hljs-comment">// RendererType::Enum 罗列了 bgfx 支持的所有图形 API 类型</span><br>	<span class="hljs-comment">// 每一个类型都对应了 libs/bgfx/src 目录下的一份渲染后端代码 .h/.cpp</span><br>	RendererType::Enum type;<br><br>	<span class="hljs-comment">// 显卡供应商的 ID</span><br>	<span class="hljs-keyword">uint16_t</span> vendorId;<br><br>	<span class="hljs-comment">// 如果同一供应商有两张显卡，那么可以用 deviceId 来指定用哪一张</span><br>	<span class="hljs-keyword">uint16_t</span> deviceId;<br><br>	<span class="hljs-comment">// 指定开启显卡特性的掩码</span><br>	<span class="hljs-keyword">uint64_t</span> capabilities;<br><br>	<span class="hljs-comment">// 开发期间打开，输出更多的调试信息到 Output 窗口</span><br>	<span class="hljs-keyword">bool</span> debug;<br>	<span class="hljs-keyword">bool</span> profile;<br><br>	<span class="hljs-comment">// 平台数据，包括 Native display type、Native window handle、context 等</span><br>	PlatformData platformData;<br><br>	<span class="hljs-comment">// 指定渲染目标的 FrameBuffer 的格式、大小、数量、刷新方式、帧延迟等</span><br>	Resolution resolution;<br><br>	<span class="hljs-comment">// 可配置运行时限制参数</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Limits</span> &#123;</span><br>		<span class="hljs-built_in">Limits</span>();<br><br>		<span class="hljs-keyword">uint16_t</span> maxEncoders;       <span class="hljs-comment">// 最大 command buffer 数量</span><br>		<span class="hljs-keyword">uint32_t</span> minResourceCbSize; <span class="hljs-comment">// 最小 command buffer 大小</span><br>		<span class="hljs-keyword">uint32_t</span> transientVbSize;   <span class="hljs-comment">// 最大 vertex buffer 大小</span><br>		<span class="hljs-keyword">uint32_t</span> transientIbSize;   <span class="hljs-comment">// 最大 index buffer 大小</span><br>	&#125;;		<br>	Limits limits;<br><br>	<span class="hljs-comment">// 提供特定应用的回调接口</span><br>	CallbackI* callback;<br>	<br>	<span class="hljs-comment">// 指定一个自定义的内存分配器，bgfx 假设它是线程安全的</span><br>	bx::AllocatorI* allocator;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<h3 id="bgfxsetdebug-的声明"><a class="markdownIt-Anchor" href="#bgfxsetdebug-的声明"></a> bgfx::setDebug() 的声明</h3>
+<p>设置 Debug 相关的标志</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">//  @param[in] _debug 启用的标志</span><br><span class="hljs-comment">//    - `BGFX_DEBUG_IFH` - 无限快的硬件。当这个标志被设置时，所有的渲染调用将被跳过。</span><br><span class="hljs-comment">//       这在分析时很有用，可以快速评估 CPU 和 GPU 之间的潜在瓶颈。</span><br><span class="hljs-comment">//    - `BGFX_DEBUG_PROFILER` - 启用分析器</span><br><span class="hljs-comment">//    - `BGFX_DEBUG_STATS` - 显示内部统计数据</span><br><span class="hljs-comment">//    - `BGFX_DEBUG_TEXT` - 显示 Debug 文本</span><br><span class="hljs-comment">//    - `BGFX_DEBUG_WIREFRAME` - 线框渲染</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setDebug</span><span class="hljs-params">(<span class="hljs-keyword">uint32_t</span> _debug)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<h3 id="bgfxsetviewclear-的声明"><a class="markdownIt-Anchor" href="#bgfxsetviewclear-的声明"></a> bgfx::setViewClear() 的声明</h3>
+<p>设置清屏相关的标志</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">//  @param[in] _id View id.</span><br><span class="hljs-comment">//  @param[in] _flags 清屏的标志</span><br><span class="hljs-comment">//    - BGFX_CLEAR_COLOR</span><br><span class="hljs-comment">//    - BGFX_CLEAR_DEPTH</span><br><span class="hljs-comment">//    - BGFX_CLEAR_STENCIL 等</span><br><span class="hljs-comment">//  @param[in] _rgba 颜色的新值</span><br><span class="hljs-comment">//  @param[in] _depth 深度的新值</span><br><span class="hljs-comment">//  @param[in] _stencil 模板的新值</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setViewClear</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">	ViewId _id,</span></span><br><span class="hljs-params"><span class="hljs-function">	<span class="hljs-keyword">uint16_t</span> _flags,</span></span><br><span class="hljs-params"><span class="hljs-function">	<span class="hljs-keyword">uint32_t</span> _rgba = <span class="hljs-number">0x000000ff</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">	<span class="hljs-keyword">float</span> _depth = <span class="hljs-number">1.0f</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">	<span class="hljs-keyword">uint8_t</span> _stencil = <span class="hljs-number">0</span></span></span><br><span class="hljs-params"><span class="hljs-function">	)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<h2 id="shutdown"><a class="markdownIt-Anchor" href="#shutdown"></a> shutdown</h2>
+<p>先 <code>imguiDestroy()</code> 再 <code>bgfx::shutdown()</code><br />
+与 init 相对，在 <code>bgfx::shutdown()</code> 中会调用 <code>Context::shutdown()</code></p>
+<h2 id="update"><a class="markdownIt-Anchor" href="#update"></a> update</h2>
+<h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
+<p><a target="_blank" rel="noopener" href="https://t-rvw.github.io/blog/2022/05/28/game_engine_rhi/">自制游戏引擎 - 图形API</a><br />
+<a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/">bgfx 文档</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/CPP/">CPP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/RHI/">RHI</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/">游戏引擎</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/01/GAMES104andEStar/">
+                        <span class="hidden-mobile">笔记 GAMES104 & E 星计划</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '85a7e9d4dc91420ab528eb5d3179e60a'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <br/> 本站内容依据 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> 许可证进行授权 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- KaTeX -->
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.10/dist/katex.min.css" />
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -192,6 +192,84 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/10/14/RTRT/" target="_self">
+          <img src="/img/RTRT/01.png" srcset="/img/loading.gif" lazyload alt="GAMES202 实时光线追踪">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/14/RTRT/" target="_self">
+          GAMES202 实时光线追踪
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/14/RTRT/" target="_self">
+          
+          
+            
+          
+           序言
+  如果认为，以路径追踪的方式，计算一次一着色点的直接光照和一次弹射的间接光照为 1 sample per pixel (1 SPP)。那么对于一帧，即使是 RTX 系列的 GPU 也只能做到 1 SPP，此时的噪声会非常夸张。但是路径追踪依旧为我们提供了非常宝贵的间接光照信息，那么接下来工作的重心就在如何降噪上了。降噪分为两个部分，单帧降噪与像素在时间上的复用。
+ 单帧降噪
+ 双边滤波
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-14 17:20" pubdate>
+              2021-10-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+            
+              <a href="/categories/GAMES202/">GAMES202</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+              <a href="/tags/%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7/">全局光照</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
+            
+              <a href="/tags/%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/">光线追踪</a>
+            
+              <a href="/tags/%E9%99%8D%E5%99%AA/">降噪</a>
+            
+              <a href="/tags/%E7%9F%A9%E9%98%B5/">矩阵</a>
+            
+              <a href="/tags/temporal/">temporal</a>
+            
+              <a href="/tags/%E8%81%94%E5%90%88%E5%8F%8C%E8%BE%B9%E6%BB%A4%E6%B3%A2/">联合双边滤波</a>
+            
+              <a href="/tags/a-trous-wavelet/">a-trous wavelet</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/10/09/Kulla/" target="_self">
           <img src="/img/Kulla/01.png" srcset="/img/loading.gif" lazyload alt="GAMES202 Kulla-Conty 微表面模型能量补偿">
         </a>
@@ -869,75 +947,6 @@ O⃗+tD⃗\vec{O}+t\vec{D}O+tD
               <a href="/tags/AABB/">AABB</a>
             
               <a href="/tags/Moller-Trumbore/">Möller-Trumbore</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/09/07/BulinnPhong/" target="_self">
-          <img src="/img/Phong/01.png" srcset="/img/loading.gif" lazyload alt="GAMES101 Blinn-Phong 光照模型">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/09/07/BulinnPhong/" target="_self">
-          GAMES101 Blinn-Phong 光照模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/09/07/BulinnPhong/" target="_self">
-          
-          
-            
-          
-           序言
-  该模型将任一点的光照分为三部分：1.由光源方向与法线方向决定的漫反射、2.由光源方向法线方向与观察方向决定的高光、3.恒定的环境光。
- getColorBilinear
-
-对贴图采样时采用双线性插值的方法以获得柔和的过度。
-12345678910111213141516171819202122232425262728Eigen::Vector3f getColorBilinear(fl
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-07 21:40" pubdate>
-              2021-09-07
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
-            
-              <a href="/categories/GAMES101/">GAMES101</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CPP/">CPP</a>
-            
-              <a href="/tags/%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">光照模型</a>
-            
-              <a href="/tags/%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC/">双线性插值</a>
-            
-              <a href="/tags/DepthBuffer/">DepthBuffer</a>
             
           </div>
         
