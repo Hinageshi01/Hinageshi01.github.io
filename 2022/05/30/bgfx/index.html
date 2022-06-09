@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.4k 字
+      1.9k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      18
+      26
        分钟
     </span>
   
@@ -241,13 +241,14 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：June 3, 2022
+                  本文最后更新于：June 8, 2022
                 
               </p>
             
             <div class="markdown-body">
               <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
 <p>  <a target="_blank" rel="noopener" href="https://github.com/bkaradzic/bgfx">bgfx</a> 是一个跨平台的渲染框架。它将 DX、GL、VK 等图形 API 封装成了统一的接口，抹除了这些 API 之间的差异性。这样我们在写渲染逻辑的时候就只需要调用这层 RHI 提供的 API 就好，而不需要关心程序实际上使用的是什么图形 API 了。</p>
+<p><img src="/img/bgfx/uml.jpg" srcset="/img/loading.gif" lazyload alt="https://www.jianshu.com/p/cd11172668c2" /></p>
 <p>bgfx 的使用通常可以从实现 <code>entry::AppI</code> 接口中</p>
 <ul>
 <li><code>virtual void init(int32_t _argc, const char* const* _argv, uint32_t _width, uint32_t _height)</code></li>
@@ -279,6 +280,7 @@
 <h3 id="顶点"><a class="markdownIt-Anchor" href="#顶点"></a> 顶点</h3>
 <p>以 example-01-cubes 为例</p>
 <h4 id="poscolorvertex-结构体"><a class="markdownIt-Anchor" href="#poscolorvertex-结构体"></a> PosColorVertex 结构体</h4>
+<p>顶点结构体的命名可以自定义。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PosColorVertex</span> &#123;</span><br>	<span class="hljs-keyword">float</span> m_x;<br>	<span class="hljs-keyword">float</span> m_y;<br>	<span class="hljs-keyword">float</span> m_z;<br>	<span class="hljs-keyword">uint32_t</span> m_abgr;<br><br>	<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>&#123;<br>		ms_layout<br>			.<span class="hljs-built_in">begin</span>() <span class="hljs-comment">// 返回对象自身的引用</span><br>			<span class="hljs-comment">// 前三个 float 作为坐标数据</span><br>			.<span class="hljs-built_in">add</span>(bgfx::Attrib::Position, <span class="hljs-number">3</span>, bgfx::AttribType::Float)<br>			<span class="hljs-comment">// 然后四个 Uint8 作为颜色数据，并归一化</span><br>			<span class="hljs-comment">// 归一化：0-255 的 Uint8 在 VertexShader 中为 0.0-1.0 </span><br>			.<span class="hljs-built_in">add</span>(bgfx::Attrib::Color0,   <span class="hljs-number">4</span>, bgfx::AttribType::Uint8, <span class="hljs-literal">true</span>)<br>			.<span class="hljs-built_in">end</span>(); <span class="hljs-comment">// 存储数据</span><br>	&#125;;<br><br>	<span class="hljs-keyword">static</span> bgfx::VertexLayout ms_layout;<br>&#125;;<br><br>bgfx::VertexLayout PosColorVertex::ms_layout;<br></code></pre></div></td></tr></table></figure>
 <h4 id="实际的数据"><a class="markdownIt-Anchor" href="#实际的数据"></a> 实际的数据</h4>
 <p>顶点数据</p>
@@ -290,7 +292,11 @@
 <h5 id="handle"><a class="markdownIt-Anchor" href="#handle"></a> Handle</h5>
 <p>在 bgfx 中每个 Buffer、Texture、Program 等都会有一个对应的 Handle 对象，并且通过 bgfx::creatXXX 接口来创建，这些接口基本都需要一个 makeRef 创建的对象。</p>
 <h5 id="bgfxmakeref"><a class="markdownIt-Anchor" href="#bgfxmakeref"></a> bgfx::makeRef()</h5>
-<p>makeRef 不会申请新的内存，他仅仅返回一个 <code>Memory*</code>，包含了对象的指针和大小。</p>
+<p>makeRef 不会申请新的内存，他仅仅返回一个 <code>Memory*</code>，包含了原对象的指针和大小。<br />
+同时在内部使用 <code>MemoryRef</code> 对象进行内存的管理，<code>MemoryRef</code> 存储了一个删除器及其参数。<br />
+这么做的好处是：可控且统一的内存管理方式，记录 size 大小以防丢失，多个 <code>MemoryRef</code> 可以对应同一份资源。<br />
+缺点是：当原指针被释放时，<code>MemoryRef</code> 中存储的指针会成为悬垂指针。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">const</span> Memory* <span class="hljs-title">makeRef</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span>* _data, <span class="hljs-keyword">uint32_t</span> _size, ReleaseFn _releaseFn, <span class="hljs-keyword">void</span>* _userData)</span> </span>&#123;<br>	MemoryRef* memRef = (MemoryRef*)<span class="hljs-built_in">BX_ALLOC</span>(g_allocator, <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(MemoryRef) );<br>	memRef-&gt;mem.size  = _size;<br>	memRef-&gt;mem.data  = (<span class="hljs-keyword">uint8_t</span>*)_data;<br>	memRef-&gt;releaseFn = _releaseFn;<br>	memRef-&gt;userData  = _userData;<br>	<span class="hljs-keyword">return</span> &amp;memRef-&gt;mem;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h3 id="program"><a class="markdownIt-Anchor" href="#program"></a> Program</h3>
 <p>通过 Shader 创建 Program</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">m_program = <span class="hljs-built_in">loadProgram</span>(<span class="hljs-string">&quot;vs_cubes&quot;</span>, <span class="hljs-string">&quot;fs_cubes&quot;</span>);<br></code></pre></div></td></tr></table></figure>
@@ -302,9 +308,39 @@
 与 init 相对，在 <code>bgfx::shutdown()</code> 中会调用 <code>Context::shutdown()</code></li>
 </ul>
 <h2 id="update"><a class="markdownIt-Anchor" href="#update"></a> update</h2>
+<h2 id="渲染流程以使用-opengl-作为渲染-api-为例"><a class="markdownIt-Anchor" href="#渲染流程以使用-opengl-作为渲染-api-为例"></a> 渲染流程（以使用 OpenGl 作为渲染 API 为例）</h2>
+<ul>
+<li>对应平台的 entry.cpp 中 <code>entry::Context::run()</code> 调用</li>
+<li>– <code>bgfx::renderFrame()</code> 调用</li>
+<li>— <code>bgfx::Context::renderFrame()</code> 调用</li>
+<li>----- <code>bgfx::gl::RendererContextGL::submit()</code> 调用</li>
+<li>------- <strong><code>glDrawElementsInstanced()</code></strong></li>
+<li>------- <code>bgfx::blit()</code> 调用</li>
+<li>--------- <code>bgfx::gl::RendererContextGL::blitRender()</code> 调用</li>
+<li>----------- <strong><code>glDrawElements()</code></strong></li>
+</ul>
+<h3 id="gldrawelementsinstanced-是如何在-submit-中被调用的"><a class="markdownIt-Anchor" href="#gldrawelementsinstanced-是如何在-submit-中被调用的"></a> <code>glDrawElementsInstanced()</code> 是如何在 <code>submit()</code> 中被调用的</h3>
+<p>列出的代码是简化过的</p>
+<h4 id="drawm_numindices-的设置"><a class="markdownIt-Anchor" href="#drawm_numindices-的设置"></a> draw.m_numIndices 的设置</h4>
+<p>首先在 example 中调用 <code>bgfx::setIndexBuffer()</code>，这个函数有以下重载：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setIndexBuffer</span><span class="hljs-params">(IndexBufferHandle _handle)</span> </span>&#123;<br>	s_ctx-&gt;m_encoder0-&gt;<span class="hljs-built_in">setIndexBuffer</span>(_handle);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setIndexBuffer</span><span class="hljs-params">(IndexBufferHandle _handle, <span class="hljs-keyword">uint32_t</span> _firstIndex, <span class="hljs-keyword">uint32_t</span> _numIndices)</span> </span>&#123;<br>	s_ctx-&gt;m_encoder0-&gt;<span class="hljs-built_in">setIndexBuffer</span>(_handle, _firstIndex, _numIndices);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>他们分别会调用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Encoder::setIndexBuffer</span><span class="hljs-params">(IndexBufferHandle _handle)</span> </span>&#123;<br>	<span class="hljs-built_in">setIndexBuffer</span>(_handle, <span class="hljs-number">0</span>, UINT32_MAX);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Encoder::setIndexBuffer</span><span class="hljs-params">(IndexBufferHandle _handle, <span class="hljs-keyword">uint32_t</span> _firstIndex, <span class="hljs-keyword">uint32_t</span> _numIndices)</span> </span>&#123;<br>	<span class="hljs-built_in">BGFX_ENCODER</span>(<span class="hljs-built_in">setIndexBuffer</span>(_handle, ib, _firstIndex, _numIndices) );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>他们最终会经由 <code>BGFX_ENCODER</code> 这个宏定义去调用 <code>bgfx::EncoderImpI::setIndexBuffer()</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setIndexBuffer</span><span class="hljs-params">(IndexBufferHandle _handle, <span class="hljs-keyword">const</span> IndexBuffer&amp; _ib, <span class="hljs-keyword">uint32_t</span> _firstIndex, <span class="hljs-keyword">uint32_t</span> _numIndices)</span> </span>&#123;<br>	m_draw.m_startIndex  = _firstIndex;<br>	m_draw.m_numIndices  = _numIndices;<br>	m_draw.m_indexBuffer = _handle;<br>	m_draw.m_submitFlags |= <span class="hljs-number">0</span> == (_ib.m_flags &amp; BGFX_BUFFER_INDEX32) ? BGFX_SUBMIT_INTERNAL_NONE : BGFX_SUBMIT_INTERNAL_INDEX32;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h4 id="drawm_numindices-的判断"><a class="markdownIt-Anchor" href="#drawm_numindices-的判断"></a> draw.m_numIndices 的判断</h4>
+<p>在 <code>renderer_gl.cpp</code> line 1815</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 使用一整块 IndexBuffer 进行绘制</span><br><span class="hljs-keyword">if</span> (UINT32_MAX == draw.m_numIndices) &#123;<br>	<span class="hljs-built_in">GL_CHECK</span>(<span class="hljs-built_in">glDrawElementsInstanced</span>(prim.m_type<br>		, numIndices<br>		, indexFormat<br>		, (<span class="hljs-keyword">void</span>*)<span class="hljs-number">0</span><br>		, draw.m_numInstances<br>		) );<br>&#125;<br><span class="hljs-comment">// 多个 drawcall 复用 IndexBuffer</span><br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (prim.m_min &lt;= draw.m_numIndices) &#123;<br>	<span class="hljs-comment">// 确保该次 drawcall 的索引数量能支持绘制当前选择的图元类型</span><br>	<span class="hljs-built_in">GL_CHECK</span>(<span class="hljs-built_in">glDrawElementsInstanced</span>(prim.m_type<br>		, numIndices<br>		, indexFormat<br>		<span class="hljs-comment">// 计算该次 drawcall 使用的 IndexBuffer 的起始位置</span><br>		, (<span class="hljs-keyword">void</span>*)(<span class="hljs-keyword">uintptr_t</span>)(draw.m_startIndex*indexSize)<br>		, draw.m_numInstances<br>		) );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="bgfxblit-是如何在-submit-中被调用的"><a class="markdownIt-Anchor" href="#bgfxblit-是如何在-submit-中被调用的"></a> <code>bgfx::blit()</code> 是如何在 <code>submit()</code> 中被调用的</h3>
+<h4 id="_render-m_debug-的设置"><a class="markdownIt-Anchor" href="#_render-m_debug-的设置"></a> _render-&gt;m_debug 的设置</h4>
+<p>在 example 中调用 <code>bgfx::setDebug()</code> 即可</p>
+<h4 id="_render-m_debug-的判断"><a class="markdownIt-Anchor" href="#_render-m_debug-的判断"></a> _render-&gt;m_debug 的判断</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span> (_render-&gt;m_debug &amp; (BGFX_DEBUG_IFH|BGFX_DEBUG_STATS) )&#123;<br>	<span class="hljs-built_in">blit</span>(<span class="hljs-keyword">this</span>, _textVideoMemBlitter, tvm);<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
 <p><a target="_blank" rel="noopener" href="https://t-rvw.github.io/blog/2022/05/28/game_engine_rhi/">自制游戏引擎 - 图形API</a><br />
-<a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/">bgfx 文档</a></p>
+<a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/">bgfx 文档</a><br />
+<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/cd11172668c2">跨平台渲染引擎之路：bgfx 分析</a><br />
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/android_wql/article/details/85044252">bgfx从入门到没有放弃</a></p>
 
             </div>
             <hr>
