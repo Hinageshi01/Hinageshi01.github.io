@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.9k 字
+      2.2k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      25
+      29
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：June 13, 2022
+                  本文最后更新于：June 14, 2022
                 
               </p>
             
@@ -301,7 +301,7 @@
 <p>通过 Shader 创建 Program</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">m_program = <span class="hljs-built_in">loadProgram</span>(<span class="hljs-string">&quot;vs_cubes&quot;</span>, <span class="hljs-string">&quot;fs_cubes&quot;</span>);<br></code></pre></div></td></tr></table></figure>
 <h4 id="shader"><a class="markdownIt-Anchor" href="#shader"></a> Shader</h4>
-<p>上面 <code>loadProgram()</code> 读取的 Shader 是 <code>bgfx\examples\runtime\shaders\对应API</code> 下的 <code>.bin</code> 文件。这种文件是通过 bgfx 自制的 Shader 编译工具 <code>shaderc.exe</code> 生成的。bgfx 各类工具都位于 tools 文件夹下。<br />
+<p>上面 <code>loadProgram()</code> 读取的 Shader 是 <code>bgfx\examples\runtime\shaders\对应API</code> 下的 <code>.bin</code> 文件。这种文件是通过 bgfx 自制的 Shader 编译工具 <code>shaderc.exe</code> 生成的。bgfx 的各类工具都位于 tools 文件夹下。<br />
 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/tools.html#shader-compiler-shaderc">https://bkaradzic.github.io/bgfx/tools.html#shader-compiler-shaderc</a></p>
 <h2 id="shutdown"><a class="markdownIt-Anchor" href="#shutdown"></a> shutdown</h2>
 <ul>
@@ -311,7 +311,8 @@
 与 init 相对，在 <code>bgfx::shutdown()</code> 中会调用 <code>Context::shutdown()</code></li>
 </ul>
 <h2 id="update"><a class="markdownIt-Anchor" href="#update"></a> update</h2>
-<h2 id="渲染流程以使用-opengl-作为渲染-api-为例"><a class="markdownIt-Anchor" href="#渲染流程以使用-opengl-作为渲染-api-为例"></a> 渲染流程（以使用 OpenGl 作为渲染 API 为例）</h2>
+<h2 id="渲染流程"><a class="markdownIt-Anchor" href="#渲染流程"></a> 渲染流程</h2>
+<p>（以使用 OpenGl 作为渲染 API 为例）</p>
 <ul>
 <li>对应平台的 entry.cpp 中 <code>entry::Context::run()</code> 调用</li>
 <li>---- <code>bgfx::renderFrame()</code> 调用</li>
@@ -339,6 +340,21 @@
 <p>在 example 中调用 <code>bgfx::setDebug()</code> 即可</p>
 <h4 id="_render-m_debug-的判断"><a class="markdownIt-Anchor" href="#_render-m_debug-的判断"></a> _render-&gt;m_debug 的判断</h4>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span> (_render-&gt;m_debug &amp; (BGFX_DEBUG_IFH|BGFX_DEBUG_STATS) )&#123;<br>	<span class="hljs-built_in">blit</span>(<span class="hljs-keyword">this</span>, _textVideoMemBlitter, tvm);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="提交-drawcall-的几种方式"><a class="markdownIt-Anchor" href="#提交-drawcall-的几种方式"></a> 提交 DrawCall 的几种方式</h2>
+<p>以 OpenGL 为例：<a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Vertex_Rendering">Vertex Rendering</a></p>
+<h3 id="direct-rendering"><a class="markdownIt-Anchor" href="#direct-rendering"></a> Direct rendering</h3>
+<h4 id="basic-drawing"><a class="markdownIt-Anchor" href="#basic-drawing"></a> Basic Drawing</h4>
+<p><code>void glDrawArrays( GLenum mode​, GLint first​, GLsizei count​ );</code><br />
+<code>void glDrawElements( GLenum mode​, GLsizei count​, GLenum type​, void * indices​ );</code></p>
+<h4 id="multi-draw"><a class="markdownIt-Anchor" href="#multi-draw"></a> Multi-Draw</h4>
+<p>只绑定/修改一次 VAO，多次 DrawCall。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">glMultiDrawArrays</span><span class="hljs-params">( GLenum mode, GLint *first, GLsizei *count, GLsizei primcount )</span> </span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; primcount; ++i)<br>		<span class="hljs-keyword">if</span> (count[i] &gt; <span class="hljs-number">0</span>)<br>			<span class="hljs-built_in">glDrawArrays</span>(mode, first[i], count[i]);<br>&#125;<br><span class="hljs-comment">// 或者</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">glMultiDrawElements</span><span class="hljs-params">( GLenum mode, GLsizei *count, GLenum type,</span></span><br><span class="hljs-params"><span class="hljs-function">	<span class="hljs-keyword">void</span> **indices, GLsizei primcount )</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; primcount; ++i)<br>		<span class="hljs-keyword">if</span> (count[i] &gt; <span class="hljs-number">0</span>)<br>			<span class="hljs-built_in">glDrawElements</span>(mode, count[i], type, indices[i]);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h4 id="instancing"><a class="markdownIt-Anchor" href="#instancing"></a> Instancing</h4>
+<p>一次 DrawCall，绘制多个相同的物体，实例之间通过一个内建变量 <code>gl_InstanceID</code> 进行区分。<br />
+可以使用该变量作为下标进行索引来获取每个实例需要的数据，也可以通过 <code>glVertexAttribDivisor()</code> 来设置顶点属性的更新方式。</p>
+<h3 id="indirect-rendering"><a class="markdownIt-Anchor" href="#indirect-rendering"></a> Indirect rendering</h3>
+<p>一次 DrawCall 发送多个绘制指令，这些指令的参数存储在缓冲区对象提供的 GPU 存储中。<br />
+这样做的目的是允许 GPU 进程填充这些值，避免了 GPU-&gt;CPU-&gt;GPU 之间的往返。可以是一个计算着色器，可以是几何着色器加上 <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Transform_Feedback">Transform Feedback</a>，或者一个 OpenCL/CUDA 进程。</p>
 <h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
 <p><a target="_blank" rel="noopener" href="https://t-rvw.github.io/blog/2022/05/28/game_engine_rhi/">自制游戏引擎 - 图形API</a><br />
 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/">bgfx 文档</a><br />
