@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      29
+      30
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：June 14, 2022
+                  本文最后更新于：June 15, 2022
                 
               </p>
             
@@ -355,6 +355,8 @@
 <h3 id="indirect-rendering"><a class="markdownIt-Anchor" href="#indirect-rendering"></a> Indirect rendering</h3>
 <p>一次 DrawCall 发送多个绘制指令，这些指令的参数存储在缓冲区对象提供的 GPU 存储中。<br />
 这样做的目的是允许 GPU 进程填充这些值，避免了 GPU-&gt;CPU-&gt;GPU 之间的往返。可以是一个计算着色器，可以是几何着色器加上 <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Transform_Feedback">Transform Feedback</a>，或者一个 OpenCL/CUDA 进程。</p>
+<h3 id="submit-里的实现"><a class="markdownIt-Anchor" href="#submit-里的实现"></a> submit() 里的实现</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// IndirectDraw</span><br><span class="hljs-keyword">if</span> (<span class="hljs-built_in">isValid</span>(draw.m_indirectBuffer))<br>	<span class="hljs-comment">// MultiDrawElements</span><br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">isValid</span>(draw.m_indexBuffer))<br>		<span class="hljs-built_in">glMultiDrawElementsIndirect</span>();<br>	<span class="hljs-comment">// MultiDrawArrays</span><br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-built_in">glMultiDrawArraysIndirect</span>();<br><span class="hljs-comment">// DirectDraw</span><br><span class="hljs-keyword">else</span><br>	<span class="hljs-comment">// DrawElements</span><br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">isValid</span>(draw.m_indexBuffer))<br>		<span class="hljs-comment">// 使用完整的 IndexBuffer 进行绘制</span><br>		<span class="hljs-keyword">if</span> (UINT32_MAX == draw.m_numIndices)<br>			<span class="hljs-built_in">glDrawElementsInstanced</span>();<br>		<span class="hljs-comment">// 复用 IndexBuffer</span><br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (prim.m_min &lt;= draw.m_numIndices)<br>			<span class="hljs-built_in">glDrawElementsInstanced</span>();<br>	<span class="hljs-comment">// DrawArrays</span><br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-built_in">glDrawArraysInstanced</span>();	<br></code></pre></div></td></tr></table></figure>
 <h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
 <p><a target="_blank" rel="noopener" href="https://t-rvw.github.io/blog/2022/05/28/game_engine_rhi/">自制游戏引擎 - 图形API</a><br />
 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/">bgfx 文档</a><br />
