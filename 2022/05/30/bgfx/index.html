@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.3k 字
+      2.6k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      31
+      36
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：June 15, 2022
+                  本文最后更新于：June 28, 2022
                 
               </p>
             
@@ -302,7 +302,8 @@
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">m_program = <span class="hljs-built_in">loadProgram</span>(<span class="hljs-string">&quot;vs_cubes&quot;</span>, <span class="hljs-string">&quot;fs_cubes&quot;</span>);<br></code></pre></div></td></tr></table></figure>
 <h4 id="shader"><a class="markdownIt-Anchor" href="#shader"></a> Shader</h4>
 <p>上面 <code>loadProgram()</code> 读取的 Shader 是 <code>bgfx\examples\runtime\shaders\对应API</code> 下的 <code>.bin</code> 文件。这种文件是通过 bgfx 自制的 Shader 编译工具 <code>shaderc.exe</code> 生成的。bgfx 的各类工具都位于 tools 文件夹下。<br />
-<a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/tools.html#shader-compiler-shaderc">https://bkaradzic.github.io/bgfx/tools.html#shader-compiler-shaderc</a></p>
+<a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/tools.html#shader-compiler-shaderc">https://bkaradzic.github.io/bgfx/tools.html#shader-compiler-shaderc</a><br />
+之后专门有一个小结来展开讲将 bgfx 的 Shader。</p>
 <h2 id="shutdown"><a class="markdownIt-Anchor" href="#shutdown"></a> shutdown</h2>
 <ul>
 <li>先 <code>imguiDestroy()</code></li>
@@ -361,12 +362,47 @@
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// IndirectDraw</span><br><span class="hljs-keyword">if</span> (<span class="hljs-built_in">isValid</span>(draw.m_indirectBuffer))<br>	<span class="hljs-comment">// MultiDrawElements</span><br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">isValid</span>(draw.m_indexBuffer))<br>		<span class="hljs-built_in">glMultiDrawElementsIndirect</span>();<br>	<span class="hljs-comment">// MultiDrawArrays</span><br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-built_in">glMultiDrawArraysIndirect</span>();<br><span class="hljs-comment">// DirectDraw</span><br><span class="hljs-keyword">else</span><br>	<span class="hljs-comment">// DrawElements</span><br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">isValid</span>(draw.m_indexBuffer))<br>		<span class="hljs-comment">// 使用完整的 IndexBuffer 进行绘制</span><br>		<span class="hljs-keyword">if</span> (UINT32_MAX == draw.m_numIndices)<br>			<span class="hljs-built_in">glDrawElementsInstanced</span>();<br>		<span class="hljs-comment">// 复用 IndexBuffer</span><br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (prim.m_min &lt;= draw.m_numIndices)<br>			<span class="hljs-built_in">glDrawElementsInstanced</span>();<br>	<span class="hljs-comment">// DrawArrays</span><br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-built_in">glDrawArraysInstanced</span>();<br></code></pre></div></td></tr></table></figure>
 <h4 id="isvalid-与-handle"><a class="markdownIt-Anchor" href="#isvalid-与-handle"></a> isValid() 与 Handle</h4>
 <p>bgfx 定义了 <code>BGFX_HANDLE</code> 宏来快速实现各类 Handle：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> BGFX_HANDLE(_name)                                                           \</span><br><span class="hljs-meta">	struct _name &#123; uint16_t idx; &#125;;                                                  \</span><br><span class="hljs-meta">	inline bool isValid(_name _handle) &#123; return bgfx::kInvalidHandle != _handle.idx; &#125;</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> BGFX_HANDLE(_name)                                                           \</span><br><span class="hljs-meta">	struct _name &#123; uint16_t idx; &#125;;                                                  \</span><br><span class="hljs-meta">	inline bool isValid(_name _handle) &#123; return bgfx::kInvalidHandle != _handle.idx; &#125;</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> BGFX_INVALID_HANDLE &#123; bgfx::kInvalidHandle &#125;</span><br></code></pre></div></td></tr></table></figure>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">uint16_t</span> kInvalidHandle = UINT16_MAX;<br><br><span class="hljs-built_in">BGFX_HANDLE</span>(DynamicIndexBufferHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(DynamicVertexBufferHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(FrameBufferHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(IndexBufferHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(IndirectBufferHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(OcclusionQueryHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(ProgramHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(ShaderHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(TextureHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(UniformHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(VertexBufferHandle)<br><span class="hljs-built_in">BGFX_HANDLE</span>(VertexLayoutHandle)<br></code></pre></div></td></tr></table></figure>
+<h2 id="bgfxs-shader"><a class="markdownIt-Anchor" href="#bgfxs-shader"></a> bgfx’s Shader</h2>
+<p><a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/tools.html#shader-compiler-shaderc">shaderc</a><br />
+bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage，以下简称为 BSL。<br />
+在编译 Shader 时，先将 BSL 通过一些预处理替换翻译成 GLSL，然后通过 <a target="_blank" rel="noopener" href="https://github.com/KhronosGroup/glslang">glslang</a> 编译成 SPIR-V，再通过 <a target="_blank" rel="noopener" href="https://github.com/KhronosGroup/SPIRV-Cross">SPIRV-Cross</a> 来逆向生成剩下的所有 ShaderLanguage。</p>
+<h3 id="编译-shader"><a class="markdownIt-Anchor" href="#编译-shader"></a> 编译 Shader</h3>
+<p><code>loadProgram()</code> 读取的 Shader 是位于 <code>bgfx\examples\runtime\shaders\对应API</code> 下的 <code>.bin</code> 文件。<br />
+这种文件可以通过 <code>shaderc.exe</code> 编译 <code>.sc</code> 文件生成。<br />
+也可以加上 <code>--raw</code> 参数表示不进行预处理和 GLSL 优化，直接接受原生的 ShaderLanguage 进行编译。<br />
+我搭建了一个简陋的结构来进行 shader 的编译：</p>
+<ul>
+<li>common
+<ul>
+<li>bgfx_shader.sh</li>
+<li><a target="_blank" rel="noopener" href="http://common.sh">common.sh</a></li>
+<li><a target="_blank" rel="noopener" href="http://shaderlib.sh">shaderlib.sh</a></li>
+</ul>
+</li>
+<li>compiled</li>
+<li>shader
+<ul>
+<li><a target="_blank" rel="noopener" href="http://varying.def.sc">varying.def.sc</a></li>
+</ul>
+</li>
+<li>compile.bat</li>
+<li>shaderc.exe</li>
+</ul>
+<ol>
+<li>将 <a target="_blank" rel="noopener" href="http://common.sh">common.sh</a> 修改为 <code>#include &quot;bgfx_shader.sh&quot;</code> 直接把 <code>bgfx_shader.sh</code> 放在同一文件夹下。</li>
+<li><code>shader</code> 文件夹内是所有的 Shader 文件以及一个必须的 <code>varying.def.sc</code></li>
+<li><code>compile.bat</code> 的内容是：<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">shaderc --type v --platform windows -p vs_5_0 -O <span class="hljs-number">3</span> --varyingdef shader/varying.def.sc -f shader/vs_demo.sc -o compiled/vs_demo.bin<br>shaderc --type f --platform windows -p ps_5_0 -O <span class="hljs-number">3</span> --varyingdef shader/varying.def.sc -f shader/fs_demo.sc -o compiled/fs_demo.bin<br>pause<br></code></pre></div></td></tr></table></figure>
+修改 -p 参数即可编译为不同的目标 ShaderLanguage。</li>
+<li>所有编译结果都保存在在 <code>compiled</code> 文件夹内。</li>
+</ol>
+<h3 id="编写-shader"><a class="markdownIt-Anchor" href="#编写-shader"></a> 编写 Shader</h3>
 <h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
 <p><a target="_blank" rel="noopener" href="https://t-rvw.github.io/blog/2022/05/28/game_engine_rhi/">自制游戏引擎 - 图形API</a><br />
 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/">bgfx 文档</a><br />
-<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/cd11172668c2">跨平台渲染引擎之路：bgfx 分析</a><br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/59452545">跨平台渲染引擎之路：bgfx 分析</a><br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72736611">跨平台渲染引擎之路：bgfx 再分析与启程</a><br />
 <a target="_blank" rel="noopener" href="https://blog.csdn.net/android_wql/article/details/85044252">bgfx从入门到没有放弃</a></p>
 
             </div>
