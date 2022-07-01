@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.5k 字
+      3.6k 字
     </span>
   
 
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：June 30, 2022
+                  本文最后更新于：July 1, 2022
                 
               </p>
             
@@ -418,7 +418,7 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 </ul>
 <h2 id="bgfxs-texture"><a class="markdownIt-Anchor" href="#bgfxs-texture"></a> bgfx’s Texture</h2>
 <p><a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/tools.html#texture-compiler-texturec">texturec</a><br />
-与 Shader 类似，<code>loadTexture(&quot;textures/name.dds&quot;);</code> 读取的文件也是经过 texturec 编码之后的纹理。</p>
+与 Shader 类似，<code>loadTexture(&quot;textures/name.dds&quot;);</code> 读取的文件也是经过 texturec 编码之后的贴图。</p>
 <h3 id="编码-texture"><a class="markdownIt-Anchor" href="#编码-texture"></a> 编码 Texture</h3>
 <ul>
 <li>
@@ -426,7 +426,7 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <img src="/img/bgfx/format.png" srcset="/img/loading.gif" lazyload alt="" /></p>
 </li>
 <li>
-<p>输出格式与编码格式需要对应上，比如：</p>
+<p>一些输出格式与编码格式需要对应上，比如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span> (!bx::<span class="hljs-built_in">strFindI</span>(saveAs, <span class="hljs-string">&quot;png&quot;</span>).<span class="hljs-built_in">isEmpty</span>() ) &#123;<br>	<span class="hljs-comment">// ...</span><br>	<span class="hljs-keyword">if</span> (options.format != bimg::TextureFormat::RGBA8) &#123;<br>		<span class="hljs-built_in">help</span>(<span class="hljs-string">&quot;Output PNG format must be RGBA8.&quot;</span>);<br>		<span class="hljs-keyword">return</span> bx::kExitFailure;<br>	&#125;<br>&#125;<br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!bx::<span class="hljs-built_in">strFindI</span>(saveAs, <span class="hljs-string">&quot;exr&quot;</span>).<span class="hljs-built_in">isEmpty</span>() ) &#123;<br>	<span class="hljs-comment">// ...</span><br>	<span class="hljs-keyword">if</span> (options.format != bimg::TextureFormat::RGBA16F) &#123;<br>		<span class="hljs-built_in">help</span>(<span class="hljs-string">&quot;Output EXR format must be RGBA16F.&quot;</span>);<br>		<span class="hljs-keyword">return</span> bx::kExitFailure;<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 </li>
 <li>
@@ -438,16 +438,24 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* quality = cmdLine.<span class="hljs-built_in">findOption</span>(<span class="hljs-string">&#x27;q&#x27;</span>);<br><span class="hljs-keyword">if</span> (<span class="hljs-literal">NULL</span> != quality) &#123;<br>	<span class="hljs-built_in"><span class="hljs-keyword">switch</span></span> (bx::<span class="hljs-built_in">toLower</span>(quality[<span class="hljs-number">0</span>]) ) &#123;<br>		<span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;h&#x27;</span>: options.quality = bimg::Quality::Highest; <span class="hljs-keyword">break</span>;<br>		<span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;f&#x27;</span>: options.quality = bimg::Quality::Fastest; <span class="hljs-keyword">break</span>;<br>		<span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;d&#x27;</span>: options.quality = bimg::Quality::Default; <span class="hljs-keyword">break</span>;<br>		<span class="hljs-keyword">default</span>:<br>			<span class="hljs-built_in">help</span>(<span class="hljs-string">&quot;Invalid quality specified.&quot;</span>);<br>			<span class="hljs-keyword">return</span> bx::kExitFailure;<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 </li>
 <li>
+<p>-n/–normal 设置会默认认为贴图是线性的。</p>
+</li>
+<li>
 <p>texturec 还能通过 <code>--radiance</code> 选项来对 Cube Map 做滤波。</p>
 </li>
 </ul>
 <h3 id="压缩-texture"><a class="markdownIt-Anchor" href="#压缩-texture"></a> 压缩 Texture</h3>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Av411K7bt?p=2">纹理压缩——包体瘦身术</a><br />
+<a target="_blank" rel="noopener" href="https://docs.unity3d.com/2021.3/Documentation/Manual/class-TextureImporterOverride.html">Recommended, default, and supported texture formats, by platform</a><br />
+<a target="_blank" rel="noopener" href="https://developer.nvidia.com/astc-texture-compression-for-game-assets">Using ASTC Texture Compression for Game Assets</a><br />
+<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/uwp/graphics-concepts/texture-block-compression">Texture block compression</a></p>
 <h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
 <p><a target="_blank" rel="noopener" href="https://t-rvw.github.io/blog/2022/05/28/game_engine_rhi/">自制游戏引擎 - 图形API</a><br />
 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/">bgfx 文档</a><br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/59452545">跨平台渲染引擎之路：bgfx 分析</a><br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72736611">跨平台渲染引擎之路：bgfx 再分析与启程</a><br />
-<a target="_blank" rel="noopener" href="https://blog.csdn.net/android_wql/article/details/85044252">bgfx从入门到没有放弃</a></p>
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/android_wql/article/details/85044252">bgfx从入门到没有放弃</a><br />
+<a target="_blank" rel="noopener" href="https://www.cnblogs.com/SmileSFL/p/15949639.html">BGFX多线程渲染</a></p>
 
             </div>
             <hr>
