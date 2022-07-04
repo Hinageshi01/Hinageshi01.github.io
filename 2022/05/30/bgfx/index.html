@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      50
+      51
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：July 1, 2022
+                  本文最后更新于：July 2, 2022
                 
               </p>
             
@@ -455,15 +455,21 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <p><code>-n/--normal</code> 设置会默认认为贴图是线性的。</p>
 </li>
 <li>
-<p>texturec 还能通过 <code>--radiance &lt;model&gt;</code> 选项来对 Cube Map 做滤波，可选的参数有：<code>Phong</code>, <code>PhongBrdf</code>, <code>Blinn</code>, <code>BlinnBrdf</code>, <code>GGX</code></p>
+<p>texturec 还能通过 <code>--radiance &lt;model&gt;</code> 选项来对 Cube Map 做滤波，可选的参数有：<code>Phong</code>, <code>PhongBrdf</code>, <code>Blinn</code>, <code>BlinnBrdf</code> 和 <code>GGX</code>。</p>
+</li>
+<li>
+<p>贴一个简单的 .bat 脚本，具体参数就视情况而定：</p>
 </li>
 </ul>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">echo off<br><br>md compiled<br><span class="hljs-keyword">for</span> %%<span class="hljs-function">i <span class="hljs-title">in</span> <span class="hljs-params">(*)</span> <span class="hljs-title">do</span> <span class="hljs-params">( </span></span><br><span class="hljs-params"><span class="hljs-function">echo compling: %%i</span></span><br><span class="hljs-params"><span class="hljs-function">texturec -f %%i -o compiled/%%~ni.dds</span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span><br><span class="hljs-function">pause</span><br></code></pre></div></td></tr></table></figure>
 <h3 id="压缩-texture"><a class="markdownIt-Anchor" href="#压缩-texture"></a> 压缩 Texture</h3>
 <p>不同压缩格式之间的区别，不同平台上压缩格式的选择：<br />
 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Av411K7bt?p=2">纹理压缩——包体瘦身术</a><br />
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/ynnmnm/article/details/44983545">常用纹理和纹理压缩格式</a><br />
 <a target="_blank" rel="noopener" href="https://docs.unity3d.com/2021.3/Documentation/Manual/class-TextureImporterOverride.html">Recommended, default, and supported texture formats, by platform</a><br />
 <a target="_blank" rel="noopener" href="https://developer.nvidia.com/astc-texture-compression-for-game-assets">Using ASTC Texture Compression for Game Assets</a><br />
-<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/uwp/graphics-concepts/texture-block-compression">Texture block compression</a></p>
+<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/uwp/graphics-concepts/texture-block-compression">Texture block compression</a><br />
+<a target="_blank" rel="noopener" href="https://isux.tencent.com/articles/isux-optimizing-3d-model.html">如何在页面极速渲染 3D 模型</a></p>
 <h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
 <p><a target="_blank" rel="noopener" href="https://t-rvw.github.io/blog/2022/05/28/game_engine_rhi/">自制游戏引擎 - 图形API</a><br />
 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/">bgfx 文档</a><br />
