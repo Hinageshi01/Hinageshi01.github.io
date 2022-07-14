@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.6k 字
+      3.7k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      51
+      52
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：July 7, 2022
+                  本文最后更新于：July 14, 2022
                 
               </p>
             
@@ -398,6 +398,7 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <li><code>compile.bat</code> 的内容是：<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">set SHADER=<span class="hljs-string">&quot;shader&quot;</span><br>set COMPILED=<span class="hljs-string">&quot;compiled&quot;</span><br>md %COMPILED%<br>shaderc --type v --platform windows -p vs_5_0 -O <span class="hljs-number">3</span> --varyingdef %SHADER%/varying.def.sc -f %SHADER%/vs_name.sc -o %COMPILED%/vs_name.bin<br>shaderc --type f --platform windows -p ps_5_0 -O <span class="hljs-number">3</span> --varyingdef %SHADER%/varying.def.sc -f %SHADER%/fs_name.sc -o %COMPILED%/fs_name.bin<br>pause<br></code></pre></div></td></tr></table></figure>
 修改 -p 参数即可编译为不同的目标 ShaderLanguage。</li>
 <li>所有编译结果都保存在在 <code>compiled</code> 文件夹内。</li>
+<li>实际使用的时候可能会用 <code>set DX11=&quot;../../runtime/shaders/dx11&quot;</code> 直接在对应路径下生成编译结果。这样方便一点。</li>
 </ol>
 <h3 id="编写-shader"><a class="markdownIt-Anchor" href="#编写-shader"></a> 编写 Shader</h3>
 <p>BSL 和 GLSL 的区别：</p>
