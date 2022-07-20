@@ -24,6 +24,8 @@
       
       <tag>RHI</tag>
       
+      <tag>bgfx</tag>
+      
       <tag>游戏引擎</tag>
       
     </tags>
@@ -49,9 +51,9 @@
     
     <tags>
       
-      <tag>渲染管线</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>渲染管线</tag>
       
       <tag>PBR</tag>
       
@@ -88,11 +90,11 @@
       
       <tag>PBR</tag>
       
+      <tag>GLSL</tag>
+      
       <tag>实时</tag>
       
       <tag>BRDF</tag>
-      
-      <tag>GLSL</tag>
       
     </tags>
     
@@ -273,6 +275,8 @@
     
     <tags>
       
+      <tag>光照模型</tag>
+      
       <tag>NDC</tag>
       
       <tag>光栅化</tag>
@@ -280,8 +284,6 @@
       <tag>中点画线</tag>
       
       <tag>渲染管线</tag>
-      
-      <tag>光照模型</tag>
       
       <tag>透视矫正</tag>
       
@@ -320,15 +322,15 @@
       
       <tag>CPP</tag>
       
-      <tag>全局光照</tag>
-      
       <tag>实时</tag>
       
-      <tag>光线追踪</tag>
+      <tag>全局光照</tag>
       
       <tag>降噪</tag>
       
       <tag>矩阵</tag>
+      
+      <tag>光线追踪</tag>
       
       <tag>temporal</tag>
       
@@ -367,11 +369,11 @@
       
       <tag>PBR</tag>
       
-      <tag>实时</tag>
+      <tag>GGX</tag>
       
       <tag>GLSL</tag>
       
-      <tag>GGX</tag>
+      <tag>实时</tag>
       
       <tag>微表面模型</tag>
       
@@ -404,13 +406,13 @@
       
       <tag>光照模型</tag>
       
-      <tag>全局光照</tag>
-      
       <tag>DepthBuffer</tag>
+      
+      <tag>GLSL</tag>
       
       <tag>实时</tag>
       
-      <tag>GLSL</tag>
+      <tag>全局光照</tag>
       
       <tag>JavaScript</tag>
       
@@ -445,11 +447,11 @@
       
       <tag>光照模型</tag>
       
-      <tag>全局光照</tag>
+      <tag>GLSL</tag>
       
       <tag>实时</tag>
       
-      <tag>GLSL</tag>
+      <tag>全局光照</tag>
       
       <tag>PRT</tag>
       
@@ -484,9 +486,9 @@
       
       <tag>DepthBuffer</tag>
       
-      <tag>实时</tag>
-      
       <tag>GLSL</tag>
+      
+      <tag>实时</tag>
       
       <tag>阴影</tag>
       
@@ -521,11 +523,11 @@
       
       <tag>PBR</tag>
       
-      <tag>BRDF</tag>
-      
       <tag>GGX</tag>
       
       <tag>微表面模型</tag>
+      
+      <tag>BRDF</tag>
       
       <tag>Fresnel-Schlick</tag>
       
@@ -717,11 +719,11 @@
       
       <tag>CPP</tag>
       
+      <tag>DepthBuffer</tag>
+      
       <tag>光栅化</tag>
       
       <tag>反走样</tag>
-      
-      <tag>DepthBuffer</tag>
       
       <tag>重心坐标</tag>
       
@@ -785,9 +787,9 @@
       
       <tag>2D</tag>
       
-      <tag>单例模式</tag>
-      
       <tag>对象池</tag>
+      
+      <tag>单例模式</tag>
       
     </tags>
     
@@ -814,11 +816,11 @@
       
       <tag>Unity</tag>
       
+      <tag>AI</tag>
+      
       <tag>C#</tag>
       
       <tag>2D</tag>
-      
-      <tag>AI</tag>
       
       <tag>状态机</tag>
       
@@ -1037,11 +1039,11 @@
       
       <tag>Unity</tag>
       
+      <tag>AI</tag>
+      
       <tag>C#</tag>
       
       <tag>2D</tag>
-      
-      <tag>AI</tag>
       
     </tags>
     
@@ -1095,11 +1097,11 @@
     
     <tags>
       
+      <tag>Pixel</tag>
+      
       <tag>Mod</tag>
       
       <tag>Java</tag>
-      
-      <tag>Pixel</tag>
       
       <tag>Forge</tag>
       
