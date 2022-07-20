@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.7k 字
+      3.8k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      52
+      55
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：July 14, 2022
+                  本文最后更新于：July 20, 2022
                 
               </p>
             
@@ -462,10 +462,10 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <p>texturec 还能通过 <code>--radiance &lt;model&gt;</code> 选项来对 Cube Map 做滤波，可选的参数有：<code>Phong</code>, <code>PhongBrdf</code>, <code>Blinn</code>, <code>BlinnBrdf</code> 和 <code>GGX</code>。</p>
 </li>
 <li>
-<p>贴一个简单的 .bat 脚本，具体参数就视情况而定：</p>
+<p>贴一个简单的脚本，metallic 和 roughness 合在一起的话在第三个分支里处理就好，更多的 texture type 需要自己定义一下：</p>
 </li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">echo off<br>md compiled<br><span class="hljs-keyword">for</span> %%<span class="hljs-function">i <span class="hljs-title">in</span> <span class="hljs-params">(*)</span> <span class="hljs-title">do</span> <span class="hljs-params">( </span></span><br><span class="hljs-params"><span class="hljs-function">echo compling: %%i</span></span><br><span class="hljs-params"><span class="hljs-function">texturec -f %%i -o compiled/%%~ni.dds</span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span><br><span class="hljs-function">pause</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs py"><span class="hljs-keyword">import</span> os<br>texture = <span class="hljs-string">&quot;texture/&quot;</span><br>compiled = <span class="hljs-string">&quot;compiled/&quot;</span><br><br>baseColor = <span class="hljs-string">&quot;baseColor&quot;</span><br>normal = <span class="hljs-string">&quot;normal&quot;</span><br>metallic = <span class="hljs-string">&quot;metallic&quot;</span><br><br><span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> os.listdir(texture):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;compiling : &quot;</span>+file)<br>    textureName = os.path.splitext(file)[<span class="hljs-number">0</span>]<br>    textureType = os.path.splitext(file)[<span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">if</span> baseColor <span class="hljs-keyword">in</span> file:<br>        os.system(<span class="hljs-string">&quot;texturec -f &quot;</span>+texture+textureName+textureType+<span class="hljs-string">&quot; -o &quot;</span>+compiled+textureName+<span class="hljs-string">&quot;.dds -t BC3 -m -q h&quot;</span>)<br>    <span class="hljs-keyword">elif</span> normal <span class="hljs-keyword">in</span> file:<br>        os.system(<span class="hljs-string">&quot;texturec -f &quot;</span>+texture+textureName+textureType+<span class="hljs-string">&quot; -o &quot;</span>+compiled+textureName+<span class="hljs-string">&quot;.dds -t BC3 -m -q h -n&quot;</span>)<br>    <span class="hljs-keyword">elif</span> metallic <span class="hljs-keyword">in</span> file:<br>        os.system(<span class="hljs-string">&quot;texturec -f &quot;</span>+texture+textureName+textureType+<span class="hljs-string">&quot; -o &quot;</span>+compiled+textureName+<span class="hljs-string">&quot;.dds -t BC3 -m -q h --linear&quot;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Undeclared texture type!&quot;</span>)<br><br></code></pre></div></td></tr></table></figure>
 <h3 id="压缩-texture"><a class="markdownIt-Anchor" href="#压缩-texture"></a> 压缩 Texture</h3>
 <p>不同压缩格式之间的区别，不同平台上压缩格式的选择：<br />
 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Av411K7bt?p=2">纹理压缩——包体瘦身术</a><br />

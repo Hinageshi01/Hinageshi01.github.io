@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：June 14, 2022
+                  本文最后更新于：July 19, 2022
                 
               </p>
             
@@ -294,9 +294,9 @@
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> fbo;<br><span class="hljs-built_in">glGenFramebuffers</span>(<span class="hljs-number">1</span>, &amp;fbo);<br></code></pre></div></td></tr></table></figure>
 <h5 id="绑定"><a class="markdownIt-Anchor" href="#绑定"></a> 绑定：</h5>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-built_in">glBindFramebuffer</span>(GL_FRAMEBUFFER, fbo);<br></code></pre></div></td></tr></table></figure>
+<p>在绑定到GL_FRAMEBUFFER目标之后，所有的读取和写入帧缓冲的操作将会影响当前绑定的帧缓冲。<br />
+但是，现在的帧缓冲还不完整，一个完整的帧缓冲需要满足以下的条件：</p>
 <ul>
-<li>在绑定到GL_FRAMEBUFFER目标之后，所有的读取和写入帧缓冲的操作将会影响当前绑定的帧缓冲。</li>
-<li>但是，现在的帧缓冲还不完整，一个完整的帧缓冲需要满足以下的条件：</li>
 <li>附加至少一个缓冲（颜色、深度或模板缓冲）。</li>
 <li>当创建一个附件的时候我们有两个选项：纹理或渲染缓冲对象(Renderbuffer Object)。</li>
 <li>至少有一个颜色附件(Attachment)。</li>
