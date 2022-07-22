@@ -192,6 +192,60 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/22/cppLatest/" target="_self">
+          <img src="/img/cppLatest/01.png" srcset="/img/loading.gif" lazyload alt="C++ 随记">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/22/cppLatest/" target="_self">
+          C++ 随记
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/07/22/cppLatest/" target="_self">
+          
+          
+            
+          
+           序言
+  现代 C++ 相关的笔记。
+ std::optional
+如果一个函数可能取不到有效的值，一般的做法是预设一个特殊值然后在调用之后去检查函数的返回值，或者在函数内抛出异常。这两种做法都不够安全、简洁。
+C++ 17 提供了 std::optional，可以将任意类型与一个有效标志包装起来：
+12345678std::optional&lt;std::string&gt; fun(boo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-22 19:17" pubdate>
+              2022-07-22
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/05/30/bgfx/" target="_self">
           <img src="/img/bgfx/01.png" srcset="/img/loading.gif" lazyload alt="笔记 bgfx">
         </a>
@@ -312,13 +366,13 @@ MRT（M
             
               <a href="/tags/%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">光照模型</a>
             
-              <a href="/tags/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/">渲染管线</a>
-            
               <a href="/tags/PBR/">PBR</a>
             
               <a href="/tags/%E5%90%8E%E5%A4%84%E7%90%86/">后处理</a>
             
               <a href="/tags/%E5%8F%8D%E8%B5%B0%E6%A0%B7/">反走样</a>
+            
+              <a href="/tags/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/">渲染管线</a>
             
               <a href="/tags/%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7/">全局光照</a>
             
@@ -774,88 +828,6 @@ C、Object-Oriented C++、Template C++、STL
               <a href="/tags/%E5%AE%9E%E6%97%B6/">实时</a>
             
               <a href="/tags/%E6%B8%B2%E6%9F%93%E5%99%A8/">渲染器</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/10/20/CGbasics/" target="_self">
-          <img src="/img/CGB/01.png" srcset="/img/loading.gif" lazyload alt="笔记 计算机图形学基础">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/20/CGbasics/" target="_self">
-          笔记 计算机图形学基础
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/20/CGbasics/" target="_self">
-          
-          
-            
-          
-           序言
-整理一下之前没有提到过的图形学基础知识。
-封面取自 《fundamentals of computer graphics 4th》。
- 基本图形的生成
- 直线的生成
- 数值微分法（DDA）
-已知P1(x1,y1)P2(x2,y2)P_1(x_1,y_1) P_2(x_2,y_2)P1​(x1​,y1​)P2​(x2​,y2​)，有：
-
-k=(y2−y1)x2−x1k=\frac{(y_2-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-20 11:45" pubdate>
-              2021-10-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">光照模型</a>
-            
-              <a href="/tags/NDC/">NDC</a>
-            
-              <a href="/tags/%E5%85%89%E6%A0%85%E5%8C%96/">光栅化</a>
-            
-              <a href="/tags/%E4%B8%AD%E7%82%B9%E7%94%BB%E7%BA%BF/">中点画线</a>
-            
-              <a href="/tags/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/">渲染管线</a>
-            
-              <a href="/tags/%E9%80%8F%E8%A7%86%E7%9F%AB%E6%AD%A3/">透视矫正</a>
-            
-              <a href="/tags/%E5%88%87%E7%BA%BF%E7%A9%BA%E9%97%B4/">切线空间</a>
-            
-              <a href="/tags/%E6%B3%95%E7%BA%BF%E8%B4%B4%E5%9B%BE/">法线贴图</a>
-            
-              <a href="/tags/Bresenham/">Bresenham</a>
-            
-              <a href="/tags/%E6%95%B0%E5%80%BC%E5%BE%AE%E5%88%86%E6%B3%95/">数值微分法</a>
             
           </div>
         

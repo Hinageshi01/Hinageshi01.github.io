@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>C++ 随记</title>
+    <link href="/2022/07/22/cppLatest/"/>
+    <url>/2022/07/22/cppLatest/</url>
+    
+    <content type="html"><![CDATA[<h1 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h1><p>  现代 C++ 相关的笔记。</p><h1 id="stdoptional"><a class="markdownIt-Anchor" href="#stdoptional"></a> std::optional</h1><p>如果一个函数可能取不到有效的值，一般的做法是预设一个特殊值然后在调用之后去检查函数的返回值，或者在函数内抛出异常。这两种做法都不够安全、简洁。<br /><code>C++ 17</code> 提供了 <a href="https://en.cppreference.com/w/cpp/utility/optional"><code>std::optional</code></a>，可以将任意类型与一个有效标志包装起来：</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">std::optional&lt;std::string&gt; <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">bool</span> f)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> b ? <span class="hljs-string">&quot;true&quot;</span> : std::nullopt;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">auto</span> str = <span class="hljs-built_in">fun</span>(<span class="hljs-literal">true</span>)) &#123;<br>        std::cout &lt;&lt; str &lt;&lt; std::endl;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure><h1 id="stdformat"><a class="markdownIt-Anchor" href="#stdformat"></a> std::format</h1><p><a href="https://en.cppreference.com/w/cpp/utility/format/format">std::format</a></p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">std::string hello = <span class="hljs-string">&quot;hello&quot;</span>;<br>std::string world = <span class="hljs-string">&quot;world&quot;</span>;<br>std::cout&lt;&lt;std::format(<span class="hljs-string">&quot;&#123;&#125;, &#123;&#125;.&quot;</span>, hello, world);<br><span class="hljs-comment">// hello, world.</span><br>std::cout&lt;&lt;std::format(<span class="hljs-string">&quot;&#123;1&#125;, &#123;0&#125;.&quot;</span>, hello, world);<br><span class="hljs-comment">// world, hello.</span><br>std::cout&lt;&lt;std::format(<span class="hljs-string">&quot;&#123;0&#125;, &#123;0&#125;.&quot;</span>, hello);<br><span class="hljs-comment">// hello, hello.</span><br></code></pre></div></td></tr></table></figure><h1 id="nrvo-stdmove"><a class="markdownIt-Anchor" href="#nrvo-stdmove"></a> (N)RVO, std::move</h1><p>开销：copy &gt; move &gt; RVO<br /><a href="https://mp.weixin.qq.com/s/LwnDtK6HNZo_StIxQ5yJhA">编译器之返回值优化</a><br /><a href="https://stackoverflow.com/questions/4986673/c11-rvalues-and-move-semantics-confusion-return-statement">rvalues and move semantics confusion</a><br /><a href="https://isocpp.org/blog/2015/07/rvo-v.s.-stdmove-zhao-wu">RVO V.S. std::move</a></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>CPP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>笔记 bgfx</title>
     <link href="/2022/05/30/bgfx/"/>
     <url>/2022/05/30/bgfx/</url>
@@ -53,13 +72,13 @@
       
       <tag>光照模型</tag>
       
-      <tag>渲染管线</tag>
-      
       <tag>PBR</tag>
       
       <tag>后处理</tag>
       
       <tag>反走样</tag>
+      
+      <tag>渲染管线</tag>
       
       <tag>全局光照</tag>
       
@@ -277,13 +296,13 @@
       
       <tag>光照模型</tag>
       
+      <tag>渲染管线</tag>
+      
       <tag>NDC</tag>
       
       <tag>光栅化</tag>
       
       <tag>中点画线</tag>
-      
-      <tag>渲染管线</tag>
       
       <tag>透视矫正</tag>
       
@@ -326,11 +345,11 @@
       
       <tag>实时</tag>
       
-      <tag>光线追踪</tag>
-      
       <tag>降噪</tag>
       
       <tag>矩阵</tag>
+      
+      <tag>光线追踪</tag>
       
       <tag>temporal</tag>
       
@@ -721,9 +740,9 @@
       
       <tag>DepthBuffer</tag>
       
-      <tag>光栅化</tag>
-      
       <tag>反走样</tag>
+      
+      <tag>光栅化</tag>
       
       <tag>重心坐标</tag>
       
@@ -750,9 +769,9 @@
     
     <tags>
       
-      <tag>NDC</tag>
-      
       <tag>渲染管线</tag>
+      
+      <tag>NDC</tag>
       
       <tag>矩阵</tag>
       
@@ -816,11 +835,11 @@
       
       <tag>Unity</tag>
       
+      <tag>AI</tag>
+      
       <tag>C#</tag>
       
       <tag>2D</tag>
-      
-      <tag>AI</tag>
       
       <tag>状态机</tag>
       
@@ -1039,11 +1058,11 @@
       
       <tag>Unity</tag>
       
+      <tag>AI</tag>
+      
       <tag>C#</tag>
       
       <tag>2D</tag>
-      
-      <tag>AI</tag>
       
     </tags>
     
