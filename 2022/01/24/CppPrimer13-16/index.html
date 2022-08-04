@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：July 22, 2022
+                  本文最后更新于：August 1, 2022
                 
               </p>
             
@@ -642,13 +642,13 @@ using 只影响派生类的使用者对基类成员的访问权限，派生类�
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-comment">// 类的类型参数</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> It&gt; <span class="hljs-comment">// 构造函数的类型参數</span><br>    Blob&lt;T&gt;::<span class="hljs-built_in">Blob</span>(It b, It e) :<br>        <span class="hljs-built_in">data</span>(std::make_shared&lt;std::vector&lt;T&gt;&gt;(b, e)) &#123; &#125;<br></code></pre></div></td></tr></table></figure>
 <h3 id="1615-控制实例化"><a class="markdownIt-Anchor" href="#1615-控制实例化"></a> 16.1.5 控制实例化</h3>
 <p>在多个文件中实例化相同模板的额外开销可能非常严重，我们可以通过显式实例化来避免这种开销。<br />
-当编译器遇到 extern 模板声明时，它不会在本文件中生成实例化代码。将一个实例化声明为 extern 就表示承诺在程序其他位置有该实例化的一个非 extern 声明（定义）。对于一个给定的实例化版本，可能有多个 extern 声明，但必须只有一个定义。extern 声明必须出现在任何使 用此实例化版本的代码之前。<br />
+当编译器遇到 extern 模板声明时，它不会在本文件中生成实例化代码。将一个实例化声明为 extern 就表示承诺在程序其他位置有该实例化的一个非 extern 声明（定义）。对于一个给定的实例化版本，可能有多个 extern 声明，但必须只有一个定义。extern 声明必须出现在任何使用此实例化版本的代码之前。<br />
 实例化文件必须为每个在其他文件中声明为 extern 的类型和函数提供一个（非extern）的定义。<br />
 当编译器遇到一个实例化定义时，它为其生成代码。<br />
 实例化定义会实例化所有成员。</p>
 <h3 id="1622-函数模板显式实参"><a class="markdownIt-Anchor" href="#1622-函数模板显式实参"></a> 16.2.2 函数模板显式实参</h3>
 <p><strong>指定显式模板实参</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 编译器无法推断T1，它未出现在函数参数列表中</span><br><span class="hljs-keyword">template</span> &lt;typeпаше Tl, <span class="hljs-keyword">typename</span> T2, <span class="hljs-keyword">typename</span> T3&gt;<br><span class="hljs-function">T1 <span class="hljs-title">sum</span><span class="hljs-params">(T2, T3)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 编译器无法推断T1，它未出现在函数参数列表中</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Tl, <span class="hljs-keyword">typename</span> T2, <span class="hljs-keyword">typename</span> T3&gt;<br><span class="hljs-function">T1 <span class="hljs-title">sum</span><span class="hljs-params">(T2, T3)</span></span>;<br></code></pre></div></td></tr></table></figure>
 <p>没有任何函数实参的类型可用米推断 Tl 的类型。毎次调用 sum 时调用者都必须为 T1 提供一个显式模板实参:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// T1 是显式指定的，T2 和 T3 是从函数实参类型推断而来的</span><br><span class="hljs-keyword">auto</span> val3 = sum&lt;<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>&gt;(i, lng); <span class="hljs-comment">// long long sum(int, long)</span><br></code></pre></div></td></tr></table></figure>
 <p>显式模板实参按由左至右的顺序与对应的模板参数匹配，只有尾部（最右）参数的显式模板实参才可以忽略，而且前提是它们可以从函数参数推断出来。</p>

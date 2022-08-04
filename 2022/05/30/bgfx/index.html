@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4k 字
+      4.2k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      58
+      60
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：July 29, 2022
+                  本文最后更新于：August 4, 2022
                 
               </p>
             
@@ -367,7 +367,7 @@
 <h2 id="bgfxs-shader"><a class="markdownIt-Anchor" href="#bgfxs-shader"></a> bgfx’s Shader</h2>
 <p><a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/tools.html#shader-compiler-shaderc">shaderc</a><br />
 bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage，以下简称为 BSL。<br />
-在编译 Shader 时，先将 BSL 通过一些预处理替换翻译成 GLSL 或者 HLSL，然后通过 <a target="_blank" rel="noopener" href="https://github.com/KhronosGroup/glslang">glslang</a> 编译成 SPIR-V，再通过 <a target="_blank" rel="noopener" href="https://github.com/KhronosGroup/SPIRV-Cross">SPIRV-Cross</a> 来逆向生成剩下的所有 ShaderLanguage。</p>
+在编译 Shader 时，先将 BSL 通过一些预处理替换翻译成 GLSL 或者 HLSL，然后通过 <a target="_blank" rel="noopener" href="https://github.com/KhronosGroup/glslang">glslang</a> 将 HLSL 编译成 SPIR-V，再通过 <a target="_blank" rel="noopener" href="https://github.com/KhronosGroup/SPIRV-Cross">SPIRV-Cross</a> 来逆向生成剩下的所有 ShaderLanguage。</p>
 <h3 id="编译-shader"><a class="markdownIt-Anchor" href="#编译-shader"></a> 编译 Shader</h3>
 <p><code>loadProgram()</code> 读取的 Shader 是位于 <code>bgfx\examples\runtime\shaders\对应API</code> 下的 <code>.bin</code> 文件。<br />
 这种文件可以通过 <code>shaderc.exe</code> 编译 <code>.sc</code> 文件生成。<br />
@@ -403,22 +403,50 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <h3 id="编写-shader"><a class="markdownIt-Anchor" href="#编写-shader"></a> 编写 Shader</h3>
 <p>BSL 和 GLSL 的区别：</p>
 <ul>
-<li>只允许 <code>float</code> 类型的 uniform 变量。</li>
-<li>所有输入变量只能在 <code>main()</code> 中被访问。</li>
-<li><code>SAMPLER2D/3D/CUBE/etc.</code> 取代了 <code>sampler2D/3D/Cube/etc.</code>。</li>
-<li><code>vec2/3/4_splat(&lt;value&gt;)</code> 取代了只接受单个参数的 <code>vec2/3/4(&lt;value&gt;)</code>，接受多个参数的 <code>vec2/3/4</code> 构造函数依然有效。</li>
-<li>使用 <code>mtxFromCols/mtxFromRows</code> 来构造矩阵。</li>
-<li><code>mul(mat, vec)</code> 用于矩阵与向量的相乘。</li>
-<li>必须且只能存在一份 <code>varying.def.sc</code>，用于声明所有 Shader 中输入/输出变量的语义和类型。</li>
-<li>在 Shader 的开头需要使用 <code>$input/$output</code> 来声明输入/输出变量，这些变量名是与 <code>varying.def.sc</code> 中的声明一一对应的。</li>
-<li>在 <a target="_blank" rel="noopener" href="https://github.com/bkaradzic/bgfx/blob/master/src/bgfx_shader.sh">bgfx_shader.sh</a> 中还定义了一些 bgfx 内建的 uniform 变量：<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">uniform vec4  u_viewRect;<br>uniform vec4  u_viewTexel;<br>uniform mat4  u_view;<br>uniform mat4  u_invView;<br>uniform mat4  u_proj;<br>uniform mat4  u_invProj;<br>uniform mat4  u_viewProj;<br>uniform mat4  u_invViewProj;<br>uniform mat4  u_model[BGFX_CONFIG_MAX_BONES];<br>uniform mat4  u_modelView;<br>uniform mat4  u_modelViewProj;<br>uniform vec4  u_alphaRef4;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> u_alphaRef u_alphaRef4.x</span><br></code></pre></div></td></tr></table></figure>
-我们只需要在用户线程中调用 <code>bgfx::setViewTransform()</code> 以及 <code>bgfx::setTransform()</code> 这样的接口，之后就可以直接在 Shader 中使用这些 uniform 变量了。
-<ul>
-<li>Shader 中的语义与顶点数据结构体中的 <code>bgfx::Attrib::</code> 一一对应：</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PosColorVertex</span> &#123;</span><br>	<span class="hljs-keyword">float</span> m_x;<br>	<span class="hljs-keyword">float</span> m_y;<br>	<span class="hljs-keyword">float</span> m_z;<br>	<span class="hljs-keyword">uint32_t</span> m_abgr;<br><br>	<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>&#123;<br>		ms_layout<br>			.<span class="hljs-built_in">begin</span>()<br>			.<span class="hljs-built_in">add</span>(bgfx::Attrib::Position, <span class="hljs-number">3</span>, bgfx::AttribType::Float)<br>			.<span class="hljs-built_in">add</span>(bgfx::Attrib::Color0,   <span class="hljs-number">4</span>, bgfx::AttribType::Uint8, <span class="hljs-literal">true</span>)<br>			.<span class="hljs-built_in">end</span>();<br>	&#125;;<br><br>	<span class="hljs-keyword">static</span> bgfx::VertexLayout ms_layout;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
-<code>Attrib</code> 结构体的定义如下：<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Attrib</span> &#123;</span><br>	<span class="hljs-comment">/// Corresponds to vertex shader attribute.</span><br>	<span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Enum</span> &#123;</span><br>		Position,  <span class="hljs-comment">//!&lt; a_position</span><br>		Normal,    <span class="hljs-comment">//!&lt; a_normal</span><br>		Tangent,   <span class="hljs-comment">//!&lt; a_tangent</span><br>		Bitangent, <span class="hljs-comment">//!&lt; a_bitangent</span><br>		Color0,    <span class="hljs-comment">//!&lt; a_color0</span><br>		Color1,    <span class="hljs-comment">//!&lt; a_color1</span><br>		Color2,    <span class="hljs-comment">//!&lt; a_color2</span><br>		Color3,    <span class="hljs-comment">//!&lt; a_color3</span><br>		Indices,   <span class="hljs-comment">//!&lt; a_indices</span><br>		Weight,    <span class="hljs-comment">//!&lt; a_weight</span><br>		TexCoord0, <span class="hljs-comment">//!&lt; a_texcoord0</span><br>		TexCoord1, <span class="hljs-comment">//!&lt; a_texcoord1</span><br>		TexCoord2, <span class="hljs-comment">//!&lt; a_texcoord2</span><br>		TexCoord3, <span class="hljs-comment">//!&lt; a_texcoord3</span><br>		TexCoord4, <span class="hljs-comment">//!&lt; a_texcoord4</span><br>		TexCoord5, <span class="hljs-comment">//!&lt; a_texcoord5</span><br>		TexCoord6, <span class="hljs-comment">//!&lt; a_texcoord6</span><br>		TexCoord7, <span class="hljs-comment">//!&lt; a_texcoord7</span><br>		Count<br>	&#125;;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<li>
+<p>只允许 <code>float</code> 类型的 uniform 变量。</p>
 </li>
+<li>
+<p>所有输入变量只能在 <code>main()</code> 中被访问。</p>
+</li>
+<li>
+<p><code>SAMPLER2D/3D/CUBE/etc.</code> 取代了 <code>sampler2D/3D/Cube/etc.</code>。</p>
+</li>
+<li>
+<p><code>vec2/3/4_splat(&lt;value&gt;)</code> 取代了只接受单个参数的 <code>vec2/3/4(&lt;value&gt;)</code>，接受多个参数的 <code>vec2/3/4</code> 构造函数依然有效。</p>
+</li>
+<li>
+<p>使用 <code>mtxFromCols/mtxFromRows</code> 来构造矩阵，相同参数下，他们的结果互为转置。</p>
+</li>
+<li>
+<p><code>mul(mat, vec)</code> 用于向量与矩阵的相乘。</p>
+</li>
+<li>
+<p>必须且只能存在一份 <code>varying.def.sc</code>，用于声明所有 Shader 中输入/输出变量的语义和类型。</p>
+</li>
+<li>
+<p>在 Shader 的开头需要使用 <code>$input/$output</code> 来声明输入/输出变量，这些变量名是与 <code>varying.def.sc</code> 中的声明一一对应的。</p>
+</li>
+<li>
+<p>在 <a target="_blank" rel="noopener" href="https://github.com/bkaradzic/bgfx/blob/master/src/bgfx_shader.sh">bgfx_shader.sh</a> 中还定义了一些 bgfx 内建的 uniform 变量：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">uniform vec4  u_viewRect;<br>uniform vec4  u_viewTexel;<br>uniform mat4  u_view;<br>uniform mat4  u_invView;<br>uniform mat4  u_proj;<br>uniform mat4  u_invProj;<br>uniform mat4  u_viewProj;<br>uniform mat4  u_invViewProj;<br>uniform mat4  u_model[BGFX_CONFIG_MAX_BONES];<br>uniform mat4  u_modelView;<br>uniform mat4  u_modelViewProj;<br>uniform vec4  u_alphaRef4;<br></code></pre></div></td></tr></table></figure>
+<p>可惜没有提供 <code>model_inverse_transpose</code>。<br />
+我们只需要在用户线程中调用 <code>bgfx::setViewTransform</code> 以及 <code>bgfx::setTransform</code> 这样的接口，之后就可以直接在 Shader 中使用这些 uniform 变量了。<br />
+<code>bgfx::setViewTransform()</code> 会将内存 copy 进 <code>bgfx::FrameCache::m_matrixCache</code> 并且将其起始地址保存至 <code>bgfx::RenderDraw::m_startMatrix</code>。<br />
+两者会在 <code>bgfx::ViewState::setPredefined</code> 模板函数中被读取，每个渲染后端都会在自己的 <code>RenderContexXXX::Submit</code> 中调用 <code>setPredefined</code>。<br />
+这个 <code>submit</code> 会在 <code>bgfx::Context::renderFrame</code> 中被调用，这个 <code>renderFrame</code> 会在对应平台的入口 <code>entry_XXX</code> 中被调用。</p>
+</li>
+<li>
+<p>Shader 中的语义与顶点数据结构体中的 <code>bgfx::Attrib::</code> 一一对应：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PosColorVertex</span> &#123;</span><br>	<span class="hljs-keyword">float</span> m_x;<br>	<span class="hljs-keyword">float</span> m_y;<br>	<span class="hljs-keyword">float</span> m_z;<br>	<span class="hljs-keyword">uint32_t</span> m_abgr;<br><br>	<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>&#123;<br>		ms_layout<br>			.<span class="hljs-built_in">begin</span>()<br>			.<span class="hljs-built_in">add</span>(bgfx::Attrib::Position, <span class="hljs-number">3</span>, bgfx::AttribType::Float)<br>			.<span class="hljs-built_in">add</span>(bgfx::Attrib::Color0,   <span class="hljs-number">4</span>, bgfx::AttribType::Uint8, <span class="hljs-literal">true</span>)<br>			.<span class="hljs-built_in">end</span>();<br>	&#125;;<br><br>	<span class="hljs-keyword">static</span> bgfx::VertexLayout ms_layout;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<p><code>Attrib</code> 结构体的定义如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Attrib</span> &#123;</span><br>	<span class="hljs-comment">/// Corresponds to vertex shader attribute.</span><br>	<span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Enum</span> &#123;</span><br>		Position,  <span class="hljs-comment">//!&lt; a_position</span><br>		Normal,    <span class="hljs-comment">//!&lt; a_normal</span><br>		Tangent,   <span class="hljs-comment">//!&lt; a_tangent</span><br>		Bitangent, <span class="hljs-comment">//!&lt; a_bitangent</span><br>		Color0,    <span class="hljs-comment">//!&lt; a_color0</span><br>		Color1,    <span class="hljs-comment">//!&lt; a_color1</span><br>		Color2,    <span class="hljs-comment">//!&lt; a_color2</span><br>		Color3,    <span class="hljs-comment">//!&lt; a_color3</span><br>		Indices,   <span class="hljs-comment">//!&lt; a_indices</span><br>		Weight,    <span class="hljs-comment">//!&lt; a_weight</span><br>		TexCoord0, <span class="hljs-comment">//!&lt; a_texcoord0</span><br>		TexCoord1, <span class="hljs-comment">//!&lt; a_texcoord1</span><br>		TexCoord2, <span class="hljs-comment">//!&lt; a_texcoord2</span><br>		TexCoord3, <span class="hljs-comment">//!&lt; a_texcoord3</span><br>		TexCoord4, <span class="hljs-comment">//!&lt; a_texcoord4</span><br>		TexCoord5, <span class="hljs-comment">//!&lt; a_texcoord5</span><br>		TexCoord6, <span class="hljs-comment">//!&lt; a_texcoord6</span><br>		TexCoord7, <span class="hljs-comment">//!&lt; a_texcoord7</span><br>		Count<br>	&#125;;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="注意事项"><a class="markdownIt-Anchor" href="#注意事项"></a> 注意事项</h3>
+<ul>
+<li>不要使用隐式的类型转换，Shader 将无法编译为 GLSL。</li>
+<li>不要使用下标访问矩阵，这会在不同的 Shader Language 中产生不同的行为（GLSL 取矩阵的列，HLSL 取矩阵的行）。</li>
 </ul>
 <h3 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h3>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61361628">shaderc 编译工具和 sc 源文件</a></p>
@@ -465,7 +493,8 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <p><code>-n/--normal</code> 设置会默认认为贴图是线性的。</p>
 </li>
 <li>
-<p>texturec 还能通过 <code>--radiance &lt;model&gt;</code> 选项来对 Cube Map 做滤波，可选的参数有：<code>Phong</code>, <code>PhongBrdf</code>, <code>Blinn</code>, <code>BlinnBrdf</code> 和 <code>GGX</code>。</p>
+<p>texturec 还能通过 <code>--radiance &lt;model&gt;</code> 选项来对 Cube Map 做滤波生成一系列的 Radiance Map，可选的参数有：<code>Phong</code>, <code>PhongBrdf</code>, <code>Blinn</code>, <code>BlinnBrdf</code> 和 <code>GGX</code>。<br />
+默认接受的是 CubeMap，如果输入是 2:1 的 Lat Long 需要加上 <code>--equirect</code> 参数。</p>
 </li>
 <li>
 <p>贴两个简单的脚本，我们假设带 <code>roughness</code> 文件名的贴图是合并了多通道数据的贴图，更多的 texture type 需要自己定义一下：</p>
@@ -483,7 +512,7 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <a target="_blank" rel="noopener" href="https://developer.nvidia.com/astc-texture-compression-for-game-assets">Using ASTC Texture Compression for Game Assets</a><br />
 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/uwp/graphics-concepts/texture-block-compression">Texture block compression</a></p>
 <h3 id="cube-map"><a class="markdownIt-Anchor" href="#cube-map"></a> Cube Map</h3>
-<p>bgfx ibl 例子中的 Diffuse Irradiance Map 和 Pre-filtered Environment Map 都是使用 <a target="_blank" rel="noopener" href="https://github.com/dariomanesku/cmft">cmft</a> 生成的。参数应该是：<br />
+<p>bgfx example-18-ibl 例子中的 Diffuse Irradiance Map 和 Pre-filtered Environment Map 都是使用 <a target="_blank" rel="noopener" href="https://github.com/dariomanesku/cmft">cmft</a> 生成的。参数应该是：<br />
 irr : <code>--filter irradiance --output0Params dds,rgba16f,cubemap --srcFaceSize 128</code><br />
 lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 256 --excludeBase true --mipCount 7 --glossScale 10 --glossBias 2 --edgeFixup warp</code></p>
 <h2 id="bgfxs-model"><a class="markdownIt-Anchor" href="#bgfxs-model"></a> bgfx’s Model</h2>
