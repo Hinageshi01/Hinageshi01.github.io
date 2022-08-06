@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      155
+      156
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 1, 2022
+                  本文最后更新于：August 6, 2022
                 
               </p>
             
@@ -372,6 +372,7 @@ noexcept 是我们承诺一个函数不抛出异常的一种方法。在一个�
 <h3 id="1421-重载输出运算符"><a class="markdownIt-Anchor" href="#1421-重载输出运算符"></a> 14.2.1 重载输出运算符 &lt;&lt;</h3>
 <p>输出运算符的第一个形参是一个非常量 ostream 对象的引用，第二个形参一般来说是一个常量的引用，一般要返回它的 ostream 形参。</p>
 <p><strong>输入输出运算符必须是非成员函数</strong><br />
+否则它左侧的运算对象将是我们的类的一个对象。<br />
 IO 运算符通常需要读写类的非公有数据成员，所以 IO 运算符一般被声明为友元。</p>
 <h3 id="1422-重载输人运算符"><a class="markdownIt-Anchor" href="#1422-重载输人运算符"></a> 14.2.2 重载输人运算符 &gt;&gt;</h3>
 <p>常会返回某个给定流的引用。<br />
