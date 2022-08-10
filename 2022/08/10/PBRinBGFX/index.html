@@ -18,9 +18,25 @@
   <meta name="author" content="Hinageshi">
   <meta name="keywords" content="">
   
-  <title>Archives - Hexo</title>
+  <title>在 BGFX 中实现 PBR - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -48,7 +64,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -159,9 +175,46 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Archive">
+            <span class="h2" id="subtitle" title="在 BGFX 中实现 PBR">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-08-10 15:20" pubdate>
+        August 10, 2022
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      193 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      2
+       分钟
+    </span>
+  
+
+  
+  
+</div>
 
             
           </div>
@@ -174,91 +227,134 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">在 BGFX 中实现 PBR</h1>
+            
+              <p class="note note-info">
                 
+                  本文最后更新于：August 10, 2022
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="pbs"><a class="markdownIt-Anchor" href="#pbs"></a> PBS</h2>
+<h3 id="directional-lighting"><a class="markdownIt-Anchor" href="#directional-lighting"></a> Directional Lighting</h3>
+<h3 id="environment-lighting"><a class="markdownIt-Anchor" href="#environment-lighting"></a> Environment Lighting</h3>
+<h2 id="pbl"><a class="markdownIt-Anchor" href="#pbl"></a> PBL</h2>
+<h2 id="pbc"><a class="markdownIt-Anchor" href="#pbc"></a> PBC</h2>
+<h3 id="使用-cmft-生成-environment-cube-map"><a class="markdownIt-Anchor" href="#使用-cmft-生成-environment-cube-map"></a> 使用 cmft 生成 environment cube map</h3>
+<p>bgfx example-18-ibl 例子中的 Diffuse Irradiance Map 和 Pre-filtered Environment Map 都是使用 <a target="_blank" rel="noopener" href="https://github.com/dariomanesku/cmft">cmft</a> 生成的。参数应该是：<br />
+irr : <code>--filter irradiance --output0Params dds,rgba16f,cubemap --srcFaceSize 128</code><br />
+lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 256 --excludeBase true --mipCount 7 --glossScale 10 --glossBias 2 --edgeFixup warp</code></p>
+<h2 id="使用-substance-painter-烘焙静态-ao-贴图"><a class="markdownIt-Anchor" href="#使用-substance-painter-烘焙静态-ao-贴图"></a> 使用 Substance Painter 烘焙静态 AO 贴图</h2>
+<ol>
+<li>文件，新建，导入模型，模板选择 <code>PBR - Metallic Roughness</code>，添加现有的贴图</li>
+<li>编辑，烘焙模型贴图，Ambient Occlusion，勾选 <code>Use Low Poly Mesh as High Poly Mesh</code>（因为我手头没有高模），Bake selected textures</li>
+<li>文件，导出贴图，新建输出模板 <code>R-G-B</code>，将单通道贴图拖至对应通道并选择 <code>灰度</code>，选择新创建的输出模板，导出</li>
+</ol>
+<h2 id="资源"><a class="markdownIt-Anchor" href="#资源"></a> 资源</h2>
+<p>Model : <a target="_blank" rel="noopener" href="https://sketchfab.com/search?q=tag%3Apbr&amp;sort_by=-likeCount&amp;type=models">sketchfab</a><br />
+Cube Map : <a target="_blank" rel="noopener" href="http://www.hdrlabs.com/sibl/archive.html">sIBL Archive</a></p>
+<h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
 
-<div class="list-group">
-  <p class="h4">38 posts in total.</p>
-  <hr>
-  
-  
-    
-      
-      <p class="h5">2021</p>
-    
-    <a href="/2021/08/18/%E5%8D%8F%E7%A8%8B/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">协程</span>
-      <time style="float: right;">08-18</time>
-    </a>
-  
-    
-    <a href="/2021/08/17/Note_MakeYourFirstGame_03/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">笔记 MakeYourFirstGame 03</span>
-      <time style="float: right;">08-17</time>
-    </a>
-  
-    
-    <a href="/2021/08/17/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">单例模式</span>
-      <time style="float: right;">08-17</time>
-    </a>
-  
-    
-    <a href="/2021/08/16/Note_MakeYourFirstGame_02/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">笔记 MakeYourFirstGame 02</span>
-      <time style="float: right;">08-16</time>
-    </a>
-  
-    
-    <a href="/2021/08/14/Note_MakeYourFirstGame_01/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">笔记 MakeYourFirstGame 01</span>
-      <time style="float: right;">08-14</time>
-    </a>
-  
-    
-    <a href="/2021/08/07/SoulForging/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Minecraft Mod Soul Forging</span>
-      <time style="float: right;">08-07</time>
-    </a>
-  
-    
-    <a href="/2021/08/05/HelloWorld/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Hello World</span>
-      <time style="float: right;">08-05</time>
-    </a>
-  
-    
-      
-      <p class="h5">1899</p>
-    
-    <a href="/1899/11/30/Inter/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">图形/引擎/渲染相关面经</span>
-      <time style="float: right;">11-30</time>
-    </a>
-  
-</div>
-
-
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/#board">2</a><a class="page-number" href="/archives/page/3/#board">3</a><span class="page-number current">4</span>
-    </span>
-  </nav>
-
-
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%B8%B2%E6%9F%93/">渲染</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/PBR/">PBR</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/22/cppLatest/">
+                        <span class="hidden-mobile">C++ 随记</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '980dd78d4302b046911f54f14355433e'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -362,9 +458,15 @@
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
 
 
 
@@ -395,6 +497,13 @@
 
 
 
+
+  
+
+  
+    <!-- KaTeX -->
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.10/dist/katex.min.css" />
+  
 
 
 
