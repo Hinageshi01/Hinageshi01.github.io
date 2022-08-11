@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      193 字
+      305 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2
+      4
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 10, 2022
+                  本文最后更新于：August 11, 2022
                 
               </p>
             
@@ -251,7 +251,7 @@
 <h3 id="environment-lighting"><a class="markdownIt-Anchor" href="#environment-lighting"></a> Environment Lighting</h3>
 <h2 id="pbl"><a class="markdownIt-Anchor" href="#pbl"></a> PBL</h2>
 <h2 id="pbc"><a class="markdownIt-Anchor" href="#pbc"></a> PBC</h2>
-<h3 id="使用-cmft-生成-environment-cube-map"><a class="markdownIt-Anchor" href="#使用-cmft-生成-environment-cube-map"></a> 使用 cmft 生成 environment cube map</h3>
+<h2 id="使用-cmft-生成-environment-cube-map"><a class="markdownIt-Anchor" href="#使用-cmft-生成-environment-cube-map"></a> 使用 cmft 生成 environment cube map</h2>
 <p>bgfx example-18-ibl 例子中的 Diffuse Irradiance Map 和 Pre-filtered Environment Map 都是使用 <a target="_blank" rel="noopener" href="https://github.com/dariomanesku/cmft">cmft</a> 生成的。参数应该是：<br />
 irr : <code>--filter irradiance --output0Params dds,rgba16f,cubemap --srcFaceSize 128</code><br />
 lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 256 --excludeBase true --mipCount 7 --glossScale 10 --glossBias 2 --edgeFixup warp</code></p>
@@ -259,8 +259,25 @@ lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 
 <ol>
 <li>文件，新建，导入模型，模板选择 <code>PBR - Metallic Roughness</code>，添加现有的贴图</li>
 <li>编辑，烘焙模型贴图，Ambient Occlusion，勾选 <code>Use Low Poly Mesh as High Poly Mesh</code>（因为我手头没有高模），Bake selected textures</li>
-<li>文件，导出贴图，新建输出模板 <code>R-G-B</code>，将单通道贴图拖至对应通道并选择 <code>灰度</code>，选择新创建的输出模板，导出</li>
+<li>文件，导出贴图，新建输出模板 <code>R-G-B</code>，将单通道贴图拖至对应通道并选择 <code>灰度</code>，选择新创建的输出模板，填充选择 <code>无限膨胀</code>，导出</li>
 </ol>
+<h2 id="使用-substance-designer-烘焙-bent-normal"><a class="markdownIt-Anchor" href="#使用-substance-designer-烘焙-bent-normal"></a> 使用 Substance Designer 烘焙 Bent Normal</h2>
+<p>暂时不用这个方案。</p>
+<h3 id="原理"><a class="markdownIt-Anchor" href="#原理"></a> 原理</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/bugrunner/article/details/7272902">Bent Normal (环境法线?)</a><br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/39879177">Unity试水Bent Normal</a><br />
+<a target="_blank" rel="noopener" href="https://developer.nvidia.com/gpugems/gpugems/part-iii-materials/chapter-17-ambient-occlusion">GPU Gems Chapter 17. Ambient Occlusion</a></p>
+<h3 id="操作"><a class="markdownIt-Anchor" href="#操作"></a> 操作</h3>
+<ol>
+<li>File，New Substance Graph</li>
+<li>右键 package，Link，3D Mesh，选择模型。或者直接将模型拖进来。</li>
+<li>右键模型，Bake model Information，Add baker，选择 <code>Bent Normals Map from Mesh</code>，Start Render</li>
+</ol>
+<h3 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题</h3>
+<ul>
+<li>Substance Designer 不支持 <code>.gltf</code> 的模型</li>
+<li>没有高模烘焙的效果很差，缺少细节</li>
+</ul>
 <h2 id="资源"><a class="markdownIt-Anchor" href="#资源"></a> 资源</h2>
 <p>Model : <a target="_blank" rel="noopener" href="https://sketchfab.com/search?q=tag%3Apbr&amp;sort_by=-likeCount&amp;type=models">sketchfab</a><br />
 Cube Map : <a target="_blank" rel="noopener" href="http://www.hdrlabs.com/sibl/archive.html">sIBL Archive</a></p>
