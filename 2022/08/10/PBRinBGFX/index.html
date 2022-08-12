@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      305 字
+      832 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4
+      11
        分钟
     </span>
   
@@ -241,20 +241,67 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 11, 2022
+                  本文最后更新于：August 12, 2022
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="pbs"><a class="markdownIt-Anchor" href="#pbs"></a> PBS</h2>
+              <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
+<p>  鉴于网上存在着大量优质的文章和教程，本文只会列出对应的链接以及补充一些实现上的细节。</p>
+<h2 id="pbs"><a class="markdownIt-Anchor" href="#pbs"></a> PBS</h2>
+<p>概览：<br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53086060"><strong>【基于物理的渲染（PBR）白皮书】（一）开篇：PBR 核心知识体系总结与概览</strong></a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1J3411n7WT/">GAMES104-现代游戏引擎：从入门到实践</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744?p=17">GAMES101-现代计算机图形学入门</a><br />
+原理：<br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av87914284/">Background: Physics and Math of Shading by Naty Hoffman</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1YK4y1T7yY?p=10">GAMES202-高质量实时渲染</a><br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/391189202">实时渲染第4版</a><br />
+实现：<br />
+<a target="_blank" rel="noopener" href="https://learnopengl-cn.github.io/07%20PBR/01%20Theory/"><strong>LearnOpenGL</strong></a><br />
+<a target="_blank" rel="noopener" href="http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_notes_v2.pdf">Real Shading in Unreal Engine 4</a><br />
+<a target="_blank" rel="noopener" href="https://media.contentapi.ea.com/content/dam/eacom/frostbite/files/course-notes-moving-frostbite-to-pbr-v32.pdf">Moving Frostbite to Physically Based Rendering 3.0</a><br />
+<em>省时间可以只看两篇加粗的</em></p>
 <h3 id="directional-lighting"><a class="markdownIt-Anchor" href="#directional-lighting"></a> Directional Lighting</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">dirColor = (KD * dirLambert + dirCookTorrance) * radiance * NdotL;<br></code></pre></div></td></tr></table></figure>
+<ul>
+<li><code>dirColor</code>：直接光的贡献。</li>
+<li><code>KD</code>：金属没有漫反射，菲涅尔项影响漫反射。</li>
+<li><code>dirLambert</code>：直接光漫反射 BRDF。</li>
+<li><code>dirCookTorrance</code>：直接光高光 BRDF（已经包含了菲涅尔项）。</li>
+<li><code>radiance</code>：辐射亮度。</li>
+</ul>
+<h4 id="ggx"><a class="markdownIt-Anchor" href="#ggx"></a> GGX</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3  Fre = <span class="hljs-built_in">FresnelSchlick</span>(HdotV, F0);<br><span class="hljs-keyword">float</span> NDF = <span class="hljs-built_in">DistributionGGX</span>(NdotH, roughness);<br><span class="hljs-keyword">float</span> Vis = <span class="hljs-built_in">Visibility</span>(NdotV, NdotL, roughness);<br></code></pre></div></td></tr></table></figure>
+<p>具体的公式在上面的链接里，值得注意的是这里将G项与分母进行了合并，省下了一点计算，也不用考虑除零的情况了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">Visibility</span><span class="hljs-params">(<span class="hljs-keyword">float</span> NdotV, <span class="hljs-keyword">float</span> NdotL, <span class="hljs-keyword">float</span> rough)</span> </span>&#123;<br>    <span class="hljs-keyword">float</span> k = (rough + <span class="hljs-number">1.0</span>) * (rough + <span class="hljs-number">1.0</span>) * <span class="hljs-number">0.125</span>;<br>    <span class="hljs-keyword">float</span> ggxV  = <span class="hljs-number">1.0</span> / (NdotV * (<span class="hljs-number">1.0</span> - k) + k);<br>    <span class="hljs-keyword">float</span> ggxL  = <span class="hljs-number">1.0</span> / (NdotL * (<span class="hljs-number">1.0</span> - k) + k);<br><br>    <span class="hljs-keyword">return</span> ggxV * ggxL * <span class="hljs-number">0.25</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h4 id="kd"><a class="markdownIt-Anchor" href="#kd"></a> KD</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 KD = (<span class="hljs-number">1.0</span> - matellic) * (<span class="hljs-number">1.0</span> - Fre);<br></code></pre></div></td></tr></table></figure>
+<p>有说法是这里为了亮一点可以不用考虑菲涅尔项。</p>
+<h4 id="dirlambert"><a class="markdownIt-Anchor" href="#dirlambert"></a> dirLambert</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 dirLambert = albedo * INV_PI;<br></code></pre></div></td></tr></table></figure>
+<p>其实 Lambert 直接光漫反射的 BRDF 范围是 [0, <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mn>1</mn><mi>π</mi></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{\pi}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>]，但这对贴图的制作来说太不直观了，不如让贴图的范围为 [0, 1]，读进来之后再除以 pi。</p>
+<h4 id="dircooktorrance"><a class="markdownIt-Anchor" href="#dircooktorrance"></a> dirCookTorrance</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 dirCookTorrance = Fre * NDF * Vis;<br></code></pre></div></td></tr></table></figure>
 <h3 id="environment-lighting"><a class="markdownIt-Anchor" href="#environment-lighting"></a> Environment Lighting</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 envColor =<br>    KD * albedo * envIrradiance * occlusion +<br>    envSpecularBRDF * envRadiance * specularOcclusion * horizonOcclusion;<br></code></pre></div></td></tr></table></figure>
+<ul>
+<li><code>envColor</code>：环境光的贡献。</li>
+<li><code>envIrradiance</code>：预计算的辐射照度除以 pi（这里用采样 CubMap 的方式实现）。</li>
+<li><code>occlusion</code>：预计算的静态环境光遮蔽。</li>
+<li><code>envSpecularBRDF</code>：预计算的环境光高光 BRDF（这里用采样 LUT 的方式实现）。</li>
+<li><code>envRadiance</code>：预计算的环境光辐射亮度。</li>
+<li><code>specularOcclusion &amp; horizonOcclusion</code>：动态的环境光高光遮蔽。</li>
+</ul>
+<h4 id="diffuse"><a class="markdownIt-Anchor" href="#diffuse"></a> Diffuse</h4>
+<h4 id="specular"><a class="markdownIt-Anchor" href="#specular"></a> Specular</h4>
 <h2 id="pbl"><a class="markdownIt-Anchor" href="#pbl"></a> PBL</h2>
 <h2 id="pbc"><a class="markdownIt-Anchor" href="#pbc"></a> PBC</h2>
 <h2 id="使用-cmft-生成-environment-cube-map"><a class="markdownIt-Anchor" href="#使用-cmft-生成-environment-cube-map"></a> 使用 cmft 生成 environment cube map</h2>
 <p>bgfx example-18-ibl 例子中的 Diffuse Irradiance Map 和 Pre-filtered Environment Map 都是使用 <a target="_blank" rel="noopener" href="https://github.com/dariomanesku/cmft">cmft</a> 生成的。参数应该是：<br />
 irr : <code>--filter irradiance --output0Params dds,rgba16f,cubemap --srcFaceSize 128</code><br />
-lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 256 --excludeBase true --mipCount 7 --glossScale 10 --glossBias 2 --edgeFixup warp</code></p>
+lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 256 --excludeBase true --mipCount 7 --glossScale 10 --glossBias 2 --edgeFixup warp</code><br />
+注意：这样生成的贴图是存储于 <code>sRGB</code> 空间的。</p>
 <h2 id="使用-substance-painter-烘焙静态-ao-贴图"><a class="markdownIt-Anchor" href="#使用-substance-painter-烘焙静态-ao-贴图"></a> 使用 Substance Painter 烘焙静态 AO 贴图</h2>
 <ol>
 <li>文件，新建，导入模型，模板选择 <code>PBR - Metallic Roughness</code>，添加现有的贴图</li>
@@ -264,8 +311,8 @@ lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 
 <h2 id="使用-substance-designer-烘焙-bent-normal"><a class="markdownIt-Anchor" href="#使用-substance-designer-烘焙-bent-normal"></a> 使用 Substance Designer 烘焙 Bent Normal</h2>
 <p>暂时不用这个方案。</p>
 <h3 id="原理"><a class="markdownIt-Anchor" href="#原理"></a> 原理</h3>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/bugrunner/article/details/7272902">Bent Normal (环境法线?)</a><br />
-<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/39879177">Unity试水Bent Normal</a><br />
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/bugrunner/article/details/7272902">Bent Normal（环境法线？）</a><br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/39879177">Unity 试水 Bent Normal</a><br />
 <a target="_blank" rel="noopener" href="https://developer.nvidia.com/gpugems/gpugems/part-iii-materials/chapter-17-ambient-occlusion">GPU Gems Chapter 17. Ambient Occlusion</a></p>
 <h3 id="操作"><a class="markdownIt-Anchor" href="#操作"></a> 操作</h3>
 <ol>
@@ -275,13 +322,12 @@ lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 
 </ol>
 <h3 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题</h3>
 <ul>
-<li>Substance Designer 不支持 <code>.gltf</code> 的模型</li>
+<li>Substance Designer 不支持 <code>.gltf</code> 模型</li>
 <li>没有高模烘焙的效果很差，缺少细节</li>
 </ul>
 <h2 id="资源"><a class="markdownIt-Anchor" href="#资源"></a> 资源</h2>
 <p>Model : <a target="_blank" rel="noopener" href="https://sketchfab.com/search?q=tag%3Apbr&amp;sort_by=-likeCount&amp;type=models">sketchfab</a><br />
 Cube Map : <a target="_blank" rel="noopener" href="http://www.hdrlabs.com/sibl/archive.html">sIBL Archive</a></p>
-<h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
 
             </div>
             <hr>
