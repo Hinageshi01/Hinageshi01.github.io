@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      832 字
+      1k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      11
+      15
        分钟
     </span>
   
@@ -241,14 +241,13 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 12, 2022
+                  本文最后更新于：August 13, 2022
                 
               </p>
             
             <div class="markdown-body">
               <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
 <p>  鉴于网上存在着大量优质的文章和教程，本文只会列出对应的链接以及补充一些实现上的细节。</p>
-<h2 id="pbs"><a class="markdownIt-Anchor" href="#pbs"></a> PBS</h2>
 <p>概览：<br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53086060"><strong>【基于物理的渲染（PBR）白皮书】（一）开篇：PBR 核心知识体系总结与概览</strong></a><br />
 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1J3411n7WT/">GAMES104-现代游戏引擎：从入门到实践</a><br />
@@ -262,6 +261,7 @@
 <a target="_blank" rel="noopener" href="http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_notes_v2.pdf">Real Shading in Unreal Engine 4</a><br />
 <a target="_blank" rel="noopener" href="https://media.contentapi.ea.com/content/dam/eacom/frostbite/files/course-notes-moving-frostbite-to-pbr-v32.pdf">Moving Frostbite to Physically Based Rendering 3.0</a><br />
 <em>省时间可以只看两篇加粗的</em></p>
+<h2 id="pbs"><a class="markdownIt-Anchor" href="#pbs"></a> PBS</h2>
 <h3 id="directional-lighting"><a class="markdownIt-Anchor" href="#directional-lighting"></a> Directional Lighting</h3>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">dirColor = (KD * dirLambert + dirCookTorrance) * radiance * NdotL;<br></code></pre></div></td></tr></table></figure>
 <ul>
@@ -293,15 +293,32 @@
 <li><code>envRadiance</code>：预计算的环境光辐射亮度。</li>
 <li><code>specularOcclusion &amp; horizonOcclusion</code>：动态的环境光高光遮蔽。</li>
 </ul>
-<h4 id="diffuse"><a class="markdownIt-Anchor" href="#diffuse"></a> Diffuse</h4>
-<h4 id="specular"><a class="markdownIt-Anchor" href="#specular"></a> Specular</h4>
+<h4 id="envspecularbrdf"><a class="markdownIt-Anchor" href="#envspecularbrdf"></a> envSpecularBRDF</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 envSpecularBRDF = (F0 * lut.x + lut.y)<br></code></pre></div></td></tr></table></figure>
+<h4 id="envradiance"><a class="markdownIt-Anchor" href="#envradiance"></a> envRadiance</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">float</span> mip = <span class="hljs-built_in">clamp</span>(<span class="hljs-number">6.0</span> * roughness, <span class="hljs-number">0.1</span>, <span class="hljs-number">6.0</span>);<br>vec3 envRadiance = <span class="hljs-built_in">textureCubeLod</span>(s_texCube, cubeReflectDir, mip).xyz;<br></code></pre></div></td></tr></table></figure>
+<p>clamp 至 0.1，避免采样太高频的 CubeMap。</p>
+<h4 id="specularocclusion"><a class="markdownIt-Anchor" href="#specularocclusion"></a> specularOcclusion</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">float</span> specularOcclusion = <span class="hljs-built_in">lerp</span>(<span class="hljs-built_in">pow</span>(occlusion, <span class="hljs-number">8.0</span>), <span class="hljs-number">1.0</span>, <span class="hljs-built_in">saturate</span>(<span class="hljs-number">-0.3</span> + NdotV * NdotV));<br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="http://www.iryoku.com/stare-into-the-future">Next-Generation Character Rendering</a></p>
+<h4 id="horizonocclusion"><a class="markdownIt-Anchor" href="#horizonocclusion"></a> horizonOcclusion</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">float</span> horizonOcclusion = <span class="hljs-built_in">saturate</span>(<span class="hljs-number">1.0</span> + <span class="hljs-number">0.8</span> * <span class="hljs-built_in">dot</span>(reflectDir, v_normal));<br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://marmosetco.tumblr.com/post/81245981087">Horizon Occlusion for Normal Mapped Reflections</a></p>
+<h3 id="post-processing"><a class="markdownIt-Anchor" href="#post-processing"></a> Post Processing</h3>
+<p>顺序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 color = dirColor + envColor;<br>color = color * <span class="hljs-built_in">exp2</span>(u_exposure); <span class="hljs-comment">// Exposure</span><br>color = <span class="hljs-built_in">ACES</span>(color); <span class="hljs-comment">// Tone Mapping</span><br>color = <span class="hljs-built_in">pow</span>(color, <span class="hljs-number">1.0</span> / <span class="hljs-number">2.2</span>); <span class="hljs-comment">// Gamma Correction</span><br></code></pre></div></td></tr></table></figure>
+<h4 id="tone-mapping"><a class="markdownIt-Anchor" href="#tone-mapping"></a> Tone Mapping</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">vec3 <span class="hljs-title">ACES</span><span class="hljs-params">(vec3 color)</span> </span>&#123;<br>    <span class="hljs-keyword">const</span> mat3 ACESInputMat  = <span class="hljs-built_in">mtxFromRows</span>(<br>        <span class="hljs-built_in">vec3</span>(<span class="hljs-number">0.59719</span>, <span class="hljs-number">0.35458</span>, <span class="hljs-number">0.04823</span>),<br>        <span class="hljs-built_in">vec3</span>(<span class="hljs-number">0.07600</span>, <span class="hljs-number">0.90834</span>, <span class="hljs-number">0.01566</span>),<br>        <span class="hljs-built_in">vec3</span>(<span class="hljs-number">0.02840</span>, <span class="hljs-number">0.13383</span>, <span class="hljs-number">0.83777</span>));<br><br>    <span class="hljs-keyword">const</span> mat3 ACESOutputMat = <span class="hljs-built_in">mtxFromRows</span>(<br>        <span class="hljs-built_in">vec3</span>( <span class="hljs-number">1.60475</span>, <span class="hljs-number">-0.53108</span>, <span class="hljs-number">-0.07367</span>),<br>        <span class="hljs-built_in">vec3</span>(<span class="hljs-number">-0.10208</span>,  <span class="hljs-number">1.10813</span>, <span class="hljs-number">-0.00605</span>),<br>        <span class="hljs-built_in">vec3</span>(<span class="hljs-number">-0.00327</span>, <span class="hljs-number">-0.07276</span>,  <span class="hljs-number">1.07602</span>));<br>    <br>    color      = <span class="hljs-built_in">mul</span>(ACESInputMat, color);<br>    vec3 nom   = color * (color + <span class="hljs-built_in">vec3_splat</span>(<span class="hljs-number">0.0245786</span>)) - <span class="hljs-built_in">vec3_splat</span>(<span class="hljs-number">0.000090537</span>);<br>    vec3 denom = color * (<span class="hljs-built_in">vec3_splat</span>(<span class="hljs-number">0.983729</span>) * color + <span class="hljs-built_in">vec3_splat</span>(<span class="hljs-number">0.4329510</span>)) + <span class="hljs-built_in">vec3_splat</span>(<span class="hljs-number">0.238081</span>);<br>    color      = nom / denom;<br>    color      = <span class="hljs-built_in">mul</span>(ACESOutputMat, color);<br>    <br>    <span class="hljs-keyword">return</span> color;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://64.github.io/tonemapping/">Tone Mapping</a></p>
 <h2 id="pbl"><a class="markdownIt-Anchor" href="#pbl"></a> PBL</h2>
+<p>TBD</p>
 <h2 id="pbc"><a class="markdownIt-Anchor" href="#pbc"></a> PBC</h2>
+<p>TBD</p>
 <h2 id="使用-cmft-生成-environment-cube-map"><a class="markdownIt-Anchor" href="#使用-cmft-生成-environment-cube-map"></a> 使用 cmft 生成 environment cube map</h2>
 <p>bgfx example-18-ibl 例子中的 Diffuse Irradiance Map 和 Pre-filtered Environment Map 都是使用 <a target="_blank" rel="noopener" href="https://github.com/dariomanesku/cmft">cmft</a> 生成的。参数应该是：<br />
 irr : <code>--filter irradiance --output0Params dds,rgba16f,cubemap --srcFaceSize 128</code><br />
 lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 256 --excludeBase true --mipCount 7 --glossScale 10 --glossBias 2 --edgeFixup warp</code><br />
-注意：这样生成的贴图是存储于 <code>sRGB</code> 空间的。</p>
+注意：这样生成的贴图是存储于 <code>sRGB</code> 空间的，在 Shader 中可以用 <code>toLinear()</code> 函数转到线性空间。</p>
 <h2 id="使用-substance-painter-烘焙静态-ao-贴图"><a class="markdownIt-Anchor" href="#使用-substance-painter-烘焙静态-ao-贴图"></a> 使用 Substance Painter 烘焙静态 AO 贴图</h2>
 <ol>
 <li>文件，新建，导入模型，模板选择 <code>PBR - Metallic Roughness</code>，添加现有的贴图</li>
