@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 10, 2022
+                  本文最后更新于：August 15, 2022
                 
               </p>
             
@@ -433,7 +433,7 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <p>我们只需要在用户线程中调用 <code>bgfx::setViewTransform</code> 以及 <code>bgfx::setTransform</code> 这样的接口，之后就可以直接在 Shader 中使用这些 uniform 变量了。</p>
 <blockquote>
 <p><code>bgfx::setViewTransform()</code> 会将内存 copy 进 <code>bgfx::FrameCache::m_matrixCache</code> 并且将其起始地址保存至 <code>bgfx::RenderDraw::m_startMatrix</code>。<br />
-两者会在 <code>bgfx::ViewState::setPredefined</code> 模板函数中被读取，每个渲染后端都会在自己的 <code>RenderContexXXX::Submit</code> 中调用 <code>setPredefined</code>。<br />
+两者会在 <code>bgfx::ViewState::setPredefined</code> 模板函数中被读取，每个 case 会调用对应 <code>RenderContext</code> 的 <code>setShaderUniform4x4f</code>（定义在 render_xxx.cpp 中），每个渲染后端都会在自己的 <code>RenderContexXXX::Submit</code> 中调用 <code>setPredefined</code>。<br />
 这个 <code>submit</code> 会在 <code>bgfx::Context::renderFrame</code> 中被调用，这个 <code>renderFrame</code> 会在对应平台的入口 <code>entry_XXX</code> 中被调用。</p>
 </blockquote>
 </li>
@@ -460,6 +460,7 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <li>在 <code>bgfx_p.h</code> 的 <code>PredefinedUniform</code> 结构体中添加自己的枚举。</li>
 <li>在 <code>bgfx.cpp</code> 的 <code>s_predefinedName</code> 数组中添加 uniform 变量的名称。两者的顺序要一致，且枚举不能添加于 <code>PredefinedUniform::Enum::Count</code> 之后。</li>
 <li>在 <code>renderer.h</code> 的 <code>setPredefined</code> 函数中添加新的 case。</li>
+<li>如果用到了 cache，记得在 <code>bgfx::ViewState::reset()</code> 中重置它。</li>
 <li>在 <code>bgfx_shader.sh</code> 中声明新的 uniform。命名要与 <code>s_predefinedName</code> 中一致。</li>
 </ol>
 </li>
