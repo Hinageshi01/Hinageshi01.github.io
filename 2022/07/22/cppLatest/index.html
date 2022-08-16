@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      312 字
+      412 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4
+      6
        分钟
     </span>
   
@@ -241,21 +241,21 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 8, 2022
+                  本文最后更新于：August 16, 2022
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h1>
+              <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
 <p>  现代 C++ 相关的笔记。</p>
-<h1 id="stdoptional"><a class="markdownIt-Anchor" href="#stdoptional"></a> std::optional</h1>
+<h2 id="stdoptional"><a class="markdownIt-Anchor" href="#stdoptional"></a> std::optional</h2>
 <p>如果一个函数可能取不到有效的值，一般的做法是预设一个特殊值然后在调用之后去检查函数的返回值，或者在函数内抛出异常。这两种做法都不够安全、简洁。<br />
 <code>C++ 17</code> 提供了 <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/optional"><code>std::optional</code></a>，可以将任意类型与一个有效标志包装起来：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">std::optional&lt;std::string&gt; <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">bool</span> f)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> b ? <span class="hljs-string">&quot;true&quot;</span> : std::nullopt;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">auto</span> str = <span class="hljs-built_in">fun</span>(<span class="hljs-literal">true</span>)) &#123;<br>        std::cout &lt;&lt; str &lt;&lt; std::endl;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<h1 id="stdformat"><a class="markdownIt-Anchor" href="#stdformat"></a> std::format</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">std::optional&lt;std::string&gt; <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">bool</span> b)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> b ? <span class="hljs-string">&quot;true&quot;</span> : std::nullopt;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">auto</span> strTrue = <span class="hljs-built_in">fun</span>(<span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">if</span>(strTrue.<span class="hljs-built_in">has_value</span>()) &#123;<br>        std::cout &lt;&lt; strTrue &lt;&lt; std::endl;<br>        <span class="hljs-comment">// true</span><br>    &#125;<br><br>    std::cout &lt;&lt; <span class="hljs-built_in">fun</span>(<span class="hljs-literal">false</span>).<span class="hljs-built_in">value_or</span>(<span class="hljs-string">&quot;false&quot;</span>); &lt;&lt; std::endl;<br>    <span class="hljs-comment">// false</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="stdformat"><a class="markdownIt-Anchor" href="#stdformat"></a> std::format</h2>
 <p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/format/format">std::format</a></p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">std::string hello = <span class="hljs-string">&quot;hello&quot;</span>;<br>std::string world = <span class="hljs-string">&quot;world&quot;</span>;<br>std::cout&lt;&lt;std::format(<span class="hljs-string">&quot;&#123;&#125;, &#123;&#125;.&quot;</span>, hello, world);<br><span class="hljs-comment">// hello, world.</span><br>std::cout&lt;&lt;std::format(<span class="hljs-string">&quot;&#123;1&#125;, &#123;0&#125;.&quot;</span>, hello, world);<br><span class="hljs-comment">// world, hello.</span><br>std::cout&lt;&lt;std::format(<span class="hljs-string">&quot;&#123;0&#125;, &#123;0&#125;.&quot;</span>, hello);<br><span class="hljs-comment">// hello, hello.</span><br></code></pre></div></td></tr></table></figure>
-<h1 id="nrvo-stdmove"><a class="markdownIt-Anchor" href="#nrvo-stdmove"></a> (N)RVO, std::move</h1>
+<h2 id="nrvo-stdmove"><a class="markdownIt-Anchor" href="#nrvo-stdmove"></a> (N)RVO, std::move</h2>
 <p>开销：copy &gt; move &gt; RVO<br />
 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LwnDtK6HNZo_StIxQ5yJhA">编译器之返回值优化</a><br />
 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/4986673/c11-rvalues-and-move-semantics-confusion-return-statement">rvalues and move semantics confusion</a><br />
@@ -267,10 +267,16 @@
 <li>函数返回 <code>std::move()</code></li>
 <li>在函数外对现存变量进行赋值而非构造一个新的对象</li>
 </ol>
-<h1 id="stdstring_view"><a class="markdownIt-Anchor" href="#stdstring_view"></a> std::string_view</h1>
+<h2 id="stdstring_view"><a class="markdownIt-Anchor" href="#stdstring_view"></a> std::string_view</h2>
 <p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/string/basic_string_view">std::basic_string_view</a><br />
 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/20803826/what-is-string-view">What is string_view?</a><br />
 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40127965/how-exactly-is-stdstring-view-faster-than-const-stdstring">How exactly is std::string_view faster than const std::string&amp;?</a></p>
+<h2 id="stdvariant"><a class="markdownIt-Anchor" href="#stdvariant"></a> std::variant</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">std::variant&lt;std::string, <span class="hljs-keyword">int</span>&gt; data;<br>data = <span class="hljs-string">&quot;Hi&quot;</span>;<br>std::get&lt;std::string&gt;(data); <span class="hljs-comment">// Hi</span><br>std::get&lt;<span class="hljs-keyword">int</span>&gt;(data); <span class="hljs-comment">// error</span><br>data.<span class="hljs-built_in">index</span>(); <span class="hljs-comment">// 0</span><br>data = <span class="hljs-number">42</span>;<br>data.<span class="hljs-built_in">index</span>(); <span class="hljs-comment">// 1</span><br><span class="hljs-keyword">auto</span> value = std::get_if&lt;<span class="hljs-keyword">int</span>&gt;(&amp;data); <span class="hljs-comment">// 42</span><br>data = <span class="hljs-string">&quot;Hi&quot;</span>;<br><span class="hljs-keyword">auto</span> value = std::get_if&lt;<span class="hljs-keyword">int</span>&gt;(&amp;data); <span class="hljs-comment">// nullptr</span><br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/variant">std::variant</a><br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/366537214">如何优雅的使用 std::variant 与 std::optional</a></p>
+<h2 id="位域"><a class="markdownIt-Anchor" href="#位域"></a> 位域</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengnianli/article/details/87386078">C语言 | 位域的使用详解</a></p>
 
             </div>
             <hr>
