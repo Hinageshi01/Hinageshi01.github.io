@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      412 字
+      445 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6
+      7
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 16, 2022
+                  本文最后更新于：August 21, 2022
                 
               </p>
             
@@ -271,12 +271,15 @@
 <p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/string/basic_string_view">std::basic_string_view</a><br />
 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/20803826/what-is-string-view">What is string_view?</a><br />
 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40127965/how-exactly-is-stdstring-view-faster-than-const-stdstring">How exactly is std::string_view faster than const std::string&amp;?</a></p>
+<h2 id="位域"><a class="markdownIt-Anchor" href="#位域"></a> 位域</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengnianli/article/details/87386078">C语言 | 位域的使用详解</a></p>
 <h2 id="stdvariant"><a class="markdownIt-Anchor" href="#stdvariant"></a> std::variant</h2>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">std::variant&lt;std::string, <span class="hljs-keyword">int</span>&gt; data;<br>data = <span class="hljs-string">&quot;Hi&quot;</span>;<br>std::get&lt;std::string&gt;(data); <span class="hljs-comment">// Hi</span><br>std::get&lt;<span class="hljs-keyword">int</span>&gt;(data); <span class="hljs-comment">// error</span><br>data.<span class="hljs-built_in">index</span>(); <span class="hljs-comment">// 0</span><br>data = <span class="hljs-number">42</span>;<br>data.<span class="hljs-built_in">index</span>(); <span class="hljs-comment">// 1</span><br><span class="hljs-keyword">auto</span> value = std::get_if&lt;<span class="hljs-keyword">int</span>&gt;(&amp;data); <span class="hljs-comment">// 42</span><br>data = <span class="hljs-string">&quot;Hi&quot;</span>;<br><span class="hljs-keyword">auto</span> value = std::get_if&lt;<span class="hljs-keyword">int</span>&gt;(&amp;data); <span class="hljs-comment">// nullptr</span><br></code></pre></div></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/variant">std::variant</a><br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/366537214">如何优雅的使用 std::variant 与 std::optional</a></p>
-<h2 id="位域"><a class="markdownIt-Anchor" href="#位域"></a> 位域</h2>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengnianli/article/details/87386078">C语言 | 位域的使用详解</a></p>
+<h2 id="stdtuple"><a class="markdownIt-Anchor" href="#stdtuple"></a> std::tuple</h2>
+<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/tuple">std::tuple</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> data = <span class="hljs-built_in">make_tuple</span>(<span class="hljs-string">&quot;pi&quot;</span>, <span class="hljs-number">3.14</span>);<br>std::string str = std::get&lt;<span class="hljs-number">0</span>&gt;(data); <span class="hljs-comment">// &quot;pi&quot;</span><br><span class="hljs-keyword">double</span> db;<br>std::<span class="hljs-built_in">tie</span>(std::ignore, db); <span class="hljs-comment">// 3.14</span><br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>
