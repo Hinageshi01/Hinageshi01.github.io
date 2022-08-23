@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.6k 字
+      4.8k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      65
+      68
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 15, 2022
+                  本文最后更新于：August 23, 2022
                 
               </p>
             
@@ -530,6 +530,9 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 默认接受的是 CubeMap，如果输入是 2:1 的 Lat Long 需要加上 <code>--equirect</code> 参数。</p>
 </li>
 <li>
+<p>如果贴图处于 sRGB 空间，<code>LoadTexture</code> 在读取 CubeMap 的时候是不支持 <code>BGFX_TEXTURE_SRGB</code> 的 flag 的，CubeMap 只能在 Shader 里用 <code>toLinear</code> 转至线性空间。</p>
+</li>
+<li>
 <p>贴两个简单的脚本，我们假设带 <code>roughness</code> 文件名的贴图是合并了多通道数据的贴图，更多的 texture type 需要自己定义一下：</p>
 </li>
 </ul>
@@ -547,6 +550,16 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <h2 id="bgfxs-model"><a class="markdownIt-Anchor" href="#bgfxs-model"></a> bgfx’s Model</h2>
 <p>模型的编码和读取同理，内容不多，看官方文档就好：<br />
 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/tools.html#geometry-compiler-geometryc">Geometry Compiler</a></p>
+<h2 id="mrt"><a class="markdownIt-Anchor" href="#mrt"></a> MRT</h2>
+<h3 id="setviewclear"><a class="markdownIt-Anchor" href="#setviewclear"></a> setViewClear</h3>
+<p>今天看到一个重载：<br />
+<img src="/img/bgfx/setViewClear.png" srcset="/img/loading.gif" lazyload alt="bgfx.h Line 3392" /></p>
+<blockquote>
+<p>Set view clear flags with different clear color for each frame buffer texture. Must use <code>bgfx::setPaletteColor</code> to setup clear color palette.</p>
+</blockquote>
+<p><code>bgfx::setViewClear</code> 调用 <code>bgfx::Context::setViewClear</code> 调用 <code>bgfx::View::setClear</code> 调用 <code>ngfx::Clear::Set</code> 给 <code>ngfx::Clear::m_index</code> 赋值，查找一下该变量的所有引用，转到了 <code>renderer_xxx.cpp</code> 里，比如 <code>bgfx::gl::RendererContextGL::clearQuad</code>，在使用 palette 的情况下 <code>m_index</code> 作为多个索引去取调色盘中的颜色，否则前四个 <code>m_index</code> 直接作为 rgba。<br />
+结合使用 <code>void setPaletteColor(uint8_t _index, uint32_t _rgba)</code> 即可对不同的 rt 设置不同的清屏颜色。<br />
+最多有 16 个调色盘：<code>#define BGFX_CONFIG_MAX_COLOR_PALETTE 16</code></p>
 <h2 id="相关链接-2"><a class="markdownIt-Anchor" href="#相关链接-2"></a> 相关链接</h2>
 <p><a target="_blank" rel="noopener" href="https://t-rvw.github.io/blog/2022/05/28/game_engine_rhi/">自制游戏引擎 - 图形API</a><br />
 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/">bgfx 文档</a><br />
