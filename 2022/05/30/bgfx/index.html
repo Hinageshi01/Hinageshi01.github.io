@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.8k 字
+      4.9k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      68
+      69
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 23, 2022
+                  本文最后更新于：August 25, 2022
                 
               </p>
             
@@ -369,10 +369,18 @@
 bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage，以下简称为 BSL。<br />
 在编译 Shader 时，先将 BSL 通过一些预处理替换翻译成 GLSL 或者 HLSL，然后通过 <a target="_blank" rel="noopener" href="https://github.com/KhronosGroup/glslang">glslang</a> 将 HLSL 编译成 SPIR-V，再通过 <a target="_blank" rel="noopener" href="https://github.com/KhronosGroup/SPIRV-Cross">SPIRV-Cross</a> 来逆向生成剩下的所有 ShaderLanguage。</p>
 <h3 id="编译-shader"><a class="markdownIt-Anchor" href="#编译-shader"></a> 编译 Shader</h3>
-<p><code>loadProgram()</code> 读取的 Shader 是位于 <code>bgfx\examples\runtime\shaders\对应API</code> 下的 <code>.bin</code> 文件。<br />
-这种文件可以通过 <code>shaderc.exe</code> 编译 <code>.sc</code> 文件生成。<br />
-也可以加上 <code>--raw</code> 参数表示不进行预处理和 GLSL 优化，直接接受原生的 ShaderLanguage 进行编译。<br />
-这里搭建一个简单的结构来完成这个工作：</p>
+<p><code>loadProgram()</code> 读取的 Shader 是位于 <code>bgfx\examples\runtime\shaders\对应API</code> 下的 <code>.bin</code> 文件。这种文件可以通过 <code>shaderc.exe</code> 编译 <code>.sc</code> 文件生成。</p>
+<blockquote>
+<p>shaderc 的实现，分两个阶段。<br />
+1.预处理阶段（包括某些字符搜索替换）。2.编译阶段。<br />
+其中预处理阶段是将 sc 源码转换成 glsl 或者 hlsl。就算有 5 个分支，预处理阶段也只输出两种语言。</p>
+</blockquote>
+<ul>
+<li><code>--preprocess</code> 参数表示只进行预处理。</li>
+<li><code>--raw</code> 参数表示不进行预处理和 GLSL 优化，直接接受 Shader 文件进行编译。</li>
+<li><code>--define NAME1=VALUE1;NAME2=VALUE2</code> 用来给 Shader 添加预处理的宏定义。</li>
+</ul>
+<p>这里搭建一个简单的结构来完成这个工作：</p>
 <ul>
 <li>common
 <ul>
@@ -425,7 +433,7 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <p>必须且只能存在一份 <code>varying.def.sc</code>，用于声明所有 Shader 中输入/输出变量的语义和类型。</p>
 </li>
 <li>
-<p>在 Shader 的开头需要使用 <code>$input/$output</code> 来声明输入/输出变量，这些变量名是与 <code>varying.def.sc</code> 中的声明一一对应的。</p>
+<p>在 Shader 的开头需要使用 <code>$input/$output</code> 来声明输入/输出变量，这些变量名与 <code>varying.def.sc</code> 中的声明一一对应。</p>
 </li>
 <li>
 <p>在 <a target="_blank" rel="noopener" href="https://github.com/bkaradzic/bgfx/blob/master/src/bgfx_shader.sh">bgfx_shader.sh</a> 中还定义了一些 bgfx 内建的 uniform 变量：</p>
