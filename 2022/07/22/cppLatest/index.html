@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      633 字
+      739 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      11
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 27, 2022
+                  本文最后更新于：September 5, 2022
                 
               </p>
             
@@ -252,6 +252,13 @@
 <p>如果一个函数可能取不到有效的值，一般的做法是预设一个特殊值然后在调用之后去检查函数的返回值，或者在函数内抛出异常。这两种做法都不够安全、简洁。<br />
 <code>C++ 17</code> 提供了 <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/optional"><code>std::optional</code></a>，可以将任意类型与一个有效标志包装起来：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;optional&gt;</span></span><br><br><span class="hljs-function">std::optional&lt;std::string&gt; <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">bool</span> b)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> b ? <span class="hljs-string">&quot;true&quot;</span> : std::nullopt;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">auto</span> strTrue = <span class="hljs-built_in">fun</span>(<span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">if</span>(strTrue.<span class="hljs-built_in">has_value</span>()) &#123;<br>        std::cout &lt;&lt; strTrue &lt;&lt; std::endl;<br>        <span class="hljs-comment">// true</span><br>    &#125;<br><br>    std::cout &lt;&lt; <span class="hljs-built_in">fun</span>(<span class="hljs-literal">false</span>).<span class="hljs-built_in">value_or</span>(<span class="hljs-string">&quot;false&quot;</span>); &lt;&lt; std::endl;<br>    <span class="hljs-comment">// false</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/438821425">关于 std::optional 传递开销的讨论与优化</a></p>
+<h2 id="stdreference_wrapper"><a class="markdownIt-Anchor" href="#stdreference_wrapper"></a> std::reference_wrapper</h2>
+<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper">std::reference_wrapper</a><br />
+作于将引用存入无法正常保有引用的标准容器，如 <code>std::vector</code>。</p>
+<blockquote>
+<p>std::reference_wrapper is a class template that wraps a reference in a copyable, assignable object. It is frequently used as a mechanism to store references inside standard containers (like std::vector) which cannot normally hold references.</p>
+</blockquote>
 <h2 id="stdformat"><a class="markdownIt-Anchor" href="#stdformat"></a> std::format</h2>
 <p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/format/format">std::format</a></p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;format&gt;</span></span><br><br>std::string hello = <span class="hljs-string">&quot;hello&quot;</span>;<br>std::string world = <span class="hljs-string">&quot;world&quot;</span>;<br>std::cout&lt;&lt;std::format(<span class="hljs-string">&quot;&#123;&#125;, &#123;&#125;.&quot;</span>, hello, world);<br><span class="hljs-comment">// hello, world.</span><br>std::cout&lt;&lt;std::format(<span class="hljs-string">&quot;&#123;1&#125;, &#123;0&#125;.&quot;</span>, hello, world);<br><span class="hljs-comment">// world, hello.</span><br>std::cout&lt;&lt;std::format(<span class="hljs-string">&quot;&#123;0&#125;, &#123;0&#125;.&quot;</span>, hello);<br><span class="hljs-comment">// hello, hello.</span><br></code></pre></div></td></tr></table></figure>
@@ -291,6 +298,9 @@
 <li>CPU 寄存器的备份。</li>
 <li>函数里的局部变量。</li>
 </ol>
+<h2 id="stdstring-太慢了"><a class="markdownIt-Anchor" href="#stdstring-太慢了"></a> std::string 太慢了</h2>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/451244912">C++ string 函数操作的坑</a><br />
+<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27803894/answer/674469806">C 语言中如何优雅地拼接多段字符串？</a></p>
 
             </div>
             <hr>
