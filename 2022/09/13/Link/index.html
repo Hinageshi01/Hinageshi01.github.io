@@ -1,0 +1,580 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Hinageshi">
+  <meta name="keywords" content="">
+  
+  <title>收藏夹合集 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":25,"cursorChar":"","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["_slim",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":17057737,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hinageshi的駄菓子屋</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                Links
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/backGround.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="收藏夹合集">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-09-13 00:00" pubdate>
+        September 13, 2022
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">收藏夹合集</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：September 13, 2022
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="c"><a class="markdownIt-Anchor" href="#c"></a> C++</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1G7411K7j2">想做 C 语言 / C++ 开发?这些才是你该学的东西！C 语言 / C++ 直通企业级开发的详细学习路线</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1WF41187TZ">C++ 实现高性能并行计算——使用 OpenMP 进行共享内存编程</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ja411M7Di">std::string 用法指南&amp;源码剖析</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gu41117bW">往数组里写入 0 为何比写入 1 更快？详解缓存的工作机制</a></p>
+<h2 id="渲染"><a class="markdownIt-Anchor" href="#渲染"></a> 渲染</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1s741147Kt">渲染的物理基础与数学原理-Naty Hoffman-2015</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1H44y157PJ">可能存在认知错误的 shader 性能优化点</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1yb411c7in">虚幻引擎中文技术直播 第1期 虚幻引擎4的实时渲染流程</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1sE411g7N9">庄懂的技术美术入门课</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1qF411z7Zp">Unity 渲染管线学习（四）URP 贴花效果</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1vY411b7xE">Filament 渲染命令队列和多线程渲染基础</a><br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61949898">GPU Rendering Pipeline——GPU 渲染流水线简介</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1U54y1E7C8">如何制作无光贴图</a></p>
+<h2 id="npr"><a class="markdownIt-Anchor" href="#npr"></a> NPR</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1xr4y127WZ">罪恶装备Xrd的美术风格——2D与3D之间的未知数 GDC 2015</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV15t4y1V76U">原神面部渲染 shader</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1J341137U5">转一个原神在 URP 中的还原</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18F411B7YA">赛马娘独特的角色模型表现力</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Mh411t7gr">【Unity】【卡通渲染】自学小半年的经验分享</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1AA411A7RR">Unity高质量实时三渲二入门 HDRP/Pencil+/光线追踪/MMD/动画电影</a></p>
+<h2 id="图形"><a class="markdownIt-Anchor" href="#图形"></a> 图形</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1my4y1z76s">Chinagraph2020 会前课程</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ca411R7Em">PC版《漫威蜘蛛侠》技术评测： 图形技术解析、优化设置</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aM4y1g75f">【技术美术百人计划】图形 2.7.2 GPU 硬件架构概述</a></p>
+<h2 id="颜色"><a class="markdownIt-Anchor" href="#颜色"></a> 颜色</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1JY4y1K7w8">忽略这一点，调色就是在调寂寞</a></p>
+<h2 id="数学"><a class="markdownIt-Anchor" href="#数学"></a> 数学</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Nr4y1j7kn">无伤理解欧拉角中的“万向死锁”现象</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wL4y147Jb">马克杯里的奇特光线——包络线</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1464y1k7Ya">数学有一个致命的缺陷</a></p>
+<h2 id="硬件"><a class="markdownIt-Anchor" href="#硬件"></a> 硬件</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aF411u7Ct">固态硬盘的缓存是干什么的？有缓存和无缓存有什么区别？</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1kk4y167rk">显示器的色域和色准是什么东西？他会影响哪些体验</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19741187gq">大佬们为啥不用鲁大师？常用硬件工具科普</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1AM4y157ut">使用高频内存条这个概念你一定要知道！详解内存 Gear2 模式</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Wz411B7Tf">全网最简洁易懂的 OLED 与 LCD 屏幕工作原理与优劣科普</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19A411a7sC">为什么装机内存条推荐安装到第 24 槽而不是 13 槽</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1cJ411K7HW">电脑主板右下角的散热片下面究竟隐藏着什么？详解主板南桥芯片组的功能和作用</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1n4411m7HX">PCIe 到底是个什么东西？他在电脑里是干什么的</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1FK4y1x7bk">全网最详细易懂的 Gsync Freesync 垂直同步工作原理科普</a></p>
+<h2 id="有意思的项目"><a class="markdownIt-Anchor" href="#有意思的项目"></a> 有意思的项目</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tN41197Hb">独立自研次世代 MMD 渲染器 - NiseMMD</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1pU4y1x7Sk">PNG 单张图片生成虚拟偶像【不需分层】一图流 Live2D 头像</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wi4y157D3">从 0 到 1 设计一台计算机</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12g411V7j4">AI 歌声合成（无参）技术预览~是尚未实装的全新模型哟</a></p>
+<h2 id="游戏开发"><a class="markdownIt-Anchor" href="#游戏开发"></a> 游戏开发</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1VM4y1V7Rf">Unity 包着方括号的实用扩展与类 - 还有哪些你没见过的呢</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ik4y1m7QF">自动&gt;手动 用随机地图丰满你的游戏</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1w3411t75x">传送门背后的开发原理分析</a></p>
+<h2 id="游戏设计"><a class="markdownIt-Anchor" href="#游戏设计"></a> 游戏设计</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1PZ4y1A76N">《怪物猎人》的配乐为什么那么有画面感？</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1j34y117nq">震惊 战神 4 四年做了个平 A</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aT4y1w7yL">你迟早要设计自己的标志，不如早点看看</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Zp4y1i7Ff">《寻门》Vol.22——济斯瓦夫·贝克辛斯基</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV11i4y1g7Gq">如何科学地设计架空地形</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1pJ411X7cG">[尼尔机械纪元]全武器动画鉴赏</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ta411k7Uq">【赛马娘技术分享】批量制作3D对话场景的秘诀</a></p>
+<h2 id="歌唱"><a class="markdownIt-Anchor" href="#歌唱"></a> 歌唱</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Yv4y1o7ts">如何把音唱准 - 基础音阶练习</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Lz4y1S7He">《关于莫名其妙职业病上身这回事》</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18a411D7JW">【异世界情绪】人声提取</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1c64y1t7nm">【异世界情绪】纯人声（反相伴奏提取）</a></p>
+<h2 id="乐理"><a class="markdownIt-Anchor" href="#乐理"></a> 乐理</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ta411F7pH">谁都能明白的和弦理论讲座</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1k5411E7Av">J-POP和弦进行大全——兼论J-POP审美特性</a></p>
+<h2 id="好看的渲染"><a class="markdownIt-Anchor" href="#好看的渲染"></a> 好看的渲染</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1BM4y1K7in">理芽 1st Album「NEW ROMANCER」XFD</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tT4y167hv">清纯天花板【4K60FPS&amp;照片级渲染&amp;芙洛伦】</a></p>
+<h2 id="哲学"><a class="markdownIt-Anchor" href="#哲学"></a> 哲学</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1rw41197VY">拉康最晦涩难懂的概念：对象a是什么，实在界、想象界、象征界之核心</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dT4y197xA">病娇的爱欲原理</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1W34y1m7uE">虚渊玄的哲学：对功利主义的批判，失去救赎的爱，或失去爱的救赎</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1cr4y1E7WC">【意识形态批判】许多人对热点事件的关注实质上只是自恋性的消费</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hT4y1Q7eN">【社会观察】不要见证历史</a></p>
+<h2 id="杂学"><a class="markdownIt-Anchor" href="#杂学"></a> 杂学</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dy4y1g7Hv">你被翻译骗了多少年？全网最全的异世界种族科普！一个视频搞清！</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1TZ4y1S7iG">JPEG 算法原理 jpeg 图片是如何压缩的？</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12q4y1a7Q2">令人智熄！带你走进 USB 命名的烧脑之旅！</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1xP4y1J7CS">你懂乱码吗？锟斤拷烫烫烫（详解ASCII、Unicode、UTF-32、UTF-8编码）</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1KQ4y117nq">DDoS 技术鉴赏</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uM4y1K7zD">域名如何成为了小国的财富+大国的武器？</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ok4y1m7WC">N64 版生化危机 2 到底是怎么压缩的？</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16a411D7PA">无处不在的知觉：关于二维动画“眉目-头发”处理的体验与考据</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uq4y1f7VZ">一个视频让你了解所有游戏类型！看完不懂，来砍我！</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Kf4y1H7rK">解析后坐力！你真的会压枪吗</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1zz4y1r7ci">为什么游戏界这么推崇吃豆人</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1RB4y1A7mu">看完就会！全网唯一！中英日多语通用：人物起名教程！</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1py4y1a7h8">「尼尔:机械纪元」结局标题，是对经典科幻的浪漫致敬</a><br />
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv10050933">【镜头语言下的名场景】——终于…找到了，凉宫春日</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/10/PBRinBGFX/">
+                        <span class="hidden-mobile">在 BGFX 中实现 PBR</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '09ab4a4b5657a3896b32c64e777283f5'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <br/> 本站内容依据 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> 许可证进行授权 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- KaTeX -->
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.10/dist/katex.min.css" />
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

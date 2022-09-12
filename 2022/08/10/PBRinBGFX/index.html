@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 22, 2022
+                  本文最后更新于：September 5, 2022
                 
               </p>
             
@@ -319,7 +319,7 @@
 <h2 id="pbl"><a class="markdownIt-Anchor" href="#pbl"></a> PBL</h2>
 <h3 id="单位"><a class="markdownIt-Anchor" href="#单位"></a> 单位</h3>
 <div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/pbrbgfx/unit.png" srcset="/img/loading.gif" lazyload alt="辐射度量学与光度学" /></div><div class="group-image-wrap"><img src="/img/pbrbgfx/unit2.png" srcset="/img/loading.gif" lazyload alt="转换" /></div></div><div class="group-image-row"></div></div>
-<p>我们将统一使用光度学单位：<br />
+<p>我们统一使用光度学单位：<br />
 点光源与聚光灯：Luminous power(lm)<br />
 平行光：Illuminance(lx)<br />
 IBL：Luminance(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>d</mi><mo>⋅</mo><msup><mi>m</mi><mrow><mo>−</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">cd\cdot m^{-2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">m</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span>)</p>
@@ -370,7 +370,7 @@ EC（曝光补偿）以光圈为单位。</p>
 <p>bgfx example-18-ibl 例子中的 Diffuse Irradiance Map 和 Pre-filtered Environment Map 都是使用 <a target="_blank" rel="noopener" href="https://github.com/dariomanesku/cmft">cmft</a> 生成的。参数应该是：<br />
 irr : <code>--filter irradiance --output0Params dds,rgba16f,cubemap --srcFaceSize 128</code><br />
 lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 256 --excludeBase true --mipCount 7 --glossScale 10 --glossBias 2 --edgeFixup warp</code><br />
-注意：这样生成的贴图是存储于 <code>sRGB</code> 空间的，在 Shader 中可以用 <code>toLinear()</code> 函数转到线性空间。</p>
+注意：这样生成的贴图是存储于 <code>sRGB</code> 空间的，在 Shader 中可以用 <code>toLinear()</code> 函数转到线性空间（CPU 端不支持将 CubeMap 转至线性空间…）。</p>
 <h2 id="使用-substance-painter-烘焙静态-ao-贴图"><a class="markdownIt-Anchor" href="#使用-substance-painter-烘焙静态-ao-贴图"></a> 使用 Substance Painter 烘焙静态 AO 贴图</h2>
 <ol>
 <li>文件，新建，导入模型，模板选择 <code>PBR - Metallic Roughness</code>，添加现有的贴图</li>
@@ -424,6 +424,12 @@ Cube Map : <a target="_blank" rel="noopener" href="http://www.hdrlabs.com/sibl/a
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/09/13/Link/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">收藏夹合集</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
