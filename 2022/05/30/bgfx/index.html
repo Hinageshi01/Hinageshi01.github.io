@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      79
+      80
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：September 14, 2022
+                  本文最后更新于：September 15, 2022
                 
               </p>
             
@@ -574,7 +574,8 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-ddx">ddx - HLSL</a><br />
 <a target="_blank" rel="noopener" href="https://docs.gl/sl4/dFdx">dFdx - GLSL</a></p>
 <h3 id="wire-frame"><a class="markdownIt-Anchor" href="#wire-frame"></a> Wire Frame</h3>
-<p>我们需要得到顶点的重心坐标在该 Fragment 插值的结果 <code>v_bc</code>。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/wutD7y7kGmu0t07Ph4EfhA">进阶渲染系列（一）——平坦和线框着色（导数和几何体）</a><br />
+我们需要得到顶点的重心坐标在该 Fragment 插值的结果 <code>v_bc</code>。</p>
 <figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c">vec3  color     = vec3(<span class="hljs-number">1.0</span>, <span class="hljs-number">0.02</span>, <span class="hljs-number">0.01</span>);<br><span class="hljs-keyword">float</span> opacity   = <span class="hljs-number">1.0</span>;<br><span class="hljs-keyword">float</span> thickness = <span class="hljs-number">1.0</span>;<br><br>vec3 fw = <span class="hljs-built_in">abs</span>(dFdx(v_bc)) + <span class="hljs-built_in">abs</span>(dFdy(v_bc));<br>vec3 val = smoothstep(vec3_splat(<span class="hljs-number">0.0</span>), fw * thickness, v_bc);<br><span class="hljs-keyword">float</span> edge = min(min(val.x, val.y), val.z); <span class="hljs-comment">// Gets to 0.0 around the edges.</span><br><span class="hljs-keyword">if</span> (gl_FrontFacing) &#123; opacity = <span class="hljs-number">0.5</span>; &#125;<br>	wfColor = vec4(color, (<span class="hljs-number">1.0</span> - edge) * opacity);<br></code></pre></div></td></tr></table></figure>
 <p>PS：在 DX12 中重心坐标是作为 System Value 提供的：<br />
 <code>in float3 barycentrics : SV_Barycentrics;</code><br />
