@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：September 14, 2022
+                  本文最后更新于：September 24, 2022
                 
               </p>
             
@@ -287,7 +287,7 @@
 <h4 id="radiance"><a class="markdownIt-Anchor" href="#radiance"></a> radiance</h4>
 <p>详见 <a target="_blank" rel="noopener" href="https://hinageshi01.github.io/2022/08/10/PBRinBGFX/#pbl">PBL</a></p>
 <h3 id="environment-lighting"><a class="markdownIt-Anchor" href="#environment-lighting"></a> Environment Lighting</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 envColor =<br>    KD * albedo * envIrradiance * occlusion +<br>    envSpecularBRDF * envRadiance * specularOcclusion * horizonOcclusion;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 envColor =<br>    KD * albedo * envIrradiance * occlusion +<br>    envSpecularBRDF * envRadiance * <span class="hljs-built_in">min</span>(specularOcclusion, horizonOcclusion);<br></code></pre></div></td></tr></table></figure>
 <ul>
 <li><code>envColor</code>：环境光的贡献。</li>
 <li><code>envIrradiance</code>：预计算的辐射照度除以 pi（这里用采样 CubMap 的方式实现）。</li>
@@ -305,7 +305,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">float</span> specularOcclusion = <span class="hljs-built_in">lerp</span>(<span class="hljs-built_in">pow</span>(occlusion, <span class="hljs-number">8.0</span>), <span class="hljs-number">1.0</span>, <span class="hljs-built_in">saturate</span>(<span class="hljs-number">-0.3</span> + NdotV * NdotV));<br></code></pre></div></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="http://www.iryoku.com/stare-into-the-future">Next-Generation Character Rendering</a></p>
 <h4 id="horizonocclusion"><a class="markdownIt-Anchor" href="#horizonocclusion"></a> horizonOcclusion</h4>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">float</span> horizonOcclusion = <span class="hljs-built_in">saturate</span>(<span class="hljs-number">1.0</span> + <span class="hljs-number">0.5</span> * <span class="hljs-built_in">dot</span>(reflectDir, v_normal));<br>horizonOcclusion *= horizonOcclusion;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">float</span> horizonOcclusion = <span class="hljs-built_in">saturate</span>(<span class="hljs-number">1.0</span> + <span class="hljs-number">1.2</span> * <span class="hljs-built_in">dot</span>(reflectDir, v_normal));<br>horizonOcclusion *= horizonOcclusion;<br></code></pre></div></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://marmosetco.tumblr.com/post/81245981087">Horizon Occlusion for Normal Mapped Reflections</a></p>
 <h3 id="post-processing"><a class="markdownIt-Anchor" href="#post-processing"></a> Post Processing</h3>
 <p>顺序：</p>
@@ -316,7 +316,8 @@
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function">vec3 <span class="hljs-title">ACES</span><span class="hljs-params">(vec3 color)</span> </span>&#123;<br>    <span class="hljs-keyword">const</span> mat3 ACESInputMat  = <span class="hljs-built_in">mtxFromRows</span>(<br>        <span class="hljs-built_in">vec3</span>(<span class="hljs-number">0.59719</span>, <span class="hljs-number">0.35458</span>, <span class="hljs-number">0.04823</span>),<br>        <span class="hljs-built_in">vec3</span>(<span class="hljs-number">0.07600</span>, <span class="hljs-number">0.90834</span>, <span class="hljs-number">0.01566</span>),<br>        <span class="hljs-built_in">vec3</span>(<span class="hljs-number">0.02840</span>, <span class="hljs-number">0.13383</span>, <span class="hljs-number">0.83777</span>));<br><br>    <span class="hljs-keyword">const</span> mat3 ACESOutputMat = <span class="hljs-built_in">mtxFromRows</span>(<br>        <span class="hljs-built_in">vec3</span>( <span class="hljs-number">1.60475</span>, <span class="hljs-number">-0.53108</span>, <span class="hljs-number">-0.07367</span>),<br>        <span class="hljs-built_in">vec3</span>(<span class="hljs-number">-0.10208</span>,  <span class="hljs-number">1.10813</span>, <span class="hljs-number">-0.00605</span>),<br>        <span class="hljs-built_in">vec3</span>(<span class="hljs-number">-0.00327</span>, <span class="hljs-number">-0.07276</span>,  <span class="hljs-number">1.07602</span>));<br>    <br>    color      = <span class="hljs-built_in">mul</span>(ACESInputMat, color);<br>    vec3 nom   = color * (color + <span class="hljs-built_in">vec3_splat</span>(<span class="hljs-number">0.0245786</span>)) - <span class="hljs-built_in">vec3_splat</span>(<span class="hljs-number">0.000090537</span>);<br>    vec3 denom = color * (<span class="hljs-built_in">vec3_splat</span>(<span class="hljs-number">0.983729</span>) * color<br>        + <span class="hljs-built_in">vec3_splat</span>(<span class="hljs-number">0.4329510</span>)) + <span class="hljs-built_in">vec3_splat</span>(<span class="hljs-number">0.238081</span>);<br>    color      = nom / denom;<br>    color      = <span class="hljs-built_in">mul</span>(ACESOutputMat, color);<br>    <br>    <span class="hljs-keyword">return</span> color;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://64.github.io/tonemapping/">Tone Mapping</a></p>
 <h3 id="todo"><a class="markdownIt-Anchor" href="#todo"></a> todo</h3>
-<p>Disney BSDF<br />
+<p>SSAO<br />
+Disney BSDF<br />
 次表面散射</p>
 <h2 id="pbl"><a class="markdownIt-Anchor" href="#pbl"></a> PBL</h2>
 <h3 id="单位"><a class="markdownIt-Anchor" href="#单位"></a> 单位</h3>
@@ -399,7 +400,7 @@ lod : <code>--filter radiance --output0Params dds,rgba16f,cubemap --srcFaceSize 
 </ul>
 <h2 id="资源"><a class="markdownIt-Anchor" href="#资源"></a> 资源</h2>
 <p>Model : <a target="_blank" rel="noopener" href="https://sketchfab.com/search?q=tag%3Apbr&amp;sort_by=-likeCount&amp;type=models">sketchfab</a><br />
-Cube Map : <a target="_blank" rel="noopener" href="http://www.hdrlabs.com/sibl/archive.html">sIBL Archive</a></p>
+CubeMap : <a target="_blank" rel="noopener" href="http://www.hdrlabs.com/sibl/archive.html">sIBL Archive</a></p>
 
             </div>
             <hr>
