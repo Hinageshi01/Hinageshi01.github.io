@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      375 字
+      450 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4
+      5
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 4, 2022
+                  本文最后更新于：October 5, 2022
                 
               </p>
             
@@ -253,18 +253,24 @@
 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1i3411T7QL/">06.游戏中地形大气和云的渲染(下) | GAMES104-现代游戏引擎：从入门到实践</a><br />
 一个简短的公式推导：<br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36498679">[Rendering] 基于物理的大气渲染</a><br />
-一个详细的推导和最暴力最直观的实现：<br />
+一个详细的推导和最暴力且直观的实现：<br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/237502022">【实战】从零实现一套完整单次大气散射</a><br />
 一篇详尽过头的文章：<br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/548799663">游戏魔法编程：unity 实现完整大气散射</a></p>
 <h2 id="accurate-atmospheric-scattering"><a class="markdownIt-Anchor" href="#accurate-atmospheric-scattering"></a> Accurate Atmospheric Scattering</h2>
-<p>预计算并拟合了任意两点间的光学距离：<br />
+<p>只考虑单次散射，预计算并拟合了任意两点间的光学距离：<br />
 <a target="_blank" rel="noopener" href="https://developer.nvidia.com/gpugems/gpugems2/part-ii-shading-lighting-and-shadows/chapter-16-accurate-atmospheric-scattering">GPU Gems 2 Chapter 16. Accurate Atmospheric Scattering</a><br />
 这也是 Unity 的做法：<br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/448521659">在 Unity 中制作 Procedural Sky</a></p>
 <h2 id="precomputed-atmospheric-scattering"><a class="markdownIt-Anchor" href="#precomputed-atmospheric-scattering"></a> Precomputed Atmospheric Scattering</h2>
 <p>预计算了多次散射，大作标配：<br />
-<a target="_blank" rel="noopener" href="https://ebruneton.github.io/precomputed_atmospheric_scattering/">Precomputed Atmospheric Scattering</a></p>
+<a target="_blank" rel="noopener" href="https://ebruneton.github.io/precomputed_atmospheric_scattering/">Precomputed Atmospheric Scattering</a><br />
+预览：<br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76844937">Precomputed Atmospheric Scattering</a><br />
+公式：<br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/380531599">Precomputed Atmosphere Scaterring</a><br />
+函数：<br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/498287539">Precomputed Atmospheric Scattering Shader代码笔记</a></p>
 <h2 id="a-scalable-and-production-ready-sky-and-atmosphere-rendering-technique"><a class="markdownIt-Anchor" href="#a-scalable-and-production-ready-sky-and-atmosphere-rendering-technique"></a> A Scalable and Production Ready Sky and Atmosphere Rendering Technique</h2>
 <p>UE 的新做法，目前最优的实现：<br />
 <a target="_blank" rel="noopener" href="https://sebh.github.io/publications/">A Scalable and Production Ready Sky and Atmosphere Rendering Technique</a> 2020 那两篇<br />
@@ -276,11 +282,16 @@
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76273445">【SIGGRAPH2019】荒野大镖客 救赎2中的天气系统</a><br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/337895373">图形学研究：《荒野大镖客2》</a></p>
 <h2 id="其他资料"><a class="markdownIt-Anchor" href="#其他资料"></a> 其他资料</h2>
+<p>关于几种新做法的系列文章：<br />
+<a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1366713442364088320">大气散射相关</a></p>
+<p>这两篇是 Eric Bruneton 那篇的进一步改进：<br />
+<a href="https://link.zhihu.com/?target=http%3A//www.cescg.org/CESCG-2009/papers/PragueCUNI-Elek-Oskar09.pdf">Rendering Parametrizable Planetary Atmospheres with Multiple Scattering in Real-Time</a><br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/345916725">【译】【大气散射】[Elek09] 实时渲染参数化的、有多次散射的行星大气</a></p>
 <p><a target="_blank" rel="noopener" href="https://sebh.github.io/publications/">A Scalable and Production Ready Sky and Atmosphere Rendering Technique</a> 2016 那篇<br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/349472710">【译】【寒霜引擎】【大气渲染】基于物理的天空、大气和云的渲染</a></p>
-<p><a href="https://link.zhihu.com/?target=http%3A//www.cescg.org/CESCG-2009/papers/PragueCUNI-Elek-Oskar09.pdf">Rendering Parametrizable Planetary Atmospheres with Multiple Scattering in Real-Time</a><br />
-<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/345916725">【译】【大气散射】[Elek09] 实时渲染参数化的、有多次散射的行星大气</a></p>
-<p><a href="https://link.zhihu.com/?target=http%3A//citeseerx.ist.psu.edu/viewdoc/download%3Fdoi%3D10.1.1.192.1514%26rep%3Drep1%26type%3Dpdf">Rendering Outdoor Light Scattering in Real Time</a></p>
+<p><a target="_blank" rel="noopener" href="http://developer.amd.com/wordpress/media/2012/10/GDC_02_HoffmanPreetham.pdf">Rendering Outdoor Light Scattering in Real Time</a></p>
+<p>纯拟合：<br />
+<a target="_blank" rel="noopener" href="https://cgg.mff.cuni.cz/projects/SkylightModelling/">An Analytic Model for Full Spectral Sky-Dome Radiance</a> 最后一篇</p>
 
             </div>
             <hr>
