@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 13, 2022
+                  本文最后更新于：October 15, 2022
                 
               </p>
             
@@ -297,6 +297,7 @@
 <li>首先将 r, mu 映射至 [0, 1]，然后将 f(0) 存在第 0 个像素，将 f(1) 存在第 n-1 个像素。</li>
 <li>num_precomputed_wavelengths 如果小于等于三，散射则被计算为三个波长并存储为 irradiance，否则会被四舍五入至三的倍数并存储为 illuminance。</li>
 <li>model 的构造函数里搞了一堆 lambda 去生成 string 拼凑成 shader…</li>
+<li>使用 irradiance 模式进行渲染时，不需要 radiance 和 luminance 之间的转换，此时 luminance_from_radiance 为单位矩阵。</li>
 </ul>
 <h2 id="a-scalable-and-production-ready-sky-and-atmosphere-rendering-technique"><a class="markdownIt-Anchor" href="#a-scalable-and-production-ready-sky-and-atmosphere-rendering-technique"></a> A Scalable and Production Ready Sky and Atmosphere Rendering Technique</h2>
 <p>UE 的新做法，目前最优的实现：<br />
