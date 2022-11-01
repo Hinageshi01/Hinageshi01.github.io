@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.1k 字
+      5.2k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      72
+      73
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 17, 2022
+                  本文最后更新于：November 1, 2022
                 
               </p>
             
@@ -405,10 +405,11 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <ol>
 <li>将 <a target="_blank" rel="noopener" href="http://common.sh">common.sh</a> 修改为 <code>#include &quot;bgfx_shader.sh&quot;</code> 直接把 <code>bgfx_shader.sh</code> 放在同一文件夹下。<br />
 具体做法无所谓，只要能让每个 Shader 都在第一行包含到 <code>bgfx_shader.sh</code>和 <code>shaderlib.sh</code> 两个文件就行。<br />
-<code>bgfx_shader.sh</code> 中是大量的宏定义，用于处理各类 Shader Language 之间的差异，<code>shaderlib.sh</code> 中是一些辅助函数，该文件并不是必须的。<br />
-<code>bgfx_shader.sh</code> 中大致从 Line39 到 Line581 是 hlsl 侧的宏定义，从 Line583 到 Line623 是 glsl 侧的宏定义。<br />
-宏嵌套了很多层，然后用缩进来整理，反正挺抽象的，不得不抱怨一下可读性太低了。</li>
-<li><code>shader</code> 文件夹内是所有的 Shader 文件以及一个必须的 <code>varying.def.sc</code></li>
+1.1. <code>bgfx_shader.sh</code> 中是大量的宏定义，用于处理各类 Shader Language 之间的差异。<code>shaderlib.sh</code> 中是一些辅助函数，该文件并不是必须的。<br />
+1.2.<code>bgfx_shader.sh</code> 中大致从 Line39 到 Line581 是 hlsl 侧的宏定义，从 Line583 到 Line623 是 glsl 侧的宏定义。宏嵌套了很多层，然后用缩进来整理，反正挺抽象的，不得不抱怨一下可读性太低了。<br />
+1.3. 对于 ComputeShader 有一个同样重要的文件叫 <code>bgfx_compute.sh</code>，之后再说。<br />
+1.4. 在 FragmentShader 中似乎也可以 <code>#include &quot;bgfx_compute.sh&quot;</code>，这时也可以用 <code>IMAG2D_WR</code> 和 <code>imageStore</code> 写入贴图，就像 FBO 和 MRT 一样。但是不能写 <code>NUM_THREADS</code> 了。详见 <code>example-21</code>。</li>
+<li><code>shader</code> 文件夹内是所有的 Shader 文件以及一个必须的 <code>varying.def.sc</code>，用于测试的话随便去一个 example 里 copy 过来就行。</li>
 <li><code>compile.bat</code> 的内容是：<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">set SHADER=<span class="hljs-string">&quot;shader&quot;</span><br>set COMPILED=<span class="hljs-string">&quot;compiled&quot;</span><br>md %COMPILED%<br>shaderc --type v --platform windows -p vs_5_0 -O <span class="hljs-number">3</span> --varyingdef %SHADER%/varying.def.sc -f %SHADER%/vs_name.sc -o %COMPILED%/vs_name.bin<br>shaderc --type f --platform windows -p ps_5_0 -O <span class="hljs-number">3</span> --varyingdef %SHADER%/varying.def.sc -f %SHADER%/fs_name.sc -o %COMPILED%/fs_name.bin<br>pause<br></code></pre></div></td></tr></table></figure>
 修改 -p 参数即可编译为不同的目标 ShaderLanguage。可选的参数有：<a target="_blank" rel="noopener" href="https://github.com/bkaradzic/bgfx/blob/master/scripts/shader.mk">shader.mk</a></li>
 <li>所有编译结果都保存在在 <code>compiled</code> 文件夹内。</li>
@@ -492,6 +493,8 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 为了解决这种差异性，bgfx 在 <code>bgfx_shader.sh</code> 中十分“<strong>贴心</strong>”地提供了 <code>instMul(a, b)</code> 函数，该函数在 HLSL 下返回 <code>mul(b, a)</code> 在 GLSL 下返回 <code>mul(a, b)</code>。<br />
 使得我们可以用这种写法在几种 Shader Language 中得到一致的表现：<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// vec4() 代指任意一个四分量向量。</span><br>mat4 tmpMat;<br>tmpMat[<span class="hljs-number">0</span>] = <span class="hljs-built_in">vec4</span>();<br>tmpMat[<span class="hljs-number">1</span>] = <span class="hljs-built_in">vec4</span>();<br>tmpMat[<span class="hljs-number">2</span>] = <span class="hljs-built_in">vec4</span>();<br>tmpMat[<span class="hljs-number">3</span>] = <span class="hljs-built_in">vec4</span>();<br>vec4 tmpVec = <span class="hljs-built_in">instMul</span>(<span class="hljs-built_in">vec4</span>(), tmpMat);<br></code></pre></div></td></tr></table></figure>
 我个人还是建议直接使用 <code>mtxFromRows</code> 和 <code>mul</code> 之类的函数从线性代数的角度去看待矩阵啦。</li>
+<li>在函数外声明与初始化变量时尽量加上 <code>static</code> 关键字。<br />
+<a target="_blank" rel="noopener" href="https://github.com/CatDogEngine/CatDogEngine/issues/17">[shaderc] Not same standard for optimization #17</a></li>
 </ul>
 <h3 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h3>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61361628">shaderc 编译工具和 sc 源文件</a><br />
