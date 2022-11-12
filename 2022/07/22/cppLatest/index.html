@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 3, 2022
+                  本文最后更新于：November 13, 2022
                 
               </p>
             
@@ -280,7 +280,7 @@
 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/20803826/what-is-string-view">What is string_view?</a><br />
 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40127965/how-exactly-is-stdstring-view-faster-than-const-stdstring">How exactly is std::string_view faster than const std::string &amp;?</a></p>
 <h2 id="位域"><a class="markdownIt-Anchor" href="#位域"></a> 位域</h2>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengnianli/article/details/87386078">C语言 | 位域的使用详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengnianli/article/details/87386078">C 语言 | 位域的使用详解</a></p>
 <h2 id="stdvariant"><a class="markdownIt-Anchor" href="#stdvariant"></a> std::variant</h2>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;variant&gt;</span></span><br><br>std::variant&lt;std::string, <span class="hljs-keyword">int</span>&gt; data;<br>data = <span class="hljs-string">&quot;Hi&quot;</span>;<br>std::get&lt;std::string&gt;(data); <span class="hljs-comment">// Hi</span><br>std::get&lt;<span class="hljs-keyword">int</span>&gt;(data); <span class="hljs-comment">// error</span><br>data.<span class="hljs-built_in">index</span>(); <span class="hljs-comment">// 0</span><br>data = <span class="hljs-number">42</span>;<br>data.<span class="hljs-built_in">index</span>(); <span class="hljs-comment">// 1</span><br><span class="hljs-keyword">auto</span> value = std::get_if&lt;<span class="hljs-keyword">int</span>&gt;(&amp;data); <span class="hljs-comment">// 42</span><br>data = <span class="hljs-string">&quot;Hi&quot;</span>;<br><span class="hljs-keyword">auto</span> value = std::get_if&lt;<span class="hljs-keyword">int</span>&gt;(&amp;data); <span class="hljs-comment">// nullptr</span><br></code></pre></div></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/variant">std::variant</a><br />
