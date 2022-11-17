@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      859 字
+      956 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      13
+      15
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 13, 2022
+                  本文最后更新于：November 17, 2022
                 
               </p>
             
@@ -311,6 +311,9 @@
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *str = <span class="hljs-string">R&quot;(</span><br><span class="hljs-string">&quot;test&quot;&#x27;test&#x27;</span><br><span class="hljs-string">/\~!@#$%^&amp;*()_+-=`[]\&#123;&#125;|;&#x27;:&quot;,./&lt;&gt;?)&quot;</span>;<br>std::cout &lt;&lt; str &lt;&lt; std::endl;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">    output :</span><br><span class="hljs-comment">    &quot;test&quot;&#x27;test&#x27;</span><br><span class="hljs-comment">    /\~!@#$%^&amp;*()_+-=`[]\&#123;&#125;|;&#x27;:&quot;,./&lt;&gt;?</span><br><span class="hljs-comment">*/</span><br></code></pre></div></td></tr></table></figure>
 <h2 id="offsetof"><a class="markdownIt-Anchor" href="#offsetof"></a> offsetof</h2>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Vertext</span> &#123;</span><br>    <span class="hljs-keyword">int</span> a, b;<br>    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    Vertext vert;<br>    *((<span class="hljs-keyword">char</span> *)(&amp;vert) + <span class="hljs-built_in">offsetof</span>(Vertext, c)) = <span class="hljs-number">42</span>;<br>    std::cout &lt;&lt; vert.c &lt;&lt; std::endl;<br>    <span class="hljs-comment">// output : 42</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="chrono"><a class="markdownIt-Anchor" href="#chrono"></a> chrono</h2>
+<p><a target="_blank" rel="noopener" href="https://cplusplus.com/reference/chrono/">chrono</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Timer</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Timer</span>(std::string _tag)<br>        : <span class="hljs-built_in">m_tag</span>(std::<span class="hljs-built_in">move</span>(_tag)), <span class="hljs-built_in">m_startPoint</span>(std::chrono::high_resolution_clock::<span class="hljs-built_in">now</span>()) &#123;&#125;<br><br>    ~<span class="hljs-built_in">Timer</span>() &#123;<br>        <span class="hljs-keyword">auto</span> endPoint = std::chrono::high_resolution_clock::<span class="hljs-built_in">now</span>();<br><br>        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> start = std::chrono::time_point_cast&lt;std::chrono::microseconds&gt;(m_startPoint).<span class="hljs-built_in">time_since_epoch</span>().<span class="hljs-built_in">count</span>();<br>        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> end = std::chrono::time_point_cast&lt;std::chrono::microseconds&gt;(endPoint).<span class="hljs-built_in">time_since_epoch</span>().<span class="hljs-built_in">count</span>();<br><br>        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> duration = end - start;<br><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s costs %lf s (%lf ms)\n&quot;</span>, m_tag.<span class="hljs-built_in">c_str</span>(), <span class="hljs-built_in"><span class="hljs-keyword">double</span></span>(duration * <span class="hljs-number">0.000001</span>), <span class="hljs-built_in"><span class="hljs-keyword">double</span></span>(duration * <span class="hljs-number">0.001</span>));<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    std::string m_tag;<br>    std::chrono::time_point&lt;std::chrono::high_resolution_clock&gt; m_startPoint;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>
