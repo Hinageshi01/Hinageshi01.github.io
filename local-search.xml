@@ -155,11 +155,11 @@
       
       <tag>CPP</tag>
       
-      <tag>GLSL</tag>
+      <tag>BRDF</tag>
       
       <tag>实时</tag>
       
-      <tag>BRDF</tag>
+      <tag>GLSL</tag>
       
     </tags>
     
@@ -305,11 +305,11 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光栅化</tag>
       
       <tag>法线贴图</tag>
+      
+      <tag>CPP</tag>
       
       <tag>实时</tag>
       
@@ -410,9 +410,9 @@
       
       <tag>GGX</tag>
       
-      <tag>GLSL</tag>
-      
       <tag>微表面模型</tag>
+      
+      <tag>GLSL</tag>
       
       <tag>Kulla-Conty</tag>
       
@@ -472,15 +472,15 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>全局光照</tag>
       
-      <tag>GLSL</tag>
-      
       <tag>实时</tag>
+      
+      <tag>GLSL</tag>
       
       <tag>PRT</tag>
       
@@ -540,17 +540,17 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
       <tag>GGX</tag>
       
-      <tag>微表面模型</tag>
-      
       <tag>BRDF</tag>
+      
+      <tag>微表面模型</tag>
       
       <tag>Fresnel-Schlick</tag>
       
@@ -691,9 +691,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
       
@@ -720,9 +720,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光栅化</tag>
+      
+      <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
       
@@ -801,9 +801,9 @@
     
     <tags>
       
-      <tag>AI</tag>
-      
       <tag>C#</tag>
+      
+      <tag>AI</tag>
       
       <tag>状态机</tag>
       
@@ -1010,11 +1010,11 @@
       
       <tag>Unity</tag>
       
-      <tag>AI</tag>
-      
       <tag>C#</tag>
       
       <tag>2D</tag>
+      
+      <tag>AI</tag>
       
     </tags>
     
