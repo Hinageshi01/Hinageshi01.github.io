@@ -18,7 +18,7 @@
   <meta name="author" content="Hinageshi">
   <meta name="keywords" content="">
   
-  <title>大气散射 - Hexo</title>
+  <title>大气散射-资料 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="大气散射">
+            <span class="h2" id="subtitle" title="大气散射-资料">
               
             </span>
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      15
+      14
        分钟
     </span>
   
@@ -237,11 +237,11 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">大气散射</h1>
+            <h1 style="display: none">大气散射-资料</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 26, 2022
+                  本文最后更新于：November 27, 2022
                 
               </p>
             
@@ -266,7 +266,6 @@
 <h2 id="accurate-atmospheric-scattering"><a class="markdownIt-Anchor" href="#accurate-atmospheric-scattering"></a> Accurate Atmospheric Scattering</h2>
 <p>只考虑单次散射，预计算并拟合了任意两点间的光学距离：<br />
 <a target="_blank" rel="noopener" href="https://developer.nvidia.com/gpugems/gpugems2/part-ii-shading-lighting-and-shadows/chapter-16-accurate-atmospheric-scattering">GPU Gems 2 Chapter 16. Accurate Atmospheric Scattering</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">GetDensityFit</span><span class="hljs-params">(<span class="hljs-keyword">float</span> height, <span class="hljs-keyword">float</span> cosine)</span> </span>&#123;<br>    <span class="hljs-keyword">float</span> heightTerm = <span class="hljs-built_in">exp</span>(<span class="hljs-number">-4.0</span> * height);<br>    <span class="hljs-keyword">float</span> c = <span class="hljs-number">1.0</span> - cosine;<br>    <span class="hljs-keyword">float</span> cosineTerm =<br>        <span class="hljs-number">0.25</span> * <span class="hljs-built_in">exp</span>(<span class="hljs-number">-0.00287</span> + c * (<span class="hljs-number">0.459</span> + c * (<span class="hljs-number">3.38</span> + c * (<span class="hljs-number">-6.8</span> + c * <span class="hljs-number">5.25</span>))));<br>    <span class="hljs-keyword">return</span> heightTerm * cosineTerm;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>这也是 Unity 的做法：<br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/448521659">在 Unity 中制作 Procedural Sky</a><br />
 解决了 Sean O’Neil 实现中标准海拔、大气高度和地球半径之间比例的限制。<br />
@@ -344,6 +343,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/11/27/AtmImp/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">大气散射-实现</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
