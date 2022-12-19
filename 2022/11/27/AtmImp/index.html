@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 29, 2022
+                  本文最后更新于：December 16, 2022
                 
               </p>
             
@@ -263,7 +263,7 @@
 如果仅仅要实现大气散射算法，这篇文档包含了不少冗余的内容：</p>
 <ol>
 <li>额外提供了全光谱的渲染模式，而非只使用 RGB 对应的三种波长。</li>
-<li>为防止不合理的类型转换，自定义了所有物理量，但是 glsl 没有静态检查，所以所有物理量实际上都是 <code>float</code> 或 <code>vec3</code>。</li>
+<li>为防止不合理的类型转换，自定义了所有物理量，但是 glsl 没有静态类型检查，所以所有物理量实际上都是 <code>float</code> 或 <code>vec3</code>。</li>
 <li>为验证各个 trick 的效果，额外提供了 CPU 版本的渲染模式，通过 <code>#include &quot;atmosphere/functions.glsl&quot;</code> 和一些宏定义，使得 CPU、GPU 共用同一份代码。</li>
 </ol>
 <p>所以 demo 和 reference 下的文件是基本不用看的。<br />

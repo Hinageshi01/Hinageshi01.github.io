@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      956 字
+      993 字
     </span>
   
 
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 24, 2022
+                  本文最后更新于：December 16, 2022
                 
               </p>
             
@@ -287,7 +287,7 @@
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/366537214">如何优雅的使用 std::variant 与 std::optional</a></p>
 <h2 id="stdtuple"><a class="markdownIt-Anchor" href="#stdtuple"></a> std::tuple</h2>
 <p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/tuple">std::tuple</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tuple&gt;</span></span><br><br><span class="hljs-keyword">auto</span> data = <span class="hljs-built_in">make_tuple</span>(<span class="hljs-string">&quot;pi&quot;</span>, <span class="hljs-number">3.14</span>);<br>std::string str = std::get&lt;<span class="hljs-number">0</span>&gt;(data); <span class="hljs-comment">// &quot;pi&quot;</span><br><span class="hljs-keyword">double</span> db;<br>std::<span class="hljs-built_in">tie</span>(std::ignore, db); <span class="hljs-comment">// 3.14</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tuple&gt;</span></span><br><br>std::tuple&lt;std::string, <span class="hljs-keyword">double</span>&gt; data = std::tuple&lt;std::string, <span class="hljs-keyword">double</span>&gt;&#123;<span class="hljs-string">&quot;pi&quot;</span>, <span class="hljs-number">3.14</span>&#125;;<br><span class="hljs-comment">//auto data = make_tuple(&quot;pi&quot;, 3.14);</span><br>std::string str = std::get&lt;<span class="hljs-number">0</span>&gt;(data); <span class="hljs-comment">// str : &quot;pi&quot;</span><br><span class="hljs-keyword">double</span> db;<br>std::<span class="hljs-built_in">tie</span>(std::ignore, db) = data; <span class="hljs-comment">// db : 3.14</span><br><br><span class="hljs-comment">// C++17 structured binding :</span><br><span class="hljs-keyword">auto</span> [str1, _] = data;<br><span class="hljs-comment">// str1 : &quot;pi&quot;</span><br></code></pre></div></td></tr></table></figure>
 <h2 id="__declspec"><a class="markdownIt-Anchor" href="#__declspec"></a> __declspec</h2>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ylhome/archive/2010/07/10/1774770.html">c++ 中 __declspec 的用法</a></p>
 <h2 id="游戏引擎架构3232-程序堆栈"><a class="markdownIt-Anchor" href="#游戏引擎架构3232-程序堆栈"></a> 《游戏引擎架构》3.2.3.2 程序堆栈</h2>
