@@ -174,11 +174,11 @@
       
       <tag>CPP</tag>
       
+      <tag>GLSL</tag>
+      
       <tag>实时</tag>
       
       <tag>BRDF</tag>
-      
-      <tag>GLSL</tag>
       
     </tags>
     
@@ -390,9 +390,9 @@
       
       <tag>实时</tag>
       
-      <tag>光线追踪</tag>
-      
       <tag>降噪</tag>
+      
+      <tag>光线追踪</tag>
       
       <tag>temporal</tag>
       
@@ -427,9 +427,9 @@
       
       <tag>PBR</tag>
       
-      <tag>GLSL</tag>
-      
       <tag>GGX</tag>
+      
+      <tag>GLSL</tag>
       
       <tag>微表面模型</tag>
       
@@ -497,9 +497,9 @@
       
       <tag>全局光照</tag>
       
-      <tag>实时</tag>
-      
       <tag>GLSL</tag>
+      
+      <tag>实时</tag>
       
       <tag>PRT</tag>
       
@@ -565,11 +565,11 @@
       
       <tag>PBR</tag>
       
-      <tag>BRDF</tag>
-      
       <tag>GGX</tag>
       
       <tag>微表面模型</tag>
+      
+      <tag>BRDF</tag>
       
       <tag>Fresnel-Schlick</tag>
       
@@ -1087,11 +1087,11 @@
     
     <tags>
       
-      <tag>Pixel</tag>
-      
       <tag>Mod</tag>
       
       <tag>Java</tag>
+      
+      <tag>Pixel</tag>
       
       <tag>Forge</tag>
       
