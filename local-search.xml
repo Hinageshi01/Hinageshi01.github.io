@@ -390,9 +390,9 @@
       
       <tag>实时</tag>
       
-      <tag>降噪</tag>
-      
       <tag>光线追踪</tag>
+      
+      <tag>降噪</tag>
       
       <tag>temporal</tag>
       
@@ -1087,11 +1087,11 @@
     
     <tags>
       
+      <tag>Pixel</tag>
+      
       <tag>Mod</tag>
       
       <tag>Java</tag>
-      
-      <tag>Pixel</tag>
       
       <tag>Forge</tag>
       
