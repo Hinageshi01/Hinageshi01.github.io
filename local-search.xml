@@ -324,11 +324,11 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光栅化</tag>
       
       <tag>法线贴图</tag>
+      
+      <tag>CPP</tag>
       
       <tag>实时</tag>
       
@@ -349,11 +349,11 @@
     
     <tags>
       
-      <tag>光照模型</tag>
-      
       <tag>光栅化</tag>
       
       <tag>渲染管线</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>透视矫正</tag>
       
@@ -491,9 +491,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>全局光照</tag>
       
@@ -559,9 +559,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -710,9 +710,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
       
@@ -739,11 +739,11 @@
     
     <tags>
       
+      <tag>光栅化</tag>
+      
       <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
-      
-      <tag>光栅化</tag>
       
       <tag>反走样</tag>
       
@@ -820,9 +820,9 @@
     
     <tags>
       
-      <tag>C#</tag>
-      
       <tag>AI</tag>
+      
+      <tag>C#</tag>
       
       <tag>状态机</tag>
       
@@ -1029,11 +1029,11 @@
       
       <tag>Unity</tag>
       
+      <tag>AI</tag>
+      
       <tag>C#</tag>
       
       <tag>2D</tag>
-      
-      <tag>AI</tag>
       
     </tags>
     
@@ -1087,11 +1087,11 @@
     
     <tags>
       
-      <tag>Pixel</tag>
-      
       <tag>Mod</tag>
       
       <tag>Java</tag>
+      
+      <tag>Pixel</tag>
       
       <tag>Forge</tag>
       
