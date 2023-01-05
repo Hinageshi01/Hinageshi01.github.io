@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.6k 字
+      4.7k 字
     </span>
   
 
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：December 15, 2022
+                  本文最后更新于：January 5, 2023
                 
               </p>
             
@@ -264,12 +264,12 @@
 <em>省时间可以只看两篇加粗的</em></p>
 <h2 id="pbsphysically-based-shading"><a class="markdownIt-Anchor" href="#pbsphysically-based-shading"></a> PBS(Physically Based Shading)</h2>
 <h3 id="directional-lighting"><a class="markdownIt-Anchor" href="#directional-lighting"></a> Directional Lighting</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">dirColor = (KD * dirLambert + dirCookTorrance) * radiance * NdotL;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">dirColor = (KD * dirDiffBRDF + dirSpecBRDF) * radiance * NdotL;<br></code></pre></div></td></tr></table></figure>
 <ul>
 <li><code>dirColor</code>：直接光的贡献。</li>
 <li><code>KD</code>：金属没有漫反射，菲涅尔项影响漫反射。</li>
-<li><code>dirLambert</code>：直接光漫反射 BRDF。</li>
-<li><code>dirCookTorrance</code>：直接光高光 BRDF（已经包含了菲涅尔项）。</li>
+<li><code>dirDiffBRDF</code>：直接光漫反射 BRDF。</li>
+<li><code>dirSpecBRDF</code>：直接光高光 BRDF（已经包含了菲涅尔项）。</li>
 <li><code>radiance</code>：辐射亮度。</li>
 </ul>
 <h4 id="ggx"><a class="markdownIt-Anchor" href="#ggx"></a> GGX</h4>
@@ -279,11 +279,11 @@
 <h4 id="kd"><a class="markdownIt-Anchor" href="#kd"></a> KD</h4>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 KD = (<span class="hljs-number">1.0</span> - matellic) * (<span class="hljs-number">1.0</span> - Fre);<br></code></pre></div></td></tr></table></figure>
 <p>有说法是这里为了亮一点可以不用考虑菲涅尔项。</p>
-<h4 id="dirlambert"><a class="markdownIt-Anchor" href="#dirlambert"></a> dirLambert</h4>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 dirLambert = albedo * INV_PI;<br></code></pre></div></td></tr></table></figure>
+<h4 id="direct-diffuse-brdf"><a class="markdownIt-Anchor" href="#direct-diffuse-brdf"></a> direct diffuse BRDF</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 dirDiffBRDF = albedo * INV_PI;<br></code></pre></div></td></tr></table></figure>
 <p>其实 Lambert 直接光漫反射的 BRDF 范围是 [0, <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mn>1</mn><mi>π</mi></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{\pi}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>]，但这对贴图的制作来说太不直观了，不如让贴图的范围为 [0, 1]，读进来之后再除以 pi。</p>
-<h4 id="dircooktorrance"><a class="markdownIt-Anchor" href="#dircooktorrance"></a> dirCookTorrance</h4>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 dirCookTorrance = Fre * NDF * Vis;<br></code></pre></div></td></tr></table></figure>
+<h4 id="direct-specular-brdf"><a class="markdownIt-Anchor" href="#direct-specular-brdf"></a> direct specular BRDF</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 dirSpecBRDF = Fre * NDF * Vis;<br></code></pre></div></td></tr></table></figure>
 <h4 id="radiance"><a class="markdownIt-Anchor" href="#radiance"></a> radiance</h4>
 <p>详见 <a target="_blank" rel="noopener" href="https://hinageshi01.github.io/2022/08/10/PBRinBGFX/#pbl">PBL</a></p>
 <h3 id="environment-lighting"><a class="markdownIt-Anchor" href="#environment-lighting"></a> Environment Lighting</h3>
@@ -296,7 +296,7 @@
 <li><code>envRadiance</code>：预计算的环境光辐射亮度。</li>
 <li><code>specularOcclusion &amp; horizonOcclusion</code>：动态的环境光高光遮蔽。</li>
 </ul>
-<h4 id="envspecularbrdf"><a class="markdownIt-Anchor" href="#envspecularbrdf"></a> envSpecularBRDF</h4>
+<h4 id="environment-specular-brdf"><a class="markdownIt-Anchor" href="#environment-specular-brdf"></a> environment specular BRDF</h4>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">vec3 envSpecularBRDF = (F0 * lut.x + lut.y)<br></code></pre></div></td></tr></table></figure>
 <h4 id="envradiance"><a class="markdownIt-Anchor" href="#envradiance"></a> envRadiance</h4>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">float</span> mip = <span class="hljs-built_in">clamp</span>(<span class="hljs-number">6.0</span> * roughness, <span class="hljs-number">0.1</span>, <span class="hljs-number">6.0</span>);<br>vec3 envRadiance = <span class="hljs-built_in">textureCubeLod</span>(s_texCube, cubeReflectDir, mip).xyz;<br></code></pre></div></td></tr></table></figure>
