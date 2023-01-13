@@ -8,7 +8,7 @@
     <link href="/2023/01/05/WSLOpenGL/"/>
     <url>/2023/01/05/WSLOpenGL/</url>
     
-    <content type="html"><![CDATA[<h2 id="wsl2-配置"><a class="markdownIt-Anchor" href="#wsl2-配置"></a> WSL2 配置</h2><h3 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h3><p>微软的官方文档写的很详细了：<br /><a href="https://learn.microsoft.com/en-us/windows/wsl/install">Install Linux on Windows with WSL</a><br /><a href="https://learn.microsoft.com/en-us/cpp/build/walkthrough-build-debug-wsl2?view=msvc-170">Walkthrough: Build and debug C++ with WSL 2 and Visual Studio 2022</a></p><h3 id="踩坑"><a class="markdownIt-Anchor" href="#踩坑"></a> 踩坑</h3><p>踩坑比较少，一个是 <code>WslRegisterDistribution failed with error: 0x80370102</code><br />参考了 <a href="https://blog.csdn.net/q20010619/article/details/120660346">安装WSL2时遇到的问题(0x80370102报错)解决</a><br />检查任务管理器发现未启用虚拟化，搜索对应主板在 BIOS 中开启虚拟化的方法即可。<br />另一个是在 Visual Studio Installer 中安装 <code>使用 C++ 进行 Linux 和嵌入式开发</code>。</p><h2 id="opengl-配置"><a class="markdownIt-Anchor" href="#opengl-配置"></a> OpenGL 配置</h2><p>参考：<br /><a href="https://github.com/JoeyDeVries/LearnOpenGL#linux-building">LearnOpenGL Linux building</a><br /><a href="https://www.bilibili.com/read/cv8285780/">在 WSL 上配置 OpenGL3.3 开发环境</a><br /><a href="https://blog.csdn.net/qq_39845665/article/details/125462900">WSL2 + OpenGL 环境配置</a><br />跟在 win 上用 vcpkg 配置 OpenGL 一样简单。<br />记得将对应的头文件放置在 <code>include_directories</code> 对应的路径中。</p><h2 id="linux-shared-object"><a class="markdownIt-Anchor" href="#linux-shared-object"></a> Linux Shared Object</h2><p><a href="https://blog.csdn.net/sniperkang/article/details/83376650">Linux 下运行时调用动态链接库 .so 的三种方法（笔记）</a><br /><a href="https://blog.csdn.net/u010333084/article/details/86506361">Linux 程序运行找不到动态库 .so 文件的三种解决办法</a></p><h2 id="大小端"><a class="markdownIt-Anchor" href="#大小端"></a> 大小端</h2><p>小端：<strong>数据的低位</strong>存储在<strong>地址的低位</strong>中<br />大端：<strong>数据的低位</strong>存储在<strong>地址的高位</strong>中<br /><a href="https://geraldonit.com/2017/09/04/big-and-little-endian-operating-systems/">Big Endian and Little Endian operating systems</a><br /><a href="https://zhuanlan.zhihu.com/p/512837473">你知道大小端由 CPU 还是操作系统决定吗？</a><br />判断环境的大小端有几种方式：<br /><a href="https://stackoverflow.com/questions/1001307/detecting-endianness-programmatically-in-a-c-program">Detecting endianness programmatically in a C++ program</a><br />这里列出一种直观且不涉及强制转换的方式：</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isBigEndian</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span><br>        <span class="hljs-keyword">uint32_t</span> i;<br>        <span class="hljs-keyword">char</span> c[<span class="hljs-number">4</span>];<br>    &#125; bint = &#123; <span class="hljs-number">0x01020304</span> &#125;;<br>    <span class="hljs-keyword">return</span> bint.c[<span class="hljs-number">0</span>] == <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure><p>上述代码中数据的高位 <code>01</code> 存储在地址的低位 <code>[0]</code> 中，则为大端。</p><h2 id="byte-swap"><a class="markdownIt-Anchor" href="#byte-swap"></a> Byte Swap</h2><p>当涉及到在大端环境读取一个小端存储的文件，或者在小端环境生成一个大端存储的文件等情况时就需要将大于 1Byte 的数据类型以字节为单位进行重新排序。<br />可以自行实现：<br /><a href="https://stackoverflow.com/questions/4949144/how-to-byteswap-a-double">How to byteswap a double?</a><br /><a href="https://stackoverflow.com/questions/105252/how-do-i-convert-between-big-endian-and-little-endian-values-in-c">How do I convert between big-endian and little-endian values in C++?</a><br />不过 C++23 中已经提供了一份实现：<br /><a href="https://en.cppreference.com/w/cpp/numeric/byteswap">std::byteswap</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="wsl2-配置"><a class="markdownIt-Anchor" href="#wsl2-配置"></a> WSL2 配置</h2><h3 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h3><p>微软的官方文档写的很详细了：<br /><a href="https://learn.microsoft.com/en-us/windows/wsl/install">Install Linux on Windows with WSL</a><br /><a href="https://learn.microsoft.com/en-us/cpp/build/walkthrough-build-debug-wsl2?view=msvc-170">Walkthrough: Build and debug C++ with WSL 2 and Visual Studio 2022</a></p><h3 id="踩坑"><a class="markdownIt-Anchor" href="#踩坑"></a> 踩坑</h3><p>踩坑比较少，一个是 <code>WslRegisterDistribution failed with error: 0x80370102</code><br />参考了 <a href="https://blog.csdn.net/q20010619/article/details/120660346">安装WSL2时遇到的问题(0x80370102报错)解决</a><br />检查任务管理器发现未启用虚拟化，搜索对应主板在 BIOS 中开启虚拟化的方法即可。<br />另一个是在 Visual Studio Installer 中安装 <code>使用 C++ 进行 Linux 和嵌入式开发</code>。</p><h2 id="opengl-配置"><a class="markdownIt-Anchor" href="#opengl-配置"></a> OpenGL 配置</h2><p>参考：<br /><a href="https://github.com/JoeyDeVries/LearnOpenGL#linux-building">LearnOpenGL Linux building</a><br /><a href="https://www.bilibili.com/read/cv8285780/">在 WSL 上配置 OpenGL3.3 开发环境</a><br /><a href="https://blog.csdn.net/qq_39845665/article/details/125462900">WSL2 + OpenGL 环境配置</a><br />跟在 win 上用 vcpkg 配置 OpenGL 一样简单。<br /><a href="https://learnopengl-cn.github.io/01%20Getting%20started/02%20Creating%20a%20window/#glad">glad</a><br /><code>glad.h</code> 与 <code>glad.c</code> 依旧需要手动放置在正确的路径。<br />记得将对应的头文件放置在 <code>include_directories</code> 对应的路径中。</p><h2 id="linux-shared-object"><a class="markdownIt-Anchor" href="#linux-shared-object"></a> Linux Shared Object</h2><p><a href="https://blog.csdn.net/sniperkang/article/details/83376650">Linux 下运行时调用动态链接库 .so 的三种方法（笔记）</a><br /><a href="https://blog.csdn.net/u010333084/article/details/86506361">Linux 程序运行找不到动态库 .so 文件的三种解决办法</a></p><h2 id="大小端"><a class="markdownIt-Anchor" href="#大小端"></a> 大小端</h2><p>小端：<strong>数据的低位</strong>存储在<strong>地址的低位</strong>中<br />大端：<strong>数据的低位</strong>存储在<strong>地址的高位</strong>中<br /><a href="https://geraldonit.com/2017/09/04/big-and-little-endian-operating-systems/">Big Endian and Little Endian operating systems</a><br /><a href="https://zhuanlan.zhihu.com/p/512837473">你知道大小端由 CPU 还是操作系统决定吗？</a><br />判断环境的大小端有几种方式：<br /><a href="https://stackoverflow.com/questions/1001307/detecting-endianness-programmatically-in-a-c-program">Detecting endianness programmatically in a C++ program</a><br />这里列出一种直观且不涉及强制转换的方式：</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">IsBigEndian</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span><br>        <span class="hljs-keyword">uint32_t</span> i;<br>        <span class="hljs-keyword">char</span> c[<span class="hljs-number">4</span>];<br>    &#125; bint = &#123; <span class="hljs-number">0x01020304</span> &#125;;<br>    <span class="hljs-keyword">return</span> bint.c[<span class="hljs-number">0</span>] == <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure><p>上述代码中数据的高位 <code>01</code> 存储在地址的低位 <code>[0]</code> 中，则为大端。</p><h2 id="byte-swap"><a class="markdownIt-Anchor" href="#byte-swap"></a> Byte Swap</h2><p>当涉及到在大端环境读取一个小端存储的文件，或者在小端环境生成一个大端存储的文件等情况时就需要将大于 1Byte 的数据类型以字节为单位进行重新排序。<br />可以自行实现：<br /><a href="https://stackoverflow.com/questions/4949144/how-to-byteswap-a-double">How to byteswap a double?</a><br /><a href="https://stackoverflow.com/questions/105252/how-do-i-convert-between-big-endian-and-little-endian-values-in-c">How do I convert between big-endian and little-endian values in C++?</a><br />不过 C++23 中已经提供了一份实现：<br /><a href="https://en.cppreference.com/w/cpp/numeric/byteswap">std::byteswap</a></p><h2 id="wsl2-窗口与鼠标相关"><a class="markdownIt-Anchor" href="#wsl2-窗口与鼠标相关"></a> WSL2 窗口与鼠标相关</h2><p>开启 <code>glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);</code> 后 win 端的鼠标依旧能离开窗口，并且该窗口的拖动、最小/最大化、关闭都会失效。<br />在注册了 <code>glfwSetCursorPosCallback(window, mouse_callback);</code> 之后鼠标的偏移量会有比较鬼畜的表现，原理未知。</p>]]></content>
     
     
     
@@ -201,9 +201,9 @@
       
       <tag>GLSL</tag>
       
-      <tag>BRDF</tag>
-      
       <tag>实时</tag>
+      
+      <tag>BRDF</tag>
       
     </tags>
     
@@ -349,11 +349,11 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光栅化</tag>
       
       <tag>法线贴图</tag>
+      
+      <tag>CPP</tag>
       
       <tag>实时</tag>
       
@@ -374,11 +374,11 @@
     
     <tags>
       
-      <tag>光照模型</tag>
-      
       <tag>光栅化</tag>
       
       <tag>渲染管线</tag>
+      
+      <tag>光照模型</tag>
       
       <tag>透视矫正</tag>
       
@@ -516,9 +516,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>全局光照</tag>
       
@@ -584,9 +584,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -646,9 +646,9 @@
       
       <tag>BRDF</tag>
       
-      <tag>辐射度量学</tag>
-      
       <tag>光线追踪</tag>
+      
+      <tag>辐射度量学</tag>
       
       <tag>蒙特卡洛积分</tag>
       
@@ -735,9 +735,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>光照模型</tag>
+      
+      <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
       
@@ -764,11 +764,11 @@
     
     <tags>
       
+      <tag>光栅化</tag>
+      
       <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
-      
-      <tag>光栅化</tag>
       
       <tag>反走样</tag>
       
@@ -845,9 +845,9 @@
     
     <tags>
       
-      <tag>AI</tag>
-      
       <tag>C#</tag>
+      
+      <tag>AI</tag>
       
       <tag>状态机</tag>
       
@@ -1054,11 +1054,11 @@
       
       <tag>Unity</tag>
       
-      <tag>AI</tag>
-      
       <tag>C#</tag>
       
       <tag>2D</tag>
+      
+      <tag>AI</tag>
       
     </tags>
     
