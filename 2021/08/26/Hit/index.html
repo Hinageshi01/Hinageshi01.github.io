@@ -241,14 +241,14 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：September 13, 2022
+                  本文最后更新于：February 7, 2023
                 
               </p>
             
             <div class="markdown-body">
               <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
 <p>  一般来说，打击感由帧冻结、镜头抖动与运动、敌人的受击反馈（动画、音效、击退等）、特效、环境的反馈等组成。<br />
-<img src="/img/AttackSense/dhq.png" srcset="/img/loading.gif" lazyload alt="动画器" /></p>
+<img src="/img/hit/dhq.png" srcset="/img/loading.gif" lazyload alt="动画器" /></p>
 <h2 id="连击"><a class="markdownIt-Anchor" href="#连击"></a> 连击</h2>
 <div class="note note-secondary">
             <p>  攻击结束方法可以不在攻击动画的最后一帧调用，而是提前几帧。这是因为连击往往存在预输入，这样做可以提高连贯性，提升手感。</p>
@@ -261,9 +261,9 @@
 <figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AttackSense</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> AttackSense instance;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">bool</span> isShake;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Awake</span>(<span class="hljs-params"></span>)</span> &#123;<br>        instance = <span class="hljs-keyword">this</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">FrameFreeze</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> pauseFrame</span>)</span> &#123;<br>        StartCoroutine(PauseOnAttack(pauseFrame));<br>    &#125;<br>    <span class="hljs-function">IEnumerator <span class="hljs-title">PauseOnAttack</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> pauseFrame</span>)</span> &#123;<br>        <span class="hljs-built_in">float</span> pauseTime = pauseFrame / <span class="hljs-number">60f</span>;<br>        Time.timeScale = <span class="hljs-number">0</span>;<br>        <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSecondsRealtime</span>(<span class="hljs-params">pauseTime</span>)</span>;<br>        Time.timeScale = <span class="hljs-number">1</span>;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="镜头抖动"><a class="markdownIt-Anchor" href="#镜头抖动"></a> 镜头抖动</h2>
 <p>为相机添加<br />
-<img src="/img/AttackSense/dd1.png" srcset="/img/loading.gif" lazyload alt="" /><br />
+<img src="/img/hit/dd1.png" srcset="/img/loading.gif" lazyload alt="" /><br />
 为玩家的攻击碰撞体添加，并调整对应的参数<br />
-<img src="/img/AttackSense/dd2.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<img src="/img/hit/dd2.png" srcset="/img/loading.gif" lazyload alt="" /></p>
 <h2 id="反馈"><a class="markdownIt-Anchor" href="#反馈"></a> 反馈</h2>
 <p>敌人的反馈会在有限状态机中进行具体的实现。</p>
 <h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
@@ -299,7 +299,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/08/29/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA/">
+                      <a href="/2021/08/29/FSM/">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">有限状态机 & AI</span>
                         <span class="visible-mobile">Previous</span>
@@ -309,7 +309,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/08/23/%E8%83%8C%E5%8C%85%E7%B3%BB%E7%BB%9F/">
+                      <a href="/2021/08/23/BackpackSystem/">
                         <span class="hidden-mobile">背包系统</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -335,7 +335,7 @@
         var options = Object.assign(
           {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: 'c1f3222c87846c9bb3fc00f011cf23f4'
+            id: '64bd79ae96d9482898fa0a9a0e3718db'
           }
         )
         var gitalk = new Gitalk(options);
