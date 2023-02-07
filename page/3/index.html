@@ -192,6 +192,71 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/10/06/SSR/" target="_self">
+          <img src="/img/SSR/01.png" srcset="/img/loading.gif" lazyload alt="GAMES202 屏幕空间反射">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/06/SSR/" target="_self">
+          GAMES202 屏幕空间反射
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/06/SSR/" target="_self">
+          
+          
+            
+          
+           序言
+  离线渲染的条件下，光线追踪可以处理光线在空间内的多次弹射，带来高质量的间接光照结果，那么如何在实时的条件下得到令人满意的全局光照效果呢。其中的一种做法是在做 RayTracing 时使用 DepthBuffer 判断射线与平面的相交问题，认为能被 DepthBuffer 看见得世界坐标是“位于物体外部”的坐标，看不见则在物体内部，那么一条步进的 Ray 从可见转为不可见时的位置便是某一
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-06 19:28" pubdate>
+              2021-10-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/GAMES202/">GAMES202</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/DepthBuffer/">DepthBuffer</a>
+            
+              <a href="/tags/%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7/">全局光照</a>
+            
+              <a href="/tags/GLSL/">GLSL</a>
+            
+              <a href="/tags/JavaScript/">JavaScript</a>
+            
+              <a href="/tags/SSR/">SSR</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/09/29/PRT/" target="_self">
           <img src="/img/PRT/01.png" srcset="/img/loading.gif" lazyload alt="GAMES202 预计算辐射传递">
         </a>
@@ -820,72 +885,13 @@ O⃗+tD⃗\vec{O}+t\vec{D}O+tD
             
               <a href="/tags/CPP/">CPP</a>
             
-              <a href="/tags/DepthBuffer/">DepthBuffer</a>
-            
               <a href="/tags/%E5%85%89%E6%A0%85%E5%8C%96/">光栅化</a>
+            
+              <a href="/tags/DepthBuffer/">DepthBuffer</a>
             
               <a href="/tags/%E5%8F%8D%E8%B5%B0%E6%A0%B7/">反走样</a>
             
               <a href="/tags/%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/">重心坐标</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/09/03/Trans/" target="_self">
-          <img src="/img/RenderingPipeline/01.png" srcset="/img/loading.gif" lazyload alt="渲染管线中的变换矩阵">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/09/03/Trans/" target="_self">
-          渲染管线中的变换矩阵
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/09/03/Trans/" target="_self">
-          
-          
-            
-          
-           序言
-  在渲染管线的前期，光栅化之前，需要对顶点和相机的坐标进行标准化变换，然后进行视口变换进入屏幕坐标空间。
- 相机的定义
-位置：e⃗\vec{e}e; 看向：g⃗\vec{g}g​; 上方：t⃗\vec{t}t;
-我们规定相机位于 (0, 0, 0) ，看向 -Z，上方为 Y。
-对相机和顶点应用同一个变换矩阵，他们的相对位置则不变。
- 视锥体的定义
-
-已知fovY和aspect可得
-
-ta
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-03 10:24" pubdate>
-              2021-09-03
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/">渲染管线</a>
             
           </div>
         
