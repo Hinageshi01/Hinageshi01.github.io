@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Hinageshi">
+  <meta name="keywords" content="">
+  
+  <title>材质系统 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":25,"cursorChar":"","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["_slim",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":17057737,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Hinageshi的駄菓子屋</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                Links
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/backGround.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="材质系统">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2023-02-07 19:17" pubdate>
+        February 7, 2023
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      850 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">材质系统</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：February 8, 2023
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
+<p>  施工现场…</p>
+<h2 id="o3de"><a class="markdownIt-Anchor" href="#o3de"></a> O3DE</h2>
+<h3 id="文档"><a class="markdownIt-Anchor" href="#文档"></a> 文档</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/o3de/o3de">https://github.com/o3de/o3de</a><br />
+<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/ant-47/posts">https://www.zhihu.com/people/ant-47/posts</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.o3de.org/docs/learning-guide/tutorials/rendering/get-started-materialtypes-and-shaders/">https://www.o3de.org/docs/learning-guide/tutorials/rendering/get-started-materialtypes-and-shaders/</a><br />
+<a target="_blank" rel="noopener" href="https://www.o3de.org/docs/atom-guide/look-dev/materials/">https://www.o3de.org/docs/atom-guide/look-dev/materials/</a></p>
+<h3 id="material"><a class="markdownIt-Anchor" href="#material"></a> Material</h3>
+<p>O3DE 的材质大致由四个相互关联的文件组成：</p>
+<ul>
+<li><code>.azsl</code>：着色器代码。</li>
+<li><code>.shader</code>：JSON 格式，持有一个 <code>.azsl</code> 引用，对渲染管线的配置。</li>
+<li><code>.materialtype</code>：JSON 格式，持有一个或多个 <code>.shader</code> 引用，绑定材质中的属性与 shader 中的变量。</li>
+<li><code>.material</code>：JSON 格式，持有一个 <code>.materialtype</code> 的引用，由 Material Editor 生成。<br />
+<code>.material</code> 可以被模型引用，也可以在编译器里手动分配给模型。<br />
+在运行时，<code>.material</code> 可以在内存中存在多个实例。</li>
+</ul>
+<h3 id="示例"><a class="markdownIt-Anchor" href="#示例"></a> 示例</h3>
+<h4 id="azsl"><a class="markdownIt-Anchor" href="#azsl"></a> <code>.azsl</code></h4>
+<figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> once</span><br><br><span class="hljs-comment">// SRG：ShaderResourceGroup，各类 Uniform，多个 Shader 之间共享的数据。</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;viewsrg.srgi&gt;</span></span><br><br><span class="hljs-comment">// 可复用的 azsl 代码。</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Atom/Features/PBR/DefaultObjectSrg.azsli&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Atom/Features/Pipeline/Forward/ForwardPassOutput.azsli&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Atom/Features/SrgSemantics.azsli&gt;</span></span><br><br><span class="hljs-comment">// 自定义 SRG。</span><br>ShaderResourceGroup UnlitColorSrg : SRG_PerMaterial<br>&#123;<br>    float3 m_unlitColor;<br>&#125;<br><br><span class="hljs-comment">// Vertex Shader 输入输出。</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">VertexShaderInput</span></span><br><span class="hljs-class">&#123;</span><br>    float3 m_position : POSITION;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">VertexShaderOutput</span></span><br><span class="hljs-class">&#123;</span><br>    float4 m_position : SV_Position;<br>&#125;;<br><br><span class="hljs-comment">// VertexShaderOutput 在 ForwardPassOutput.azsli 中定义。</span><br><span class="hljs-function">VertexShaderOutput <span class="hljs-title">MainVS</span><span class="hljs-params">(VertexShaderInput IN)</span></span><br><span class="hljs-function"></span>&#123;<br>    VertexShaderOutput OUT;<br>    float3 worldPosition =<br>        mul(ObjectSrg::GetWorldMatrix(), float4(IN.m_position, <span class="hljs-number">1</span>)).xyz;<br>    OUT.m_position =<br>        mul(ViewSrg::m_viewProjectionMatrix, float4(worldPosition, <span class="hljs-number">1.0</span>));        <br>    <span class="hljs-keyword">return</span> OUT;<br>&#125;<br><br><span class="hljs-function">ForwardPassOutput <span class="hljs-title">MainPS</span><span class="hljs-params">(VertexShaderOutput IN)</span></span><br><span class="hljs-function"></span>&#123;<br>    ForwardPassOutput OUT;<br><br>    <span class="hljs-comment">// Subsurface scattering is disabled</span><br>    OUT.m_diffuseColor = float4(UnlitColorSrg::m_unlitColor, <span class="hljs-number">-1.0</span>);<br>    <span class="hljs-comment">// Disable specular lighting</span><br>    OUT.m_specularColor = float4(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);<br><br>    <span class="hljs-keyword">return</span> OUT;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h4 id="shader"><a class="markdownIt-Anchor" href="#shader"></a> <code>.shader</code></h4>
+<figure class="highlight json"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;Source&quot;</span>: <span class="hljs-string">&quot;MyUnlitColor.azsl&quot;</span>,<br><br>    <span class="hljs-attr">&quot;DepthStencilState&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;Depth&quot;</span>: &#123;<br>            <span class="hljs-attr">&quot;Enable&quot;</span>: <span class="hljs-literal">true</span>,<br>            <span class="hljs-attr">&quot;CompareFunc&quot;</span>: <span class="hljs-string">&quot;GreaterEqual&quot;</span><br>        &#125;<br>    &#125;,<br><br>    <span class="hljs-attr">&quot;ProgramSettings&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;EntryPoints&quot;</span>: [<br>            &#123;<br>                <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;MainVS&quot;</span>,<br>                <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;Vertex&quot;</span><br>            &#125;,<br>            &#123;<br>                <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;MainPS&quot;</span>,<br>                <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;Fragment&quot;</span><br>            &#125;<br>        ]<br>    &#125;,<br><br>    <span class="hljs-attr">&quot;DrawList&quot;</span>: <span class="hljs-string">&quot;forward&quot;</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h4 id="materialtype"><a class="markdownIt-Anchor" href="#materialtype"></a> <code>.materialtype</code></h4>
+<figure class="highlight json"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;Renders a model unlit with a single suface color value.&quot;</span>,<br>    <span class="hljs-attr">&quot;version&quot;</span>: <span class="hljs-number">3</span>,<br>    <span class="hljs-attr">&quot;shaders&quot;</span>: [<br>        &#123;<br>            <span class="hljs-attr">&quot;file&quot;</span>: <span class="hljs-string">&quot;./MyUnlitColor.shader&quot;</span><br>        &#125;,<br>        &#123;<br>            <span class="hljs-comment">// 用于写入深度缓存。</span><br>            <span class="hljs-attr">&quot;file&quot;</span>: <span class="hljs-string">&quot;Shaders/Depth/DepthPass.shader&quot;</span><br>        &#125;,<br>        &#123;<br>            <span class="hljs-comment">// 阴影 Shader。</span><br>            <span class="hljs-attr">&quot;file&quot;</span>: <span class="hljs-string">&quot;Shaders/Shadow/Shadowmap.shader&quot;</span><br>        &#125;<br>    ],<br>    <span class="hljs-attr">&quot;propertyLayout&quot;</span>: &#123;<br>        <span class="hljs-comment">// 显示在编辑器中的可折叠属性组。</span><br>        <span class="hljs-attr">&quot;groups&quot;</span>: [<br>            &#123;<br>                <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;settings&quot;</span>,<br>                <span class="hljs-attr">&quot;displayName&quot;</span>: <span class="hljs-string">&quot;Settings&quot;</span><br>            &#125;<br>        ],<br>        <span class="hljs-attr">&quot;properties&quot;</span>: &#123;<br>            <span class="hljs-attr">&quot;settings&quot;</span>: [<br>                &#123;<br>                    <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;color&quot;</span>,<br>                    <span class="hljs-attr">&quot;displayName&quot;</span>: <span class="hljs-string">&quot;Color&quot;</span>,<br>                    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;Color&quot;</span>,<br>                    <span class="hljs-attr">&quot;defaultValue&quot;</span>: [ <span class="hljs-number">0.5</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.5</span> ],<br>                    <span class="hljs-comment">// 绑定该属性和 Shader 中的变量。</span><br>                    <span class="hljs-attr">&quot;connection&quot;</span>: &#123;<br>                        <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;ShaderInput&quot;</span>,<br>                        <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;m_unlitColor&quot;</span><br>                    &#125;<br>                &#125;<br>            ]<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>或者可以看看官方提供的标准 PBR 材质类型：<br />
+<a target="_blank" rel="noopener" href="https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/StandardPBR.materialtype">StandardPBR.materialtype</a></p>
+<h4 id="material-2"><a class="markdownIt-Anchor" href="#material-2"></a> <code>.material</code></h4>
+<figure class="highlight json"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;description&quot;</span>:  <span class="hljs-string">&quot;Example Description&quot;</span>,<br>    <span class="hljs-attr">&quot;materialType&quot;</span>: <span class="hljs-string">&quot;Materials/Types/StandardPBR.materialtype&quot;</span>,<br>    <span class="hljs-attr">&quot;materialTypeVersion&quot;</span>: <span class="hljs-number">6</span>,<br>    <span class="hljs-attr">&quot;propertyValues&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;baseColor.textureMap&quot;</span>: <span class="hljs-string">&quot;Textures/Default/default_basecolor.tif&quot;</span>,<br>        <span class="hljs-attr">&quot;roughness.textureMap&quot;</span>: <span class="hljs-string">&quot;Textures/Default/default_roughness.tif&quot;</span>,<br>        <span class="hljs-attr">&quot;normal.factor&quot;</span>: <span class="hljs-number">0.8</span>,<br>        <span class="hljs-attr">&quot;normal.textureMap&quot;</span>: <span class="hljs-string">&quot;Textures/Default/default_normal.tif&quot;</span><br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h3 id="pbr-属性"><a class="markdownIt-Anchor" href="#pbr-属性"></a> PBR 属性</h3>
+<p><img src="/img/Material/o3deProperties.png" srcset="/img/loading.gif" lazyload alt="PBR" /></p>
+<h3 id="整体流程"><a class="markdownIt-Anchor" href="#整体流程"></a> 整体流程</h3>
+<p><img src="/img/Material/o3deMaterial.png" srcset="/img/loading.gif" lazyload alt="Material System" /></p>
+<p>目前前三个文件需要手动编写，第四个文件需要使用材质编辑器生成，详见上方的文档链接。<br />
+在文档里还看到：</p>
+<blockquote>
+<p>A node graph based tool for authoring material types is in development. Until that’s available, material type are authored directly.</p>
+</blockquote>
+<p>整体看起来似乎还不是特别完善的样子。<br />
+– 2023/2/7</p>
+<h2 id="filament"><a class="markdownIt-Anchor" href="#filament"></a> Filament</h2>
+<p><a target="_blank" rel="noopener" href="https://google.github.io/filament/Materials.html">https://google.github.io/filament/Materials.html</a><br />
+<a target="_blank" rel="noopener" href="https://jerkwin.github.io/filamentcn/Materials.md.html">https://jerkwin.github.io/filamentcn/Materials.md.html</a></p>
+<h2 id="unreal"><a class="markdownIt-Anchor" href="#unreal"></a> Unreal</h2>
+<p><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.1/en-US/unreal-engine-materials/">https://docs.unrealengine.com/5.1/en-US/unreal-engine-materials/</a></p>
+<h2 id="unity"><a class="markdownIt-Anchor" href="#unity"></a> Unity</h2>
+<p><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2022.1/Manual/Materials.html">https://docs.unity.cn/cn/2022.1/Manual/Materials.html</a></p>
+<h2 id="cocos"><a class="markdownIt-Anchor" href="#cocos"></a> COCOS</h2>
+<p><a target="_blank" rel="noopener" href="https://docs.cocos.com/creator/manual/zh/material-system/overview.html">https://docs.cocos.com/creator/manual/zh/material-system/overview.html</a></p>
+<p>文件（无所谓线性非线性） -&gt; 计算（一定是线性） -&gt; 显示（以非线性的形式输出到显示器，被显示器自动矫正到线性）</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Material/">Material</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/05/WSLOpenGL/">
+                        <span class="hidden-mobile">WSL2 + OpenGL 配置记录</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: 'c6f8645386854b3ab0821fe0f5e46417'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <br/> 本站内容依据 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> 许可证进行授权 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- KaTeX -->
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.10/dist/katex.min.css" />
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
