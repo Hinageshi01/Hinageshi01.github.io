@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：February 10, 2023
+                  本文最后更新于：February 11, 2023
                 
               </p>
             
@@ -362,6 +362,7 @@ PS：中文文档不全。</p>
 <p>该函数会替代原本用于计算光照结果的函数，并且为场景中所有会影响当前 fragment 的光源所调用。<br />
 注意，<code>customSurfaceShading</code> 仅可以在 Lit 光照模型下使用，也就是说官方仅开放了一个标准表面 PBR Shader 的自定义光照计算。<br />
 通过该函数的三个参数我们可以抽象地理解一下 Filament Lit 模型的计算方式。<br />
+详细的公式还是得看这篇：<a target="_blank" rel="noopener" href="https://google.github.io/filament/Filament.html">Physically Based Rendering in Filament</a>。<br />
 <code>MaterialInputs</code> 结构体的声明见上文。</p>
 <h4 id="shadingdata"><a class="markdownIt-Anchor" href="#shadingdata"></a> ShadingData</h4>
 <figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ShadingData</span> &#123;</span><br>    <span class="hljs-comment">// The material&#x27;s diffuse color, as derived from baseColor and metallic.</span><br>    <span class="hljs-comment">// This color is pre-multiplied by alpha and in the linear sRGB color space.</span><br>    vec3  diffuseColor;<br><br>    <span class="hljs-comment">// The material&#x27;s specular color, as derived from baseColor and metallic.</span><br>    <span class="hljs-comment">// This color is pre-multiplied by alpha and in the linear sRGB color space.</span><br>    vec3  f0;<br><br>    <span class="hljs-comment">// The perceptual roughness is the roughness value set in MaterialInputs,</span><br>    <span class="hljs-comment">// with extra processing:</span><br>    <span class="hljs-comment">// - Clamped to safe values</span><br>    <span class="hljs-comment">// - Filtered if specularAntiAliasing is enabled</span><br>    <span class="hljs-comment">// This value is between 0.0 and 1.0.</span><br>    <span class="hljs-keyword">float</span> perceptualRoughness;<br><br>    <span class="hljs-comment">// The roughness value expected by BRDFs. This value is the square of</span><br>    <span class="hljs-comment">// perceptualRoughness. This value is between 0.0 and 1.0.</span><br>    <span class="hljs-keyword">float</span> roughness;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
