@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.5k 字
+      2.8k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      41
+      45
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：March 8, 2023
+                  本文最后更新于：March 15, 2023
                 
               </p>
             
@@ -381,6 +381,80 @@ PS：中文文档不全。</p>
 <p><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2022.1/Manual/Materials.html">https://docs.unity.cn/cn/2022.1/Manual/Materials.html</a></p>
 <h2 id="unreal"><a class="markdownIt-Anchor" href="#unreal"></a> Unreal</h2>
 <p><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.1/en-US/unreal-engine-materials/">https://docs.unrealengine.com/5.1/en-US/unreal-engine-materials/</a></p>
+<h2 id="assimp"><a class="markdownIt-Anchor" href="#assimp"></a> Assimp</h2>
+<p>Assimp 中的 <code>material.h</code></p>
+<h3 id="枚举"><a class="markdownIt-Anchor" href="#枚举"></a> 枚举</h3>
+<ul>
+<li>
+<p>aiTextureOp<br />
+两张贴图之间的结合方式</p>
+</li>
+<li>
+<p>aiTextureMapMode<br />
+超出范围的 uv 坐标如何 map</p>
+</li>
+<li>
+<p>aiTextureMapping<br />
+uv 的应用方式，SPHERE/BOX</p>
+</li>
+<li>
+<p>aiTextureType<br />
+贴图类型，从布林冯到 PBR 都有</p>
+</li>
+<li>
+<p>aiShadingMode<br />
+渲染方式，从布林冯到 PBR 都有</p>
+</li>
+<li>
+<p>aiTextureFlags<br />
+是否使用 alpha 通道</p>
+</li>
+<li>
+<p>aiBlendMode<br />
+透明的混合方式</p>
+</li>
+<li>
+<p>aiUVTransform<br />
+uv 的变换</p>
+</li>
+<li>
+<p>aiPropertyTypeInfo<br />
+简单的 RTTI，存储 property 实际的数据类型</p>
+</li>
+</ul>
+<h3 id="aimaterialproperty"><a class="markdownIt-Anchor" href="#aimaterialproperty"></a> aiMaterialProperty</h3>
+<p>assimp 建议通过 aiMaterial::Get 而非该结构体访问他们</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">aiMaterialProperty</span> &#123;</span><br>    <span class="hljs-comment">// key of property</span><br>    aiString mKey;<br><br>    <span class="hljs-comment">// aiTextureType</span><br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> mSemantic;<br><br>    <span class="hljs-comment">// texture index</span><br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> mIndex;<br><br>    <span class="hljs-comment">// buffer size</span><br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> mDataLength;<br><br>    <span class="hljs-comment">// buffer 中存储的实际数据类型</span><br>    aiPropertyTypeInfo mType;<br><br>    <span class="hljs-comment">// 实际的数据 buffer</span><br>    <span class="hljs-keyword">char</span> *mData;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<h3 id="aimaterial"><a class="markdownIt-Anchor" href="#aimaterial"></a> aiMaterial</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">aiMaterial</span> &#123;</span><br>    <span class="hljs-comment">// 所有 property</span><br>    aiMaterialProperty **mProperties;<br><br>    <span class="hljs-comment">// 存储的 property 数量</span><br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> mNumProperties;<br><br>    <span class="hljs-comment">// 分配了空间的 property 数量，可能大于等于 mNumProperties</span><br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> mNumAllocated;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<ul>
+<li>Get<br />
+<code>Get</code> 的定义类似</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Type&gt;<br><span class="hljs-function">aiReturn <span class="hljs-title">Get</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *pKey, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> type,</span></span><br><span class="hljs-params"><span class="hljs-function">        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> idx, Type &amp;pOut)</span> <span class="hljs-keyword">const</span></span>;<br></code></pre></div></td></tr></table></figure>
+<p>调用时第一个参数必须为 <code>AI_MATKEY_XXX</code>，这个宏直接包含了前三个参数</p>
+<ul>
+<li>
+<p>GetName<br />
+返回该 material 的名字</p>
+</li>
+<li>
+<p>GetTextureCount<br />
+返回指定 Texture Type 的数量</p>
+</li>
+<li>
+<p>GetTexture<br />
+返回指定 type 指定 index 的贴图路径，index 由 <code>GetTextureCount</code> 得到</p>
+</li>
+<li>
+<p>AddProperty<br />
+第三个参数依旧是 <code>AI_MATKEY_XXX</code></p>
+</li>
+<li>
+<p>RemoveProperty<br />
+对应于 AddProperty</p>
+</li>
+</ul>
 
             </div>
             <hr>
