@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.1k 字
+      2.2k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      28
+      29
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：March 15, 2023
+                  本文最后更新于：March 28, 2023
                 
               </p>
             
@@ -251,11 +251,19 @@
 <p>  一个非常流行的模型导入库 Assimp(Open Asset Import Library)。它能够导入数十种不同的模型文件格式（也能导出一些），并在内存中呈现为 Assimp 的通用数据结构。一旦 Assimp 加载了模型，我们就可以通过 Assimp 提供的接口检索所需的所有数据。<br />
   由于 Assimp 的数据结构保持不变，不论导入的是什么种类的文件格式，它都能够将我们从这些不同的文件格式中抽象出来，用一种相同的方式访问我们需要的数据。</p>
 <h2 id="编译"><a class="markdownIt-Anchor" href="#编译"></a> 编译</h2>
-<p>Assimp 官方比较推荐 vcpkg 的集成方式，需要手动编译的话可以看 <a target="_blank" rel="noopener" href="https://github.com/assimp/assimp/blob/master/Build.md">assimp/Build.md</a>，以及我的 bat 例子：</p>
-<figure class="highlight bat"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bat">@<span class="hljs-built_in">echo</span> off<br><br><span class="hljs-built_in">set</span> ASSIMP_PATH=<span class="hljs-variable">%THIRD_PARTY_PATH%</span>/assimp<br><br><span class="hljs-built_in">echo</span> Generating assimp...<br><span class="hljs-built_in">echo</span> [ assimp ] <span class="hljs-built_in">path</span>: <span class="hljs-variable">%ASSIMP_PATH%</span><br><br><span class="hljs-built_in">cd</span> <span class="hljs-variable">%ASSIMP_PATH%</span><br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">exist</span> build <span class="hljs-built_in">mkdir</span> build<br><span class="hljs-comment"></span><br><span class="hljs-comment">rem https://github.com/assimp/assimp/blob/master/Build.md#cmake-build-options</span><br>cmake -S <span class="hljs-variable">%ASSIMP_PATH%</span> -B <span class="hljs-variable">%ASSIMP_PATH%</span>/build -D BUILD_SHARED_LIBS=OFF -D USE_STATIC_CRT=ON<br>cmake -S . -B build<br><br><span class="hljs-built_in">echo</span>.<br></code></pre></div></td></tr></table></figure>
+<p>Assimp 官方比较推荐 vcpkg 的集成方式。<br />
+手动集成的话有两个坑：</p>
+<ol>
+<li>config.h<br />
+假设生成目录是 <code>assimp/build</code>，Assimp 会在 <code>assimp/build/include/assimp</code> 下生成一份 <code>config.h</code>，这个文件最终会被 include 进源码里。<br />
+所以在我们的项目中不但要包含 <code>assimp/include</code> 路径，还要包含 <code>assimp/build/include/assimp</code> 路径。</li>
+<li>zlib<br />
+Assimp 依赖于 zlib 运行，所以在我们的项目中不但要包含 <code>assimp-vc143-mt</code> 库还要包含 <code>zlibstatic</code> 库，这个项目生成在 <code>assimp/build/contrib/zlib</code> 下，目标文件生成在 <code>assimp/build/contrib/zlib/Debug(or Release)</code> 下。</li>
+</ol>
+<p>官方文档 <a target="_blank" rel="noopener" href="https://github.com/assimp/assimp/blob/master/Build.md">assimp/Build.md</a> 似乎没有提及这两件事，很坑。</p>
 <h2 id="导入"><a class="markdownIt-Anchor" href="#导入"></a> 导入</h2>
 <p>调用 <code>Assimp::Importer</code> 之后 Assimp 解析的模型数据会以一个只读的 <code>aiScene *</code> 的形式返回，并且当 Importer 实例销毁之后对应的 aiScene 也会销毁。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;assimp/Importer.hpp&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;assimp/scene.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;assimp/postprocess.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Import</span><span class="hljs-params">( <span class="hljs-keyword">const</span> std::string &amp;filePath)</span> </span>&#123;<br>    Assimp::Importer importer;<br><br>    <span class="hljs-keyword">const</span> aiScene *pScene = importer.<span class="hljs-built_in">ReadFile</span>( filePath,<br>        aiProcess_AAA | aiProcess_BBB);<br><br>    <span class="hljs-keyword">if</span> (<span class="hljs-literal">nullptr</span> != pScene) &#123;<br>        <span class="hljs-comment">// Import failed.</span><br>    &#125;<br><br>    <span class="hljs-built_in">ProcessScene</span>(pScene);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;assimp/Importer.hpp&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;assimp/scene.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;assimp/postprocess.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Import</span><span class="hljs-params">( <span class="hljs-keyword">const</span> std::string &amp;filePath)</span> </span>&#123;<br>    Assimp::Importer importer;<br><br>    <span class="hljs-keyword">const</span> aiScene *pScene = importer.<span class="hljs-built_in">ReadFile</span>( filePath,<br>        aiProcess_AAA | aiProcess_BBB);<br><br>    <span class="hljs-keyword">if</span> (<span class="hljs-literal">nullptr</span> == pScene) &#123;<br>        <span class="hljs-comment">// Import failed.</span><br>    &#125;<br><br>    <span class="hljs-built_in">ProcessScene</span>(pScene);<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p><code>ReadFile</code> 的 aiProcess_XXX 是一个比较重要的参数，是 Assimp 提供的对模型的后处理，比如 <code>aiProcess_GenNormals</code> 代表如果模型不包含法向量的话由 Assimp 生成法向量。更多的选项看：<a target="_blank" rel="noopener" href="https://assimp.sourceforge.net/lib_html/postprocess_8h.html">postprocess.h File Reference</a>。</p>
 <h2 id="规范"><a class="markdownIt-Anchor" href="#规范"></a> 规范</h2>
 <p>默认：</p>
