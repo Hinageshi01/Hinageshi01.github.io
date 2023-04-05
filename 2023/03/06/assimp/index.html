@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.2k 字
+      2.3k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      29
+      30
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：March 28, 2023
+                  本文最后更新于：April 5, 2023
                 
               </p>
             
@@ -252,13 +252,18 @@
   由于 Assimp 的数据结构保持不变，不论导入的是什么种类的文件格式，它都能够将我们从这些不同的文件格式中抽象出来，用一种相同的方式访问我们需要的数据。</p>
 <h2 id="编译"><a class="markdownIt-Anchor" href="#编译"></a> 编译</h2>
 <p>Assimp 官方比较推荐 vcpkg 的集成方式。<br />
-手动集成的话有两个坑：</p>
+手动集成的话有三个坑：</p>
 <ol>
 <li>config.h<br />
 假设生成目录是 <code>assimp/build</code>，Assimp 会在 <code>assimp/build/include/assimp</code> 下生成一份 <code>config.h</code>，这个文件最终会被 include 进源码里。<br />
 所以在我们的项目中不但要包含 <code>assimp/include</code> 路径，还要包含 <code>assimp/build/include/assimp</code> 路径。</li>
 <li>zlib<br />
 Assimp 依赖于 zlib 运行，所以在我们的项目中不但要包含 <code>assimp-vc143-mt</code> 库还要包含 <code>zlibstatic</code> 库，这个项目生成在 <code>assimp/build/contrib/zlib</code> 下，目标文件生成在 <code>assimp/build/contrib/zlib/Debug(or Release)</code> 下。</li>
+<li>stb<br />
+Assimp 默认包含一份 stb_image 的定义，如果你的项目中需要手动包含 stb_image，其中一份实现会被忽略。<br />
+Assimp 默认会 define <code>STBI_ONLY_PNG</code>，导致 stb_image 只能读取 .png 格式。<br />
+这块的逻辑可以看下 <a target="_blank" rel="noopener" href="https://github.com/assimp/assimp/blob/497e286cfa0fd7d055f867aa5aff43e089d7a849/code/Common/Assimp.cpp">Assimp.cpp</a><br />
+解决办法是在 make Assimp 的时候使用 <code>-DASSIMP_NO_EXPORT=ON</code>。</li>
 </ol>
 <p>官方文档 <a target="_blank" rel="noopener" href="https://github.com/assimp/assimp/blob/master/Build.md">assimp/Build.md</a> 似乎没有提及这两件事，很坑。</p>
 <h2 id="导入"><a class="markdownIt-Anchor" href="#导入"></a> 导入</h2>
