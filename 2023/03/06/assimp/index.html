@@ -262,7 +262,7 @@ Assimp 依赖于 zlib 运行，所以在我们的项目中不但要包含 <code>
 <li>stb<br />
 Assimp 默认包含一份 stb_image 的定义，如果你的项目中需要手动包含 stb_image，其中一份实现会被忽略。<br />
 Assimp 默认会 define <code>STBI_ONLY_PNG</code>，导致 stb_image 只能读取 .png 格式。<br />
-这块的逻辑可以看下 <a target="_blank" rel="noopener" href="https://github.com/assimp/assimp/blob/497e286cfa0fd7d055f867aa5aff43e089d7a849/code/Common/Assimp.cpp">Assimp.cpp</a><br />
+这块的逻辑可以看下 <a target="_blank" rel="noopener" href="https://github.com/assimp/assimp/blob/497e286cfa0fd7d055f867aa5aff43e089d7a849/code/Common/Assimp.cpp">Assimp.cpp</a> 最后几行。<br />
 解决办法是在 make Assimp 的时候使用 <code>-DASSIMP_NO_EXPORT=ON</code>。</li>
 </ol>
 <p>官方文档 <a target="_blank" rel="noopener" href="https://github.com/assimp/assimp/blob/master/Build.md">assimp/Build.md</a> 似乎没有提及这几件事，很坑。</p>
