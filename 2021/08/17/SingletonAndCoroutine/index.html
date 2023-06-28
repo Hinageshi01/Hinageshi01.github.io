@@ -18,7 +18,7 @@
   <meta name="author" content="Hinageshi">
   <meta name="keywords" content="">
   
-  <title>单例模式 - Hexo</title>
+  <title>单例，协程以及 Unity - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -170,12 +170,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/backGround.png') no-repeat center center;
+         style="background: url('/img/backGround.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="单例模式">
+            <span class="h2" id="subtitle" title="单例，协程以及 Unity">
               
             </span>
 
@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      698 字
+      844 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      12
        分钟
     </span>
   
@@ -237,18 +237,16 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">单例模式</h1>
+            <h1 style="display: none">单例，协程以及 Unity</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：February 7, 2023
+                  本文最后更新于：June 28, 2023
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
-<p>  为了降低偶和将 PlayerController 类上挂载的 SoundClip 及其控制逻辑交由 SoundManager 类处理。由于整个游戏只存在一个管理声音的类，使用单例模式可以大大简化调用播放声音方法的过程。</p>
-<h2 id="单例模式"><a class="markdownIt-Anchor" href="#单例模式"></a> 单例模式</h2>
+              <h2 id="单例模式"><a class="markdownIt-Anchor" href="#单例模式"></a> 单例模式</h2>
 <p>单例有且仅有一个静态的实例，可以直接通过这个实例调用方法，而无需实例化该类的对象。</p>
 <h3 id="简单实现"><a class="markdownIt-Anchor" href="#简单实现"></a> 简单实现</h3>
 <figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ExampleManager</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ExampleManager instance;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Awake</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">null</span>) &#123;<br>            instance = <span class="hljs-keyword">this</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ExampleFun</span>(<span class="hljs-params"></span>)</span>&#123;<br>        DO SOMETHING;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
@@ -261,8 +259,8 @@
 <h3 id="更优雅的做法"><a class="markdownIt-Anchor" href="#更优雅的做法"></a> 更优雅的做法</h3>
 <figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ExampleManager</span>&lt;<span class="hljs-title">T</span>&gt; : <span class="hljs-title">MonoBehaviour</span> <span class="hljs-keyword">where</span> <span class="hljs-title">T</span> : <span class="hljs-title">ExampleManager</span>&lt;<span class="hljs-title">T</span>&gt;<br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> T instance;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ExampleManager Instance &#123;<br>        <span class="hljs-keyword">get</span> &#123;<br>            <span class="hljs-keyword">return</span> instance;<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Awake</span>(<span class="hljs-params"></span>)</span>&#123;<br>        id(instance == <span class="hljs-literal">null</span>)&#123;<br>            instance = (T)<span class="hljs-keyword">this</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> IsInit&#123;<br>        <span class="hljs-keyword">get</span>&#123;<br>            <span class="hljs-keyword">return</span> (instance != <span class="hljs-literal">null</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnDestory</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">if</span>(instance == <span class="hljs-keyword">this</span>)&#123;<br>            instance = <span class="hljs-literal">null</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>以后任何新的单例类只用继承这个泛型类即可。</p>
-<h2 id="我的soundmanager"><a class="markdownIt-Anchor" href="#我的soundmanager"></a> 我的SoundManager</h2>
-<h3 id="音效"><a class="markdownIt-Anchor" href="#音效"></a> 音效</h3>
+<h3 id="我的-soundmanager"><a class="markdownIt-Anchor" href="#我的-soundmanager"></a> 我的 SoundManager</h3>
+<h4 id="音效"><a class="markdownIt-Anchor" href="#音效"></a> 音效</h4>
 <ul>
 <li>首先需要一个挂载 Manager 的 Object</li>
 <li>上一个场景的 Manager 实例需要带到下一个场景中去，故使用 DontDestroyOnLoad(gameObject)</li>
@@ -271,25 +269,27 @@
 <li>故在 Awake 中做判断销毁任何新加载的 Object</li>
 </ul>
 <figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SFXMananger</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SFXMananger instance;<br><br>    [<span class="hljs-meta">SerializeField</span>]<br>    <span class="hljs-keyword">private</span> AudioClip hurtAudio, collectAudio, enemyDestoryAudio;<br>    <span class="hljs-keyword">private</span> AudioSource audioSource;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Awake</span>(<span class="hljs-params"></span>)</span> &#123;<br>        audioSource = GetComponent&lt;AudioSource&gt;();<br>        <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">null</span>) &#123;<br>            instance = <span class="hljs-keyword">this</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (instance != <span class="hljs-keyword">this</span>) &#123;<br>            Destroy(gameObject);<br>        &#125;<br>        DontDestroyOnLoad(gameObject);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">HurtAudio</span>(<span class="hljs-params"></span>)</span> &#123;<br>        audioSource.clip = hurtAudio;<br>        audioSource.Play();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">CollectAudio</span>(<span class="hljs-params"></span>)</span> &#123;<br>        audioSource.clip = collectAudio;<br>        audioSource.Play();<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">EnemyDestoryAudio</span>(<span class="hljs-params"></span>)</span> &#123;<br>        audioSource.clip = enemyDestoryAudio;<br>        audioSource.Play();<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<h3 id="bgm"><a class="markdownIt-Anchor" href="#bgm"></a> bgm</h3>
+<h4 id="bgm"><a class="markdownIt-Anchor" href="#bgm"></a> bgm</h4>
 <p>在满足与音效相同的条件之上，反复加载同一场景时，我不希望 bgm 从头开始播放。</p>
 <figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BGMManager</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> BGMManager instance;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">int</span> sceneIndex;<br><br>    [<span class="hljs-meta">SerializeField</span>]<br>    <span class="hljs-keyword">private</span> AudioClip openingBGM, scene1BGM, scene2BGM, scene3BGM, endingBGM, defautBGM;<br>    <span class="hljs-keyword">private</span>  AudioSource audioSource;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Awake</span> (<span class="hljs-params"></span>)</span> &#123;<br>        audioSource = GetComponent&lt;AudioSource&gt;();<br>        <span class="hljs-built_in">int</span> crtIndex = SceneManager.GetActiveScene().buildIndex;<br>        <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-comment">// 只有首个Manager加载时会进入这个分支</span><br>            instance = <span class="hljs-keyword">this</span>;<br>            sceneIndex = crtIndex;<br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (instance != <span class="hljs-keyword">this</span>) &#123;<br>            Destroy(gameObject);<br>            <span class="hljs-keyword">if</span> (sceneIndex != crtIndex) &#123;<br>                <span class="hljs-comment">// 根据关卡编号切换bgm，重新加载同一关时则不需要切换</span><br>                instance.SwitchBGM(crtIndex);<br>                sceneIndex = crtIndex;<br>            &#125;<br>        &#125;<br>        DontDestroyOnLoad(gameObject);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SwitchBGM</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> i</span>)</span> &#123;<br>        <span class="hljs-keyword">switch</span> (i) &#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>                audioSource.clip = openingBGM;<br>                audioSource.Play();<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>                audioSource.clip = scene1BGM;<br>                audioSource.Play();<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>                audioSource.clip = scene2BGM;<br>                audioSource.Play();<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>                audioSource.clip = scene3BGM;<br>                audioSource.Play();<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:<br>                audioSource.clip = endingBGM;<br>                audioSource.Play();<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-literal">default</span>:<br>                audioSource.clip = defautBGM;<br>                audioSource.Play();<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h2 id="协程"><a class="markdownIt-Anchor" href="#协程"></a> 协程</h2>
+<p>  协程就像一个函数，能够暂停执行并将控制权返还给 Unity 一段时间，可以是等待一帧，可以是等待几秒，也可以是等待另一个协程。当需要一个函数的内容（如一个循环）不需要在单帧内执行完成时往往会使用协程。</p>
+<h3 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h3>
+<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-function">IEnumerator <span class="hljs-title">Fun</span>(<span class="hljs-params"></span>)</span>&#123;<br>    DO SOMETHING;<br>    <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<span class="hljs-comment">// 暂停执行并在下一帧恢复的点</span><br>    <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSeconds</span>(<span class="hljs-params"><span class="hljs-number">.1</span>f</span>)</span>;<span class="hljs-comment">// 暂停执行并等待0.1s后恢复的点</span><br>    <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-title">StartCoroutine</span>(<span class="hljs-params">Fun2(</span>))</span>;<span class="hljs-comment">// 暂停执行并等待Fun2()返还控制权</span><br>&#125;<br><br>StartCoroutine(Fun());<br></code></pre></div></td></tr></table></figure>
+<h3 id="我的主菜单"><a class="markdownIt-Anchor" href="#我的主菜单"></a> 我的主菜单</h3>
+<p>间隔dt秒依次激活所有 UI。</p>
+<figure class="highlight cs"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MainMenu</span> : <span class="hljs-title">MonoBehaviour</span><br>&#123;<br>    <span class="hljs-keyword">public</span> GameObject titleUI, startUI, endUI;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Start</span>(<span class="hljs-params"></span>)</span> &#123;<br>        StartCoroutine(Delayed(<span class="hljs-number">0.65f</span>, titleUI, startUI, endUI));<br>    &#125;<br>    <span class="hljs-function">IEnumerator <span class="hljs-title">Delayed</span>(<span class="hljs-params"><span class="hljs-built_in">float</span> dt, <span class="hljs-keyword">params</span> GameObject[] list</span>)</span> &#123;<br>        <span class="hljs-keyword">foreach</span> (GameObject obj <span class="hljs-keyword">in</span> list) &#123;<br>            <span class="hljs-function"><span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title">WaitForSeconds</span>(<span class="hljs-params">dt</span>)</span>;<br>            obj.SetActive(<span class="hljs-literal">true</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="相关链接"><a class="markdownIt-Anchor" href="#相关链接"></a> 相关链接</h2>
 <p><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/SceneManagement.SceneManager.html">SceneManager</a><br />
 <a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/SceneManagement.Scene.html">Scene</a><br />
-<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/Object.DontDestroyOnLoad.html">DontDestroyOnLoad</a></p>
+<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/Object.DontDestroyOnLoad.html">DontDestroyOnLoad</a><br />
+<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/Manual/Coroutines.html">Coroutines</a><br />
+<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/ScriptReference/YieldInstruction.html">YieldInstruction</a></p>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Unity/">Unity</a>
-                    
-                  </div>
                 
                 
                   <div class="post-meta">
@@ -297,7 +297,7 @@
                     
                       <a class="hover-with-bg" href="/tags/C/">C#</a>
                     
-                      <a class="hover-with-bg" href="/tags/Singleton/">Singleton</a>
+                      <a class="hover-with-bg" href="/tags/Unity/">Unity</a>
                     
                   </div>
                 
@@ -308,9 +308,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/08/17/Note_MakeYourFirstGame_03/">
+                      <a href="/2021/08/19/SunnyLand/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">笔记 MakeYourFirstGame 03</span>
+                        <span class="hidden-mobile">平台跳跃游戏 Sunny Land</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -318,8 +318,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/08/16/Note_MakeYourFirstGame_02/">
-                        <span class="hidden-mobile">笔记 MakeYourFirstGame 02</span>
+                      <a href="/2021/08/12/MakeYourFirstGame/">
+                        <span class="hidden-mobile">M_Studio MakeYourFirstGame</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -344,7 +344,7 @@
         var options = Object.assign(
           {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '2a56840c405b2bead310c82311c1ed3f'
+            id: 'b182183911528a64e6fcc68922516240'
           }
         )
         var gitalk = new Gitalk(options);

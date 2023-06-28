@@ -170,7 +170,7 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/backGround.png') no-repeat center center;
+         style="background: url('/img/backGround.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3k 字
+      2.9k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      43
+      42
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：March 8, 2023
+                  本文最后更新于：June 28, 2023
                 
               </p>
             
@@ -393,7 +393,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 <h3 id="已知支线-ab-cd-不共面求两线之间最短距离"><a class="markdownIt-Anchor" href="#已知支线-ab-cd-不共面求两线之间最短距离"></a> 已知支线 AB、CD 不共面，求两线之间最短距离</h3>
 <p>叉乘得公垂向量，两线上任意取两点得向量 ab，求 ab 在公垂向量上的投影（点乘）。</p>
 <h2 id="透视矫正插值"><a class="markdownIt-Anchor" href="#透视矫正插值"></a> 透视矫正插值</h2>
-<p>刚接触光栅化时被我完全忽略的概念，毕竟就算透视不正确效果也大差不差。<br />
+<p>刚接触光栅化时被我完全忽略的概念，毕竟就算透视不正确效果也不会很差。<br />
 具体的推导在 <a target="_blank" rel="noopener" href="https://blog.csdn.net/n5/article/details/100148540">CSDN</a> 和 <a target="_blank" rel="noopener" href="https://www.comp.nus.edu.sg/~lowkl/publications/lowk_persp_interp_techrep.pdf">lowk_persp_interp_techrep</a> 里已经讲的很清楚了。<br />
 重要的结论是：</p>
 <ul>
@@ -413,9 +413,6 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 记录一点自己的理解，矩阵乘法可以看做坐标系的转换，例如 M * a 便是将定义在 M 坐标系下的 a 向量转换至 <strong>定义了 M 坐标系的坐标系</strong> 下。<br />
 在这个问题中，M 便是当前片元所在的切线空间在世界坐标系下的表示（就是 TBN 矩阵），a 便是法线贴图中的向量。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">Eigen::Vector2f dUV1 = v[<span class="hljs-number">1</span>].uv - v[<span class="hljs-number">0</span>].uv;<br>Eigen::Vector2f dUV2 = v[<span class="hljs-number">2</span>].uv - v[<span class="hljs-number">0</span>].uv;<br><span class="hljs-keyword">float</span> inverse = <span class="hljs-number">1.f</span> / (dUV1[<span class="hljs-number">0</span>] * dUV2[<span class="hljs-number">1</span>] - dUV2[<span class="hljs-number">0</span>] * dUV1[<span class="hljs-number">1</span>]);<br><br>Eigen::Vector3f e1 = v[<span class="hljs-number">1</span>].viewPos - v[<span class="hljs-number">0</span>].viewPos;<br>Eigen::Vector3f e2 = v[<span class="hljs-number">2</span>].viewPos - v[<span class="hljs-number">0</span>].viewPos;<br><br><span class="hljs-function">Eigen::Vector3f <span class="hljs-title">T</span><span class="hljs-params">(dUV2[<span class="hljs-number">1</span>] * e1[<span class="hljs-number">0</span>] - dUV1[<span class="hljs-number">1</span>] * e2[<span class="hljs-number">0</span>],</span></span><br><span class="hljs-params"><span class="hljs-function">    dUV2[<span class="hljs-number">1</span>] * e1[<span class="hljs-number">1</span>] - dUV1[<span class="hljs-number">1</span>] * e2[<span class="hljs-number">1</span>],</span></span><br><span class="hljs-params"><span class="hljs-function">    dUV2[<span class="hljs-number">1</span>] * e1[<span class="hljs-number">2</span>] - dUV1[<span class="hljs-number">1</span>] * e2[<span class="hljs-number">2</span>])</span></span>;<br><span class="hljs-function">Eigen::Vector3f <span class="hljs-title">B</span><span class="hljs-params">(dUV1[<span class="hljs-number">0</span>] * e2[<span class="hljs-number">0</span>] - dUV2[<span class="hljs-number">0</span>] * e1[<span class="hljs-number">0</span>],</span></span><br><span class="hljs-params"><span class="hljs-function">    dUV1[<span class="hljs-number">0</span>] * e2[<span class="hljs-number">1</span>] - dUV2[<span class="hljs-number">0</span>] * e1[<span class="hljs-number">1</span>],</span></span><br><span class="hljs-params"><span class="hljs-function">    dUV1[<span class="hljs-number">0</span>] * e2[<span class="hljs-number">2</span>] - dUV2[<span class="hljs-number">0</span>] * e1[<span class="hljs-number">2</span>])</span></span>;<br>B *= inverse;<br>T *= inverse;<br>T.<span class="hljs-built_in">normalize</span>();<br>B.<span class="hljs-built_in">normalize</span>();<br><br>Eigen::Matrix3f TBN;<br>TBN &lt;&lt; T[<span class="hljs-number">0</span>], B[<span class="hljs-number">0</span>], normal[<span class="hljs-number">0</span>],<br>    T[<span class="hljs-number">1</span>], B[<span class="hljs-number">1</span>], normal[<span class="hljs-number">1</span>],<br>    T[<span class="hljs-number">2</span>], B[<span class="hljs-number">2</span>], normal[<span class="hljs-number">2</span>];<br>normal = (TBN * model-&gt;<span class="hljs-built_in">normalMap</span>(uv)).<span class="hljs-built_in">normalized</span>();<br></code></pre></div></td></tr></table></figure>
-<p>TODO：<br />
-很久之后我才意识到，在我的软渲染器里，在逻辑上，这段计算实际上是在每个 <code>FragmentShader</code> 里重新计算的，导致了大量不必要的开销。<br />
-回头把他移到 <code>VertexShader</code> 里先做插值再进 <code>FragmentShader</code>。或者，提前把切线数据保存到顶点数据里。</p>
 <h2 id="法向量修复"><a class="markdownIt-Anchor" href="#法向量修复"></a> 法向量修复</h2>
 <p><a target="_blank" rel="noopener" href="https://learnopengl-cn.github.io/02%20Lighting/02%20Basic%20Lighting/#_6">LearnOpenGL 评论区</a><br />
 法向量乘以 model 矩阵左上角 3x3 矩阵的逆的转置。</p>
@@ -429,11 +426,11 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
+                      <a class="hover-with-bg" href="/tags/LightingModel/">LightingModel</a>
+                    
                       <a class="hover-with-bg" href="/tags/NormalMap/">NormalMap</a>
                     
                       <a class="hover-with-bg" href="/tags/Rasterization/">Rasterization</a>
-                    
-                      <a class="hover-with-bg" href="/tags/LightingModel/">LightingModel</a>
                     
                   </div>
                 
@@ -480,7 +477,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
         var options = Object.assign(
           {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '9a2d458ac2df42aa1d23b87a35215303'
+            id: '95c5a295adff1a290c33bcd255a1d8a6'
           }
         )
         var gitalk = new Gitalk(options);

@@ -170,7 +170,7 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/backGround.png') no-repeat center center;
+         style="background: url('/img/backGround.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.2k 字
+      5.3k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      73
+      74
        分钟
     </span>
   
@@ -403,7 +403,7 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <li>shaderc.exe</li>
 </ul>
 <ol>
-<li>将 <a target="_blank" rel="noopener" href="http://common.sh">common.sh</a> 修改为 <code>#include &quot;bgfx_shader.sh&quot;</code> 直接把 <code>bgfx_shader.sh</code> 放在同一文件夹下。<br />
+<li>将 <a target="_blank" rel="noopener" href="http://common.sh">common.sh</a> 里的 <code>#include &lt;bgfx_shader.sh&gt;</code> 修改为 <code>#include &quot;bgfx_shader.sh&quot;</code> 直接把 <code>bgfx_shader.sh</code> 放在同一文件夹下。<br />
 具体做法无所谓，只要能让每个 Shader 都在第一行包含到 <code>bgfx_shader.sh</code>和 <code>shaderlib.sh</code> 两个文件就行。
 <ul>
 <li><code>bgfx_shader.sh</code> 中是大量的宏定义，用于处理各类 Shader Language 之间的差异。<code>shaderlib.sh</code> 中是一些辅助函数，该文件并不是必须的。</li>
@@ -412,8 +412,9 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <li>在 FragmentShader 中似乎也可以 <code>#include &quot;bgfx_compute.sh&quot;</code>，这时也可以用 <code>IMAG2D_WR</code> 和 <code>imageStore</code> 写入贴图，就像 FBO 和 MRT 一样。但是不能写 <code>NUM_THREADS</code> 了。详见 <code>example-21</code>。</li>
 </ul>
 </li>
-<li><code>shader</code> 文件夹内是所有的 Shader 文件以及一个必须的 <code>varying.def.sc</code>，用于测试的话随便去一个 example 里 copy 过来就行。</li>
+<li><code>shader</code> 文件夹内是所有的 Shader 文件以及一个必须的 <code>varying.def.sc</code>，用于测试的话随便去一个 example 里把这些 copy 过来就行。</li>
 <li><code>compile.bat</code> 的内容是：<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">set SHADER=<span class="hljs-string">&quot;shader&quot;</span><br>set COMPILED=<span class="hljs-string">&quot;compiled&quot;</span><br>md %COMPILED%<br>shaderc --type v --platform windows -p vs_5_0 -O <span class="hljs-number">3</span> --varyingdef %SHADER%/varying.def.sc -f %SHADER%/vs_name.sc -o %COMPILED%/vs_name.bin<br>shaderc --type f --platform windows -p ps_5_0 -O <span class="hljs-number">3</span> --varyingdef %SHADER%/varying.def.sc -f %SHADER%/fs_name.sc -o %COMPILED%/fs_name.bin<br>pause<br></code></pre></div></td></tr></table></figure>
+记得更改 shader 对应的文件名。<br />
 修改 -p 参数即可编译为不同的目标 ShaderLanguage。可选的参数有：<a target="_blank" rel="noopener" href="https://github.com/bkaradzic/bgfx/blob/master/scripts/shader.mk">shader.mk</a></li>
 <li>所有编译结果都保存在在 <code>compiled</code> 文件夹内。</li>
 <li>实际使用中可能会写： <code>set DX11=&quot;../../runtime/shaders/dx11&quot;</code> 直接在对应路径下生成编译结果，这样方便一点。</li>
