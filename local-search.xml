@@ -381,11 +381,11 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>NormalMap</tag>
       
       <tag>Rasterization</tag>
+      
+      <tag>CPP</tag>
       
     </tags>
     
@@ -404,11 +404,11 @@
     
     <tags>
       
-      <tag>LightingModel</tag>
-      
       <tag>NormalMap</tag>
       
       <tag>Rasterization</tag>
+      
+      <tag>LightingModel</tag>
       
     </tags>
     
@@ -522,9 +522,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>LightingModel</tag>
+      
+      <tag>CPP</tag>
       
       <tag>GLSL</tag>
       
@@ -584,9 +584,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>LightingModel</tag>
+      
+      <tag>CPP</tag>
       
       <tag>PBR</tag>
       
@@ -719,11 +719,11 @@
     
     <tags>
       
+      <tag>LightingModel</tag>
+      
       <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
-      
-      <tag>LightingModel</tag>
       
     </tags>
     
@@ -748,11 +748,11 @@
     
     <tags>
       
+      <tag>Rasterization</tag>
+      
       <tag>CPP</tag>
       
       <tag>DepthBuffer</tag>
-      
-      <tag>Rasterization</tag>
       
       <tag>AntiAliasing</tag>
       
