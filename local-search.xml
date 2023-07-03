@@ -752,9 +752,9 @@
       
       <tag>DepthBuffer</tag>
       
-      <tag>AntiAliasing</tag>
-      
       <tag>Rasterization</tag>
+      
+      <tag>AntiAliasing</tag>
       
     </tags>
     
