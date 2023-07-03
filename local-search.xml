@@ -640,9 +640,9 @@
       
       <tag>BRDF</tag>
       
-      <tag>Radiometry</tag>
-      
       <tag>RayTracing</tag>
+      
+      <tag>Radiometry</tag>
       
       <tag>MonteCarlo</tag>
       
@@ -752,9 +752,9 @@
       
       <tag>DepthBuffer</tag>
       
-      <tag>Rasterization</tag>
-      
       <tag>AntiAliasing</tag>
+      
+      <tag>Rasterization</tag>
       
     </tags>
     
