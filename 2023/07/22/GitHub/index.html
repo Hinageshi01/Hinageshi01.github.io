@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      914 字
+      1.6k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      20
        分钟
     </span>
   
@@ -241,13 +241,13 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：July 22, 2023
+                  本文最后更新于：July 24, 2023
                 
               </p>
             
             <div class="markdown-body">
               <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
-<p>  一些在工作中常用到的 git/GitHub 常见概念的整理。</p>
+<p>  一些在工作中常用到的 git/GitHub 概念的整理。</p>
 <h2 id="分支与开发"><a class="markdownIt-Anchor" href="#分支与开发"></a> 分支与开发</h2>
 <p>对于正规一点的仓库，main branch 通常是受保护的，而我们的提交与推送都是在单独的 brnach 上进行的。</p>
 <h3 id="查看分支"><a class="markdownIt-Anchor" href="#查看分支"></a> 查看分支</h3>
@@ -276,7 +276,8 @@
 </ul>
 <h3 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h3>
 <ul>
-<li>当你的 branch 准备好之后，就可以在 gitub 上发起 Pull Request，通知仓库相关的开发者检查代码以及帮忙合并。</li>
+<li>当你的 branch 准备好之后，就可以在 gitub 上发起 Pull Request，通知仓库相关的开发者检查代码以及帮忙合并。<br />
+<img src="/img/GitHub/pr.png" srcset="/img/loading.gif" lazyload alt="Pull Request" /></li>
 <li>add, rm, commit, push 之类的操作直接用 VS 的 <code>Git 更改</code> 视图，或者 <code>Git GUI</code> 就好，比命令方便得多。</li>
 </ul>
 <h2 id="冲突与合并"><a class="markdownIt-Anchor" href="#冲突与合并"></a> 冲突与合并</h2>
@@ -318,10 +319,34 @@ ps: 按q退出</li>
 强制将远程的 log 同步成本地的状态。</p>
 <h3 id="pr"><a class="markdownIt-Anchor" href="#pr"></a> PR</h3>
 <p>pr 已经 merge 了，怎么撤销？<br />
-在该 pr 的最下方的 merge 右侧找到 <code>Revert</code>，这个按钮会自动创建一个新的 branch 以及 pr，并且在其中将原 pr 内的所有修改反向操作。当然尽量不要出现这种情况。<br />
+在该 pr 的最下方的 merge 右侧找到 <code>Revert</code>，这个按钮会自动创建一个新的 branch 以及 pr，并且在其中将原 pr 内的所有修改反向操作。当然尽量不要出现这种不得不 Revert 的情况。<br />
 <img src="/img/GitHub/revert.png" srcset="/img/loading.gif" lazyload alt="Revert" /></p>
-<h2 id="github-action"><a class="markdownIt-Anchor" href="#github-action"></a> GitHub Action</h2>
 <h2 id="git-submodule"><a class="markdownIt-Anchor" href="#git-submodule"></a> Git Submodule</h2>
+<h2 id="github-actions"><a class="markdownIt-Anchor" href="#github-actions"></a> GitHub Actions</h2>
+<p>GitHub Actions 是 github 推出的持续集成工具，简单来说就是可以在我们每次提交代码后在服务器上自动运行一些指令。我们不需要太复杂的 action，在仓库 build system 完备的基础上，只需要在代码提交后让 github 服务器自动运行我们的构建脚本并且检查仓库的构建与编译是否正常即可，以保证每一次 pr 都不会破坏仓库。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions">官方文档</a></p>
+<p>GitHub Actions 使用 YAML 来定义工作流程。 每个工作流都作为单独的 YAML 文件存储在 <code>.github/workflows/*.yml</code>。</p>
+<p>一个简单的例子：</p>
+<figure class="highlight yml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yml"><span class="hljs-attr">name:</span> <span class="hljs-string">build</span><br><br><span class="hljs-attr">on:</span><br>  <span class="hljs-attr">push:</span><br>    <span class="hljs-attr">branches:</span> [ <span class="hljs-string">&quot;main&quot;</span> ]<br>  <span class="hljs-attr">pull_request:</span><br>    <span class="hljs-attr">branches:</span> [ <span class="hljs-string">&quot;main&quot;</span> ]<br><br><span class="hljs-attr">jobs:</span><br>  <span class="hljs-attr">Windows:</span><br>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">windows-latest</span><br>    <span class="hljs-attr">steps:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Check</span> <span class="hljs-string">out</span> <span class="hljs-string">repository</span> <span class="hljs-string">under</span> <span class="hljs-string">$GITHUB_WORKSPACE.</span><br>      <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v3</span><br>    <br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Add</span> <span class="hljs-string">MSBuild</span> <span class="hljs-string">to</span> <span class="hljs-string">PATH.</span><br>      <span class="hljs-attr">uses:</span> <span class="hljs-string">microsoft/setup-msbuild@v1.1</span><br><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">project.</span><br>      <span class="hljs-attr">run:</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/Setup.bat</span><br><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">x64</span> <span class="hljs-string">Debug.</span><br>      <span class="hljs-attr">run:</span> <span class="hljs-string">msbuild</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/HinaEngine.sln</span> <span class="hljs-string">/p:Configuration=Debug</span> <span class="hljs-string">/p:Platform=x64</span><br>      <br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">x64</span> <span class="hljs-string">Release.</span><br>      <span class="hljs-attr">run:</span> <span class="hljs-string">msbuild</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/HinaEngine.sln</span> <span class="hljs-string">/p:Configuration=Release</span> <span class="hljs-string">/p:Platform=x64</span><br></code></pre></div></td></tr></table></figure>
+<h3 id="on"><a class="markdownIt-Anchor" href="#on"></a> on</h3>
+<figure class="highlight yml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yml"><span class="hljs-attr">on:</span><br>  <span class="hljs-attr">push:</span><br>    <span class="hljs-attr">branches:</span> [ <span class="hljs-string">&quot;main&quot;</span> ]<br>  <span class="hljs-attr">pull_request:</span><br>    <span class="hljs-attr">branches:</span> [ <span class="hljs-string">&quot;main&quot;</span> ]<br></code></pre></div></td></tr></table></figure>
+<p>代表这个 actions 会被 main branch 上的 push 和 pr 动作触发。</p>
+<h3 id="jobs"><a class="markdownIt-Anchor" href="#jobs"></a> jobs</h3>
+<figure class="highlight yml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yml"><span class="hljs-attr">jobs:</span><br>  <span class="hljs-attr">Windows:</span><br>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">windows-latest</span><br></code></pre></div></td></tr></table></figure>
+<ul>
+<li>job 定义了最粗粒度的任务，默认每个 job 之间是并行的， 也可以用 <code>needs:</code> 来指定 job 之间的依赖关系，不过我们习惯使用多个 .yml 每个运行一个 job。</li>
+<li><code>Windows:</code> 是自定义的 job 名称，<code>runs-on:</code> 用于指定系统的运行环境，其他环境详见 <a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions/using-workflows/workflow-syntax-for-github-actions#%E9%80%89%E6%8B%A9-github-%E6%89%98%E7%AE%A1%E7%9A%84%E8%BF%90%E8%A1%8C%E5%99%A8">选择 GitHub 托管的运行器</a>。</li>
+</ul>
+<h3 id="steps"><a class="markdownIt-Anchor" href="#steps"></a> steps</h3>
+<figure class="highlight yml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Check</span> <span class="hljs-string">out</span> <span class="hljs-string">repository</span> <span class="hljs-string">under</span> <span class="hljs-string">$GITHUB_WORKSPACE.</span><br>  <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v3</span><br><br><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Add</span> <span class="hljs-string">MSBuild</span> <span class="hljs-string">to</span> <span class="hljs-string">PATH.</span><br>  <span class="hljs-attr">uses:</span> <span class="hljs-string">microsoft/setup-msbuild@v1.1</span><br><br><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">project.</span><br>  <span class="hljs-attr">run:</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/Setup.bat</span><br><br><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">x64</span> <span class="hljs-string">Debug.</span><br>  <span class="hljs-attr">run:</span> <span class="hljs-string">msbuild</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/HinaEngine.sln</span> <span class="hljs-string">/p:Configuration=Debug</span> <span class="hljs-string">/p:Platform=x64</span><br>  <br><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">x64</span> <span class="hljs-string">Release.</span><br>  <span class="hljs-attr">run:</span> <span class="hljs-string">msbuild</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/HinaEngine.sln</span> <span class="hljs-string">/p:Configuration=Release</span> <span class="hljs-string">/p:Platform=x64</span><br></code></pre></div></td></tr></table></figure>
+<ul>
+<li><code>steps:</code> 定义了该 job 中的每一步指令，在这里我们的流程是 1. 拉取仓库 2. 将 MSBuild 添加至环境变量 3. 构建与编译项目</li>
+<li>不同仓库中的一些操作是类似的，github 也在 <a target="_blank" rel="noopener" href="https://github.com/marketplace?type=actions">Actions 市场</a> 中提供了一系列封装好的命令。比如：</li>
+<li><code>actions/checkout@v3</code> 代表了将仓库拉取到 <code>$GITHUB_WORKSPACE</code>。<a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/checkout">Checkout</a></li>
+<li><code>microsoft/setup-msbuild@v1.1</code> 代表寻找 MSBuild 的路径，并且将其添加到环境变量。<a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/setup-msbuild">setup-msbuild</a></li>
+<li><code>$&#123;&#123;github.workspace&#125;&#125;</code> 代表了在命令行中该仓库的根目录。<code>Setup.bat</code> 是我们自定义的项目构建脚本，我们最终会在这个脚本中运行 premake 并且生成项目的 .sln 文件。</li>
+<li>接着在命令行中编译项目的 Debug 和 Release 版本。msbuild 命令行详见 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2022">MSBuild 命令行参考</a> 和 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2022">常用的 MSBuild 项目属性</a>。</li>
+</ul>
 
             </div>
             <hr>
