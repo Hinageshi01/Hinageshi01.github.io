@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.6k 字
+      1.7k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      20
+      21
        分钟
     </span>
   
@@ -276,7 +276,7 @@
 </ul>
 <h3 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h3>
 <ul>
-<li>当你的 branch 准备好之后，就可以在 gitub 上发起 Pull Request，通知仓库相关的开发者检查代码以及帮忙合并。<br />
+<li>当你的 branch 准备好之后，就可以在 github 上发起 Pull Request，通知仓库相关的开发者检查代码以及帮忙合并。<br />
 <img src="/img/GitHub/pr.png" srcset="/img/loading.gif" lazyload alt="Pull Request" /></li>
 <li>add, rm, commit, push 之类的操作直接用 VS 的 <code>Git 更改</code> 视图，或者 <code>Git GUI</code> 就好，比命令方便得多。</li>
 </ul>
@@ -303,7 +303,7 @@
 <p>上一个 commit 太蠢了，怎么撤销？</p>
 <ul>
 <li><code>git log</code> 查看提交日志，获取想要回退的 commit 哈希<br />
-ps: 按q退出</li>
+<em>ps: 按q退出</em></li>
 <li><code>git reset &lt;CommitHash&gt;</code> 回退到 CommitHash 对应的 commit，即如果我要撤销 commit <code>balabala</code>，reset 的参数应该是 <code>balabala</code> 的上一个 commit 的哈希
 <ul>
 <li><code>--mixed</code> 默认模式，不删除改动代码，撤销 commit，撤销 add</li>
@@ -314,7 +314,7 @@ ps: 按q退出</li>
 </ul>
 <h3 id="push"><a class="markdownIt-Anchor" href="#push"></a> Push</h3>
 <p>commit 已经 push 上去了，怎么撤销？<br />
-在完成上一节之后，本地和远程其实处于一个冲突的状态，这时候要使用<br />
+在完成上一节之后，本地和远程其实处于一个冲突的状态，这时候只需要用<br />
 <code>git push --force</code><br />
 强制将远程的 log 同步成本地的状态。</p>
 <h3 id="pr"><a class="markdownIt-Anchor" href="#pr"></a> PR</h3>
@@ -347,6 +347,13 @@ ps: 按q退出</li>
 <li><code>$&#123;&#123;github.workspace&#125;&#125;</code> 代表了在命令行中该仓库的根目录。<code>Setup.bat</code> 是我们自定义的项目构建脚本，我们最终会在这个脚本中运行 premake 并且生成项目的 .sln 文件。</li>
 <li>接着在命令行中编译项目的 Debug 和 Release 版本。msbuild 命令行详见 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2022">MSBuild 命令行参考</a> 和 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2022">常用的 MSBuild 项目属性</a>。</li>
 </ul>
+<h3 id="在-readme-中添加状态徽章"><a class="markdownIt-Anchor" href="#在-readme-中添加状态徽章"></a> 在 README 中添加状态徽章</h3>
+<p>github actions 会将自身运行的状态生成为一张图片，我们可以用这个链接访问它：</p>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/&lt;OWNER&gt;/</span>&lt;REPOSITORY&gt;<span class="hljs-regexp">/actions/</span>workflows<span class="hljs-regexp">/&lt;WORKFLOW_FILE&gt;/</span>badge.svg<br></code></pre></div></td></tr></table></figure>
+<p>然后将其作为图片塞入 markdown 语法中并指向仓库的 actions 界面：</p>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">[![build](https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/Hinageshi01/</span>HinaEngine<span class="hljs-regexp">/workflows/</span>build<span class="hljs-regexp">/badge.svg)](https:/</span><span class="hljs-regexp">/github.com/</span>Hinageshi01<span class="hljs-regexp">/HinaEngine/</span>actions?workflow=build)<br></code></pre></div></td></tr></table></figure>
+<p>效果：<br />
+<a target="_blank" rel="noopener" href="https://github.com/Hinageshi01/HinaEngine/actions?workflow=build"><img src="https://github.com/Hinageshi01/HinaEngine/workflows/build/badge.svg" srcset="/img/loading.gif" lazyload alt="build" /></a></p>
 
             </div>
             <hr>
