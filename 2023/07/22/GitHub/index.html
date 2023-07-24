@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2k 字
+      2.4k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      24
+      29
        分钟
     </span>
   
@@ -345,6 +345,21 @@
 在该 pr 的最下方的 merge 右侧找到 <code>Revert</code>，这个按钮会自动创建一个新的 branch 以及 pr，并且在其中将原 pr 内的所有修改反向操作。当然尽量不要出现这种不得不 Revert 的情况。<br />
 <img src="/img/GitHub/revert.png" srcset="/img/loading.gif" lazyload alt="Revert" /></p>
 <h2 id="git-submodule"><a class="markdownIt-Anchor" href="#git-submodule"></a> Git Submodule</h2>
+<p>git 提供了子模块将一个仓库集成为另一个仓库的子目录，并且让他们保持独立的提交。<br />
+子模块有一个非常抽象的特性：如果不使用 <code>submodule</code> 相关的指令，子模块的内容不会受到任何 git 指令的影响，甚至不会在 clone 之后出现在你的硬盘里。</p>
+<h3 id="添加子模块"><a class="markdownIt-Anchor" href="#添加子模块"></a> 添加子模块</h3>
+<p><code>git submodule add &lt;url&gt; &lt;path&gt;</code> 将 url 对应的仓库作为子模块添加到 path 路径下<br />
+添加子模块后主仓库会新增一个 <code>.gitmodules</code> 文件来描述子模块的信息。<br />
+<img src="/img/GitHub/sb.png" srcset="/img/loading.gif" lazyload alt=".gitmodules" /></p>
+<h3 id="clone-带有子模块的仓库"><a class="markdownIt-Anchor" href="#clone-带有子模块的仓库"></a> Clone 带有子模块的仓库</h3>
+<p><code>git clone --recursive &lt;url&gt;</code> 将仓库内容以及子模块内容以及子模块的子模块内容递归地 clone 下来。<br />
+如果 clone 的时候没有带上 <code>--recursive</code> 参数，也可以在 clone 结束后在仓库目录运行 <code>git submodule update --init --recursive</code> 达成一样的效果。<br />
+<code>--init</code> 参数用于在 <code>.git/config</code> 中注册子模块信息。</p>
+<h3 id="更新子模块"><a class="markdownIt-Anchor" href="#更新子模块"></a> 更新子模块</h3>
+<p><code>git submodule update</code> 将子模块更新到最新版本<br />
+<code>git submodule update --remote</code> 将子模块更新到远程的最新版本<br />
+有什么区别呢，这里要引出子模块另一个非常抽象的特性：区分六个概念<code>远程的主仓库</code>、<code>本地的主仓库</code>、<code>远程的子仓库</code>、<code>本地的子仓库</code>、<code>远程主仓库中的子仓库</code>、<code>本地主仓库中的子仓库</code></p>
+<p>ps: 如果 <code>.gitmodules</code> 中的 url 有变或者新增，<code>git submodule update</code> 是无法将其跟新的，保险起见，你可以在每一次 update 子模块之前执行 <code>git submodule init</code>。</p>
 <h2 id="github-actions"><a class="markdownIt-Anchor" href="#github-actions"></a> GitHub Actions</h2>
 <p>GitHub Actions 是 github 推出的持续集成工具，简单来说就是可以在我们每次提交代码后在服务器上自动运行一些指令。我们不需要太复杂的 action，在仓库 build system 完备的基础上，只需要在代码提交后让 github 服务器自动运行我们的构建脚本并且检查仓库的构建与编译是否正常即可，以保证每一次 pr 都不会破坏仓库。</p>
 <p><a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions">官方文档</a><br />
@@ -373,6 +388,9 @@ GitHub Actions 使用 YAML 来定义工作流程。 每个工作流都作为单�
 <li><code>$&#123;&#123;github.workspace&#125;&#125;</code> 代表了在命令行中该仓库的根目录。<code>Setup.bat</code> 是我们自定义的项目构建脚本，我们最终会在这个脚本中运行 premake 并且生成项目的 .sln 文件。</li>
 <li>接着在命令行中编译项目的 Debug 和 Release 版本。msbuild 命令行详见 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2022">MSBuild 命令行参考</a> 和 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2022">常用的 MSBuild 项目属性</a>。</li>
 </ul>
+<h3 id="check-failed"><a class="markdownIt-Anchor" href="#check-failed"></a> Check Failed</h3>
+<p>Action 检查未通过是非常正常的，这时候只要检查一下 Details 往往能帮我们定位错误。<br />
+<img src="/img/GitHub/sb.png" srcset="/img/loading.gif" lazyload alt=".gitmodules" /></p>
 <h3 id="在-readme-中添加状态徽章"><a class="markdownIt-Anchor" href="#在-readme-中添加状态徽章"></a> 在 README 中添加状态徽章</h3>
 <p>github actions 会将自身运行的状态生成为一张图片，我们可以用这个链接访问它：</p>
 <figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/&lt;OWNER&gt;/</span>&lt;REPOSITORY&gt;<span class="hljs-regexp">/actions/</span>workflows<span class="hljs-regexp">/&lt;WORKFLOW_FILE&gt;/</span>badge.svg<br></code></pre></div></td></tr></table></figure>
