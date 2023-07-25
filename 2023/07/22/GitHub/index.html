@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.4k 字
+      3.2k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      29
+      38
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：July 24, 2023
+                  本文最后更新于：July 25, 2023
                 
               </p>
             
@@ -346,11 +346,12 @@
 <img src="/img/GitHub/revert.png" srcset="/img/loading.gif" lazyload alt="Revert" /></p>
 <h2 id="git-submodule"><a class="markdownIt-Anchor" href="#git-submodule"></a> Git Submodule</h2>
 <p>git 提供了子模块将一个仓库集成为另一个仓库的子目录，并且让他们保持独立的提交。<br />
-子模块有一个非常抽象的特性：如果不使用 <code>submodule</code> 相关的指令，子模块的内容不会受到任何 git 指令的影响，甚至不会在 clone 之后出现在你的硬盘里。</p>
+子模块有一个非常抽象的特性：在主仓库中如果不使用 <code>submodule</code> 相关的指令，子模块的内容不会受到任何 git 指令的影响，不受主仓库切换分支的影响，甚至不会在 clone 之后出现在你的硬盘里。</p>
 <h3 id="添加子模块"><a class="markdownIt-Anchor" href="#添加子模块"></a> 添加子模块</h3>
 <p><code>git submodule add &lt;url&gt; &lt;path&gt;</code> 将 url 对应的仓库作为子模块添加到 path 路径下<br />
 添加子模块后主仓库会新增一个 <code>.gitmodules</code> 文件来描述子模块的信息。<br />
-<img src="/img/GitHub/sb.png" srcset="/img/loading.gif" lazyload alt=".gitmodules" /></p>
+<img src="/img/GitHub/sb.png" srcset="/img/loading.gif" lazyload alt=".gitmodules" /><br />
+<em>不想让第三方库的不受控的更新破坏自己的主仓库？将其 fork 一份再集成为子模块即可。</em></p>
 <h3 id="clone-带有子模块的仓库"><a class="markdownIt-Anchor" href="#clone-带有子模块的仓库"></a> Clone 带有子模块的仓库</h3>
 <p><code>git clone --recursive &lt;url&gt;</code> 将仓库内容以及子模块内容以及子模块的子模块内容递归地 clone 下来。<br />
 如果 clone 的时候没有带上 <code>--recursive</code> 参数，也可以在 clone 结束后在仓库目录运行 <code>git submodule update --init --recursive</code> 达成一样的效果。<br />
@@ -358,8 +359,29 @@
 <h3 id="更新子模块"><a class="markdownIt-Anchor" href="#更新子模块"></a> 更新子模块</h3>
 <p><code>git submodule update</code> 将子模块更新到最新版本<br />
 <code>git submodule update --remote</code> 将子模块更新到远程的最新版本<br />
-有什么区别呢，这里要引出子模块另一个非常抽象的特性：区分六个概念<code>远程的主仓库</code>、<code>本地的主仓库</code>、<code>远程的子仓库</code>、<code>本地的子仓库</code>、<code>远程主仓库中的子仓库</code>、<code>本地主仓库中的子仓库</code></p>
-<p>ps: 如果 <code>.gitmodules</code> 中的 url 有变或者新增，<code>git submodule update</code> 是无法将其跟新的，保险起见，你可以在每一次 update 子模块之前执行 <code>git submodule init</code>。</p>
+有什么区别呢，这里要引出子模块另一个非常抽象的特性：区分六个概念：<code>远程的主仓库</code>、<code>本地的主仓库</code>、<code>远程的子仓库</code>、<code>本地的子仓库</code>、<code>远程主仓库中的子仓库</code>、<code>本地主仓库中的子仓库</code>，这六个东西的版本是可以不同的。</p>
+<ul>
+<li>重点在于，主仓库中会存储一个子仓库的 commit 版本，<code>git submodule update</code> 只能将 <code>本地的子仓库</code> 更新为 <code>本地主仓库中的子仓库</code> 版本。</li>
+<li>或者先使用 <code>git pull</code> 将 <code>本地主仓库中的子仓库</code> 版本更新为 <code>远程主仓库中的子仓库</code> 版本，再结合使用 <code>git submodule update</code> 即可将 <code>本地的子仓库</code> 更新为 <code>远程主仓库中的子仓库</code> 版本。<br />
+<em>这也是 clone 之后，对着空空如也的子模块文件夹使用 <code>git submodule update</code> 即可将其更新的原因</em></li>
+<li>而 <code>git submodule update --remote</code> 实际上相当于进入每一个子模块执行 <code>git pull</code>，即将 <code>本地的子仓库</code> 更新为 <code>远程的子仓库</code>。</li>
+<li>最后一步，如何更新 <code>远程主仓库中的子仓库</code> 版本呢？在 <code>本地主仓库中的子仓库</code> 版本与 <code>本地的子仓库</code> 不同时，在主仓库执行 commit 即可更新 <code>本地主仓库中的子仓库</code> 版本。在 <code>远程主仓库中的子仓库</code> 与 <code>本地主仓库中的子仓库</code> 版本不同时，在主仓库执行 push 即可更新 <code>远程主仓库中的子仓库</code> 版本。</li>
+</ul>
+<p>ps: 如果 <code>.gitmodules</code> 中的 url 有变或者新增，<code>git submodule update</code> 是无法将其跟新的，保险起见，我们可以在每一次 update 子模块之前执行 <code>git submodule init</code>。</p>
+<h3 id="开发子模块"><a class="markdownIt-Anchor" href="#开发子模块"></a> 开发子模块</h3>
+<p>子模块最抽象的特性：当我们使用 <code>git submodule update</code> 对子模块进行更新之后，子模块实际上会处于一个游离的 branch 上并且这个 branch 是 main（不一定是 main，可以配置）的复制。</p>
+<figure class="highlight less"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs less"><span class="hljs-selector-tag">git</span> <span class="hljs-selector-tag">branch</span><br>* (HEAD detached at abcdefg)<br>  <span class="hljs-selector-tag">main</span><br></code></pre></div></td></tr></table></figure>
+<p>在这个 branch 上的所有工作不但无法进行 push，甚至会在下一次 <code>git submodule update</code> 之后丢失。</p>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p>子模块的设计非常复杂且反直觉，好在我们可以通过一些项目规范和开发习惯来规避一些使用子模块带来的的副作用。</p>
+<ul>
+<li>对子模块的 main branch 进行保护，所有的开发都在特定的 branch 上进行，以免游离的 HEAD 带来困扰。</li>
+<li>开发子模块时，将其单独 clone 下来或者复制出来，总之不要直接在主仓库里的子仓库进行开发，以免主仓库检测到子模块 commit 的更新。</li>
+<li>在主仓库中更新子模块时，不要在更新 <code>主仓库中的子仓库</code> 版本之前更新依赖于子模块新版本的代码。</li>
+<li>主仓库与子模块同步更新之后视情况通知其他开发者，毕竟在主仓库 <code>git pull</code> 只会更新依赖于子模块新版本的代码，而无法更新子模块。</li>
+<li>当我们在主仓库 <code>git pull</code> 之后发现检测出了子仓库的更新（这种情况属于 <code>本地的子仓库</code> 落后于 <code>本地主仓库中的子仓库</code> 版本），手动执行 submodule update。</li>
+<li>项目保证主仓库只使用子模块的特定分支，且当 <code>主仓库中的子仓库</code> 产生冲突时，以最新的子模块版本为准。</li>
+</ul>
 <h2 id="github-actions"><a class="markdownIt-Anchor" href="#github-actions"></a> GitHub Actions</h2>
 <p>GitHub Actions 是 github 推出的持续集成工具，简单来说就是可以在我们每次提交代码后在服务器上自动运行一些指令。我们不需要太复杂的 action，在仓库 build system 完备的基础上，只需要在代码提交后让 github 服务器自动运行我们的构建脚本并且检查仓库的构建与编译是否正常即可，以保证每一次 pr 都不会破坏仓库。</p>
 <p><a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions">官方文档</a><br />
