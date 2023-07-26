@@ -417,11 +417,11 @@
     
     <tags>
       
-      <tag>LightingModel</tag>
-      
       <tag>NormalMap</tag>
       
       <tag>Rasterization</tag>
+      
+      <tag>LightingModel</tag>
       
     </tags>
     
@@ -734,9 +734,9 @@
       
       <tag>CPP</tag>
       
-      <tag>DepthBuffer</tag>
-      
       <tag>LightingModel</tag>
+      
+      <tag>DepthBuffer</tag>
       
     </tags>
     
@@ -763,9 +763,9 @@
       
       <tag>CPP</tag>
       
-      <tag>DepthBuffer</tag>
-      
       <tag>Rasterization</tag>
+      
+      <tag>DepthBuffer</tag>
       
       <tag>AntiAliasing</tag>
       
@@ -921,6 +921,19 @@
     <url>/2021/08/05/HelloWorld/</url>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2><h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3><h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3><h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3><h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3><div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/test_slim.png" alt="" /></div><div class="group-image-wrap"><img src="/img/test_slim.png" alt="" /></div><div class="group-image-wrap"><img src="/img/test_slim.png" alt="" /></div></div><div class="group-image-row"><div class="group-image-wrap"><img src="/img/test_slim.png" alt="" /></div><div class="group-image-wrap"><img src="/img/test_slim.png" alt="" /></div></div><div class="group-image-row"><div class="group-image-wrap"><img src="/img/test_slim.png" alt="Test slim img" /></div></div></div><div class="note note-success">            <p>testNote</p>          </div><div>            <input type="checkbox" disabled checked="checked">testCheckbox1          </div><div>            <input type="checkbox" disabled >testCheckbox2          </div><a class="btn" href="https://hinageshi01.github.io/"  title="Text displayed on mouse over" target="_blank">testButton</a><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Scene::sampleLight</span><span class="hljs-params">(Intersection&amp; pos, <span class="hljs-keyword">float</span>&amp; pdf)</span> <span class="hljs-keyword">const</span> </span>&#123;<br><span class="hljs-keyword">float</span> emit_area_sum = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">uint32_t</span> k = <span class="hljs-number">0</span>; k &lt; objects.<span class="hljs-built_in">size</span>(); ++k) &#123;<br><span class="hljs-keyword">if</span> (objects[k]-&gt;<span class="hljs-built_in">hasEmit</span>()) &#123;<br>emit_area_sum += objects[k]-&gt;<span class="hljs-built_in">getArea</span>();<br>&#125;<br>&#125;<br><span class="hljs-keyword">float</span> p = <span class="hljs-built_in">get_random_float</span>() * emit_area_sum;<br>emit_area_sum = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">uint32_t</span> k = <span class="hljs-number">0</span>; k &lt; objects.<span class="hljs-built_in">size</span>(); ++k) &#123;<br><span class="hljs-keyword">if</span> (objects[k]-&gt;<span class="hljs-built_in">hasEmit</span>()) &#123;<br>emit_area_sum += objects[k]-&gt;<span class="hljs-built_in">getArea</span>();<br><span class="hljs-keyword">if</span> (p &lt;= emit_area_sum) &#123;<br>objects[k]-&gt;<span class="hljs-built_in">Sample</span>(pos, pdf);<br><span class="hljs-keyword">break</span>;<br>&#125;<br>&#125;<br>&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure><h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>参考资料1<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a href="http://example.com/">http://example.com/</a><a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>歌单</title>
+    <link href="/2000/01/01/Song/"/>
+    <url>/2000/01/01/Song/</url>
+    
+    <content type="html"><![CDATA[<h2 id="日文"><a class="markdownIt-Anchor" href="#日文"></a> 日文</h2><h3 id="术力口"><a class="markdownIt-Anchor" href="#术力口"></a> 术力口</h3><h4 id="シャルル"><a class="markdownIt-Anchor" href="#シャルル"></a> シャルル</h4><ul><li>原唱：<a href="https://www.bilibili.com/video/BV1gs41147c8/">https://www.bilibili.com/video/BV1gs41147c8/</a></li><li>参考：<a href="https://www.bilibili.com/list/ml1371645219/">https://www.bilibili.com/list/ml1371645219/</a></li><li>升降：-4</li></ul><h4 id="駄菓子屋商売"><a class="markdownIt-Anchor" href="#駄菓子屋商売"></a> 駄菓子屋商売</h4><ul><li>原唱：米津玄师</li><li>升降：-2</li></ul><h3 id="jpop"><a class="markdownIt-Anchor" href="#jpop"></a> JPOP</h3><h3 id="jrock"><a class="markdownIt-Anchor" href="#jrock"></a> JROCK</h3><h3 id="anisong"><a class="markdownIt-Anchor" href="#anisong"></a> AniSong</h3><h2 id="英文"><a class="markdownIt-Anchor" href="#英文"></a> 英文</h2><h2 id="中文"><a class="markdownIt-Anchor" href="#中文"></a> 中文</h2>]]></content>
     
     
     
