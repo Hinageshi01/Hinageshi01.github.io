@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.3k 字
+      4.8k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      74
+      66
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：July 6, 2023
+                  本文最后更新于：August 8, 2023
                 
               </p>
             
@@ -313,36 +313,6 @@
 <li>然后 <code>bgfx::shutdown()</code><br />
 与 init 相对，在 <code>bgfx::shutdown()</code> 中会调用 <code>Context::shutdown()</code></li>
 </ul>
-<h2 id="update"><a class="markdownIt-Anchor" href="#update"></a> update</h2>
-<h2 id="渲染流程"><a class="markdownIt-Anchor" href="#渲染流程"></a> 渲染流程</h2>
-<p>（以使用 OpenGl 作为渲染 API 为例）</p>
-<ul>
-<li>对应平台的 entry.cpp 中 <code>entry::Context::run()</code> 调用</li>
-<li>---- <code>bgfx::renderFrame()</code> 调用</li>
-<li>------ <code>bgfx::Context::renderFrame()</code> 调用</li>
-<li>-------- <code>bgfx::gl::RendererContextGL::submit()</code> 调用</li>
-<li>---------- <strong><code>glDrawElementsInstanced()</code></strong></li>
-<li>---------- <code>bgfx::blit()</code> 调用</li>
-<li>------------ <code>bgfx::gl::RendererContextGL::blitRender()</code> 调用</li>
-<li>-------------- <strong><code>glDrawElements()</code></strong></li>
-</ul>
-<h3 id="gldrawelementsinstanced-是如何在-submit-中被调用的"><a class="markdownIt-Anchor" href="#gldrawelementsinstanced-是如何在-submit-中被调用的"></a> <code>glDrawElementsInstanced()</code> 是如何在 <code>submit()</code> 中被调用的</h3>
-<p>列出的代码是简化过的</p>
-<h4 id="drawm_numindices-的设置"><a class="markdownIt-Anchor" href="#drawm_numindices-的设置"></a> draw.m_numIndices 的设置</h4>
-<p>首先在 example 中调用 <code>bgfx::setIndexBuffer()</code>，这个函数有以下重载：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setIndexBuffer</span><span class="hljs-params">(IndexBufferHandle _handle)</span> </span>&#123;<br>	s_ctx-&gt;m_encoder0-&gt;<span class="hljs-built_in">setIndexBuffer</span>(_handle);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setIndexBuffer</span><span class="hljs-params">(IndexBufferHandle _handle,</span></span><br><span class="hljs-params"><span class="hljs-function">	<span class="hljs-keyword">uint32_t</span> _firstIndex, <span class="hljs-keyword">uint32_t</span> _numIndices)</span> </span>&#123;<br>	s_ctx-&gt;m_encoder0-&gt;<span class="hljs-built_in">setIndexBuffer</span>(_handle, _firstIndex, _numIndices);<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<p>他们分别会调用：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Encoder::setIndexBuffer</span><span class="hljs-params">(IndexBufferHandle _handle)</span> </span>&#123;<br>	<span class="hljs-built_in">setIndexBuffer</span>(_handle, <span class="hljs-number">0</span>, UINT32_MAX);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Encoder::setIndexBuffer</span><span class="hljs-params">(IndexBufferHandle _handle,</span></span><br><span class="hljs-params"><span class="hljs-function">	<span class="hljs-keyword">uint32_t</span> _firstIndex, <span class="hljs-keyword">uint32_t</span> _numIndices)</span> </span>&#123;<br>	<span class="hljs-built_in">BGFX_ENCODER</span>(<span class="hljs-built_in">setIndexBuffer</span>(_handle, ib, _firstIndex, _numIndices) );<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<p>最终会经由 <code>BGFX_ENCODER</code> 这个宏去调用 <code>bgfx::EncoderImpI::setIndexBuffer()</code></p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setIndexBuffer</span><span class="hljs-params">(IndexBufferHandle _handle, <span class="hljs-keyword">const</span> IndexBuffer&amp; _ib,</span></span><br><span class="hljs-params"><span class="hljs-function">	<span class="hljs-keyword">uint32_t</span> _firstIndex, <span class="hljs-keyword">uint32_t</span> _numIndices)</span> </span>&#123;<br>	m_draw.m_startIndex  = _firstIndex;<br>	m_draw.m_numIndices  = _numIndices;<br>	m_draw.m_indexBuffer = _handle;<br>	m_draw.m_submitFlags |= <span class="hljs-number">0</span> == (_ib.m_flags &amp; BGFX_BUFFER_INDEX32) ?<br>		BGFX_SUBMIT_INTERNAL_NONE : BGFX_SUBMIT_INTERNAL_INDEX32;<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<h4 id="drawm_numindices-的判断"><a class="markdownIt-Anchor" href="#drawm_numindices-的判断"></a> draw.m_numIndices 的判断</h4>
-<p>在 <code>renderer_gl.cpp</code> line 1815</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-comment">// 使用一整块 IndexBuffer 进行绘制</span><br><span class="hljs-keyword">if</span> (UINT32_MAX == draw.m_numIndices) &#123;<br>	<span class="hljs-built_in">GL_CHECK</span>(<span class="hljs-built_in">glDrawElementsInstanced</span>(prim.m_type<br>		, numIndices<br>		, indexFormat<br>		, (<span class="hljs-keyword">void</span>*)<span class="hljs-number">0</span><br>		, draw.m_numInstances<br>		) );<br>&#125;<br><span class="hljs-comment">// 多个 drawcall 复用 IndexBuffer</span><br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (prim.m_min &lt;= draw.m_numIndices) &#123;<br>	<span class="hljs-comment">// 确保该次 drawcall 的索引数量能支持绘制当前选择的图元类型</span><br>	<span class="hljs-built_in">GL_CHECK</span>(<span class="hljs-built_in">glDrawElementsInstanced</span>(prim.m_type<br>		, numIndices<br>		, indexFormat<br>		<span class="hljs-comment">// 计算该次 drawcall 使用的 IndexBuffer 的起始位置</span><br>		, (<span class="hljs-keyword">void</span>*)(<span class="hljs-keyword">uintptr_t</span>)(draw.m_startIndex*indexSize)<br>		, draw.m_numInstances<br>		) );<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<h3 id="bgfxblit-是如何在-submit-中被调用的"><a class="markdownIt-Anchor" href="#bgfxblit-是如何在-submit-中被调用的"></a> <code>bgfx::blit()</code> 是如何在 <code>submit()</code> 中被调用的</h3>
-<h4 id="_render-m_debug-的设置"><a class="markdownIt-Anchor" href="#_render-m_debug-的设置"></a> _render-&gt;m_debug 的设置</h4>
-<p>在 example 中调用 <code>bgfx::setDebug()</code> 即可。</p>
-<h4 id="_render-m_debug-的判断"><a class="markdownIt-Anchor" href="#_render-m_debug-的判断"></a> _render-&gt;m_debug 的判断</h4>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span> (_render-&gt;m_debug &amp; (BGFX_DEBUG_IFH|BGFX_DEBUG_STATS) )&#123;<br>	<span class="hljs-built_in">blit</span>(<span class="hljs-keyword">this</span>, _textVideoMemBlitter, tvm);<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="提交-drawcall-的几种方式"><a class="markdownIt-Anchor" href="#提交-drawcall-的几种方式"></a> 提交 DrawCall 的几种方式</h2>
 <p>以 OpenGL 为例：<a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Vertex_Rendering">Vertex Rendering</a></p>
 <h3 id="direct-rendering"><a class="markdownIt-Anchor" href="#direct-rendering"></a> Direct rendering</h3>
@@ -386,9 +356,9 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <ul>
 <li>common
 <ul>
-<li>bgfx_shader.sh</li>
-<li><a target="_blank" rel="noopener" href="http://common.sh">common.sh</a></li>
-<li><a target="_blank" rel="noopener" href="http://shaderlib.sh">shaderlib.sh</a></li>
+<li>bgfx_shader.sh (位于 bgfx\src)</li>
+<li><a target="_blank" rel="noopener" href="http://common.sh">common.sh</a> (位于 bgfx\examples\common)</li>
+<li><a target="_blank" rel="noopener" href="http://shaderlib.sh">shaderlib.sh</a> (位于 bgfx\examples\common)</li>
 </ul>
 </li>
 <li>compiled</li>
@@ -413,9 +383,10 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 </ul>
 </li>
 <li><code>shader</code> 文件夹内是所有的 Shader 文件以及一个必须的 <code>varying.def.sc</code>，用于测试的话随便去一个 example 里把这些 copy 过来就行。</li>
-<li><code>compile.bat</code> 的内容是：<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">set SHADER=<span class="hljs-string">&quot;shader&quot;</span><br>set COMPILED=<span class="hljs-string">&quot;compiled&quot;</span><br>md %COMPILED%<br>shaderc --type v --platform windows -p vs_5_0 -O <span class="hljs-number">3</span> --varyingdef %SHADER%/varying.def.sc -f %SHADER%/vs_name.sc -o %COMPILED%/vs_name.bin<br>shaderc --type f --platform windows -p ps_5_0 -O <span class="hljs-number">3</span> --varyingdef %SHADER%/varying.def.sc -f %SHADER%/fs_name.sc -o %COMPILED%/fs_name.bin<br>pause<br></code></pre></div></td></tr></table></figure>
+<li><code>compile.bat</code> 的内容是：<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp">set SHADER=<span class="hljs-string">&quot;shader&quot;</span><br>set COMPILED=<span class="hljs-string">&quot;compiled&quot;</span><br>md %COMPILED%<br>shaderc --type v --platform windows -p s_5_0 -O <span class="hljs-number">3</span> --varyingdef %SHADER%/varying.def.sc -f %SHADER%/vs_name.sc -o %COMPILED%/vs_name.bin<br>shaderc --type f --platform windows -p s_5_0 -O <span class="hljs-number">3</span> --varyingdef %SHADER%/varying.def.sc -f %SHADER%/fs_name.sc -o %COMPILED%/fs_name.bin<br>pause<br></code></pre></div></td></tr></table></figure>
 记得更改 shader 对应的文件名。<br />
-修改 -p 参数即可编译为不同的目标 ShaderLanguage。可选的参数有：<a target="_blank" rel="noopener" href="https://github.com/bkaradzic/bgfx/blob/master/scripts/shader.mk">shader.mk</a></li>
+修改 -p 参数即可编译为不同的目标 ShaderLanguage。可选的参数有：<a target="_blank" rel="noopener" href="https://github.com/bkaradzic/bgfx/blob/master/scripts/shader.mk">shader.mk</a><br />
+更多的参数可以查看 <code>--help</code> 或者 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/tools.html#shader-compiler-shaderc">Shader Compiler (shaderc)¶</a></li>
 <li>所有编译结果都保存在在 <code>compiled</code> 文件夹内。</li>
 <li>实际使用中可能会写： <code>set DX11=&quot;../../runtime/shaders/dx11&quot;</code> 直接在对应路径下生成编译结果，这样方便一点。</li>
 </ol>
@@ -571,16 +542,6 @@ bgfx 自定义了一种基于 GLSL 的 <code>.sc</code> 后缀的 ShaderLanguage
 <h2 id="bgfxs-model"><a class="markdownIt-Anchor" href="#bgfxs-model"></a> bgfx’s Model</h2>
 <p>模型的编码和读取同理，内容不多，看官方文档就好：<br />
 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/tools.html#geometry-compiler-geometryc">Geometry Compiler</a></p>
-<h2 id="mrt"><a class="markdownIt-Anchor" href="#mrt"></a> MRT</h2>
-<h3 id="setviewclear"><a class="markdownIt-Anchor" href="#setviewclear"></a> setViewClear</h3>
-<p>今天看到一个重载：<br />
-<img src="/img/bgfx/setViewClear.png" srcset="/img/loading.gif" lazyload alt="bgfx.h Line 3392" /></p>
-<blockquote>
-<p>Set view clear flags with different clear color for each frame buffer texture. Must use <code>bgfx::setPaletteColor</code> to setup clear color palette.</p>
-</blockquote>
-<p><code>bgfx::setViewClear</code> 调用 <code>bgfx::Context::setViewClear</code> 调用 <code>bgfx::View::setClear</code> 调用 <code>ngfx::Clear::Set</code> 给 <code>ngfx::Clear::m_index</code> 赋值，查找一下该变量的所有引用，转到了 <code>renderer_xxx.cpp</code> 里，比如 <code>bgfx::gl::RendererContextGL::clearQuad</code>，在使用 palette 的情况下 <code>m_index</code> 作为多个索引去取调色盘中的颜色，否则前四个 <code>m_index</code> 直接作为 rgba。<br />
-结合使用 <code>void setPaletteColor(uint8_t _index, uint32_t _rgba)</code> 即可对不同的 rt 设置不同的清屏颜色。<br />
-最多有 16 个调色盘：<code>#define BGFX_CONFIG_MAX_COLOR_PALETTE 16</code></p>
 <h2 id="相关链接-2"><a class="markdownIt-Anchor" href="#相关链接-2"></a> 相关链接</h2>
 <p><a target="_blank" rel="noopener" href="https://t-rvw.github.io/blog/2022/05/28/game_engine_rhi/">自制游戏引擎 - 图形API</a><br />
 <a target="_blank" rel="noopener" href="https://bkaradzic.github.io/bgfx/">bgfx 文档</a><br />
