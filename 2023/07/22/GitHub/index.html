@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      38
+      39
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：July 25, 2023
+                  本文最后更新于：August 10, 2023
                 
               </p>
             
@@ -282,7 +282,7 @@
 </ul>
 <h2 id="冲突与合并"><a class="markdownIt-Anchor" href="#冲突与合并"></a> 冲突与合并</h2>
 <h3 id="冲突"><a class="markdownIt-Anchor" href="#冲突"></a> 冲突</h3>
-<p>在发起 pr 后，github 会自动帮你检查该分支是否与主分支有冲突。在产生冲突的情况下，我的建议是回到本地进行如下操作：</p>
+<p>在发起 pr 后，github 会自动帮你检查该分支是否与主分支有冲突。简单的冲突可以直接在网页端解决，也可以回到本地进行如下操作：</p>
 <ul>
 <li><code>git checkout main</code> 切换回主分支</li>
 <li><code>git pull</code> 拉取最新的主分支</li>
@@ -414,8 +414,9 @@ GitHub Actions 使用 YAML 来定义工作流程。 每个工作流都作为单�
 <li>接着在命令行中编译项目的 Debug 和 Release 版本。msbuild 命令行详见 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2022">MSBuild 命令行参考</a> 和 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2022">常用的 MSBuild 项目属性</a>。</li>
 </ul>
 <h3 id="check-failed"><a class="markdownIt-Anchor" href="#check-failed"></a> Check Failed</h3>
-<p>Action 检查未通过是非常正常的，这时候只要检查一下 Details 往往能帮我们定位错误。<br />
-<img src="/img/GitHub/action.png" srcset="/img/loading.gif" lazyload alt=".gitmodules" /></p>
+<p>Action 检查未通过是非常常见的，这时候只需要检查一下 Details 往往能帮我们定位错误。<br />
+<img src="/img/GitHub/action.png" srcset="/img/loading.gif" lazyload alt=".gitmodules" /><br />
+有时他的报错会非常抽象，如果你认为这个 failed 可能不是你的问题，可以在失败的 Actions 界面点击 <code>Re-run job</code> 按钮。</p>
 <h3 id="在-readme-中添加状态徽章"><a class="markdownIt-Anchor" href="#在-readme-中添加状态徽章"></a> 在 README 中添加状态徽章</h3>
 <p>github actions 会将自身运行的状态生成为一张图片，我们可以用这个链接访问它：</p>
 <figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/&lt;OWNER&gt;/</span>&lt;REPOSITORY&gt;<span class="hljs-regexp">/actions/</span>workflows<span class="hljs-regexp">/&lt;WORKFLOW_FILE&gt;/</span>badge.svg<br></code></pre></div></td></tr></table></figure>
