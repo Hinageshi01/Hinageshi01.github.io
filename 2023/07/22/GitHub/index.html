@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.3k 字
+      3.4k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      39
+      40
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 10, 2023
+                  本文最后更新于：August 16, 2023
                 
               </p>
             
@@ -367,7 +367,11 @@
 <li>而 <code>git submodule update --remote</code> 实际上相当于进入每一个子模块执行 <code>git pull</code>，即将 <code>本地的子仓库</code> 更新为 <code>远程的子仓库</code>。</li>
 <li>最后一步，如何更新 <code>远程主仓库中的子仓库</code> 版本呢？在 <code>本地主仓库中的子仓库</code> 版本与 <code>本地的子仓库</code> 不同时，在主仓库执行 commit 即可更新 <code>本地主仓库中的子仓库</code> 版本。在 <code>远程主仓库中的子仓库</code> 与 <code>本地主仓库中的子仓库</code> 版本不同时，在主仓库执行 push 即可更新 <code>远程主仓库中的子仓库</code> 版本。</li>
 </ul>
-<p>ps: 如果 <code>.gitmodules</code> 中的 url 有变或者新增，<code>git submodule update</code> 是无法将其更新的，保险起见，我们可以在每一次 update 子模块之前执行 <code>git submodule init</code>。</p>
+<h4 id="其他-2"><a class="markdownIt-Anchor" href="#其他-2"></a> 其他</h4>
+<ul>
+<li>如果 <code>.gitmodules</code> 中的 url 有变或者新增，<code>git submodule update</code> 是无法将其更新的，保险起见，我们可以在每一次 update 子模块之前执行 <code>git submodule init</code>。</li>
+<li>只希望 <code>git submodule update --remote</code> 更新指定的子模块而非更新所有的子模块？使用 <code>git submodule update --remote &lt;Path&gt;</code> 指定子模块的路径即可。具体路径可以在 <code>.gitmodules</code> 文件中确认。</li>
+</ul>
 <h3 id="开发子模块"><a class="markdownIt-Anchor" href="#开发子模块"></a> 开发子模块</h3>
 <p>子模块最抽象的特性：当我们使用 <code>git submodule update</code> 对子模块进行更新之后，子模块实际上会处于一个游离的 branch 上并且这个 branch 是 main（不一定是 main，可以配置）的复制。</p>
 <figure class="highlight less"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs less"><span class="hljs-selector-tag">git</span> <span class="hljs-selector-tag">branch</span><br>* (HEAD detached at abcdefg)<br>  <span class="hljs-selector-tag">main</span><br></code></pre></div></td></tr></table></figure>
