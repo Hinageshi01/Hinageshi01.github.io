@@ -417,11 +417,11 @@
     
     <tags>
       
-      <tag>LightingModel</tag>
-      
       <tag>NormalMap</tag>
       
       <tag>Rasterization</tag>
+      
+      <tag>LightingModel</tag>
       
     </tags>
     
@@ -653,9 +653,9 @@
       
       <tag>BRDF</tag>
       
-      <tag>Radiometry</tag>
-      
       <tag>RayTracing</tag>
+      
+      <tag>Radiometry</tag>
       
       <tag>MonteCarlo</tag>
       
@@ -734,9 +734,9 @@
       
       <tag>CPP</tag>
       
-      <tag>DepthBuffer</tag>
-      
       <tag>LightingModel</tag>
+      
+      <tag>DepthBuffer</tag>
       
     </tags>
     
@@ -763,9 +763,9 @@
       
       <tag>CPP</tag>
       
-      <tag>DepthBuffer</tag>
-      
       <tag>Rasterization</tag>
+      
+      <tag>DepthBuffer</tag>
       
       <tag>AntiAliasing</tag>
       
