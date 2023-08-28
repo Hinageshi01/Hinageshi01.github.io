@@ -668,11 +668,11 @@ C、Object-Oriented C++、Template C++、STL
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
+              <a href="/tags/CPP/">CPP</a>
+            
               <a href="/tags/NormalMap/">NormalMap</a>
             
               <a href="/tags/Rasterization/">Rasterization</a>
-            
-              <a href="/tags/CPP/">CPP</a>
             
           </div>
         
@@ -745,30 +745,28 @@ k=(y2−y1)x2−x1k=\frac{(y_2-
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/10/14/RTRT/" target="_self">
-          <img src="/img/RTRT/01.png" srcset="/img/loading.gif" lazyload alt="GAMES202 实时光线追踪">
+        <a href="/2021/09/22/GAMES202/" target="_self">
+          <img src="/img/GAMES202/01.png" srcset="/img/loading.gif" lazyload alt="【Archive】GAMES202">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/10/14/RTRT/" target="_self">
-          GAMES202 实时光线追踪
+        <a href="/2021/09/22/GAMES202/" target="_self">
+          【Archive】GAMES202
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/10/14/RTRT/" target="_self">
+        <a href="/2021/09/22/GAMES202/" target="_self">
           
           
             
           
-           序言
-  如果认为，以路径追踪的方式，计算一次一着色点的直接光照和一次弹射的间接光照为 1 sample per pixel (1 SPP)。那么对于一帧，即使是 RTX 系列的 GPU 也只能做到 1 SPP，此时的噪声会非常夸张。但是路径追踪依旧为我们提供了非常宝贵的间接光照信息，那么接下来工作的重心就在如何降噪上了。降噪分为两个部分，单帧降噪与像素在时间上的复用。
- 单帧降噪
- 双边滤波
-
+           序言 百分比近似软阴影
+  若要判断当前着色点是否处于阴影之中，我们需要知到该点与光源之间的遮挡关系。一种常见的做法是 Shadow Mapping，假设从光源看向场景，就像做深度测试一样，保存一张从光源处获得的 DepthBuffer，然后比较着色点与光源之间的距离与 DepthBuffer 中对应点的深度，前者更大则代表场景中有另一物体比当前着色点更接近光源，即该着色点被遮挡。
+ Two P
         </a>
       </p>
 
@@ -776,18 +774,11 @@ k=(y2−y1)x2−x1k=\frac{(y_2-
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-14 17:20" pubdate>
-              2021-10-14
+            <time datetime="2021-09-22 22:12" pubdate>
+              2021-09-22
             </time>
           </div>
         
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/GAMES202/">GAMES202</a>
-            
-          </div>
         
         
           <div class="post-meta">
@@ -795,9 +786,15 @@ k=(y2−y1)x2−x1k=\frac{(y_2-
             
               <a href="/tags/CPP/">CPP</a>
             
-              <a href="/tags/RayTracing/">RayTracing</a>
+              <a href="/tags/GLSL/">GLSL</a>
             
-              <a href="/tags/temporal/">temporal</a>
+              <a href="/tags/Shadow/">Shadow</a>
+            
+              <a href="/tags/JavaScript/">JavaScript</a>
+            
+              <a href="/tags/Reflection/">Reflection</a>
+            
+              <a href="/tags/RayTracing/">RayTracing</a>
             
           </div>
         
@@ -809,7 +806,7 @@ k=(y2−y1)x2−x1k=\frac{(y_2-
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
