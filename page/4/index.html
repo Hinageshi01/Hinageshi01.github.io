@@ -192,71 +192,6 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/09/07/BulinnPhong/" target="_self">
-          <img src="/img/Phong/01.png" srcset="/img/loading.gif" lazyload alt="GAMES101 Blinn-Phong 光照模型">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/09/07/BulinnPhong/" target="_self">
-          GAMES101 Blinn-Phong 光照模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/09/07/BulinnPhong/" target="_self">
-          
-          
-            
-          
-           序言
-  该模型将任一点的光照分为三部分：1.由光源方向与法线方向决定的漫反射、2.由光源方向法线方向与观察方向决定的高光、3.恒定的环境光。
- getColorBilinear
-
-对贴图采样时采用双线性插值的方法以获得柔和的过度。
-12345678910111213141516171819202122232425262728Eigen::Vector3f getColorBilinear(fl
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-07 21:40" pubdate>
-              2021-09-07
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/GAMES101/">GAMES101</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CPP/">CPP</a>
-            
-              <a href="/tags/DepthBuffer/">DepthBuffer</a>
-            
-              <a href="/tags/LightingModel/">LightingModel</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/09/05/SSAA/" target="_self">
           <img src="/img/SSAA/01.png" srcset="/img/loading.gif" lazyload alt="GAMES101 Super Sample Anti-Aliasing">
         </a>
@@ -376,7 +311,7 @@ ta
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/08/29/Unity/" target="_self">
-          <img src="/img/Unity/01.png" srcset="/img/loading.gif" lazyload alt="连击，卡肉，镜头抖动，有限状态机，对象池">
+          <img src="/img/Unity/01.png" srcset="/img/loading.gif" lazyload alt="/[Archive/] 背包，连击，卡肉，镜头抖动，有限状态机，对象池">
         </a>
       </div>
     
@@ -384,7 +319,7 @@ ta
       <h1 class="index-header">
         
         <a href="/2021/08/29/Unity/" target="_self">
-          连击，卡肉，镜头抖动，有限状态机，对象池
+          /[Archive/] 背包，连击，卡肉，镜头抖动，有限状态机，对象池
         </a>
       </h1>
 
@@ -394,14 +329,15 @@ ta
           
             
           
-           打击感
-  一般来说，打击感由帧冻结、镜头抖动与运动、敌人的受击反馈（动画、音效、击退等）、特效、环境的反馈等组成。
+           背包系统
+  背包 GUI 的实现、ScriptableObject、数据的存储与读取。
+ 层级结构
 
- 连击
 
-              攻击结束方法可以不在攻击动画的最后一帧调用，而是提前几帧。这是因为连击往往存在预输入，这样做可以提高连贯性，提升手感。
-          
-1234567891011121314151617181920212223242526272829
+Bag 挂载 BagOnDrag 脚本
+Grid 挂载 Grid Layout Group 组件，使其子物体（Slot）整齐地排放
+Slot 挂载 Slot 脚本，更改其子物体（Item）以实现拖拽
+Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 but
         </a>
       </p>
 
@@ -419,11 +355,11 @@ ta
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
+              <a href="/tags/AI/">AI</a>
+            
               <a href="/tags/C/">C#</a>
             
               <a href="/tags/Unity/">Unity</a>
-            
-              <a href="/tags/AI/">AI</a>
             
               <a href="/tags/GameDesign/">GameDesign</a>
             
@@ -437,69 +373,8 @@ ta
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/08/23/Backpack/" target="_self">
-          <img src="/img/BackpackSystem/01.png" srcset="/img/loading.gif" lazyload alt="背包系统">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/23/Backpack/" target="_self">
-          背包系统
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/23/Backpack/" target="_self">
-          
-          
-            
-          
-           序言
-  背包 GUI 的实现、ScriptableObject、数据的存储与读取。
- 层级结构
-
-
-Bag 挂载 BagOnDrag 脚本
-Grid 挂载 Grid Layout Group 组件，使其子物体（Slot）整齐地排放
-Slot 挂载 Slot 脚本，更改其子物体（Item）以实现拖拽
-Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 butto
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-23 16:41" pubdate>
-              2021-08-23
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">C#</a>
-            
-              <a href="/tags/GUI/">GUI</a>
-            
-              <a href="/tags/Unity/">Unity</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/08/19/SunnyLand/" target="_self">
-          <img src="/img/SunnyLand/lg.png" srcset="/img/loading.gif" lazyload alt="平台跳跃游戏 Sunny Land">
+          <img src="/img/SunnyLand/lg.png" srcset="/img/loading.gif" lazyload alt="/[Archive/] Sunny Land">
         </a>
       </div>
     
@@ -507,7 +382,7 @@ Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 butto
       <h1 class="index-header">
         
         <a href="/2021/08/19/SunnyLand/" target="_self">
-          平台跳跃游戏 Sunny Land
+          /[Archive/] Sunny Land
         </a>
       </h1>
 
@@ -573,7 +448,7 @@ Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 butto
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/08/12/MakeYourFirstGame/" target="_self">
-          <img src="/img/MakeYourFirstGame/01.png" srcset="/img/loading.gif" lazyload alt="M_Studio MakeYourFirstGame">
+          <img src="/img/MakeYourFirstGame/01.png" srcset="/img/loading.gif" lazyload alt="/[Archive/] Make Your First Game by M_Studio">
         </a>
       </div>
     
@@ -581,7 +456,7 @@ Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 butto
       <h1 class="index-header">
         
         <a href="/2021/08/12/MakeYourFirstGame/" target="_self">
-          M_Studio MakeYourFirstGame
+          /[Archive/] Make Your First Game by M_Studio
         </a>
       </h1>
 
@@ -613,11 +488,11 @@ Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 butto
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
+              <a href="/tags/AI/">AI</a>
+            
               <a href="/tags/C/">C#</a>
             
               <a href="/tags/Unity/">Unity</a>
-            
-              <a href="/tags/AI/">AI</a>
             
           </div>
         
@@ -630,7 +505,7 @@ Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 butto
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/08/07/SoulForging/" target="_self">
-          <img src="/img/SoulForging/lg.png" srcset="/img/loading.gif" lazyload alt="Minecraft Mod Soul Forging">
+          <img src="/img/SoulForging/lg.png" srcset="/img/loading.gif" lazyload alt="/[Archive/] Soul Forging">
         </a>
       </div>
     
@@ -638,7 +513,7 @@ Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 butto
       <h1 class="index-header">
         
         <a href="/2021/08/07/SoulForging/" target="_self">
-          Minecraft Mod Soul Forging
+          /[Archive/] Soul Forging
         </a>
       </h1>
 
@@ -742,7 +617,7 @@ Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 butto
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2000/01/01/Song/" target="_self">
-          <img src="/img/default.png" srcset="/img/loading.gif" lazyload alt="歌单">
+          <img src="/img/Song/01.png" srcset="/img/loading.gif" lazyload alt="歌单">
         </a>
       </div>
     
@@ -790,11 +665,62 @@ Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 butto
     </article>
   </div>
 
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/1899/11/30/Audition/" target="_self">
+          <img src="/img/Audition/01.png" srcset="/img/loading.gif" lazyload alt="图形/引擎/渲染相关面经">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/1899/11/30/Audition/" target="_self">
+          图形/引擎/渲染相关面经
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/1899/11/30/Audition/" target="_self">
+          
+          
+            
+          
+           序言
+重复的问题就不记了，也不区分几面，写一起浏览起来方便。
+ 网易互娱：游戏引擎研发工程师
+ C++
+
+class 与 struct 有什么区别？
+了解过内存对齐吗，为什么要对齐，不对齐会怎样？
+struct 内存对齐
+__declspec(align(#)) 的用法和大小计算
+struct TA &#123; char a; int b; char c; &#125;; struct TB 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="1899-11-30 00:00" pubdate>
+              1899-11-30
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/5/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span>
     </span>
   </nav>
 
