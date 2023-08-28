@@ -192,6 +192,60 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/22/cppLatest/" target="_self">
+          <img src="/img/cppLatest/01.png" srcset="/img/loading.gif" lazyload alt="C++ 随记">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/22/cppLatest/" target="_self">
+          C++ 随记
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/07/22/cppLatest/" target="_self">
+          
+          
+            
+          
+           序言
+  现代 C++ 相关的笔记。
+ std::optional
+如果一个函数可能取不到有效的值，一般的做法是预设一个特殊值然后在调用之后去检查函数的返回值，或者在函数内抛出异常。这两种做法都不够安全、简洁。
+C++ 17 提供了 std::optional，可以将任意类型与一个有效标志包装起来：
+123456789101112131415#include &lt;optional&gt;st
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-22 19:17" pubdate>
+              2022-07-22
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CPP/">CPP</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/05/30/bgfx/" target="_self">
           <img src="/img/bgfx/01.png" srcset="/img/loading.gif" lazyload alt="笔记 bgfx">
         </a>
@@ -250,28 +304,26 @@ virtual void init(int32_t _argc,
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/05/01/GAMES104andEStar/" target="_self">
-          <img src="/img/104EStar/01.png" srcset="/img/loading.gif" lazyload alt="笔记 GAMES104 &amp; E 星计划">
+        <a href="/2022/05/01/EStarProject/" target="_self">
+          <img src="/img/EStarProject/01.png" srcset="/img/loading.gif" lazyload alt="【Archive】笔记 E 星计划">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/05/01/GAMES104andEStar/" target="_self">
-          笔记 GAMES104 &amp; E 星计划
+        <a href="/2022/05/01/EStarProject/" target="_self">
+          【Archive】笔记 E 星计划
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/05/01/GAMES104andEStar/" target="_self">
+        <a href="/2022/05/01/EStarProject/" target="_self">
           
           
             
           
-           序言
-  刚好是同时开设的两门课程，都偏向概念性。
- E 星计划
+           E 星计划
  02 渲染流程简述
 GPU Driven、Mesh Cluster Rendering、Cluster whith LOD（nanite）
 Mesh Shader
@@ -281,7 +333,7 @@ Virtual Texture
  05 光照综述
  直接光漫反射
 
-πfdif\pi f_
+πfdif\pi f_{dif}πfdif​ 的范围是 [0,1][0, 1
         </a>
       </p>
 
@@ -295,17 +347,6 @@ Virtual Texture
           </div>
         
         
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/AntiAliasing/">AntiAliasing</a>
-            
-              <a href="/tags/PBR/">PBR</a>
-            
-              <a href="/tags/PostProssing/">PostProssing</a>
-            
-          </div>
         
       </div>
     </article>
@@ -433,159 +474,33 @@ C、Object-Oriented C++、Template C++、STL
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/CppPrimer13-16/" target="_self">
-          <img src="/img/CppPrimer/01.png" srcset="/img/loading.gif" lazyload alt="笔记 C++ Primer 第十三章~第十六章">
+        <a href="/2021/11/27/CppPrimer/" target="_self">
+          <img src="/img/CppPrimer/01.png" srcset="/img/loading.gif" lazyload alt="笔记 C++ Primer">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/01/24/CppPrimer13-16/" target="_self">
-          笔记 C++ Primer 第十三章~第十六章
+        <a href="/2021/11/27/CppPrimer/" target="_self">
+          笔记 C++ Primer
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/01/24/CppPrimer13-16/" target="_self">
+        <a href="/2021/11/27/CppPrimer/" target="_self">
           
           
             
           
-           序言
-  《C++ Primer 5th Edition》类设计者工具部分的读书笔记。
- 第十三章 拷贝控制
- 13.1 拷贝、赋值与销毁
- 13.1.1 拷贝构造函数
-如果一个构造函数的第一个参数是自身类类型的引用，且任何额外参数都有默认值， 则此构造函数是拷贝构造函数。
-1234class Foo &#123;public:    Foo (const Foo&amp;); //拷贝构造函数
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 23:03" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/C-Primer/">C++ Primer</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CPP/">CPP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/12/15/CppPrimer8-12/" target="_self">
-          <img src="/img/CppPrimer/01.png" srcset="/img/loading.gif" lazyload alt="笔记 C++ Primer 第八章~第十二章">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/15/CppPrimer8-12/" target="_self">
-          笔记 C++ Primer 第八章~第十二章
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/12/15/CppPrimer8-12/" target="_self">
-          
-          
-            
-          
-           序言
-  《C++ Primer 5th Edition》标准库部分的读书笔记。
- 第八章 IO 库
- 8.1 IO 类
- 8.1.1 IO 对象无拷贝或赋值
-进 IO 操作的函数通常以引用方式传递和返回流。读写一个 IO 对象会改变其状态，因此传递和返回的引用不能是 const 的。
- 8.1.2 条件状态
-如果我们输入一个非期望的数据类型或一个文件结束标识，cin 会进入错误状态。
-一个流一
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-15 10:55" pubdate>
-              2021-12-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/C-Primer/">C++ Primer</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CPP/">CPP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/11/27/CppPrimer1-7/" target="_self">
-          <img src="/img/CppPrimer/01.png" srcset="/img/loading.gif" lazyload alt="笔记 C++ Primer 第一章~第七章">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/11/27/CppPrimer1-7/" target="_self">
-          笔记 C++ Primer 第一章~第七章
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/27/CppPrimer1-7/" target="_self">
-          
-          
-            
-          
-           序言
-  《C++ Primer 5th Edition》前七章的读书笔记，只记录我认为重要/不熟悉的知识点，前七章刚好都属于不那么“C++”的部分，比较适合作为一个整理的节点。
- 第一章 开始
+           第一章 开始
  1.2 初识输入输出
 #include &lt;iostream&gt;
 使用了 iostream 库，包含了 istream 类和 ostream 类，分别表示输入流和输出流。
 向流写入数据
-输出运
+输出运算符（&lt;&lt;）接受两个运算对象，左侧必须是一个 ostream 对象，右侧是要打印的值，然后返回其左侧的对象。
+std::endl
+这是一个被称为操作符的特殊值，写入 en
         </a>
       </p>
 
@@ -598,13 +513,6 @@ C、Object-Oriented C++、Template C++、STL
             </time>
           </div>
         
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/C-Primer/">C++ Primer</a>
-            
-          </div>
         
         
           <div class="post-meta">
@@ -703,9 +611,9 @@ C、Object-Oriented C++、Template C++、STL
           
             
           
-           序言 百分比近似软阴影
+           百分比近似软阴影
   若要判断当前着色点是否处于阴影之中，我们需要知到该点与光源之间的遮挡关系。一种常见的做法是 Shadow Mapping，假设从光源看向场景，就像做深度测试一样，保存一张从光源处获得的 DepthBuffer，然后比较着色点与光源之间的距离与 DepthBuffer 中对应点的深度，前者更大则代表场景中有另一物体比当前着色点更接近光源，即该着色点被遮挡。
- Two P
+ Two Pass
         </a>
       </p>
 
@@ -798,6 +706,94 @@ C、Object-Oriented C++、Template C++、STL
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Ismism/">Ismism</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/09/14/Radiometry/" target="_self">
+          <img src="/img/Radi/01.png" srcset="/img/loading.gif" lazyload alt="辐射度量学基础">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/14/Radiometry/" target="_self">
+          辐射度量学基础
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/14/Radiometry/" target="_self">
+          
+          
+            
+          
+           序言
+  路径追踪的前置知识。
+ 物理量一览
+
+
+
+名称
+符号
+单位
+
+
+
+
+Radiant Energy
+Q
+J 或 lm.s
+
+
+Radiant Flux
+ϕ\phiϕ
+W 或 Lumen
+
+
+Radiant Intensity
+I
+W/sr 或 Candela
+
+
+Irradiance
+E
+W/m2m^2m2 或 Lux
+
+
+Radiance
+L
+W/(sr * m2m^2m2) 或 Ni
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-14 19:59" pubdate>
+              2021-09-14
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PBR/">PBR</a>
+            
+              <a href="/tags/BRDF/">BRDF</a>
+            
+              <a href="/tags/Radiometry/">Radiometry</a>
             
           </div>
         

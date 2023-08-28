@@ -18,7 +18,7 @@
   <meta name="author" content="Hinageshi">
   <meta name="keywords" content="">
   
-  <title>笔记 GAMES104 &amp; E 星计划 - Hexo</title>
+  <title>【Archive】笔记 E 星计划 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="笔记 GAMES104 & E 星计划">
+            <span class="h2" id="subtitle" title="【Archive】笔记 E 星计划">
               
             </span>
 
@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.2k 字
+      763 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
+      9
        分钟
     </span>
   
@@ -237,18 +237,16 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">笔记 GAMES104 &amp; E 星计划</h1>
+            <h1 style="display: none">【Archive】笔记 E 星计划</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：June 28, 2023
+                  本文最后更新于：August 28, 2023
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
-<p>  刚好是同时开设的两门课程，都偏向概念性。</p>
-<h2 id="e-星计划"><a class="markdownIt-Anchor" href="#e-星计划"></a> E 星计划</h2>
+              <h2 id="e-星计划"><a class="markdownIt-Anchor" href="#e-星计划"></a> E 星计划</h2>
 <h3 id="02-渲染流程简述"><a class="markdownIt-Anchor" href="#02-渲染流程简述"></a> 02 渲染流程简述</h3>
 <p>GPU Driven、Mesh Cluster Rendering、Cluster whith LOD（nanite）<br />
 Mesh Shader</p>
@@ -262,7 +260,7 @@ Virtual Texture</p>
 <li>布林冯的 Diffuse Map 比较灵活，可以将一部分阴影和高光直接绘制在贴图上，但是 PBR 的 Albedo Map 只能绘制漫反射的贴图。albedo 要除以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span></span></span></span>，看起来会比 diffuse 亮一点。</li>
 </ul>
 <p><a target="_blank" rel="noopener" href="https://marmoset.co/posts/pbr-texture-conversion/">PBR Texture Conversion</a></p>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/E/5.1.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/E/5.2.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
+<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/EStarProject/5.1.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/EStarProject/5.2.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
 <h4 id="直接光高光"><a class="markdownIt-Anchor" href="#直接光高光"></a> 直接光高光</h4>
 <ul>
 <li>非金属的 F0 普遍非常小且相差无几，在实际计算中可以用一个常量（比如 0.04）代替所有非金属的材质的 F0 属性。</li>
@@ -270,15 +268,15 @@ Virtual Texture</p>
 <li>金属没有 Diffuse 反射，所以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>L</mi><mi>o</mi></msub><mo stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>m</mi><mi>e</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>l</mi><mi>i</mi><mi>c</mi><mo stretchy="false">)</mo><msubsup><mi>F</mi><mi>d</mi><mo>∗</mo></msubsup><mfrac><mrow><mi>a</mi><mi>l</mi><mi>b</mi><mi>e</mi><mi>d</mi><mi>o</mi></mrow><mi>π</mi></mfrac><msub><mi>L</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>n</mi><mo>⋅</mo><mi>l</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">L_o(v)=(1-metallic)F_d^*\frac{albedo}{\pi}L_i(n\cdot l)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">o</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.2251079999999999em;vertical-align:-0.345em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">c</span><span class="mclose">)</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-2.4168920000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">d</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2831079999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">b</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">o</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">)</span></span></span></span> （这个 Fd 加不加都行）。</li>
 </ul>
 <p>Light Culling、Clustered Shading</p>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/E/5.3.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/E/5.4.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/E/5.5.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
+<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/EStarProject/5.3.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/EStarProject/5.4.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/EStarProject/5.5.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
 <h4 id="环境光"><a class="markdownIt-Anchor" href="#环境光"></a> 环境光</h4>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/E/5.6.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/E/5.7.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
+<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/EStarProject/5.6.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/EStarProject/5.7.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
 <h4 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h4>
 <ul>
 <li>游戏中的 HDR 与显示器的 HDR 不是一个概念，如果显示器启用了 HDR，游戏 Tone Mapping 的曲线需要调整。<br />
 split sum approximate</li>
 </ul>
-<p><img src="/img/104EStar/E/5.8.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p><img src="/img/EStarProject/5.8.png" srcset="/img/loading.gif" lazyload alt="" /></p>
 <h3 id="06-性能优化综述"><a class="markdownIt-Anchor" href="#06-性能优化综述"></a> 06 性能优化综述</h3>
 <p>视锥剔除、遮挡剔除（硬件遮挡查询、软件遮挡查询、与计算可见集）、Triangle Cluster Culling<br />
 <strong>渲染合批</strong><br />
@@ -299,99 +297,18 @@ Compute Shader 可以进行运行时纹理压缩（TEC2，显卡可以直接使�
 <h3 id="07-全局光照技术综述"><a class="markdownIt-Anchor" href="#07-全局光照技术综述"></a> 07 全局光照技术综述</h3>
 <p>LightMap<br />
 Point-Based Global Illumination<br />
-<img src="/img/104EStar/E/7.1.png" srcset="/img/loading.gif" lazyload alt="" /><br />
+<img src="/img/EStarProject/7.1.png" srcset="/img/loading.gif" lazyload alt="" /><br />
 Light Propagation Volumes<br />
-<img src="/img/104EStar/E/7.2.png" srcset="/img/loading.gif" lazyload alt="" /><br />
+<img src="/img/EStarProject/7.2.png" srcset="/img/loading.gif" lazyload alt="" /><br />
 SVO Cone Tracing</p>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/E/7.3.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/E/7.4.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
+<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/EStarProject/7.3.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/EStarProject/7.4.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
 <p>SVGF</p>
-<h2 id="gmes104"><a class="markdownIt-Anchor" href="#gmes104"></a> GMES104</h2>
-<h3 id="02-引擎架构分层"><a class="markdownIt-Anchor" href="#02-引擎架构分层"></a> 02 引擎架构分层</h3>
-<ul>
-<li>工具层<br />
-编辑器</li>
-<li>功能层<br />
-渲染，动画，物理，相机，UI，脚本等</li>
-<li>资源层<br />
-加载与管理资源</li>
-<li>核心层<br />
-内存管理，容器分配，线程池，数学</li>
-<li>平台层<br />
-消除平台之间的差异</li>
-</ul>
-<h3 id="04-游戏引擎中的渲染实践"><a class="markdownIt-Anchor" href="#04-游戏引擎中的渲染实践"></a> 04 游戏引擎中的渲染实践</h3>
-<p>ampere 架构<br />
-GPU Batch Rendering<br />
-Potential Visibility Set<br />
-<strong>block-based compression</strong></p>
-<ul>
-<li>PC-BC7 or DXTC(old)</li>
-<li>Mobie-ASTC or ETC/PVRTC(old)</li>
-</ul>
-<p>Cluster-Based Mesh Pipeline</p>
-<h3 id="05-渲染中光和材质的魔法"><a class="markdownIt-Anchor" href="#05-渲染中光和材质的魔法"></a> 05 渲染中光和材质的魔法</h3>
-<p>渲染方程</p>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/104/5.1.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/5.2.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
-<p>球谐函数的前两阶经过压缩（BC6 + BC7）后可以存储在一张RGBA8的贴图中（32bits）<br />
-<img src="/img/104EStar/104/5.3.png" srcset="/img/loading.gif" lazyload alt="" /><br />
-PBR</p>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/104/5.4.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/5.5.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/5.6.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/5.7.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/104/5.8.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/5.9.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/5.10.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
-<p>IBL</p>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/104/5.11.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/5.12.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/5.13.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/5.14.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/5.15.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
-<p>光照探针、反射探针<br />
-Cascade Shadow<br />
-Variance Soft Shadow Map<br />
-Screen-space GI<br />
-SDF-Based GI<br />
-Voxel-Based GI<br />
-RSM/RTX GI<br />
-Virtual Shadow Map<br />
-Uber Shader、Shader variants</p>
-<h3 id="06-游戏中地形-大气和云的渲染"><a class="markdownIt-Anchor" href="#06-游戏中地形-大气和云的渲染"></a> 06 游戏中地形、大气和云的渲染</h3>
-<p>GPU Driven<br />
-虚拟纹理<br />
-Direct Storage、DMA<br />
-<img src="/img/104EStar/104/6.1.png" srcset="/img/loading.gif" lazyload alt="" /><br />
-Floating-point Precision Error</p>
-<h3 id="07-渲染管线-后处理和其他一切"><a class="markdownIt-Anchor" href="#07-渲染管线-后处理和其他一切"></a> 07 渲染管线、后处理和其他一切</h3>
-<p><strong>环境光遮蔽</strong><br />
-SSAO（采样球体）、SSAO+（采样半球）、HBAO（Horizon-based Ambient Occlusion）、GTAO（Ground Truth-based Ambient Occlusion）、RTAO（Ray-Tracing Ambient Occlusion）</p>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/104/7.1.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/7.2.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/7.3.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/7.4.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
-<p>FXAA</p>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/104/7.5.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/7.6.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/7.7.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/7.8.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/7.9.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
-<p>bloom<br />
-<img src="/img/104EStar/104/7.10.png" srcset="/img/loading.gif" lazyload alt="" /><br />
-ACES、LUT<br />
-Light Culting by Tiles、Depth Range Optimization、Cluster-based Rendering</p>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/104EStar/104/7.11.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/7.12.png" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/img/104EStar/104/7.13.png" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
-<p>Forward+<br />
-Visibility Buffer（存储属于哪个 mesh，属于哪个三角形的ID，以及重心坐标）<br />
-<img src="/img/104EStar/104/7.14.png" srcset="/img/loading.gif" lazyload alt="" /><br />
-Render Graph/Frame Graph</p>
-<h3 id="10-游戏引擎中物理系统的基础理论和算法"><a class="markdownIt-Anchor" href="#10-游戏引擎中物理系统的基础理论和算法"></a> 10 游戏引擎中物理系统的基础理论和算法</h3>
-<p>Semi-implicit Euler’s Method 半隐式欧拉法<br />
-<strong>碰撞检测</strong><br />
-BVH、Sort and Sweep<br />
-Minkowski Difference 用 GJK 算法判断明可夫斯基差是否过原点<br />
-Separating Axis Theorem 能否找到一个面将两堆顶点一分为二</p>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/AntiAliasing/">AntiAliasing</a>
-                    
-                      <a class="hover-with-bg" href="/tags/PBR/">PBR</a>
-                    
-                      <a class="hover-with-bg" href="/tags/PostProssing/">PostProssing</a>
-                    
-                  </div>
                 
               </div>
               
@@ -436,7 +353,7 @@ Separating Axis Theorem 能否找到一个面将两堆顶点一分为二</p>
         var options = Object.assign(
           {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: 'f8b8c829050d1722cd65ff7a1a661001'
+            id: '902b3e8afb8d4c81b214858b0ab47577'
           }
         )
         var gitalk = new Gitalk(options);
