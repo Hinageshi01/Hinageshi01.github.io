@@ -192,6 +192,65 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/10/04/EditorCamera/" target="_self">
+          <img src="/img/EditorCamera/01.png" srcset="/img/loading.gif" lazyload alt="编辑器相机">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/10/04/EditorCamera/" target="_self">
+          编辑器相机
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/10/04/EditorCamera/" target="_self">
+          
+          
+            
+          
+           一些 Unity Editor 中很人性化的相机操作
+ 左键
+
+单击选中实体。
+长按拉框选中多个实体。
+多个实体重叠时，反复单击，按照一定顺序切换选中的实体（好像是优先距离镜头近的实体，优先父节点）。
+逻辑大概是，相机存储一个队列，每次点击返回 N 个相交的 entity，按顺序忽略队列中的 entity 之后，将一个 entity 加入队列。若队列无法匹配，则清空队列。
+
+ 中键
+
+按住中键进
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-10-04 17:14" pubdate>
+              2023-10-04
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Editor/">Editor</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/07/22/GitHub/" target="_self">
           <img src="/img/GitHub/01.png" srcset="/img/loading.gif" lazyload alt="GitHub 工作流">
         </a>
@@ -580,21 +639,21 @@ I=ISβ(λ)γ(θ)∑P∈AB‾T(CP‾)T(PA‾)ρ(h)dsI=I_S\beta(\lam
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/10/03/Editor/" target="_self">
-          <img src="/img/Editor/01.png" srcset="/img/loading.gif" lazyload alt="线框与白模渲染">
+        <a href="/2022/10/03/DebugShading/" target="_self">
+          <img src="/img/DebugShading/01.png" srcset="/img/loading.gif" lazyload alt="线框与白模渲染">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/10/03/Editor/" target="_self">
+        <a href="/2022/10/03/DebugShading/" target="_self">
           线框与白模渲染
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/10/03/Editor/" target="_self">
+        <a href="/2022/10/03/DebugShading/" target="_self">
           
           
             
@@ -677,69 +736,6 @@ C++ 实现高性能并行
           </div>
         
         
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/08/10/PBRinBGFX/" target="_self">
-          <img src="/img/pbrbgfx/01.png" srcset="/img/loading.gif" lazyload alt="在 BGFX 中实现 PBR">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/10/PBRinBGFX/" target="_self">
-          在 BGFX 中实现 PBR
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/08/10/PBRinBGFX/" target="_self">
-          
-          
-            
-          
-           序言
-  鉴于网上存在着大量优质的文章和教程，本文只会列出对应的链接以及补充一些实现上的细节。
-概览：
-【基于物理的渲染（PBR）白皮书】（一）开篇：PBR 核心知识体系总结与概览
-GAMES104-现代游戏引擎：从入门到实践
-GAMES101-现代计算机图形学入门
-原理：
-Background: Physics and Math of Shading by Naty Hoffman
-GAMES
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-10 15:20" pubdate>
-              2022-08-10
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/PBR/">PBR</a>
-            
-              <a href="/tags/BRDF/">BRDF</a>
-            
-              <a href="/tags/ArealLight/">ArealLight</a>
-            
-              <a href="/tags/LightingModel/">LightingModel</a>
-            
-          </div>
         
       </div>
     </article>
