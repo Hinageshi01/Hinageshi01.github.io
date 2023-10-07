@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.4k 字
+      3.5k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      40
+      41
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：August 28, 2023
+                  本文最后更新于：October 7, 2023
                 
               </p>
             
@@ -249,14 +249,14 @@
               <h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2>
 <p>  一些在工作中常用到的 git/GitHub 概念的整理。</p>
 <h2 id="分支与开发"><a class="markdownIt-Anchor" href="#分支与开发"></a> 分支与开发</h2>
-<p>对于正规一点的仓库，main branch 通常是受保护的，而我们的提交与推送都是在单独的 brnach 上进行的。</p>
+<p>对于正规一点的仓库，main branch 通常是受保护的，而我们的提交与推送都在单独的 brnach 上进行。</p>
 <h3 id="查看分支"><a class="markdownIt-Anchor" href="#查看分支"></a> 查看分支</h3>
 <ul>
 <li><code>git branch</code> 查看本地分支</li>
 <li><code>git branch -r</code> 查看远程分支</li>
 <li><code>git branch -a</code> 查看所有分支</li>
 </ul>
-<p>注意：如果远程新建了 branch，在本地运行 <code>git remote update origin</code> 之前，新的 branch 是不会显示在 <code>git branch -r</code> 上的。也有更简单的命令，在任意 branch 上的 <code>git pull</code> 也能实现这一效果。</p>
+<p>注意：如果远程新建了 branch，在本地运行 <code>git remote update origin</code> 之前，新的 branch 是不会显示在 <code>git branch -r/a</code> 上的。也有更简单的命令，在任意 branch 上的 <code>git pull</code> 也能实现这一效果。</p>
 <h3 id="操作分支"><a class="markdownIt-Anchor" href="#操作分支"></a> 操作分支</h3>
 <ul>
 <li><code>git branch &lt;Name&gt;</code> 创建新的本地分支，不会 checkout</li>
@@ -264,10 +264,10 @@
 <li><code>git branch -d &lt;Name&gt;</code> 删除本地分支，不能删除当前分支</li>
 <li><code>git branch -d -r &lt;Name&gt;</code> 删除远程分支</li>
 </ul>
-<h3 id="联系分支"><a class="markdownIt-Anchor" href="#联系分支"></a> 联系分支</h3>
+<h3 id="关联分支"><a class="markdownIt-Anchor" href="#关联分支"></a> 关联分支</h3>
 <ul>
-<li><code>git branch --set-upstream-to=origin/&lt;RemoteName&gt; &lt;LocalName&gt;</code></li>
-<li><code>git push -u origin &lt;LocalName&gt;</code> 说实话没用过这个</li>
+<li><code>git branch --set-upstream-to=origin/&lt;RemoteName&gt; &lt;LocalName&gt;</code> 将本地分支与远程分支关联起来</li>
+<li><code>git push --set-upstream origin &lt;RemoteName&gt;</code> 在远程新建分支，并将当前分支与远程新分支关联并推送。</li>
 </ul>
 <p>当然最简单的命令是：<code>git checkout -b &lt;LocalName&gt; origin/&lt;RemoteName&gt;</code><br />
 这个命令代表在本地新建分支，并且切换过去，并且与远程分支建立联系。</p>
@@ -279,7 +279,7 @@
 <li>当你的 branch 准备好之后，就可以在 github 上发起 Pull Request，通知仓库相关的开发者检查代码以及帮忙合并。<br />
 <img src="/img/GitHub/pr.png" srcset="/img/loading.gif" lazyload alt="Pull Request" /></li>
 <li>add, rm, commit, push 之类的操作直接用 VS 的 <code>Git 更改</code> 视图，或者 <code>Git GUI</code> 就好，比命令方便得多。</li>
-<li>一般来说，除非很紧急的情况，请在获得 reviewers 的 approve 和 review 之后再进行合并。</li>
+<li>一般来说，除非很紧急的情况，请在获得 approve 和 review 之后再进行合并。</li>
 <li>选择 Sauash Merge 的方式将 pr 内多个 commit 合并为一个 commit 提交到 main 分支上。</li>
 </ul>
 <h2 id="冲突与合并"><a class="markdownIt-Anchor" href="#冲突与合并"></a> 冲突与合并</h2>
@@ -347,8 +347,8 @@
 在该 pr 的最下方的 merge 右侧找到 <code>Revert</code>，这个按钮会自动创建一个新的 branch 以及 pr，并且在其中将原 pr 内的所有修改反向操作。当然尽量不要出现这种不得不 Revert 的情况。<br />
 <img src="/img/GitHub/revert.png" srcset="/img/loading.gif" lazyload alt="Revert" /></p>
 <h2 id="git-submodule"><a class="markdownIt-Anchor" href="#git-submodule"></a> Git Submodule</h2>
-<p>git 提供了子模块将一个仓库集成为另一个仓库的子目录，并且让他们保持独立的提交。<br />
-子模块有一个非常抽象的特性：在主仓库中如果不使用 <code>submodule</code> 相关的指令，子模块的内容不会受到任何 git 指令的影响，不受主仓库切换分支的影响，甚至不会在 clone 之后出现在你的硬盘里。</p>
+<p>git 提供了子模块功能将一个仓库集成为另一个仓库的子目录，并且让他们保持独立的提交。<br />
+子模块有一个非常抽象的特性：在主仓库中如果不使用 <code>submodule</code> 相关的指令，子模块的内容不会受到任何 git 指令的影响，不受主仓库切换分支的影响，甚至不会在主仓库 clone 之后出现在你的硬盘里。</p>
 <h3 id="添加子模块"><a class="markdownIt-Anchor" href="#添加子模块"></a> 添加子模块</h3>
 <p><code>git submodule add &lt;url&gt; &lt;path&gt;</code> 将 url 对应的仓库作为子模块添加到 path 路径下<br />
 添加子模块后主仓库会新增一个 <code>.gitmodules</code> 文件来描述子模块的信息。<br />
@@ -427,9 +427,9 @@ GitHub Actions 使用 YAML 来定义工作流程。 每个工作流都作为单�
 <p>github actions 会将自身运行的状态生成为一张图片，我们可以用这个链接访问它：</p>
 <figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/&lt;OWNER&gt;/</span>&lt;REPOSITORY&gt;<span class="hljs-regexp">/actions/</span>workflows<span class="hljs-regexp">/&lt;WORKFLOW_FILE&gt;/</span>badge.svg<br></code></pre></div></td></tr></table></figure>
 <p>然后将其作为图片塞入 markdown 语法中并指向仓库的 actions 界面：</p>
-<figure class="highlight md"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs md">[<span class="hljs-string">![build</span>](<span class="hljs-link">https://github.com/Hinageshi01/HinaEngine/workflows/build/badge.svg</span>)](<span class="hljs-link">https://github.com/Hinageshi01/HinaEngine/actions?workflow=build</span>)<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight md"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs md">[<span class="hljs-string">![win64_vs2022_msvc</span>](<span class="hljs-link">https://github.com/CatDogEngine/CatDogEngine/actions/workflows/win64_vs2022_msvc.yml/badge.svg?branch=main</span>)](<span class="hljs-link">https://github.com/CatDogEngine/CatDogEngine/actions/workflows/win64_vs2022_msvc.yml</span>)<br></code></pre></div></td></tr></table></figure>
 <p>效果：<br />
-<a target="_blank" rel="noopener" href="https://github.com/Hinageshi01/HinaEngine/actions?workflow=build"><img src="https://github.com/Hinageshi01/HinaEngine/workflows/build/badge.svg" srcset="/img/loading.gif" lazyload alt="build" /></a></p>
+<a target="_blank" rel="noopener" href="https://github.com/CatDogEngine/CatDogEngine/actions/workflows/win64_vs2022_msvc.yml"><img src="https://github.com/CatDogEngine/CatDogEngine/actions/workflows/win64_vs2022_msvc.yml/badge.svg?branch=main" srcset="/img/loading.gif" lazyload alt="win64_vs2022_msvc" /></a></p>
 
             </div>
             <hr>
