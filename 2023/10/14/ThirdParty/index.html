@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      288 字
+      380 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      4
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 15, 2023
+                  本文最后更新于：October 16, 2023
                 
               </p>
             
@@ -254,8 +254,9 @@
 <a target="_blank" rel="noopener" href="https://gitlab.com/libeigen/eigen">https://gitlab.com/libeigen/eigen</a></p>
 <h2 id="opencv"><a class="markdownIt-Anchor" href="#opencv"></a> OpenCV</h2>
 <p><a target="_blank" rel="noopener" href="https://github.com/opencv/opencv">https://github.com/opencv/opencv</a></p>
-<h3 id="坑"><a class="markdownIt-Anchor" href="#坑"></a> 坑</h3>
-<p>比较容易卡在 CMake 下载依赖阶段（万恶的 GFW）</p>
+<h3 id="make"><a class="markdownIt-Anchor" href="#make"></a> Make</h3>
+<h4 id="下载依赖"><a class="markdownIt-Anchor" href="#下载依赖"></a> 下载依赖</h4>
+<p><em>万恶的 GFW</em></p>
 <ol>
 <li>
 <p>最无脑的解决方案，通过配置<br />
@@ -267,7 +268,7 @@ ps:<br />
 总之有点抽象，好在 GitHub Latest Release + -DOPENCV_DOWNLOAD_MIRROR_ID=gitcode 的组合是没什么问题的。</p>
 </li>
 <li>
-<p>官方有提到可以通过开启代理并配置环境变量的方式进行下载<br />
+<p>官方提到可以通过开启代理并配置环境变量的方式进行下载<br />
 <a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/db/d05/tutorial_config_reference.html#tutorial_config_reference_general_download">Downloaded dependencies</a></p>
 </li>
 <li>
@@ -275,6 +276,39 @@ ps:<br />
 详见：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/344036896">Visual Studio + OpenCV + OpenCV_contrib 源代码编译流程</a></p>
 </li>
 </ol>
+<h4 id="其他配置"><a class="markdownIt-Anchor" href="#其他配置"></a> 其他配置</h4>
+<p><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/db/d05/tutorial_config_reference.html">生成配置</a></p>
+<ul>
+<li>
+<p>静态 / 动态：<code>BUILD_SHARED_LIBS</code></p>
+</li>
+<li>
+<p>运行时库：<code>BUILD_WITH_STATIC_CRT</code></p>
+</li>
+<li>
+<p>测试：<code>BUILD_TESTS</code>, <code>BUILD_PERF_TESTS</code>, <code>BUILD_EXAMPLES</code>, <code>BUILD_opencv_apps</code></p>
+</li>
+<li>
+<p>只生单个库文件：<code>BUILD_opencv_world</code></p>
+</li>
+</ul>
+<h3 id="头文件"><a class="markdownIt-Anchor" href="#头文件"></a> 头文件</h3>
+<ul>
+<li><code>opencv\include\opencv2\opencv.hpp</code></li>
+<li><code>opencv\build\opencv2\opencv_modules.hpp</code></li>
+<li><code>opencv\modules\**\include\opencv2\core.hpp</code></li>
+</ul>
+<p>最后两项可以通过 <code>BUILD_LIST</code> 或者 <code>BUILD_opencv_&lt;Module Name&gt;</code> 之类的配置进行调整，关闭不必要的模块。</p>
+<h3 id="lib"><a class="markdownIt-Anchor" href="#lib"></a> Lib</h3>
+<ul>
+<li><code>opencv\build\lib\Debug</code></li>
+<li><code>opencv\build\lib\Release</code></li>
+</ul>
+<h3 id="dll"><a class="markdownIt-Anchor" href="#dll"></a> dll</h3>
+<ul>
+<li><code>opencv\build\bin\Debug</code></li>
+<li><code>opencv\build\bin\Release</code></li>
+</ul>
 
             </div>
             <hr>
