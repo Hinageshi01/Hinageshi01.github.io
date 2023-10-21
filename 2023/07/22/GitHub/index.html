@@ -416,6 +416,7 @@ GitHub Actions 使用 YAML 来定义工作流程。 每个工作流都作为单�
 <ul>
 <li><code>actions/checkout@v3</code> 代表了将仓库拉取到 <code>$GITHUB_WORKSPACE</code>。<a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/checkout">Checkout</a></li>
 <li><code>microsoft/setup-msbuild@v1.1</code> 代表寻找 MSBuild 的路径，并且将其添加到环境变量。<a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/setup-msbuild">setup-msbuild</a></li>
+<li>检查这些 action 的官方页面以获取最新的版本号。</li>
 </ul>
 </li>
 <li><code>$&#123;&#123;github.workspace&#125;&#125;</code> 代表了在命令行中该仓库的根目录。<code>Setup.bat</code> 是我们自定义的项目构建脚本，我们最终会在这个脚本中运行 premake 并且生成项目的 .sln 文件。</li>
