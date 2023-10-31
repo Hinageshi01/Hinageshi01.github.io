@@ -18,7 +18,7 @@
   <meta name="author" content="Hinageshi">
   <meta name="keywords" content="">
   
-  <title>各第三方库的构建与集成记录 - Hexo</title>
+  <title>命令行调用 CMake 与 MSBuild - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="各第三方库的构建与集成记录">
+            <span class="h2" id="subtitle" title="命令行调用 CMake 与 MSBuild">
               
             </span>
 
@@ -185,8 +185,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2023-10-14 15:25" pubdate>
-        October 14, 2023
+      <time datetime="2023-10-30 11:47" pubdate>
+        October 30, 2023
       </time>
     </span>
   
@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      400 字
+      488 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      6
        分钟
     </span>
   
@@ -237,83 +237,42 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">各第三方库的构建与集成记录</h1>
+            <h1 style="display: none">命令行调用 CMake 与 MSBuild</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 21, 2023
+                  本文最后更新于：October 31, 2023
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="eigen"><a class="markdownIt-Anchor" href="#eigen"></a> Eigen</h2>
-<p>纯头文件库，包含路径即可<br />
-最近官网好像上不去：<br />
-<a target="_blank" rel="noopener" href="https://eigen.tuxfamily.org/index.php?title=Main_Page">https://eigen.tuxfamily.org/index.php?title=Main_Page</a><br />
-GitHub:<br />
-<a target="_blank" rel="noopener" href="https://github.com/PX4/eigen">https://github.com/PX4/eigen</a><br />
-GitLab：<br />
-<a target="_blank" rel="noopener" href="https://gitlab.com/libeigen/eigen">https://gitlab.com/libeigen/eigen</a><br />
-3.4.0 release 的 .gitignore 相比 GitLab 最新的主分支少两行：</p>
-<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">!Eigen/Core<br>!Eigen<span class="hljs-regexp">/src/</span>Core<br></code></pre></div></td></tr></table></figure>
-<p>直接集成的话仓库会少文件。</p>
-<h2 id="opencv"><a class="markdownIt-Anchor" href="#opencv"></a> OpenCV</h2>
-<p><a target="_blank" rel="noopener" href="https://github.com/opencv/opencv">https://github.com/opencv/opencv</a></p>
-<h3 id="make"><a class="markdownIt-Anchor" href="#make"></a> Make</h3>
-<h4 id="下载依赖"><a class="markdownIt-Anchor" href="#下载依赖"></a> 下载依赖</h4>
-<p><em>万恶的 GFW</em></p>
-<ol>
-<li>
-<p>最无脑的解决方案，通过配置<br />
-<code>-DOPENCV_DOWNLOAD_MIRROR_ID=gitcode</code><br />
-将下载源改为 GitCode，一个国内代码托管网站。比较依赖于 OpenCV 中国团队和 GitCode 对镜像仓库的维护。<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QhtEjXn126bitN9AQ3_s6w">下载不再卡顿，OpenCV 中国镜像启用</a><br />
-ps:<br />
-他们说从 <a target="_blank" rel="noopener" href="https://gitcode.net/opencv/opencv">https://gitcode.net/opencv/opencv</a> 下载的代码是不用这条配置的，但是我尝试 clone 下来后看到了 <code>Package ADE from mirror gitcode.net is outdated and will be downloaded from github.com instead.</code> 的警告。<br />
-然后 GitCode 上的 Release 实际上又是需要这条配置的（意思是 GitCode Release 和 GitHub Release 是一样的，下载源都是外网。）<br />
-总之有点抽象，好在 GitHub Latest Release + -DOPENCV_DOWNLOAD_MIRROR_ID=gitcode 的组合是没什么问题的。</p>
-</li>
-<li>
-<p>开启代理并配置环境变量<br />
-<a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/db/d05/tutorial_config_reference.html#tutorial_config_reference_general_download">Downloaded dependencies</a></p>
-</li>
-<li>
-<p>手动下载依赖<br />
-<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/344036896">Visual Studio + OpenCV + OpenCV_contrib 源代码编译流程</a></p>
-</li>
-</ol>
-<h4 id="其他配置"><a class="markdownIt-Anchor" href="#其他配置"></a> 其他配置</h4>
-<p><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/db/d05/tutorial_config_reference.html">生成配置</a></p>
-<ul>
-<li>
-<p>静态 / 动态：<code>BUILD_SHARED_LIBS</code></p>
-</li>
-<li>
-<p>运行时库：<code>BUILD_WITH_STATIC_CRT</code></p>
-</li>
-<li>
-<p>测试：<code>BUILD_TESTS</code>, <code>BUILD_PERF_TESTS</code>, <code>BUILD_EXAMPLES</code>, <code>BUILD_opencv_apps</code></p>
-</li>
-<li>
-<p>只生单个库文件：<code>BUILD_opencv_world</code></p>
-</li>
-</ul>
-<h3 id="header"><a class="markdownIt-Anchor" href="#header"></a> Header</h3>
-<ul>
-<li><code>opencv\include\opencv2\opencv.hpp</code></li>
-<li><code>opencv\build\opencv2\opencv_modules.hpp</code></li>
-<li><code>opencv\modules\**\include\opencv2\core.hpp</code></li>
-</ul>
-<p>最后两项可以通过 <code>BUILD_LIST</code> 或者 <code>BUILD_opencv_&lt;Module Name&gt;</code> 之类的配置进行调整，关闭不必要的模块。</p>
-<h3 id="lib"><a class="markdownIt-Anchor" href="#lib"></a> Lib</h3>
-<ul>
-<li><code>opencv\build\lib\Debug</code></li>
-<li><code>opencv\build\lib\Release</code></li>
-</ul>
-<h3 id="dll"><a class="markdownIt-Anchor" href="#dll"></a> dll</h3>
-<ul>
-<li><code>opencv\build\bin\Debug</code></li>
-<li><code>opencv\build\bin\Release</code></li>
-</ul>
+              <h2 id="cmake"><a class="markdownIt-Anchor" href="#cmake"></a> CMake</h2>
+<p>一个 OpenCV 的例子</p>
+<figure class="highlight bat"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bat">@<span class="hljs-built_in">echo</span> off<br><br><span class="hljs-built_in">set</span> &quot;ROOT_PATH=%~dp0&quot;<br><span class="hljs-built_in">set</span> &quot;OPENCV_PATH=<span class="hljs-variable">%ROOT_PATH%</span>\Frame\Source\ThirdParty\opencv&quot;<br><span class="hljs-built_in">echo</span> [ opencv ] <span class="hljs-built_in">path</span>: <span class="hljs-variable">%OPENCV_PATH%</span><br><span class="hljs-built_in">cd</span> <span class="hljs-variable">%OPENCV_PATH%</span><br><br>cmake -B build -D CMAKE_CONFIGURATION_TYPES=&quot;Release;Debug&quot; -D OPENCV_DOWNLOAD_MIRROR_ID=gitcode -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_opencv_apps=OFF -D BUILD_opencv_world=ON<br><br>cmake --build build --target opencv_world --config Release<br>cmake --build build --target opencv_world --config Debug<br><br><span class="hljs-built_in">echo</span>.<br><span class="hljs-built_in">pause</span><br></code></pre></div></td></tr></table></figure>
+<h3 id="~dp0"><a class="markdownIt-Anchor" href="#~dp0"></a> %~dp0</h3>
+<p>当前 batch 文件的路径。</p>
+<h3 id="cmake-b-build"><a class="markdownIt-Anchor" href="#cmake-b-build"></a> cmake -B build</h3>
+<p>配置阶段，会在当前目录下生成 <code>build</code> 文件夹，并在其中生成一系列 cmake 缓存。<code>-D</code> 之类的配置正是在这个阶段进行的，不过由于缓存的机制，只有在第一次 <code>-B</code> 的时候 <code>-D</code> 等配置才会生效。<br />
+任何时候都可以通过删除 <code>build/CMakeCache.txt</code> 或整个 <code>build</code> 文件夹来删除缓存，以便重新运行 <code>-B</code>。</p>
+<h3 id="cmake_configuration_types"><a class="markdownIt-Anchor" href="#cmake_configuration_types"></a> CMAKE_CONFIGURATION_TYPES</h3>
+<p>指定多配置生成器（如 VS，XCode，Ninja）上可用的构建类型，常见有 <code>Debug</code>, <code>Release</code>, <code>RelWithDebInfo</code> 和 <code>MinSizeRel</code>。<br />
+相对于用于指定单配置生成器的构建类型的 <code>CMAKE_BUILD_TYPE</code>。</p>
+<h3 id="cmake-build-build"><a class="markdownIt-Anchor" href="#cmake-build-build"></a> cmake --build build</h3>
+<p>会使用 build 目录下的 CMake 缓存编译目标文件。</p>
+<h3 id="target"><a class="markdownIt-Anchor" href="#target"></a> –target</h3>
+<p>用于指定要编译的目标，默认则编译所有目标。</p>
+<h3 id="config"><a class="markdownIt-Anchor" href="#config"></a> –config</h3>
+<p>用于指定多配置生成器要编译的构建类型，对于单配置生成器会忽略该选项。</p>
+<h2 id="msbuild"><a class="markdownIt-Anchor" href="#msbuild"></a> MSBuild</h2>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2022">MSBuild 命令行参考</a><br />
+<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2022">常用的 MSBuild 项目属性</a></p>
+<p>在 windows 中调用 MSBuild 编译现成的 .sln。</p>
+<figure class="highlight bat"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bat"><span class="hljs-comment">rem Find MSBuild by vswhere</span><br><span class="hljs-built_in">set</span> &quot;VSWHERE_PATH=<span class="hljs-variable">%ProgramFiles(x86)%</span>\Microsoft Visual Studio\Installer\vswhere.exe&quot;<br><span class="hljs-keyword">for</span> /f &quot;usebackq tokens=*&quot; <span class="hljs-variable">%%i</span> <span class="hljs-keyword">in</span> (`&quot;<span class="hljs-variable">%VSWHERE_PATH%</span>&quot; -latest -requires Microsoft.Component.MSBuild -<span class="hljs-built_in">find</span> MSBuild\**\Bin\MSBuild.exe`) <span class="hljs-keyword">do</span> (<br>  <span class="hljs-built_in">set</span> &quot;MSBUILD_PATH=<span class="hljs-variable">%%i</span>&quot;<br>  <span class="hljs-keyword">goto</span> :exitLoop<br>)<br>:exitLoop<br><span class="hljs-built_in">echo</span> Found MSBuild <span class="hljs-built_in">at</span>: <span class="hljs-variable">%MSBUILD_PATH%</span><br><br>&quot;<span class="hljs-variable">%MSBUILD_PATH%</span>&quot; &quot;<span class="hljs-variable">%OPENCV_PATH%</span>\build\OpenCV.sln&quot; -p:Configuration=Debug;Platform=x64<br>&quot;<span class="hljs-variable">%MSBUILD_PATH%</span>&quot; &quot;<span class="hljs-variable">%OPENCV_PATH%</span>\build\OpenCV.sln&quot; -p:Configuration=Release;Platform=x64<br></code></pre></div></td></tr></table></figure>
+<h3 id="vswhere"><a class="markdownIt-Anchor" href="#vswhere"></a> vswhere</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/microsoft/vswhere/wiki/Find-MSBuild">vswhere Find MSBuild</a><br />
+一个用于查找 Visual Studio 相关路径的软件，当安装 2017 或更高的 VS 版本时，vswhere 会被安装到 <code>%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe</code>。</p>
+<h3 id="-p"><a class="markdownIt-Anchor" href="#-p"></a> -p</h3>
+<p>p:<code>name</code>=<code>value</code>，设置或重写指定项目级属性，多个属性之间用分号或逗号分隔。</p>
 
             </div>
             <hr>
@@ -328,18 +287,12 @@ ps:<br />
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/10/30/batcmakemsbuild/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">命令行调用 CMake 与 MSBuild</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/10/13/GAMES101New/">
-                        <span class="hidden-mobile">GAMES101 拾遗</span>
+                      <a href="/2023/10/14/ThirdParty/">
+                        <span class="hidden-mobile">各第三方库的构建与集成记录</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -364,7 +317,7 @@ ps:<br />
         var options = Object.assign(
           {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '73c477bf6559b64f62cbb1797b739f43'
+            id: '6ae1c54d31e8cbd90033588ad27ee426'
           }
         )
         var gitalk = new Gitalk(options);
