@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：October 20, 2023
+                  本文最后更新于：November 7, 2023
                 
               </p>
             
@@ -271,8 +271,11 @@
 <li><code>git branch --set-upstream-to=origin/&lt;RemoteName&gt; &lt;LocalName&gt;</code> 将本地分支与远程分支关联起来</li>
 <li><code>git push --set-upstream origin &lt;RemoteName&gt;</code> 在远程新建分支，并将当前分支与远程新分支关联并推送。</li>
 </ul>
-<p>当然最简单的命令是：<code>git checkout -b &lt;LocalName&gt; origin/&lt;RemoteName&gt;</code><br />
-这个命令代表在本地新建分支，并且切换过去，并且与远程分支建立联系。</p>
+<p>当然最简单的命令是本地识别到远程新分支时直接：<br />
+<code>git checkout &lt;RemoteName&gt;</code><br />
+这个命令相当于<br />
+<code>git checkout -b &lt;LocalName&gt; origin/&lt;RemoteName&gt;</code><br />
+即在本地新建分支，并且切换过去，并且与远程分支建立联系。</p>
 <ul>
 <li><code>git branch -vv</code> 查看本地分支核远程的对应关系</li>
 </ul>
