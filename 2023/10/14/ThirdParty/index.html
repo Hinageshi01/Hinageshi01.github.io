@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      751 字
+      782 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      10
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 3, 2023
+                  本文最后更新于：November 9, 2023
                 
               </p>
             
@@ -269,8 +269,8 @@ GitHub:<br />
 <code>-DOPENCV_DOWNLOAD_MIRROR_ID=gitcode</code><br />
 将下载源改为 GitCode，一个国内代码托管网站。比较依赖于 OpenCV 中国团队和 GitCode 对镜像仓库的维护。<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QhtEjXn126bitN9AQ3_s6w">下载不再卡顿，OpenCV 中国镜像启用</a><br />
 ps:<br />
-他们说从 <a target="_blank" rel="noopener" href="https://gitcode.net/opencv/opencv">https://gitcode.net/opencv/opencv</a> 下载的代码是不用这条配置的，但是我尝试 clone 下来后看到了 <code>Package ADE from mirror gitcode.net is outdated and will be downloaded from github.com instead.</code> 的警告。<br />
-然后 GitCode 上的 Release 实际上又是需要这条配置的（意思是 GitCode Release 和 GitHub Release 是一样的，下载源都是外网。）<br />
+他们说从 <a target="_blank" rel="noopener" href="https://gitcode.net/opencv/opencv">https://gitcode.net/opencv/opencv</a> 下载的代码是不用这条配置的，但是我尝试 clone 下来后看到了 <code>Package ADE from mirror gitcode.net is outdated and will be downloaded from github.com instead.</code> 的警告。提了 Issue 也没有反应 <a target="_blank" rel="noopener" href="https://gitcode.net/opencv/opencv/-/issues/1">Package ADE is outdated</a>。<br />
+然后 GitCode 上的 Release 实际上又是需要这条配置的（意思是 GitCode Release 和 GitHub Release 是一模一样的，而且下载源都是外网。）<br />
 总之有点抽象，好在 GitHub Latest Release + -DOPENCV_DOWNLOAD_MIRROR_ID=gitcode 的组合是没什么问题的。</p>
 </li>
 <li>
@@ -320,20 +320,21 @@ ps:<br />
 一个使用 GCC 编译的跨平台文件监视器，作者根本不在乎 Windows 上的编译体验，深感麻烦。</p>
 <h3 id="安装-mingw"><a class="markdownIt-Anchor" href="#安装-mingw"></a> 安装 MinGW</h3>
 <p>我们需要一个 Windows GCC，自然是先装 MinGW-W64。<br />
-比起直接解压 MinGW 再配置环境变量，更方便的是先安装一个 MSYS2。MSYS2 自带一个包管理器 packman，可以很方便的下载 MinGW 以及更多乱七八糟的依赖。以 <code>Windows</code> <code>MSYS2</code> <code>MinGW</code>  <code>GCC</code> 为关键词搜索便能找到不错的教程。</p>
+比起直接解压 MinGW 再配置环境变量，更方便的是先安装一个 MSYS2。MSYS2 自带一个包管理器 packman，可以很方便的下载 MinGW 以及更多乱七八糟的依赖。以 <code>Windows</code> <code>MSYS2</code> <code>MinGW</code>  <code>GCC</code> 为关键词搜索应该就能找到不错的教程。</p>
 <h3 id="配置-cmake-生成器"><a class="markdownIt-Anchor" href="#配置-cmake-生成器"></a> 配置 CMake 生成器</h3>
 <p>在指定生成器的阶段我们需要选择 <code>MinGW Makefiles</code> + <code>Specify native compilers</code>，然后将 C 与 C++ 的编译器配置为 MSYS2 安装的 gcc.exe 与 g++.exe 路径。</p>
 <div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/ThirdParty/generator.png" srcset="/img/loading.gif" lazyload alt="指定生成器" /></div><div class="group-image-wrap"><img src="/img/ThirdParty/compiler.png" srcset="/img/loading.gif" lazyload alt="指定本地编译器" /></div></div></div>
+<p>路径大概是 <code>C:\msys64\mingw64\bin</code> 之类的。</p>
 <h3 id="配置-cmake-依赖"><a class="markdownIt-Anchor" href="#配置-cmake-依赖"></a> 配置 CMake 依赖</h3>
 <p>Makefile 生成依赖于 MSGFMT，MSGMERGE 与 PTHREAD，前两个都属于 Gettext。<br />
-如果看到任何 <code>NOTFOUND</code> 字眼，用 MSYS2 搜索并安装对应的库，并配置对应路径。</p>
+如果看到任何 <code>NOTFOUND</code> 字眼，用 MSYS2 搜索并安装对应的库，然后配置对应路径。</p>
 <h3 id="编译"><a class="markdownIt-Anchor" href="#编译"></a> 编译</h3>
 <p>回到根目录执行 <code>cmake --build build</code>，出现如下报错：<br />
 <code>error: 'realpath' was not declared in this scope</code><br />
 <code>error: 'lstat' was not declared in this scope; did you mean 'wstat'?</code><br />
 结果这似乎是一个遗留 bug，七年没修：<br />
 <a target="_blank" rel="noopener" href="https://github.com/emcrisostomo/fswatch/issues/121">https://github.com/emcrisostomo/fswatch/issues/121</a><br />
-最终我放弃了这个库的集成转而使用了 <a target="_blank" rel="noopener" href="https://github.com/septag/dmon">dmon</a>。</p>
+最终是放弃了这个库的集成转而使用了 <a target="_blank" rel="noopener" href="https://github.com/septag/dmon">dmon</a>。</p>
 <h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/401188789">给萌新的 C/C++ 环境搭建攻略（VSCode 和 MSYS2）</a><br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/448884264">捋一捋 gcc / g++ / MingW / MSVC 与 make / CMake 的关系</a><br />

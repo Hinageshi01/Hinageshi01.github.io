@@ -18,7 +18,7 @@
   <meta name="author" content="Hinageshi">
   <meta name="keywords" content="">
   
-  <title>命令行调用 CMake 与 MSBuild - Hexo</title>
+  <title>何为一个 C++ 项目 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="命令行调用 CMake 与 MSBuild">
+            <span class="h2" id="subtitle" title="何为一个 C++ 项目">
               
             </span>
 
@@ -185,8 +185,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2023-10-30 11:47" pubdate>
-        October 30, 2023
+      <time datetime="2023-11-09 11:33" pubdate>
+        November 9, 2023
       </time>
     </span>
   
@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      488 字
+      410 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6
+      5
        分钟
     </span>
   
@@ -237,42 +237,62 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">命令行调用 CMake 与 MSBuild</h1>
+            <h1 style="display: none">何为一个 C++ 项目</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 3, 2023
+                  本文最后更新于：November 9, 2023
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="cmake"><a class="markdownIt-Anchor" href="#cmake"></a> CMake</h2>
-<p>一个 OpenCV 的例子</p>
-<figure class="highlight bat"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bat">@<span class="hljs-built_in">echo</span> off<br><br><span class="hljs-built_in">set</span> &quot;ROOT_PATH=%~dp0&quot;<br><span class="hljs-built_in">set</span> &quot;OPENCV_PATH=<span class="hljs-variable">%ROOT_PATH%</span>\Frame\Source\ThirdParty\opencv&quot;<br><span class="hljs-built_in">echo</span> [ opencv ] <span class="hljs-built_in">path</span>: <span class="hljs-variable">%OPENCV_PATH%</span><br><span class="hljs-built_in">cd</span> <span class="hljs-variable">%OPENCV_PATH%</span><br><br>cmake -B build -D CMAKE_CONFIGURATION_TYPES=&quot;Release;Debug&quot; -D OPENCV_DOWNLOAD_MIRROR_ID=gitcode -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_opencv_apps=OFF -D BUILD_opencv_world=ON<br><br>cmake --build build --target opencv_world --config Release<br>cmake --build build --target opencv_world --config Debug<br><br><span class="hljs-built_in">echo</span>.<br><span class="hljs-built_in">pause</span><br></code></pre></div></td></tr></table></figure>
-<h3 id="~dp0"><a class="markdownIt-Anchor" href="#~dp0"></a> %~dp0</h3>
-<p>当前 batch 文件的路径。</p>
-<h3 id="cmake-b-build"><a class="markdownIt-Anchor" href="#cmake-b-build"></a> cmake -B build</h3>
-<p>配置阶段，会在当前目录下生成 <code>build</code> 文件夹，并在其中生成一系列 cmake 缓存。<code>-D</code> 之类的配置正是在这个阶段进行的，不过由于缓存的机制，只有在第一次 <code>-B</code> 的时候 <code>-D</code> 等配置才会生效。<br />
-任何时候都可以通过删除 <code>build/CMakeCache.txt</code> 或整个 <code>build</code> 文件夹来删除缓存，以便重新运行 <code>-B</code>。</p>
-<h3 id="cmake_configuration_types"><a class="markdownIt-Anchor" href="#cmake_configuration_types"></a> CMAKE_CONFIGURATION_TYPES</h3>
-<p>指定多配置生成器（如 VS，XCode，Ninja）上可用的构建类型，常见有 <code>Debug</code>, <code>Release</code>, <code>RelWithDebInfo</code> 和 <code>MinSizeRel</code>。<br />
-相对于用于指定单配置生成器的构建类型的 <code>CMAKE_BUILD_TYPE</code>。</p>
-<h3 id="cmake-build-build"><a class="markdownIt-Anchor" href="#cmake-build-build"></a> cmake --build build</h3>
-<p>会使用 build 目录下的 CMake 缓存编译目标文件。</p>
-<h3 id="target"><a class="markdownIt-Anchor" href="#target"></a> –target</h3>
-<p>用于指定要编译的目标，默认则编译所有目标。</p>
-<h3 id="config"><a class="markdownIt-Anchor" href="#config"></a> –config</h3>
-<p>用于指定多配置生成器要编译的构建类型，对于单配置生成器会忽略该选项。</p>
-<h2 id="msbuild"><a class="markdownIt-Anchor" href="#msbuild"></a> MSBuild</h2>
-<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2022">MSBuild 命令行参考</a><br />
-<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2022">常用的 MSBuild 项目属性</a></p>
-<p>在 windows 中调用 MSBuild 编译现成的 .sln。</p>
-<figure class="highlight bat"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bat"><span class="hljs-comment">rem Find MSBuild by vswhere</span><br><span class="hljs-built_in">set</span> &quot;VSWHERE_PATH=<span class="hljs-variable">%ProgramFiles(x86)%</span>\Microsoft Visual Studio\Installer\vswhere.exe&quot;<br><span class="hljs-keyword">for</span> /f &quot;usebackq tokens=*&quot; <span class="hljs-variable">%%i</span> <span class="hljs-keyword">in</span> (`&quot;<span class="hljs-variable">%VSWHERE_PATH%</span>&quot; -latest -requires Microsoft.Component.MSBuild -<span class="hljs-built_in">find</span> MSBuild\**\Bin\MSBuild.exe`) <span class="hljs-keyword">do</span> (<br>  <span class="hljs-built_in">set</span> &quot;MSBUILD_PATH=<span class="hljs-variable">%%i</span>&quot;<br>  <span class="hljs-keyword">goto</span> :exitLoop<br>)<br>:exitLoop<br><span class="hljs-built_in">echo</span> Found MSBuild <span class="hljs-built_in">at</span>: <span class="hljs-variable">%MSBUILD_PATH%</span><br><br>&quot;<span class="hljs-variable">%MSBUILD_PATH%</span>&quot; &quot;<span class="hljs-variable">%OPENCV_PATH%</span>\build\OpenCV.sln&quot; -p:Configuration=Debug;Platform=x64<br>&quot;<span class="hljs-variable">%MSBUILD_PATH%</span>&quot; &quot;<span class="hljs-variable">%OPENCV_PATH%</span>\build\OpenCV.sln&quot; -p:Configuration=Release;Platform=x64<br></code></pre></div></td></tr></table></figure>
-<h3 id="vswhere"><a class="markdownIt-Anchor" href="#vswhere"></a> vswhere</h3>
-<p><a target="_blank" rel="noopener" href="https://github.com/microsoft/vswhere/wiki/Find-MSBuild">vswhere Find MSBuild</a><br />
-一个用于查找 Visual Studio 相关路径的软件，当安装 2017 或更高的 VS 版本时，vswhere 会被安装到 <code>%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe</code>。</p>
-<h3 id="-p"><a class="markdownIt-Anchor" href="#-p"></a> -p</h3>
-<p>p:<code>name</code>=<code>value</code>，设置或重写指定项目级属性，多个属性之间用分号或逗号分隔。</p>
+              <h2 id="todo"><a class="markdownIt-Anchor" href="#todo"></a> TODO</h2>
+<p>待整理，但是最近发现了一些有趣的东西，先记一下</p>
+<h2 id="cmake_msvc_runtime_library"><a class="markdownIt-Anchor" href="#cmake_msvc_runtime_library"></a> CMAKE_MSVC_RUNTIME_LIBRARY</h2>
+<p>用于在 CMakeLists 里指定 MSVC 使用的运行时库。</p>
+<ul>
+<li><code>MultiThreaded</code> 对应 <code>MT</code></li>
+<li><code>MultiThreadedDebug</code> 对应 <code>MTd</code></li>
+<li><code>MultiThreadedDLL</code> 对应 <code>MD</code></li>
+<li><code>MultiThreadedDebugDLL</code> 对应 <code>MDd</code></li>
+</ul>
+<p>注意这项功能仅在 CMake 3.15 之后被支持，至少需要 <code>cmake_minimum_required(VERSION 3.15)</code>。</p>
+<h3 id="用法"><a class="markdownIt-Anchor" href="#用法"></a> 用法</h3>
+<figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c"><span class="hljs-built_in">set</span>(CMAKE_MSVC_RUNTIME_LIBRARY <span class="hljs-string">&quot;MultiThreaded$&lt;$&lt;CONFIG:Debug&gt;:Debug&gt;&quot;</span>)<br></code></pre></div></td></tr></table></figure>
+<p><code>$&lt;$&lt;CONFIG:Debug&gt;:Debug&gt;</code> 为生成器表达式，意为“如果当前为 Debug，返回 Debug，否则返回空字符串”。<br />
+在 3.15 以下的版本中要实现相同的功能则需要：</p>
+<figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c"><span class="hljs-built_in">set</span>(CompilerFlags<br>        CMAKE_CXX_FLAGS<br>        CMAKE_CXX_FLAGS_DEBUG<br>        CMAKE_CXX_FLAGS_RELEASE<br>        CMAKE_C_FLAGS<br>        CMAKE_C_FLAGS_DEBUG<br>        CMAKE_C_FLAGS_RELEASE<br>        )<br>foreach(CompilerFlag $&#123;CompilerFlags&#125;)<br>  <span class="hljs-built_in">string</span>(REPLACE <span class="hljs-string">&quot;/MD&quot;</span> <span class="hljs-string">&quot;/MT&quot;</span> $&#123;CompilerFlag&#125; <span class="hljs-string">&quot;$&#123;$&#123;CompilerFlag&#125;&#125;&quot;</span>)<br>endforeach()<br></code></pre></div></td></tr></table></figure>
+<p>详见：<br />
+<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/14172856/compile-with-mt-instead-of-md-using-cmake">Compile with /MT instead of /MD using CMake</a></p>
+<h3 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h3>
+<p><a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/variable/CMAKE_MSVC_RUNTIME_LIBRARY.html">CMAKE_MSVC_RUNTIME_LIBRARY</a><br />
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/429849408">在 CMake 中设置 MSVC 运行库</a></p>
+<h2 id="使用-dumpbin-查看静态库的依赖"><a class="markdownIt-Anchor" href="#使用-dumpbin-查看静态库的依赖"></a> 使用 dumpbin 查看静态库的依赖</h2>
+<p>在安装 VS2017 或以上的版本时会自动安装 dumpbin.exe，我的路径在：</p>
+<figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c"><span class="hljs-string">&quot;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\dumpbin.exe&quot;</span><br></code></pre></div></td></tr></table></figure>
+<p>将其加入环境变量即可在任意位置调用 <code>dumpbin</code>。</p>
+<h3 id="用法-2"><a class="markdownIt-Anchor" href="#用法-2"></a> 用法</h3>
+<figure class="highlight bat"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bat">dumpbin /directives &lt;<span class="hljs-built_in">path</span>&gt;<br></code></pre></div></td></tr></table></figure>
+<p><img src="/img/cppProject/directives.png" srcset="/img/loading.gif" lazyload alt="directives" /><br />
+其中 <code>MT_StaticReleasd</code> 和 <code>LIBCMT</code> 都代表该文件使用的运行时库为 <code>MT</code>。<br />
+剩余对应详见 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/c-runtime-library/crt-library-features?view=msvc-170#c-runtime-lib-files">C 运行时 .lib 文件</a><br />
+<img src="/img/cppProject/CRT.png" srcset="/img/loading.gif" lazyload alt="directives" /></p>
+<h3 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h3>
+<p>dumpbin 看起来还有很多功能，可惜连官方文档写的也不是很清楚：<br />
+<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/build/reference/dumpbin-options?view=msvc-170">DUMPBIN 选项</a></p>
+<h2 id="使用-depends-查看动态库的依赖"><a class="markdownIt-Anchor" href="#使用-depends-查看动态库的依赖"></a> 使用 depends 查看动态库的依赖</h2>
+<p>一个开源的 dll 依赖分析软件：<br />
+<a target="_blank" rel="noopener" href="https://github.com/lucasg/Dependencies">https://github.com/lucasg/Dependencies</a><br />
+打开 GUI 将对应 dll 拖入：</p>
+<ul>
+<li><code>msvcp&lt;version&gt;.dll</code> 对应 <code>/MD</code></li>
+<li><code>msvcp&lt;version&gt;d.dll</code> 对应 <code>/MDd</code><br />
+自 VS2017 以后这个 version 应该是 140。</li>
+</ul>
+<p>MD：<br />
+<img src="/img/cppProject/MD.png" srcset="/img/loading.gif" lazyload alt="MD" /><br />
+MT：<br />
+<img src="/img/cppProject/MT.png" srcset="/img/loading.gif" lazyload alt="MT" /></p>
 
             </div>
             <hr>
@@ -287,18 +307,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/09/cppProject/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">何为一个 C++ 项目</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/10/14/ThirdParty/">
-                        <span class="hidden-mobile">各第三方库的构建与集成记录</span>
+                      <a href="/2023/10/30/batcmakemsbuild/">
+                        <span class="hidden-mobile">命令行调用 CMake 与 MSBuild</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -323,7 +337,7 @@
         var options = Object.assign(
           {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '6ae1c54d31e8cbd90033588ad27ee426'
+            id: 'c94a7a1330ada4d35c377d0f6e51f282'
           }
         )
         var gitalk = new Gitalk(options);
