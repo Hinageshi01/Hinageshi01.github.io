@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 16, 2023
+                  本文最后更新于：November 17, 2023
                 
               </p>
             
@@ -303,7 +303,7 @@ ps:<br />
 <ul>
 <li><code>opencv/include/opencv2/opencv.hpp</code></li>
 <li><code>opencv/build/opencv2/opencv_modules.hpp</code></li>
-<li><code>opencv/modules/**\include/opencv2/core.hpp</code></li>
+<li><code>opencv/modules/**/include/opencv2/core.hpp</code></li>
 </ul>
 <p>最后两项可以通过 <code>BUILD_LIST</code> 或者 <code>BUILD_opencv_&lt;Module Name&gt;</code> 之类的配置进行调整，开启/关闭模块。</p>
 <h3 id="lib"><a class="markdownIt-Anchor" href="#lib"></a> lib</h3>
@@ -325,7 +325,7 @@ ps:<br />
 <h3 id="配置-cmake-生成器"><a class="markdownIt-Anchor" href="#配置-cmake-生成器"></a> 配置 CMake 生成器</h3>
 <p>在指定生成器的阶段我们需要选择 <code>MinGW Makefiles</code> + <code>Specify native compilers</code>，然后将 C 与 C++ 的编译器配置为 MSYS2 安装的 gcc.exe 与 g++.exe 路径。</p>
 <div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/ThirdParty/generator.png" srcset="/img/loading.gif" lazyload alt="指定生成器" /></div><div class="group-image-wrap"><img src="/img/ThirdParty/compiler.png" srcset="/img/loading.gif" lazyload alt="指定本地编译器" /></div></div></div>
-<p>路径大概是 <code>C:\msys64\mingw64\bin</code> 之类的。</p>
+<p>路径大概是 <code>C:/msys64/mingw64/bin</code> 之类的。</p>
 <h3 id="配置-cmake-依赖"><a class="markdownIt-Anchor" href="#配置-cmake-依赖"></a> 配置 CMake 依赖</h3>
 <p>Makefile 生成依赖于 MSGFMT，MSGMERGE 与 PTHREAD，前两个都属于 Gettext。<br />
 如果看到任何 <code>NOTFOUND</code> 字眼，用 MSYS2 搜索并安装对应的库，然后配置对应路径。</p>
