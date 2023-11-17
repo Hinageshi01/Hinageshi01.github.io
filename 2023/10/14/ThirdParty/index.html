@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      782 字
+      1.1k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      14
        分钟
     </span>
   
@@ -241,13 +241,14 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 9, 2023
+                  本文最后更新于：November 16, 2023
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="eigen"><a class="markdownIt-Anchor" href="#eigen"></a> Eigen</h2>
-<p>纯头文件库，包含路径即可<br />
+              <p>没写 dll 路径就代表我没编过他的动态链接库。</p>
+<h2 id="eigen"><a class="markdownIt-Anchor" href="#eigen"></a> Eigen</h2>
+<p>纯头文件库，包含路径即可。<br />
 <a target="_blank" rel="noopener" href="https://eigen.tuxfamily.org/index.php?title=Main_Page">https://eigen.tuxfamily.org/index.php?title=Main_Page</a><br />
 GitLab：<br />
 <a target="_blank" rel="noopener" href="https://gitlab.com/libeigen/eigen">https://gitlab.com/libeigen/eigen</a><br />
@@ -257,8 +258,8 @@ GitHub:<br />
 <p>3.4.0 release 的 .gitignore 相比 GitLab 最新的主分支少两行：</p>
 <figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">!Eigen/Core<br>!Eigen<span class="hljs-regexp">/src/</span>Core<br></code></pre></div></td></tr></table></figure>
 <p>直接集成的话 Core 文件会错误地被忽略。</p>
-<h3 id="header"><a class="markdownIt-Anchor" href="#header"></a> Header</h3>
-<p><code>eigen3\Eigen\Core</code></p>
+<h3 id="header"><a class="markdownIt-Anchor" href="#header"></a> header</h3>
+<p><code>eigen3/Eigen/Core</code></p>
 <h2 id="opencv"><a class="markdownIt-Anchor" href="#opencv"></a> OpenCV</h2>
 <p><a target="_blank" rel="noopener" href="https://github.com/opencv/opencv">https://github.com/opencv/opencv</a></p>
 <h3 id="下载依赖"><a class="markdownIt-Anchor" href="#下载依赖"></a> 下载依赖</h3>
@@ -282,7 +283,7 @@ ps:<br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/344036896">Visual Studio + OpenCV + OpenCV_contrib 源代码编译流程</a></p>
 </li>
 </ol>
-<h3 id="其他配置"><a class="markdownIt-Anchor" href="#其他配置"></a> 其他配置</h3>
+<h3 id="配置"><a class="markdownIt-Anchor" href="#配置"></a> 配置</h3>
 <p><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/db/d05/tutorial_config_reference.html">生成配置</a></p>
 <ul>
 <li>
@@ -292,32 +293,32 @@ ps:<br />
 <p>运行时库：<code>BUILD_WITH_STATIC_CRT</code></p>
 </li>
 <li>
-<p>测试：<code>BUILD_TESTS</code>, <code>BUILD_PERF_TESTS</code>, <code>BUILD_EXAMPLES</code>, <code>BUILD_opencv_apps</code></p>
+<p>非核心功能：<code>BUILD_TESTS</code>, <code>BUILD_PERF_TESTS</code>, <code>BUILD_EXAMPLES</code>, <code>BUILD_opencv_apps</code></p>
 </li>
 <li>
 <p>只生单个库文件：<code>BUILD_opencv_world</code></p>
 </li>
 </ul>
-<h3 id="header-2"><a class="markdownIt-Anchor" href="#header-2"></a> Header</h3>
+<h3 id="header-2"><a class="markdownIt-Anchor" href="#header-2"></a> header</h3>
 <ul>
-<li><code>opencv\include\opencv2\opencv.hpp</code></li>
-<li><code>opencv\build\opencv2\opencv_modules.hpp</code></li>
-<li><code>opencv\modules\**\include\opencv2\core.hpp</code></li>
+<li><code>opencv/include/opencv2/opencv.hpp</code></li>
+<li><code>opencv/build/opencv2/opencv_modules.hpp</code></li>
+<li><code>opencv/modules/**\include/opencv2/core.hpp</code></li>
 </ul>
-<p>最后两项可以通过 <code>BUILD_LIST</code> 或者 <code>BUILD_opencv_&lt;Module Name&gt;</code> 之类的配置进行调整，关闭不必要的模块。</p>
-<h3 id="lib"><a class="markdownIt-Anchor" href="#lib"></a> Lib</h3>
+<p>最后两项可以通过 <code>BUILD_LIST</code> 或者 <code>BUILD_opencv_&lt;Module Name&gt;</code> 之类的配置进行调整，开启/关闭模块。</p>
+<h3 id="lib"><a class="markdownIt-Anchor" href="#lib"></a> lib</h3>
 <ul>
-<li><code>opencv\build\lib\Debug</code></li>
-<li><code>opencv\build\lib\Release</code></li>
+<li><code>opencv/build/lib/Debug/opencv_world481d.lib</code></li>
+<li><code>opencv/build/lib/Release/opencv_world481.lib</code></li>
 </ul>
 <h3 id="dll"><a class="markdownIt-Anchor" href="#dll"></a> dll</h3>
 <ul>
-<li><code>opencv\build\bin\Debug</code></li>
-<li><code>opencv\build\bin\Release</code></li>
+<li><code>opencv/build/bin/Debug/opencv_world481d.dll</code></li>
+<li><code>opencv/build/bin/Release/opencv_world481.dll</code></li>
 </ul>
 <h2 id="fswatch"><a class="markdownIt-Anchor" href="#fswatch"></a> fswatch</h2>
 <p><a target="_blank" rel="noopener" href="https://github.com/emcrisostomo/fswatch">https://github.com/emcrisostomo/fswatch</a><br />
-一个使用 GCC 编译的跨平台文件监视器，作者根本不在乎 Windows 上的编译体验，深感麻烦。</p>
+一个使用 GCC 编译的跨平台文件监视器，开发者根本不关心 Windows 上的编译体验，深感麻烦。</p>
 <h3 id="安装-mingw"><a class="markdownIt-Anchor" href="#安装-mingw"></a> 安装 MinGW</h3>
 <p>我们需要一个 Windows GCC，自然是先装 MinGW-W64。<br />
 比起直接解压 MinGW 再配置环境变量，更方便的是先安装一个 MSYS2。MSYS2 自带一个包管理器 packman，可以很方便的下载 MinGW 以及更多乱七八糟的依赖。以 <code>Windows</code> <code>MSYS2</code> <code>MinGW</code>  <code>GCC</code> 为关键词搜索应该就能找到不错的教程。</p>
@@ -339,6 +340,45 @@ ps:<br />
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/401188789">给萌新的 C/C++ 环境搭建攻略（VSCode 和 MSYS2）</a><br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/448884264">捋一捋 gcc / g++ / MingW / MSVC 与 make / CMake 的关系</a><br />
 <a target="_blank" rel="noopener" href="https://github.com/FrankHB/pl-docs/blob/master/zh-CN/mingw-vs-mingw-v64.md">[科普][FAQ] MinGW vs MinGW-W64 及其它</a></p>
+<h2 id="ferrtype"><a class="markdownIt-Anchor" href="#ferrtype"></a> FerrType</h2>
+<p><a target="_blank" rel="noopener" href="https://freetype.org/download.html">https://freetype.org/download.html</a><br />
+字体渲染库，好像没什么特别的。</p>
+<h3 id="header-3"><a class="markdownIt-Anchor" href="#header-3"></a> header</h3>
+<p><code>freetype/include/ft2build.h</code></p>
+<h3 id="lib-2"><a class="markdownIt-Anchor" href="#lib-2"></a> lib</h3>
+<p><code>freetype/build/Debug/freetyped.lib</code><br />
+<code>freetype/build/Release/freetype.lib</code></p>
+<h2 id="glew"><a class="markdownIt-Anchor" href="#glew"></a> GLEW</h2>
+<p><a target="_blank" rel="noopener" href="https://glew.sourceforge.net/index.html">https://glew.sourceforge.net/index.html</a><br />
+OpenGL 扩展库。</p>
+<h3 id="配置-2"><a class="markdownIt-Anchor" href="#配置-2"></a> 配置</h3>
+<ul>
+<li>非核心功能：<code>BUILD_UTILS</code></li>
+</ul>
+<h3 id="静态-动态"><a class="markdownIt-Anchor" href="#静态-动态"></a> 静态 / 动态</h3>
+<p>CMake 会生成 <code>glew</code> 和 <code>glew_s</code> 两个项目，分别对应了动态与静态的生成目标。<br />
+然后使用静态库时，要在包含 GLEW 头文件之前定义 <code>GLEW_STATIC</code> 这个宏，写在项目配置里比较好。</p>
+<h3 id="header-4"><a class="markdownIt-Anchor" href="#header-4"></a> header</h3>
+<p><code>glew/include/GL/glew.h</code></p>
+<h3 id="lib-3"><a class="markdownIt-Anchor" href="#lib-3"></a> lib</h3>
+<p><code>glew/build/cmake/build/lib/Debug/libglew32d.lib</code><br />
+<code>glew/build/cmake/build/lib/Release/libglew32.lib</code></p>
+<h3 id="gitignore-2"><a class="markdownIt-Anchor" href="#gitignore-2"></a> .gitignore</h3>
+<p>要注意一下 glew 仓库里就有一个 <code>build</code> 文件夹，CMakeLists 也在里面，总觉得不太合理，你叫个什么 <code>builds</code> 都比这好。<br />
+如果你的仓库忽略了所有叫做 <code>build</code> 的文件夹的话，小心这个文件夹也被忽略掉。</p>
+<h2 id="glfw"><a class="markdownIt-Anchor" href="#glfw"></a> GLFW</h2>
+<p><a target="_blank" rel="noopener" href="https://www.glfw.org/download.html">https://www.glfw.org/download.html</a><br />
+跨平台窗口库。</p>
+<h3 id="配置-3"><a class="markdownIt-Anchor" href="#配置-3"></a> 配置</h3>
+<ul>
+<li>运行时库：<code>USE_MSVC_RUNTIME_LIBRARY_DLL</code></li>
+<li>非核心功能：<code>GLFW_BUILD_EXAMPLES</code>、<code>GLFW_BUILD_TESTS</code>、<code>GLFW_BUILD_DOCS</code></li>
+</ul>
+<h3 id="header-5"><a class="markdownIt-Anchor" href="#header-5"></a> header</h3>
+<p><code>glfw/include/GLFW/glfw3.h</code></p>
+<h3 id="lib-4"><a class="markdownIt-Anchor" href="#lib-4"></a> lib</h3>
+<p><code>glfw/build/src/Debug/glfw3.lib</code><br />
+<code>glfw/build/src/Release/glfw3.lib</code></p>
 
             </div>
             <hr>
