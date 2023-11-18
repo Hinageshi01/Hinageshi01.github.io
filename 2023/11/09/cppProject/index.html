@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      424 字
+      663 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      8
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 11, 2023
+                  本文最后更新于：November 17, 2023
                 
               </p>
             
@@ -260,8 +260,8 @@
 <h3 id="用法"><a class="markdownIt-Anchor" href="#用法"></a> 用法</h3>
 <figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c"><span class="hljs-built_in">set</span>(CMAKE_MSVC_RUNTIME_LIBRARY <span class="hljs-string">&quot;MultiThreaded$&lt;$&lt;CONFIG:Debug&gt;:Debug&gt;&quot;</span>)<br></code></pre></div></td></tr></table></figure>
 <p><code>$&lt;$&lt;CONFIG:Debug&gt;:Debug&gt;</code> 为生成器表达式，意为“如果当前为 Debug，返回 Debug，否则返回空字符串”。<br />
-放在 <code>project</code> 之前才能生效。</p>
-<p>在 3.15 以下的版本中要实现相同的功能则需要：</p>
+要放在 <code>project</code> 之前才会生效。</p>
+<p>在 3.15 以下的版本中要实现相同的功能需要类似于：</p>
 <figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c"><span class="hljs-built_in">set</span>(CompilerFlags<br>        CMAKE_CXX_FLAGS<br>        CMAKE_CXX_FLAGS_DEBUG<br>        CMAKE_CXX_FLAGS_RELEASE<br>        CMAKE_C_FLAGS<br>        CMAKE_C_FLAGS_DEBUG<br>        CMAKE_C_FLAGS_RELEASE<br>        )<br>foreach(CompilerFlag $&#123;CompilerFlags&#125;)<br>  <span class="hljs-built_in">string</span>(REPLACE <span class="hljs-string">&quot;/MD&quot;</span> <span class="hljs-string">&quot;/MT&quot;</span> $&#123;CompilerFlag&#125; <span class="hljs-string">&quot;$&#123;$&#123;CompilerFlag&#125;&#125;&quot;</span>)<br>endforeach()<br></code></pre></div></td></tr></table></figure>
 <p>详见：<br />
 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/14172856/compile-with-mt-instead-of-md-using-cmake">Compile with /MT instead of /MD using CMake</a></p>
@@ -295,8 +295,10 @@
 MT：<br />
 <img src="/img/cppProject/MT.png" srcset="/img/loading.gif" lazyload alt="MT" /></p>
 <h2 id="abi"><a class="markdownIt-Anchor" href="#abi"></a> ABI</h2>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/577996608">C++ ABI总结</a><br />
-<a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/pimpl">PImpl</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/577996608">C++ ABI总结</a></p>
+<p>体现在跨编译器的 link 大概率是失败的，因为 C++ 编译器会对符号进行一个名称重整的行为以满足 C++ 中的多态，而不同编译器名称重整的逻辑完全不同。不过好像 clang 之类的是能够提供对其他编译器的兼容的。<br />
+另一个方面是混合了同一个编译器不同版本的编译流程，比如 MSVC 说自 VS2015 之后，新的连接器可以混合链接旧版 MSVC 编译出来的库文件。<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/porting/binary-compat-2015-2017?view=msvc-170">C++ binary compatibility between Visual Studio versions</a><br />
+还有就是第三方库只要能保持 ABI 兼容，即可只更新 dll 文件而不用重新编译最终的运行文件。对虚函数表的重排序，添加删除成员变量都会使 ABI 兼容失效，因为内存排布不一样了，然后有个保持 ABI 兼容的技巧叫做 Pointer to implementation。<a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/pimpl">PImpl</a></p>
 
             </div>
             <hr>
@@ -310,6 +312,12 @@ MT：<br />
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/11/17/inline/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">inline, explict, static, namespace</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
