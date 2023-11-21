@@ -18,9 +18,25 @@
   <meta name="author" content="Hinageshi">
   <meta name="keywords" content="">
   
-  <title>Archives - Hexo</title>
+  <title>【GDC】 蜘蛛侠中的程序化光照 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -48,7 +64,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -159,9 +175,46 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Archive">
+            <span class="h2" id="subtitle" title="【GDC】 蜘蛛侠中的程序化光照">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2023-11-21 14:23" pubdate>
+        November 21, 2023
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      669 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      7
+       分钟
+    </span>
+  
+
+  
+  
+</div>
 
             
           </div>
@@ -174,64 +227,158 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">34 posts in total.</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2021</p>
-    
-    <a href="/2021/08/29/Unity/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">【Archive】背包，卡肉，镜头抖动，有限状态机</span>
-      <time style="float: right;">08-29</time>
-    </a>
-  
-    
-    <a href="/2021/08/19/SunnyLand/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">【Archive】Sunny Land, a platformmer game</span>
-      <time style="float: right;">08-19</time>
-    </a>
-  
-    
-    <a href="/2021/08/12/MakeYourFirstGame/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">【Archive】Make Your First Game by M_Studio</span>
-      <time style="float: right;">08-12</time>
-    </a>
-  
-    
-    <a href="/2021/08/07/SoulForging/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">【Archive】Soul Forging, a Minecraft mod</span>
-      <time style="float: right;">08-07</time>
-    </a>
-  
-    
-    <a href="/2021/08/05/HelloWorld/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Hello World</span>
-      <time style="float: right;">08-05</time>
-    </a>
-  
-</div>
 
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【GDC】 蜘蛛侠中的程序化光照</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：November 21, 2023
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=HnguuY9IRro">https://www.youtube.com/watch?v=HnguuY9IRro</a></p>
+<h2 id="open-world-tiles"><a class="markdownIt-Anchor" href="#open-world-tiles"></a> Open World Tiles</h2>
+<p><img src="/img/GDC_SpiderMan_Lighting/Tile.png" srcset="/img/loading.gif" lazyload alt="Tile" /></p>
+<ul>
+<li>将整个世界分成数个 128 x 128 米的 Tile，对于每个 Tile，由数个 JSON 文件描述该 Tile 所引用的资源。</li>
+<li>只有玩家当前所在的和周围的 Tile 会流入内存，其余的 Tile 卸载。</li>
+<li>极远处的渲染由下文会讲到的 Impostor 系统负责。</li>
+</ul>
+<h2 id="procedural-placement"><a class="markdownIt-Anchor" href="#procedural-placement"></a> Procedural Placement</h2>
+<p><img src="/img/GDC_SpiderMan_Lighting/ProceduralPlacement.png" srcset="/img/loading.gif" lazyload alt="ProceduralPlacement" /></p>
+<ul>
+<li>程序化沿着街道放置路灯。</li>
+<li>可视化所有光源的位置及其光照范围（RayCast），以找到打光不足的区域。</li>
+</ul>
+<h2 id="light-probesspecular"><a class="markdownIt-Anchor" href="#light-probesspecular"></a> Light Probes（Specular）</h2>
+<ul>
+<li>在每个 Tile 中均匀划分四个区域，在每个区域中心生成一个 Probe。</li>
+<li>将 Probe 移动到距离最近的街道上，优先主干道，然后次干道。</li>
+<li>如果 Probe 位于建筑物内，用 SDF 将其移出。</li>
+<li>Probes 所捕获的信息来自 Impostor 系统。</li>
+</ul>
+<p><img src="/img/GDC_SpiderMan_Lighting/LightProbes.png" srcset="/img/loading.gif" lazyload alt="LightProbes" /></p>
+<ul>
+<li>在磁盘上存储 Light Probe 信息数据量过大，故使用实时的 Light Probe 生成。</li>
+<li>每个 Probe 的每个面分辨率为 512 x 512，然后向下进行 5 层卷积存储为 MipMap。</li>
+</ul>
+<h2 id="ig-impostors"><a class="markdownIt-Anchor" href="#ig-impostors"></a> IG-Impostors</h2>
+<p><img src="/img/GDC_SpiderMan_Lighting/IG.png" srcset="/img/loading.gif" lazyload alt="IG" /></p>
+<ul>
+<li>相关的 Mesh 和 Texture 常驻于全局内存中，代表最低级别的 LOD。</li>
+<li>所有 Mesh 共占 100 MB，Texture 共占 90 MB，还有一些高质量的用于自发光以及反射的 Mesh 共占 30 MB。</li>
+<li>一共 220 MB 的数据来表示整个城市的最低级别 LOD，可以被任何系统访问。<br />
+<img src="/img/GDC_SpiderMan_Lighting/Texture.png" srcset="/img/loading.gif" lazyload alt="Texture" /></li>
+<li>一张贴图存储 albedo，一张一半分辨率的贴图存储 specular，gloss，emission。</li>
+</ul>
+<h2 id="light-grids"><a class="markdownIt-Anchor" href="#light-grids"></a> Light Grids</h2>
+<p><img src="/img/GDC_SpiderMan_Lighting/Grid.png" srcset="/img/loading.gif" lazyload alt="Grid" /></p>
+<ul>
+<li>每个 128 x 128 米的 Tile 被划分为数个 16 x 16 x 16 的 capture volume。</li>
+<li>由建筑物高度决定立方体的分布。</li>
+<li>移除建筑物内部的立方体。</li>
+<li>Light Grids 信息生成为 JSON，引擎读取后进行采样并存储为 Cache File。</li>
+</ul>
+<p><img src="/img/GDC_SpiderMan_Lighting/LightGrids.png" srcset="/img/loading.gif" lazyload alt="LightGrids" /></p>
+<ul>
+<li>每个 capture volume 内 4096 个样本，一立方米一个。</li>
+<li>每个样本生成每个面 256 x 256 像素的立方体贴图。</li>
+<li>然后每个面被卷积至单个 HDR 像素，用以表示 diffuse 和方向（高度可压缩的）。</li>
+</ul>
+<h2 id="others"><a class="markdownIt-Anchor" href="#others"></a> Others</h2>
+<ul>
+<li>还存在一个 Hibernation 系统，简单来说只是拥有一个更远的剔除平面，用于处理一些被 Impostors 系统认为过于复杂而被剔除的物体，比如公园里的长椅，楼顶的空调外机等。</li>
+<li>Light Probe 的更新大约为每秒两次，具体则由引擎的任务系统调度。</li>
+<li>一共有 4 份 Light Grid 数据来描述一整天中的漫反射信息，分别为正午，阴天，黎明/黄昏，夜晚，</li>
+<li>每个 Probe 存储一份可见的建筑列表。</li>
+<li>通过视锥体，移动方向，移动速度来决定如何优化加载哪些 Tile。</li>
+</ul>
 
-
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/17/inline/">
+                        <span class="hidden-mobile">inline, explict, static, namespace</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: 'b065503839b93a8b862606f98c0e7a4e'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -335,9 +482,15 @@
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
 
 
 
@@ -368,6 +521,13 @@
 
 
 
+
+  
+
+  
+    <!-- KaTeX -->
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.10/dist/katex.min.css" />
+  
 
 
 
