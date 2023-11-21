@@ -4,13 +4,29 @@
   
   
   <entry>
-    <title>【GDC】 蜘蛛侠中的程序化光照</title>
+    <title>漫威蜘蛛侠中的程序化光照</title>
     <link href="/2023/11/21/GDC-SpiderMan-Lighting/"/>
     <url>/2023/11/21/GDC-SpiderMan-Lighting/</url>
     
     <content type="html"><![CDATA[<p><a href="https://www.youtube.com/watch?v=HnguuY9IRro">https://www.youtube.com/watch?v=HnguuY9IRro</a></p><h2 id="open-world-tiles"><a class="markdownIt-Anchor" href="#open-world-tiles"></a> Open World Tiles</h2><p><img src="/img/GDC_SpiderMan_Lighting/Tile.png" alt="Tile" /></p><ul><li>将整个世界分成数个 128 x 128 米的 Tile，对于每个 Tile，由数个 JSON 文件描述该 Tile 所引用的资源。</li><li>只有玩家当前所在的和周围的 Tile 会流入内存，其余的 Tile 卸载。</li><li>极远处的渲染由下文会讲到的 Impostor 系统负责。</li></ul><h2 id="procedural-placement"><a class="markdownIt-Anchor" href="#procedural-placement"></a> Procedural Placement</h2><p><img src="/img/GDC_SpiderMan_Lighting/ProceduralPlacement.png" alt="ProceduralPlacement" /></p><ul><li>程序化沿着街道放置路灯。</li><li>可视化所有光源的位置及其光照范围（RayCast），以找到打光不足的区域。</li></ul><h2 id="light-probesspecular"><a class="markdownIt-Anchor" href="#light-probesspecular"></a> Light Probes（Specular）</h2><ul><li>在每个 Tile 中均匀划分四个区域，在每个区域中心生成一个 Probe。</li><li>将 Probe 移动到距离最近的街道上，优先主干道，然后次干道。</li><li>如果 Probe 位于建筑物内，用 SDF 将其移出。</li><li>Probes 所捕获的信息来自 Impostor 系统。</li></ul><p><img src="/img/GDC_SpiderMan_Lighting/LightProbes.png" alt="LightProbes" /></p><ul><li>在磁盘上存储 Light Probe 信息数据量过大，故使用实时的 Light Probe 生成。</li><li>每个 Probe 的每个面分辨率为 512 x 512，然后向下进行 5 层卷积存储为 MipMap。</li></ul><h2 id="ig-impostors"><a class="markdownIt-Anchor" href="#ig-impostors"></a> IG-Impostors</h2><p><img src="/img/GDC_SpiderMan_Lighting/IG.png" alt="IG" /></p><ul><li>相关的 Mesh 和 Texture 常驻于全局内存中，代表最低级别的 LOD。</li><li>所有 Mesh 共占 100 MB，Texture 共占 90 MB，还有一些高质量的用于自发光以及反射的 Mesh 共占 30 MB。</li><li>一共 220 MB 的数据来表示整个城市的最低级别 LOD，可以被任何系统访问。<br /><img src="/img/GDC_SpiderMan_Lighting/Texture.png" alt="Texture" /></li><li>一张贴图存储 albedo，一张一半分辨率的贴图存储 specular，gloss，emission。</li></ul><h2 id="light-grids"><a class="markdownIt-Anchor" href="#light-grids"></a> Light Grids</h2><p><img src="/img/GDC_SpiderMan_Lighting/Grid.png" alt="Grid" /></p><ul><li>每个 128 x 128 米的 Tile 被划分为数个 16 x 16 x 16 的 capture volume。</li><li>由建筑物高度决定立方体的分布。</li><li>移除建筑物内部的立方体。</li><li>Light Grids 信息生成为 JSON，引擎读取后进行采样并存储为 Cache File。</li></ul><p><img src="/img/GDC_SpiderMan_Lighting/LightGrids.png" alt="LightGrids" /></p><ul><li>每个 capture volume 内 4096 个样本，一立方米一个。</li><li>每个样本生成每个面 256 x 256 像素的立方体贴图。</li><li>然后每个面被卷积至单个 HDR 像素，用以表示 diffuse 和方向（高度可压缩的）。</li></ul><h2 id="others"><a class="markdownIt-Anchor" href="#others"></a> Others</h2><ul><li>还存在一个 Hibernation 系统，简单来说只是拥有一个更远的剔除平面，用于处理一些被 Impostors 系统认为过于复杂而被剔除的物体，比如公园里的长椅，楼顶的空调外机等。</li><li>Light Probe 的更新大约为每秒两次，具体则由引擎的任务系统调度。</li><li>一共有 4 份 Light Grid 数据来描述一整天中的漫反射信息，分别为正午，阴天，黎明/黄昏，夜晚，</li><li>每个 Probe 存储一份可见的建筑列表。</li><li>通过视锥体，移动方向，移动速度来决定如何优化加载哪些 Tile。</li></ul>]]></content>
     
     
+    <categories>
+      
+      <category>GDC</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Procedural</tag>
+      
+      <tag>LightProbe</tag>
+      
+      <tag>Impostor</tag>
+      
+    </tags>
     
   </entry>
   
@@ -25,6 +41,12 @@
     
     
     
+    <tags>
+      
+      <tag>CPP</tag>
+      
+    </tags>
+    
   </entry>
   
   
@@ -37,6 +59,16 @@
     <content type="html"><![CDATA[<h2 id="todo"><a class="markdownIt-Anchor" href="#todo"></a> TODO</h2><p>待整理，但是最近发现了一些有趣的东西，先记一下</p><h2 id="cmake_msvc_runtime_library"><a class="markdownIt-Anchor" href="#cmake_msvc_runtime_library"></a> CMAKE_MSVC_RUNTIME_LIBRARY</h2><p>用于在 CMakeLists 里指定 MSVC 使用的运行时库。</p><ul><li><code>MultiThreaded</code> 对应 <code>MT</code></li><li><code>MultiThreadedDebug</code> 对应 <code>MTd</code></li><li><code>MultiThreadedDLL</code> 对应 <code>MD</code></li><li><code>MultiThreadedDebugDLL</code> 对应 <code>MDd</code></li></ul><p>注意这项功能仅在 CMake 3.15 之后被支持，至少需要 <code>cmake_minimum_required(VERSION 3.15)</code>。</p><h3 id="用法"><a class="markdownIt-Anchor" href="#用法"></a> 用法</h3><figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c"><span class="hljs-built_in">set</span>(CMAKE_MSVC_RUNTIME_LIBRARY <span class="hljs-string">&quot;MultiThreaded$&lt;$&lt;CONFIG:Debug&gt;:Debug&gt;&quot;</span>)<br></code></pre></div></td></tr></table></figure><p><code>$&lt;$&lt;CONFIG:Debug&gt;:Debug&gt;</code> 为生成器表达式，意为“如果当前为 Debug，返回 Debug，否则返回空字符串”。<br />要放在 <code>project</code> 之前才会生效。</p><p>在 3.15 以下的版本中要实现相同的功能需要类似于：</p><figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c"><span class="hljs-built_in">set</span>(CompilerFlags<br>        CMAKE_CXX_FLAGS<br>        CMAKE_CXX_FLAGS_DEBUG<br>        CMAKE_CXX_FLAGS_RELEASE<br>        CMAKE_C_FLAGS<br>        CMAKE_C_FLAGS_DEBUG<br>        CMAKE_C_FLAGS_RELEASE<br>        )<br>foreach(CompilerFlag $&#123;CompilerFlags&#125;)<br>  <span class="hljs-built_in">string</span>(REPLACE <span class="hljs-string">&quot;/MD&quot;</span> <span class="hljs-string">&quot;/MT&quot;</span> $&#123;CompilerFlag&#125; <span class="hljs-string">&quot;$&#123;$&#123;CompilerFlag&#125;&#125;&quot;</span>)<br>endforeach()<br></code></pre></div></td></tr></table></figure><p>详见：<br /><a href="https://stackoverflow.com/questions/14172856/compile-with-mt-instead-of-md-using-cmake">Compile with /MT instead of /MD using CMake</a></p><h3 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h3><p><a href="https://cmake.org/cmake/help/latest/variable/CMAKE_MSVC_RUNTIME_LIBRARY.html">CMAKE_MSVC_RUNTIME_LIBRARY</a><br /><a href="https://zhuanlan.zhihu.com/p/429849408">在 CMake 中设置 MSVC 运行库</a></p><h2 id="使用-dumpbin-查看静态库的依赖"><a class="markdownIt-Anchor" href="#使用-dumpbin-查看静态库的依赖"></a> 使用 dumpbin 查看静态库的依赖</h2><p>在安装 VS2017 或以上的版本时会自动安装 dumpbin.exe，我的路径在：</p><figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c"><span class="hljs-string">&quot;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\dumpbin.exe&quot;</span><br></code></pre></div></td></tr></table></figure><p>将其加入环境变量即可在任意位置调用 <code>dumpbin</code>。</p><h3 id="用法-2"><a class="markdownIt-Anchor" href="#用法-2"></a> 用法</h3><figure class="highlight bat"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bat">dumpbin /directives &lt;<span class="hljs-built_in">path</span>&gt;<br></code></pre></div></td></tr></table></figure><p><img src="/img/cppProject/directives.png" alt="directives" /><br />其中 <code>MT_StaticReleasd</code> 和 <code>LIBCMT</code> 都代表该文件使用的运行时库为 <code>MT</code>。<br />剩余对应详见 <a href="https://learn.microsoft.com/en-us/cpp/c-runtime-library/crt-library-features?view=msvc-170#c-runtime-lib-files">C 运行时 .lib 文件</a><br /><img src="/img/cppProject/CRT.png" alt="directives" /></p><h3 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h3><p>dumpbin 看起来还有很多功能，可惜官方文档写的也不是很清楚：<br /><a href="https://learn.microsoft.com/en-us/cpp/build/reference/dumpbin-options?view=msvc-170">DUMPBIN 选项</a></p><h2 id="使用-depends-查看动态库的依赖"><a class="markdownIt-Anchor" href="#使用-depends-查看动态库的依赖"></a> 使用 depends 查看动态库的依赖</h2><p>一个开源的 dll 依赖分析软件：<br /><a href="https://github.com/lucasg/Dependencies">https://github.com/lucasg/Dependencies</a><br />打开 GUI 将对应 dll 拖入：</p><ul><li><code>msvcp&lt;version&gt;.dll</code> 对应 <code>/MD</code></li><li><code>msvcp&lt;version&gt;d.dll</code> 对应 <code>/MDd</code><br />自 VS2017 以后这个 version 应该是 140。</li></ul><p>MD：<br /><img src="/img/cppProject/MD.png" alt="MD" /><br />MT：<br /><img src="/img/cppProject/MT.png" alt="MT" /></p><h2 id="abi"><a class="markdownIt-Anchor" href="#abi"></a> ABI</h2><p><a href="https://zhuanlan.zhihu.com/p/577996608">C++ ABI总结</a></p><p>体现在跨编译器的 link 大概率是失败的，因为 C++ 编译器会对符号进行一个“名称重整”的行为以满足 C++ 中的多态，而不同编译器名称重整的逻辑完全不同。不过好像 clang 之类的是能够提供对其他编译器的兼容的。<br />另一个方面是混合了同一个编译器不同版本的编译流程，比如 MSVC 自 VS2015 之后说，新的连接器可以混合链接旧版 MSVC 编译出来的库文件。<a href="https://learn.microsoft.com/en-us/cpp/porting/binary-compat-2015-2017?view=msvc-170">C++ binary compatibility between Visual Studio versions</a><br />还有就是第三方库只要能保持 ABI 兼容，即可只更新 dll 文件而不用重新编译最终的运行文件。<br />对虚函数表的重排序，添加删除成员变量都会使 ABI 兼容失效，因为内存排布不一样了，然后有个保持 ABI 兼容的技巧叫做 Pointer to implementation。<a href="https://en.cppreference.com/w/cpp/language/pimpl">PImpl</a></p>]]></content>
     
     
+    
+    <tags>
+      
+      <tag>CPP</tag>
+      
+      <tag>Build</tag>
+      
+      <tag>Premake5</tag>
+      
+    </tags>
     
   </entry>
   
@@ -51,6 +83,18 @@
     
     
     
+    <tags>
+      
+      <tag>Build</tag>
+      
+      <tag>CMake</tag>
+      
+      <tag>MSBuild</tag>
+      
+      <tag>MSVC</tag>
+      
+    </tags>
+    
   </entry>
   
   
@@ -63,6 +107,12 @@
     <content type="html"><![CDATA[<p>没写 dll 路径就代表我没编过他的动态链接库。</p><h2 id="eigen"><a class="markdownIt-Anchor" href="#eigen"></a> Eigen</h2><p>纯头文件库，包含路径即可。<br /><a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">https://eigen.tuxfamily.org/index.php?title=Main_Page</a><br />GitLab：<br /><a href="https://gitlab.com/libeigen/eigen">https://gitlab.com/libeigen/eigen</a><br />GitHub:<br /><a href="https://github.com/PX4/eigen">https://github.com/PX4/eigen</a></p><h3 id="gitignore"><a class="markdownIt-Anchor" href="#gitignore"></a> .gitignore</h3><p>3.4.0 release 的 .gitignore 相比 GitLab 最新的主分支少两行：</p><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">!Eigen/Core<br>!Eigen<span class="hljs-regexp">/src/</span>Core<br></code></pre></div></td></tr></table></figure><p>直接集成的话 Core 文件会错误地被忽略。</p><h3 id="header"><a class="markdownIt-Anchor" href="#header"></a> header</h3><p><code>eigen3/Eigen/Core</code></p><h2 id="opencv"><a class="markdownIt-Anchor" href="#opencv"></a> OpenCV</h2><p><a href="https://github.com/opencv/opencv">https://github.com/opencv/opencv</a></p><h3 id="下载依赖"><a class="markdownIt-Anchor" href="#下载依赖"></a> 下载依赖</h3><p><em>万恶的 GFW</em></p><ol><li><p>最无脑的解决方案，通过配置<br /><code>-DOPENCV_DOWNLOAD_MIRROR_ID=gitcode</code><br />将下载源改为 GitCode，一个国内代码托管网站。比较依赖于 OpenCV 中国团队和 GitCode 对镜像仓库的维护。<a href="https://mp.weixin.qq.com/s/QhtEjXn126bitN9AQ3_s6w">下载不再卡顿，OpenCV 中国镜像启用</a><br />ps:<br />他们说从 <a href="https://gitcode.net/opencv/opencv">https://gitcode.net/opencv/opencv</a> 下载的代码是不用这条配置的，但是我尝试 clone 下来后看到了 <code>Package ADE from mirror gitcode.net is outdated and will be downloaded from github.com instead.</code> 的警告。提了 Issue 也没有反应 <a href="https://gitcode.net/opencv/opencv/-/issues/1">Package ADE is outdated</a>。<br />然后 GitCode 上的 Release 实际上又是需要这条配置的（意思是 GitCode Release 和 GitHub Release 是一模一样的，而且下载源都是外网。）<br />总之有点抽象，好在 GitHub Latest Release + -DOPENCV_DOWNLOAD_MIRROR_ID=gitcode 的组合是没什么问题的。</p></li><li><p>开启代理并配置环境变量<br /><a href="https://docs.opencv.org/4.x/db/d05/tutorial_config_reference.html#tutorial_config_reference_general_download">Downloaded dependencies</a></p></li><li><p>手动下载依赖<br /><a href="https://zhuanlan.zhihu.com/p/344036896">Visual Studio + OpenCV + OpenCV_contrib 源代码编译流程</a></p></li></ol><h3 id="配置"><a class="markdownIt-Anchor" href="#配置"></a> 配置</h3><p><a href="https://docs.opencv.org/4.x/db/d05/tutorial_config_reference.html">生成配置</a></p><ul><li><p>静态 / 动态：<code>BUILD_SHARED_LIBS</code></p></li><li><p>运行时库：<code>BUILD_WITH_STATIC_CRT</code></p></li><li><p>非核心功能：<code>BUILD_TESTS</code>, <code>BUILD_PERF_TESTS</code>, <code>BUILD_EXAMPLES</code>, <code>BUILD_opencv_apps</code></p></li><li><p>只生单个库文件：<code>BUILD_opencv_world</code></p></li></ul><h3 id="header-2"><a class="markdownIt-Anchor" href="#header-2"></a> header</h3><ul><li><code>opencv/include/opencv2/opencv.hpp</code></li><li><code>opencv/build/opencv2/opencv_modules.hpp</code></li><li><code>opencv/modules/**/include/opencv2/core.hpp</code></li></ul><p>最后两项可以通过 <code>BUILD_LIST</code> 或者 <code>BUILD_opencv_&lt;Module Name&gt;</code> 之类的配置进行调整，开启/关闭模块。</p><h3 id="lib"><a class="markdownIt-Anchor" href="#lib"></a> lib</h3><ul><li><code>opencv/build/lib/Debug/opencv_world481d.lib</code></li><li><code>opencv/build/lib/Release/opencv_world481.lib</code></li></ul><h3 id="dll"><a class="markdownIt-Anchor" href="#dll"></a> dll</h3><ul><li><code>opencv/build/bin/Debug/opencv_world481d.dll</code></li><li><code>opencv/build/bin/Release/opencv_world481.dll</code></li></ul><h2 id="fswatch"><a class="markdownIt-Anchor" href="#fswatch"></a> fswatch</h2><p><a href="https://github.com/emcrisostomo/fswatch">https://github.com/emcrisostomo/fswatch</a><br />一个使用 GCC 编译的跨平台文件监视器，开发者根本不关心 Windows 上的编译体验，深感麻烦。</p><h3 id="安装-mingw"><a class="markdownIt-Anchor" href="#安装-mingw"></a> 安装 MinGW</h3><p>我们需要一个 Windows GCC，自然是先装 MinGW-W64。<br />比起直接解压 MinGW 再配置环境变量，更方便的是先安装一个 MSYS2。MSYS2 自带一个包管理器 packman，可以很方便的下载 MinGW 以及更多乱七八糟的依赖。以 <code>Windows</code> <code>MSYS2</code> <code>MinGW</code>  <code>GCC</code> 为关键词搜索应该就能找到不错的教程。</p><h3 id="配置-cmake-生成器"><a class="markdownIt-Anchor" href="#配置-cmake-生成器"></a> 配置 CMake 生成器</h3><p>在指定生成器的阶段我们需要选择 <code>MinGW Makefiles</code> + <code>Specify native compilers</code>，然后将 C 与 C++ 的编译器配置为 MSYS2 安装的 gcc.exe 与 g++.exe 路径。</p><div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/ThirdParty/generator.png" alt="指定生成器" /></div><div class="group-image-wrap"><img src="/img/ThirdParty/compiler.png" alt="指定本地编译器" /></div></div></div><p>路径大概是 <code>C:/msys64/mingw64/bin</code> 之类的。</p><h3 id="配置-cmake-依赖"><a class="markdownIt-Anchor" href="#配置-cmake-依赖"></a> 配置 CMake 依赖</h3><p>Makefile 生成依赖于 MSGFMT，MSGMERGE 与 PTHREAD，前两个都属于 Gettext。<br />如果看到任何 <code>NOTFOUND</code> 字眼，用 MSYS2 搜索并安装对应的库，然后配置对应路径。</p><h3 id="编译"><a class="markdownIt-Anchor" href="#编译"></a> 编译</h3><p>回到根目录执行 <code>cmake --build build</code>，出现如下报错：<br /><code>error: 'realpath' was not declared in this scope</code><br /><code>error: 'lstat' was not declared in this scope; did you mean 'wstat'?</code><br />结果这似乎是一个遗留 bug，七年没修：<br /><a href="https://github.com/emcrisostomo/fswatch/issues/121">https://github.com/emcrisostomo/fswatch/issues/121</a><br />最终是放弃了这个库的集成转而使用了 <a href="https://github.com/septag/dmon">dmon</a>。</p><h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3><p><a href="https://zhuanlan.zhihu.com/p/401188789">给萌新的 C/C++ 环境搭建攻略（VSCode 和 MSYS2）</a><br /><a href="https://zhuanlan.zhihu.com/p/448884264">捋一捋 gcc / g++ / MingW / MSVC 与 make / CMake 的关系</a><br /><a href="https://github.com/FrankHB/pl-docs/blob/master/zh-CN/mingw-vs-mingw-v64.md">[科普][FAQ] MinGW vs MinGW-W64 及其它</a></p><h2 id="ferrtype"><a class="markdownIt-Anchor" href="#ferrtype"></a> FerrType</h2><p><a href="https://freetype.org/download.html">https://freetype.org/download.html</a><br />字体渲染库，好像没什么特别的。</p><h3 id="header-3"><a class="markdownIt-Anchor" href="#header-3"></a> header</h3><p><code>freetype/include/ft2build.h</code></p><h3 id="lib-2"><a class="markdownIt-Anchor" href="#lib-2"></a> lib</h3><p><code>freetype/build/Debug/freetyped.lib</code><br /><code>freetype/build/Release/freetype.lib</code></p><h2 id="glew"><a class="markdownIt-Anchor" href="#glew"></a> GLEW</h2><p><a href="https://glew.sourceforge.net/index.html">https://glew.sourceforge.net/index.html</a><br />OpenGL 扩展库。</p><h3 id="配置-2"><a class="markdownIt-Anchor" href="#配置-2"></a> 配置</h3><ul><li>非核心功能：<code>BUILD_UTILS</code></li></ul><h3 id="静态-动态"><a class="markdownIt-Anchor" href="#静态-动态"></a> 静态 / 动态</h3><p>CMake 会生成 <code>glew</code> 和 <code>glew_s</code> 两个项目，分别对应了动态与静态的生成目标。<br />然后使用静态库时，要在包含 GLEW 头文件之前定义 <code>GLEW_STATIC</code> 这个宏，写在项目配置里比较好。</p><h3 id="header-4"><a class="markdownIt-Anchor" href="#header-4"></a> header</h3><p><code>glew/include/GL/glew.h</code></p><h3 id="lib-3"><a class="markdownIt-Anchor" href="#lib-3"></a> lib</h3><p><code>glew/build/cmake/build/lib/Debug/libglew32d.lib</code><br /><code>glew/build/cmake/build/lib/Release/libglew32.lib</code></p><h3 id="gitignore-2"><a class="markdownIt-Anchor" href="#gitignore-2"></a> .gitignore</h3><p>要注意一下 glew 仓库里就有一个 <code>build</code> 文件夹，CMakeLists 也在里面，总觉得不太合理，你叫个什么 <code>builds</code> 都比这好。<br />如果你的仓库忽略了所有叫做 <code>build</code> 的文件夹的话，小心这个文件夹也被忽略掉。</p><h2 id="glfw"><a class="markdownIt-Anchor" href="#glfw"></a> GLFW</h2><p><a href="https://www.glfw.org/download.html">https://www.glfw.org/download.html</a><br />跨平台窗口库。</p><h3 id="配置-3"><a class="markdownIt-Anchor" href="#配置-3"></a> 配置</h3><ul><li>运行时库：<code>USE_MSVC_RUNTIME_LIBRARY_DLL</code></li><li>非核心功能：<code>GLFW_BUILD_EXAMPLES</code>、<code>GLFW_BUILD_TESTS</code>、<code>GLFW_BUILD_DOCS</code></li></ul><h3 id="header-5"><a class="markdownIt-Anchor" href="#header-5"></a> header</h3><p><code>glfw/include/GLFW/glfw3.h</code></p><h3 id="lib-4"><a class="markdownIt-Anchor" href="#lib-4"></a> lib</h3><p><code>glfw/build/src/Debug/glfw3.lib</code><br /><code>glfw/build/src/Release/glfw3.lib</code></p>]]></content>
     
     
+    
+    <tags>
+      
+      <tag>Build</tag>
+      
+    </tags>
     
   </entry>
   
@@ -79,7 +129,11 @@
     
     <tags>
       
-      <tag>Note</tag>
+      <tag>LinearAlgebra</tag>
+      
+      <tag>MVP</tag>
+      
+      <tag>RayTracing</tag>
       
     </tags>
     
@@ -100,6 +154,8 @@
       
       <tag>Editor</tag>
       
+      <tag>Camera</tag>
+      
     </tags>
     
   </entry>
@@ -114,6 +170,14 @@
     <content type="html"><![CDATA[<h2 id="序言"><a class="markdownIt-Anchor" href="#序言"></a> 序言</h2><p>  一些在工作中常用到的 git/GitHub 概念的整理。</p><h2 id="license"><a class="markdownIt-Anchor" href="#license"></a> License</h2><p><a href="https://zhuanlan.zhihu.com/p/51331026">如何为自己的 Github 项目选择开源许可证？</a></p><h2 id="分支与开发"><a class="markdownIt-Anchor" href="#分支与开发"></a> 分支与开发</h2><p>对于正规一点的仓库，main branch 通常是受保护的，而我们的提交与推送都在单独的 branch 上进行。</p><h3 id="查看分支"><a class="markdownIt-Anchor" href="#查看分支"></a> 查看分支</h3><ul><li><code>git branch</code> 查看本地分支</li><li><code>git branch -r</code> 查看远程分支</li><li><code>git branch -a</code> 查看所有分支</li></ul><p>注意：如果远程新建了 branch，在本地运行 <code>git remote update origin</code> 之前，新的 branch 是不会显示在 <code>git branch -r/a</code> 上的。也有更简单的命令，在任意 branch 上的 <code>git pull</code> 也能实现这一效果。</p><h3 id="操作分支"><a class="markdownIt-Anchor" href="#操作分支"></a> 操作分支</h3><ul><li><code>git branch &lt;Name&gt;</code> 创建新的本地分支，不会 checkout</li><li><code>git branch -m &lt;OldName&gt; &lt;NewName&gt;</code> 重命名本地分支</li><li><code>git branch -d &lt;Name&gt;</code> 删除本地分支，不能删除当前分支</li><li><code>git branch -d -r &lt;Name&gt;</code> 删除远程分支</li></ul><h3 id="关联分支"><a class="markdownIt-Anchor" href="#关联分支"></a> 关联分支</h3><ul><li><code>git branch --set-upstream-to=origin/&lt;RemoteName&gt; &lt;LocalName&gt;</code> 将本地分支与远程分支关联起来</li><li><code>git push --set-upstream origin &lt;RemoteName&gt;</code> 在远程新建分支，并将当前分支与远程新分支关联并推送。</li></ul><p>当然最简单的命令是本地识别到远程新分支时直接：<br /><code>git checkout &lt;RemoteName&gt;</code><br />这个命令相当于<br /><code>git checkout -b &lt;LocalName&gt; origin/&lt;RemoteName&gt;</code><br />即在本地新建分支，并且切换过去，并且与远程分支建立联系。</p><ul><li><code>git branch -vv</code> 查看本地分支核远程的对应关系</li></ul><h3 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h3><ul><li>当你的 branch 准备好之后，就可以在 github 上发起 Pull Request，通知仓库相关的开发者检查代码以及帮忙合并。<br /><img src="/img/GitHub/pr.png" alt="Pull Request" /></li><li>add, rm, commit, push 之类的操作直接用 VS 的 <code>Git 更改</code> 视图，或者 <code>Git GUI</code> 就好，比命令方便得多。</li><li>一般来说，除非很紧急的情况，请在获得 approve 和 review 之后再进行合并。</li><li>选择 Sauash Merge 的方式将 pr 内多个 commit 合并为一个 commit 提交到 main 分支上。</li></ul><h2 id="冲突与合并"><a class="markdownIt-Anchor" href="#冲突与合并"></a> 冲突与合并</h2><h3 id="冲突"><a class="markdownIt-Anchor" href="#冲突"></a> 冲突</h3><p>在发起 pr 后，github 会自动帮你检查该分支是否与主分支有冲突。简单的冲突可以直接在网页端解决，也可以回到本地进行如下操作：</p><ul><li><code>git checkout main</code> 切换回主分支</li><li><code>git pull</code> 拉取最新的主分支</li><li>可以顺便确认一下主分支的编译与运行是否正常</li><li><code>git checkout &lt;Name&gt;</code> 切换回冲突分支</li><li><code>git merge main</code> 合并主分支与冲突分支</li><li>进入 <code>Git 更改</code> 视图解决冲突</li><li>提交与推送，查看 github</li></ul><p>VS 提供了非常直观的图形界面来帮助我们解决冲突，在不确定如何解决的情况下可以联系冲突文件的上一个开发者帮忙合并。</p><h3 id="合并"><a class="markdownIt-Anchor" href="#合并"></a> 合并</h3><ul><li>想在当前 branch 应用某个别的 branch 的修改？同样是将对应的 branch pull 下来，merge 即可。</li><li>不想 merge 整个 branch，或者 对方的 branch 还在开发中？使用 <code>git cherry-pick &lt;CommitHash&gt;</code> 以 commit 为粒度进行合并。</li></ul><h2 id="撤销"><a class="markdownIt-Anchor" href="#撤销"></a> 撤销</h2><h3 id="工作区"><a class="markdownIt-Anchor" href="#工作区"></a> 工作区</h3><p>本地所有未 add 的改动我都不想要，怎么撤销？</p><ul><li><code>git checkout .</code> 清除未 add 的所有改动，无法删除新增的文件。</li></ul><h3 id="暂存区"><a class="markdownIt-Anchor" href="#暂存区"></a> 暂存区</h3><p>本地 add 了的改动我也不想要，怎么撤销？</p><ul><li><code>git reset [--soft | --mixed | --hard] [HEAD]</code><ul><li><code>--mixed</code> 默认模式，不删除改动代码，撤销 commit，撤销 add</li><li><code>--soft</code> 不删除改动代码，撤销 commit，不撤销 add</li><li><code>--hard</code> 删除改动代码，撤销 commit，撤销 add</li><li><code>HEAD</code> 默认版本<ul><li><code>HEAD</code> 和 <code>HEAD~0</code> 表示当前版本</li><li><code>HEAD^</code> 和 <code>HEAD~1</code> 表示上一个版本</li><li><code>HEAD^^</code> 和 <code>HEAD~2</code> 表示上上个版本</li><li>依此类推</li></ul></li></ul></li></ul><p>当我们需要撤销暂存区里的代码时，可以 <code>git reset</code> 将暂存区回退到工作区，然后 <code>git checkout .</code> 清除工作区。<br />或者直接 <code>git reset --hard</code> 把工作区和暂存区的修改全扬了，这个指令也能删除暂存区中的新增文件，反而删除不了工作区中的新增文件。</p><h3 id="git-更改视图"><a class="markdownIt-Anchor" href="#git-更改视图"></a> Git 更改视图</h3><p>其实对工作区和暂存区的操作完全可以由 VS 提供的图形界面完成，非常方便直观。</p><h3 id="commit"><a class="markdownIt-Anchor" href="#commit"></a> Commit</h3><p>上一个 commit 太蠢了，怎么撤销？</p><ul><li><code>git log</code> 查看提交日志，获取想要回退的 commit 哈希<br /><em>ps: 按q退出</em></li><li><code>git reset --soft &lt;CommitHash&gt;</code> 回退到 CommitHash 对应的 commit，即如果我要撤销 commit <code>balabala</code>，reset 的参数应该是 <code>balabala</code> 的上一个 commit 的哈希。<br />这种情况下我比较习惯用 <code>--soft</code> 将 commit 回退到暂存区而非默认的工作区，如果此时本地工作区有修改便能将他们区分开来。</li></ul><h3 id="push"><a class="markdownIt-Anchor" href="#push"></a> Push</h3><p>commit 已经 push 上去了，怎么撤销？<br />在完成上一节之后，本地和远程其实处于一个冲突的状态，这时候只需要用<br /><code>git push --force</code><br />强制将远程的 log 同步成本地的状态。</p><h3 id="pr"><a class="markdownIt-Anchor" href="#pr"></a> PR</h3><p>pr 已经 merge 了，怎么撤销？<br />在该 pr 的最下方的 merge 右侧找到 <code>Revert</code>，这个按钮会自动创建一个新的 branch 以及 pr，并且在其中将原 pr 内的所有修改反向操作。当然尽量不要出现这种不得不 Revert 的情况。<br /><img src="/img/GitHub/revert.png" alt="Revert" /></p><h2 id="git-submodule"><a class="markdownIt-Anchor" href="#git-submodule"></a> Git Submodule</h2><p>git 提供了子模块功能将一个仓库集成为另一个仓库的子目录，并且让他们保持独立的提交。<br />子模块有一个非常抽象的特性：在主仓库中如果不使用 <code>submodule</code> 相关的指令，子模块的内容不会受到任何 git 指令的影响，不受主仓库切换分支的影响，甚至不会在主仓库 clone 之后出现在你的硬盘里。</p><h3 id="添加子模块"><a class="markdownIt-Anchor" href="#添加子模块"></a> 添加子模块</h3><p><code>git submodule add &lt;url&gt; &lt;path&gt;</code> 将 url 对应的仓库作为子模块添加到 path 路径下<br />添加子模块后主仓库会新增一个 <code>.gitmodules</code> 文件来描述子模块的信息。<br /><img src="/img/GitHub/sb.png" alt=".gitmodules" /><br /><em>不想让第三方库的不受控的更新破坏自己的主仓库？将其 fork 一份再集成为子模块即可。</em></p><h3 id="clone-带有子模块的仓库"><a class="markdownIt-Anchor" href="#clone-带有子模块的仓库"></a> Clone 带有子模块的仓库</h3><p><code>git clone --recursive &lt;url&gt;</code> 将仓库内容以及子模块内容以及子模块的子模块内容递归地 clone 下来。<br />如果 clone 的时候没有带上 <code>--recursive</code> 参数，也可以在 clone 结束后在仓库目录运行 <code>git submodule update --init --recursive</code> 达成一样的效果。<br /><code>--init</code> 参数用于在 <code>.git/config</code> 中注册子模块信息。</p><h3 id="更新子模块"><a class="markdownIt-Anchor" href="#更新子模块"></a> 更新子模块</h3><p><code>git submodule update</code> 将子模块更新到最新版本<br /><code>git submodule update --remote</code> 将子模块更新到远程的最新版本<br />有什么区别呢，这里要引出子模块另一个非常抽象的特性：区分六个概念：<code>远程的主仓库</code>、<code>本地的主仓库</code>、<code>远程的子仓库</code>、<code>本地的子仓库</code>、<code>远程主仓库中的子仓库</code>、<code>本地主仓库中的子仓库</code>，这六个东西的版本是可以不同的。</p><ul><li>重点在于，主仓库中会存储一个子模块的 commit 版本，<code>git submodule update</code> 只能将 <code>本地的子仓库</code> 更新为 <code>本地主仓库中的子仓库</code> 版本。</li><li>或者先使用 <code>git pull</code> 将 <code>本地主仓库中的子仓库</code> 版本更新为 <code>远程主仓库中的子仓库</code> 版本，再结合使用 <code>git submodule update</code> 即可将 <code>本地的子仓库</code> 更新为 <code>远程主仓库中的子仓库</code> 版本。<br /><em>这也是 clone 之后，对着空空如也的子模块文件夹使用 <code>git submodule update</code> 即可将其更新的原因</em></li><li>而 <code>git submodule update --remote</code> 实际上相当于进入每一个子模块执行 <code>git pull</code>，即将 <code>本地的子仓库</code> 更新为 <code>远程的子仓库</code>。</li><li>最后一步，如何更新 <code>远程主仓库中的子仓库</code> 版本呢？在 <code>本地主仓库中的子仓库</code> 版本与 <code>本地的子仓库</code> 不同时，在主仓库执行 commit 即可更新 <code>本地主仓库中的子仓库</code> 版本。在 <code>远程主仓库中的子仓库</code> 与 <code>本地主仓库中的子仓库</code> 版本不同时，在主仓库执行 push 即可更新 <code>远程主仓库中的子仓库</code> 版本。</li></ul><h4 id="其他-2"><a class="markdownIt-Anchor" href="#其他-2"></a> 其他</h4><ul><li>如果 <code>.gitmodules</code> 中的 url 有变或者新增，<code>git submodule update</code> 是无法将其更新的，保险起见，我们可以在每一次 update 子模块之前执行 <code>git submodule init</code>。</li><li>只希望 <code>git submodule update --remote</code> 更新指定的子模块而非更新所有的子模块？使用 <code>git submodule update --remote &lt;Path&gt;</code> 指定子模块的路径即可。具体路径可以在 <code>.gitmodules</code> 文件中确认。</li></ul><h3 id="开发子模块"><a class="markdownIt-Anchor" href="#开发子模块"></a> 开发子模块</h3><p>子模块最抽象的特性：当我们使用 <code>git submodule update</code> 对子模块进行更新之后，子模块实际上会处于一个游离的 branch 上并且这个 branch 是 main（不一定是 main，可以配置）的复制。</p><figure class="highlight less"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs less"><span class="hljs-selector-tag">git</span> <span class="hljs-selector-tag">branch</span><br>* (HEAD detached at abcdefg)<br>  <span class="hljs-selector-tag">main</span><br></code></pre></div></td></tr></table></figure><p>在这个 branch 上的所有工作不但无法进行 push，甚至会在下一次 <code>git submodule update</code> 之后丢失。</p><h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3><p>子模块的设计非常复杂且反直觉，好在我们可以通过一些项目规范和开发习惯来规避一些使用子模块带来的的副作用。</p><ul><li>对子模块的 main branch 进行保护，所有的开发都在特定的 branch 上进行，以避免游离的 HEAD 带来的困扰。</li><li>开发子模块时，将其单独 clone 下来或者复制出来，总之不要直接在主仓库里的子模块里进行开发，以免主仓库检测到子模块 commit 的更新。</li><li>在主仓库中更新子模块时，不要在更新 <code>主仓库中的子仓库</code> 版本之前更新依赖于子模块新版本的代码。</li><li>主仓库与子模块同步更新之后视情况通知其他开发者，毕竟在主仓库 <code>git pull</code> 只会更新依赖于子模块新版本的代码，而无法更新子模块。</li><li>当我们在主仓库 <code>git pull</code> 之后发现检测出了子模块的更新（这种情况属于 <code>本地的子仓库</code> 落后于 <code>本地主仓库中的子仓库</code> 版本），手动执行 submodule update。</li><li>项目保证主仓库只使用子模块的特定分支，且当 <code>主仓库中的子仓库</code> 产生冲突时，以最新的子模块版本为准。</li></ul><h3 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h3><p><a href="https://iphysresearch.github.io/blog/post/programing/git/git_submodule/">Git: submodule 子模块简明教程</a><br /><a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97">7.11 Git 工具 - 子模块</a></p><h2 id="github-actions"><a class="markdownIt-Anchor" href="#github-actions"></a> GitHub Actions</h2><p>GitHub Actions 是 github 推出的持续集成工具，简单来说就是可以在我们每次提交代码后在服务器上自动运行一些指令。我们不需要太复杂的 action，在仓库 build system 完备的基础上，只需要在代码提交后让 github 服务器自动运行我们的构建脚本并且检查仓库的构建与编译是否正常即可，以保证每一次 pr 都不会破坏仓库。</p><p><a href="https://docs.github.com/zh/actions">官方文档</a><br />GitHub Actions 使用 YAML 来定义工作流程。 每个工作流都作为单独的 YAML 文件存储在 <code>.github/workflows/*.yml</code>。</p><p>一个简单的例子：</p><figure class="highlight yml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yml"><span class="hljs-attr">name:</span> <span class="hljs-string">build</span><br><br><span class="hljs-attr">on:</span><br>  <span class="hljs-attr">push:</span><br>    <span class="hljs-attr">branches:</span> [ <span class="hljs-string">&quot;main&quot;</span> ]<br>  <span class="hljs-attr">pull_request:</span><br>    <span class="hljs-attr">branches:</span> [ <span class="hljs-string">&quot;main&quot;</span> ]<br><br><span class="hljs-attr">jobs:</span><br>  <span class="hljs-attr">Windows:</span><br>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">windows-latest</span><br>    <span class="hljs-attr">steps:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Check</span> <span class="hljs-string">out</span> <span class="hljs-string">repository</span> <span class="hljs-string">under</span> <span class="hljs-string">$GITHUB_WORKSPACE.</span><br>      <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v3</span><br>    <br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Add</span> <span class="hljs-string">MSBuild</span> <span class="hljs-string">to</span> <span class="hljs-string">PATH.</span><br>      <span class="hljs-attr">uses:</span> <span class="hljs-string">microsoft/setup-msbuild@v1.1</span><br><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">project.</span><br>      <span class="hljs-attr">run:</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/Setup.bat</span><br><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">x64</span> <span class="hljs-string">Debug.</span><br>      <span class="hljs-attr">run:</span> <span class="hljs-string">msbuild</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/HinaEngine.sln</span> <span class="hljs-string">/p:Configuration=Debug</span> <span class="hljs-string">/p:Platform=x64</span><br>      <br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">x64</span> <span class="hljs-string">Release.</span><br>      <span class="hljs-attr">run:</span> <span class="hljs-string">msbuild</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/HinaEngine.sln</span> <span class="hljs-string">/p:Configuration=Release</span> <span class="hljs-string">/p:Platform=x64</span><br></code></pre></div></td></tr></table></figure><h3 id="on"><a class="markdownIt-Anchor" href="#on"></a> on</h3><figure class="highlight yml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yml"><span class="hljs-attr">on:</span><br>  <span class="hljs-attr">push:</span><br>    <span class="hljs-attr">branches:</span> [ <span class="hljs-string">&quot;main&quot;</span> ]<br>  <span class="hljs-attr">pull_request:</span><br>    <span class="hljs-attr">branches:</span> [ <span class="hljs-string">&quot;main&quot;</span> ]<br></code></pre></div></td></tr></table></figure><p>代表这个 actions 会被 main branch 上的 push 和 pr 动作触发。</p><h3 id="jobs"><a class="markdownIt-Anchor" href="#jobs"></a> jobs</h3><figure class="highlight yml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yml"><span class="hljs-attr">jobs:</span><br>  <span class="hljs-attr">Windows:</span><br>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">windows-latest</span><br></code></pre></div></td></tr></table></figure><ul><li>job 定义了最粗粒度的任务，默认每个 job 之间是并行的， 也可以用 <code>needs:</code> 来指定 job 之间的依赖关系，不过我们习惯使用多个 .yml 每个运行一个 job。</li><li><code>Windows:</code> 是自定义的 job 名称，<code>runs-on:</code> 用于指定系统的运行环境，其他环境详见 <a href="https://docs.github.com/zh/actions/using-workflows/workflow-syntax-for-github-actions#%E9%80%89%E6%8B%A9-github-%E6%89%98%E7%AE%A1%E7%9A%84%E8%BF%90%E8%A1%8C%E5%99%A8">选择 GitHub 托管的运行器</a>。</li></ul><h3 id="steps"><a class="markdownIt-Anchor" href="#steps"></a> steps</h3><figure class="highlight yml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yml"><span class="hljs-attr">steps:</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Check</span> <span class="hljs-string">out</span> <span class="hljs-string">repository</span> <span class="hljs-string">under</span> <span class="hljs-string">$GITHUB_WORKSPACE.</span><br>  <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v3</span><br><br><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Add</span> <span class="hljs-string">MSBuild</span> <span class="hljs-string">to</span> <span class="hljs-string">PATH.</span><br>  <span class="hljs-attr">uses:</span> <span class="hljs-string">microsoft/setup-msbuild@v1.1</span><br><br><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">project.</span><br>  <span class="hljs-attr">run:</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/Setup.bat</span><br><br><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">x64</span> <span class="hljs-string">Debug.</span><br>  <span class="hljs-attr">run:</span> <span class="hljs-string">msbuild</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/HinaEngine.sln</span> <span class="hljs-string">/p:Configuration=Debug</span> <span class="hljs-string">/p:Platform=x64</span><br>  <br><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">x64</span> <span class="hljs-string">Release.</span><br>  <span class="hljs-attr">run:</span> <span class="hljs-string">msbuild</span> <span class="hljs-string">$&#123;&#123;github.workspace&#125;&#125;/HinaEngine.sln</span> <span class="hljs-string">/p:Configuration=Release</span> <span class="hljs-string">/p:Platform=x64</span><br></code></pre></div></td></tr></table></figure><ul><li><code>steps:</code> 定义了该 job 中的每一步指令，在这里我们的流程是 1. 拉取仓库 2. 将 MSBuild 添加至环境变量 3. 构建与编译项目</li><li>不同仓库中的一些操作是类似的，github 也在 <a href="https://github.com/marketplace?type=actions">Actions 市场</a> 中提供了一系列封装好的命令。比如：<ul><li><code>actions/checkout@v3</code> 代表了将仓库拉取到 <code>$GITHUB_WORKSPACE</code>。<a href="https://github.com/marketplace/actions/checkout">Checkout</a></li><li><code>microsoft/setup-msbuild@v1.1</code> 代表寻找 MSBuild 的路径，并且将其添加到环境变量。<a href="https://github.com/marketplace/actions/setup-msbuild">setup-msbuild</a></li><li>检查这些 action 的官方页面以获取最新的版本号。</li></ul></li><li><code>$&#123;&#123;github.workspace&#125;&#125;</code> 代表了在命令行中该仓库的根目录。<code>Setup.bat</code> 是我们自定义的项目构建脚本，我们最终会在这个脚本中运行 premake 并且生成项目的 .sln 文件。</li><li>接着在命令行中编译项目的 Debug 和 Release 版本。msbuild 命令行详见 <a href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2022">MSBuild 命令行参考</a> 和 <a href="https://learn.microsoft.com/zh-cn/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2022">常用的 MSBuild 项目属性</a>。</li></ul><h3 id="check-failed"><a class="markdownIt-Anchor" href="#check-failed"></a> Check Failed</h3><p>Action 检查未通过是非常常见的，这时候只需要检查一下 Details 往往能帮我们定位错误。<br /><img src="/img/GitHub/action.png" alt=".gitmodules" /><br />有时候他的报错会非常抽象，如果你认为这个 failed 可能不是你的问题，可以尝试在失败的 Actions 界面点击 <code>Re-run job</code> 按钮。</p><h3 id="在-readme-中添加状态徽章"><a class="markdownIt-Anchor" href="#在-readme-中添加状态徽章"></a> 在 README 中添加状态徽章</h3><p>github actions 会将自身运行的状态生成为一张图片，我们可以用这个链接访问它：</p><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/&lt;OWNER&gt;/</span>&lt;REPOSITORY&gt;<span class="hljs-regexp">/actions/</span>workflows<span class="hljs-regexp">/&lt;WORKFLOW_FILE&gt;/</span>badge.svg<br></code></pre></div></td></tr></table></figure><p>然后将其作为图片塞入 markdown 语法中并指向仓库的 actions 界面：</p><figure class="highlight md"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs md">[<span class="hljs-string">![win64_vs2022_msvc</span>](<span class="hljs-link">https://github.com/CatDogEngine/CatDogEngine/actions/workflows/win64_vs2022_msvc.yml/badge.svg?branch=main</span>)](<span class="hljs-link">https://github.com/CatDogEngine/CatDogEngine/actions/workflows/win64_vs2022_msvc.yml</span>)<br></code></pre></div></td></tr></table></figure><p>效果：<br /><a href="https://github.com/CatDogEngine/CatDogEngine/actions/workflows/win64_vs2022_msvc.yml"><img src="https://github.com/CatDogEngine/CatDogEngine/actions/workflows/win64_vs2022_msvc.yml/badge.svg?branch=main" alt="win64_vs2022_msvc" /></a></p>]]></content>
     
     
+    
+    <tags>
+      
+      <tag>Git</tag>
+      
+      <tag>GitHub</tag>
+      
+    </tags>
     
   </entry>
   
@@ -144,6 +208,8 @@
     <tags>
       
       <tag>CPP</tag>
+      
+      <tag>Model</tag>
       
     </tags>
     
@@ -244,12 +310,6 @@
     
     
     
-    <tags>
-      
-      <tag>Shader</tag>
-      
-    </tags>
-    
   </entry>
   
   
@@ -280,11 +340,7 @@
       
       <tag>PBR</tag>
       
-      <tag>BRDF</tag>
-      
       <tag>ArealLight</tag>
-      
-      <tag>LightingModel</tag>
       
     </tags>
     
@@ -325,8 +381,6 @@
       <tag>CPP</tag>
       
       <tag>RHI</tag>
-      
-      <tag>bgfx</tag>
       
     </tags>
     
@@ -448,6 +502,8 @@
       
       <tag>CPP</tag>
       
+      <tag>RayTracing</tag>
+      
       <tag>GLSL</tag>
       
       <tag>Shadow</tag>
@@ -455,8 +511,6 @@
       <tag>JavaScript</tag>
       
       <tag>Reflection</tag>
-      
-      <tag>RayTracing</tag>
       
     </tags>
     
@@ -496,10 +550,6 @@
       
       <tag>PBR</tag>
       
-      <tag>BRDF</tag>
-      
-      <tag>Radiometry</tag>
-      
     </tags>
     
   </entry>
@@ -519,11 +569,11 @@
       
       <tag>CPP</tag>
       
+      <tag>RayTracing</tag>
+      
       <tag>AntiAliasing</tag>
       
       <tag>Rasterization</tag>
-      
-      <tag>Raytracing</tag>
       
     </tags>
     
