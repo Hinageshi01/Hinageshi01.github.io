@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      663 字
+      664 字
     </span>
   
 
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 21, 2023
+                  本文最后更新于：November 23, 2023
                 
               </p>
             
@@ -296,10 +296,12 @@ MT：<br />
 <img src="/img/cppProject/MT.png" srcset="/img/loading.gif" lazyload alt="MT" /></p>
 <h2 id="abi"><a class="markdownIt-Anchor" href="#abi"></a> ABI</h2>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/577996608">C++ ABI总结</a></p>
-<p>体现在跨编译器的 link 大概率是失败的，因为 C++ 编译器会对符号进行一个“名称重整”的行为以满足 C++ 中的多态，而不同编译器名称重整的逻辑完全不同。不过好像 clang 之类的是能够提供对其他编译器的兼容的。<br />
-另一个方面是混合了同一个编译器不同版本的编译流程，比如 MSVC 自 VS2015 之后说，新的连接器可以混合链接旧版 MSVC 编译出来的库文件。<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/porting/binary-compat-2015-2017?view=msvc-170">C++ binary compatibility between Visual Studio versions</a><br />
-还有就是第三方库只要能保持 ABI 兼容，即可只更新 dll 文件而不用重新编译最终的运行文件。<br />
-对虚函数表的重排序，添加删除成员变量都会使 ABI 兼容失效，因为内存排布不一样了，然后有个保持 ABI 兼容的技巧叫做 Pointer to implementation。<a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/pimpl">PImpl</a></p>
+<ul>
+<li>体现在跨编译器的 link 大概率是失败的，因为 C++ 编译器会对符号进行一个“名称重整”的行为以满足 C++ 中的多态，而不同编译器名称重整的逻辑完全不同。不过好像 clang 之类的是能够提供对其他编译器的兼容的。</li>
+<li>另一个方面是混合了同一个编译器不同版本的编译流程，比如 MSVC 自 VS2015 之后说，新的连接器可以混合链接旧版 MSVC 编译出来的库文件。<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/porting/binary-compat-2015-2017?view=msvc-170">C++ binary compatibility between Visual Studio versions</a></li>
+<li>还有就是第三方库只要能保持 ABI 兼容，即可只更新 dll 文件而不用重新编译最终的运行文件。</li>
+<li>对虚函数表的重排序，添加删除成员变量等都会使 ABI 兼容失效，因为内存排布不一样了，然后有个保持 ABI 兼容的技巧叫做 Pointer to implementation。<a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/pimpl">PImpl</a></li>
+</ul>
 
             </div>
             <hr>
