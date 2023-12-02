@@ -37,7 +37,7 @@
     <link href="/2023/11/17/inline/"/>
     <url>/2023/11/17/inline/</url>
     
-    <content type="html"><![CDATA[<h2 id="唯一定义原则"><a class="markdownIt-Anchor" href="#唯一定义原则"></a> 唯一定义原则</h2><p><a href="https://en.cppreference.com/w/cpp/language/definition">https://en.cppreference.com/w/cpp/language/definition</a></p><p><code>int a;</code>, <code>int a = 1;</code>, <code>extern int a = 1;</code> 都是定义。<br /><code>extern int a;</code> 为声明。</p><p><code>void fo() &#123;&#125;</code> 为定义。<br /><code>void foo();</code> 为声明。</p><h2 id="static"><a class="markdownIt-Anchor" href="#static"></a> static</h2><ul><li>将定义的可见性限制到当前翻译单元，使得不同翻译单元之间同名定义不冲突。</li><li>实际上不同用法 static 可以控制可见性，也可以控制生命周期，这里我们只讨论可见性相关的功能。</li></ul><h2 id="inline"><a class="markdownIt-Anchor" href="#inline"></a> inline</h2><ul><li>可以在多个翻译单元内存在同名 inline 定义，编译器选择其中一份作为唯一的定义，具体选择哪份定义则是未定义行为。</li><li>既有 static 的优点，可以写在头文件内被不同翻译单元包含，又有 extern 的优点，可以全局共享。</li></ul><h2 id="对于函数"><a class="markdownIt-Anchor" href="#对于函数"></a> 对于函数</h2><ul><li>写在头文件里的 static 函数定义自然不会产生冲突，但是 static 也导致不同翻译单元之间各包含一份函数定义，导致最终生成的目标体积增大。</li><li>inline 很好地解决了这个问题，应为连接器最终只会将 inline 函数链接到同一份定义，指向同一个函数地址。</li><li>include 同一份头文件更不会产生连接器链接到不同的定义（函数体）的问题。</li><li>同时，整个定义都在 class / struct / union 内的函数，隐式的是 inline 的，在这个角度上，是否将函数体分离在 cpp 文件内是殊途同归的。</li><li>顺便，直接写定义的模板函数是默认 inline 的。</li></ul><h2 id="对于类"><a class="markdownIt-Anchor" href="#对于类"></a> 对于类</h2><ul><li>可惜不能将 class 声明为 static，但是要解决这个问题也很简单，将类的定义放在一个匿名命名空间即可将该类的可见范围限制在当前翻译单元。</li><li>匿名命名空间下的函数定义和 static 的函数定义效果也是一样的。</li></ul><h2 id="至于内联"><a class="markdownIt-Anchor" href="#至于内联"></a> 至于内联</h2><ul><li>自 C++17 之后 inline 的意义产生了巨大的变化，对于函数的含义已经变为“容许多次定义”而不是“优先内联”。</li><li>现在对于 MSVC，可以使用 <code>__forceinline</code> 放宽编译器对内联函数的判断，不过编译器依旧不一定会听你的。</li></ul>]]></content>
+    <content type="html"><![CDATA[<h2 id="唯一定义原则"><a class="markdownIt-Anchor" href="#唯一定义原则"></a> 唯一定义原则</h2><p><a href="https://en.cppreference.com/w/cpp/language/definition">https://en.cppreference.com/w/cpp/language/definition</a></p><p><code>int a;</code>, <code>int a = 1;</code>, <code>extern int a = 1;</code> 都是定义。<br /><code>extern int a;</code> 为声明。</p><p><code>void fo() &#123;&#125;</code> 为定义。<br /><code>void foo();</code> 为声明。</p><h2 id="static"><a class="markdownIt-Anchor" href="#static"></a> static</h2><ul><li>将定义的可见性限制到当前翻译单元，使得不同翻译单元之间同名定义不冲突。</li><li>实际上不同用法 static 可以控制可见性，也可以控制生命周期，这里我们只讨论可见性相关的功能。</li></ul><h2 id="inline"><a class="markdownIt-Anchor" href="#inline"></a> inline</h2><ul><li>可以在多个翻译单元内存在同名 inline 定义，编译器选择其中一份作为唯一的定义，具体选择哪份定义则是未定义行为。</li><li>既有 static 的优点，可以写在头文件内被不同翻译单元包含，又有 extern 的优点，可以全局共享。</li></ul><h2 id="对于函数"><a class="markdownIt-Anchor" href="#对于函数"></a> 对于函数</h2><ul><li>写在头文件里的 static 函数定义自然不会产生冲突，但是 static 也导致不同翻译单元之间各包含一份函数定义，导致最终生成的目标体积增大。inline 很好地解决了这个问题，因为连接器最终只会将 inline 函数链接到同一份定义，指向同一个函数地址。</li><li>include 同一份头文件更不会产生连接器链接到不同的定义（函数体）的问题。</li><li>同时，整个定义都在 class / struct / union 内的函数，隐式的是 inline 的，在这个角度上，是否将函数体分离在 cpp 文件内是殊途同归的。</li><li>顺便，直接写定义的模板函数是默认 inline 的。</li></ul><h2 id="对于类"><a class="markdownIt-Anchor" href="#对于类"></a> 对于类</h2><ul><li>可惜不能将 class 声明为 static，但是要解决这个问题也很简单，将类的定义放在一个匿名命名空间即可将该类的可见范围限制在当前翻译单元。</li><li>匿名命名空间下的函数定义和 static 的函数定义效果也是一样的。</li></ul><h2 id="至于内联"><a class="markdownIt-Anchor" href="#至于内联"></a> 至于内联</h2><ul><li>自 C++17 之后 inline 的意义产生了巨大的变化，对于函数的含义已经变为“容许多次定义”而不是“优先内联”。</li><li>现在对于 MSVC，可以使用 <code>__forceinline</code> 放宽编译器对内联函数的判断，不过编译器依旧不一定会听你的。</li></ul>]]></content>
     
     
     
@@ -129,11 +129,11 @@
     
     <tags>
       
+      <tag>RayTracing</tag>
+      
       <tag>LinearAlgebra</tag>
       
       <tag>MVP</tag>
-      
-      <tag>RayTracing</tag>
       
     </tags>
     
@@ -569,11 +569,11 @@
       
       <tag>CPP</tag>
       
-      <tag>RayTracing</tag>
-      
       <tag>AntiAliasing</tag>
       
       <tag>Rasterization</tag>
+      
+      <tag>RayTracing</tag>
       
     </tags>
     
