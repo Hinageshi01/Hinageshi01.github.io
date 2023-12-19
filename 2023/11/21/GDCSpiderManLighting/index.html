@@ -68,7 +68,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>Hinageshi的駄菓子屋</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>Hinageshi 的駄菓子屋</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -241,21 +241,21 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：November 21, 2023
+                  本文最后更新于：December 19, 2023
                 
               </p>
             
             <div class="markdown-body">
               <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=HnguuY9IRro">https://www.youtube.com/watch?v=HnguuY9IRro</a></p>
 <h2 id="open-world-tiles"><a class="markdownIt-Anchor" href="#open-world-tiles"></a> Open World Tiles</h2>
-<p><img src="/img/GDC_SpiderMan_Lighting/Tile.png" srcset="/img/loading.gif" lazyload alt="Tile" /></p>
+<p><img src="/img/GDCSpiderManLighting/Tile.png" srcset="/img/loading.gif" lazyload alt="Tile" /></p>
 <ul>
 <li>将整个世界分成数个 128 x 128 米的 Tile，对于每个 Tile，由数个 JSON 文件描述该 Tile 所引用的资源。</li>
 <li>只有玩家当前所在的和周围的 Tile 会流入内存，其余的 Tile 卸载。</li>
 <li>极远处的渲染由下文会讲到的 Impostor 系统负责。</li>
 </ul>
 <h2 id="procedural-placement"><a class="markdownIt-Anchor" href="#procedural-placement"></a> Procedural Placement</h2>
-<p><img src="/img/GDC_SpiderMan_Lighting/ProceduralPlacement.png" srcset="/img/loading.gif" lazyload alt="ProceduralPlacement" /></p>
+<p><img src="/img/GDCSpiderManLighting/ProceduralPlacement.png" srcset="/img/loading.gif" lazyload alt="ProceduralPlacement" /></p>
 <ul>
 <li>程序化沿着街道放置路灯。</li>
 <li>可视化所有光源的位置及其光照范围（RayCast），以找到打光不足的区域。</li>
@@ -267,29 +267,29 @@
 <li>如果 Probe 位于建筑物内，用 SDF 将其移出。</li>
 <li>Probes 所捕获的信息来自 Impostor 系统。</li>
 </ul>
-<p><img src="/img/GDC_SpiderMan_Lighting/LightProbes.png" srcset="/img/loading.gif" lazyload alt="LightProbes" /></p>
+<p><img src="/img/GDCSpiderManLighting/LightProbes.png" srcset="/img/loading.gif" lazyload alt="LightProbes" /></p>
 <ul>
 <li>在磁盘上存储 Light Probe 信息数据量过大，故使用实时的 Light Probe 生成。</li>
 <li>每个 Probe 的每个面分辨率为 512 x 512，然后向下进行 5 层卷积存储为 MipMap。</li>
 </ul>
 <h2 id="ig-impostors"><a class="markdownIt-Anchor" href="#ig-impostors"></a> IG-Impostors</h2>
-<p><img src="/img/GDC_SpiderMan_Lighting/IG.png" srcset="/img/loading.gif" lazyload alt="IG" /></p>
+<p><img src="/img/GDCSpiderManLighting/IG.png" srcset="/img/loading.gif" lazyload alt="IG" /></p>
 <ul>
 <li>相关的 Mesh 和 Texture 常驻于全局内存中，代表最低级别的 LOD。</li>
 <li>所有 Mesh 共占 100 MB，Texture 共占 90 MB，还有一些高质量的用于自发光以及反射的 Mesh 共占 30 MB。</li>
 <li>一共 220 MB 的数据来表示整个城市的最低级别 LOD，可以被任何系统访问。<br />
-<img src="/img/GDC_SpiderMan_Lighting/Texture.png" srcset="/img/loading.gif" lazyload alt="Texture" /></li>
+<img src="/img/GDCSpiderManLighting/Texture.png" srcset="/img/loading.gif" lazyload alt="Texture" /></li>
 <li>一张贴图存储 albedo，一张一半分辨率的贴图存储 specular，gloss，emission。</li>
 </ul>
 <h2 id="light-grids"><a class="markdownIt-Anchor" href="#light-grids"></a> Light Grids</h2>
-<p><img src="/img/GDC_SpiderMan_Lighting/Grid.png" srcset="/img/loading.gif" lazyload alt="Grid" /></p>
+<p><img src="/img/GDCSpiderManLighting/Grid.png" srcset="/img/loading.gif" lazyload alt="Grid" /></p>
 <ul>
 <li>每个 128 x 128 米的 Tile 被划分为数个 16 x 16 x 16 的 capture volume。</li>
 <li>由建筑物高度决定立方体的分布。</li>
 <li>移除建筑物内部的立方体。</li>
 <li>Light Grids 信息生成为 JSON，引擎读取后进行采样并存储为 Cache File。</li>
 </ul>
-<p><img src="/img/GDC_SpiderMan_Lighting/LightGrids.png" srcset="/img/loading.gif" lazyload alt="LightGrids" /></p>
+<p><img src="/img/GDCSpiderManLighting/LightGrids.png" srcset="/img/loading.gif" lazyload alt="LightGrids" /></p>
 <ul>
 <li>每个 capture volume 内 4096 个样本，一立方米一个。</li>
 <li>每个样本生成每个面 256 x 256 像素的立方体贴图。</li>
@@ -365,7 +365,7 @@
         var options = Object.assign(
           {"clientID":"5e2153d92606f0f30050","clientSecret":"71138048e7eacddcadcf14ce72f87fe12fa35c40","repo":"Hinageshi01.github.io","owner":"Hinageshi01","admin":["Hinageshi01"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: 'b065503839b93a8b862606f98c0e7a4e'
+            id: 'ae3e5ed695e8f9e606997638342b7766'
           }
         )
         var gitalk = new Gitalk(options);
