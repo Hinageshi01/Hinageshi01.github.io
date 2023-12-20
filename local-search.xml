@@ -154,11 +154,11 @@
     
     <tags>
       
-      <tag>RayTracing</tag>
-      
       <tag>LinearAlgebra</tag>
       
       <tag>MVP</tag>
+      
+      <tag>RayTracing</tag>
       
     </tags>
     
@@ -594,11 +594,11 @@
       
       <tag>CPP</tag>
       
+      <tag>RayTracing</tag>
+      
       <tag>AntiAliasing</tag>
       
       <tag>Rasterization</tag>
-      
-      <tag>RayTracing</tag>
       
     </tags>
     
