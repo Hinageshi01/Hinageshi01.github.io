@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.7k 字
+      1.8k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      20
+      22
        分钟
     </span>
   
@@ -438,6 +438,21 @@ Raymarch 内存更小但是运行开销更大，剔除了雾, irradiance probe �
 <p>有一篇结合了逆向的文章，还在 UE 里复现了一遍：<br />
 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/127435500">荒野大镖客2天气系统云雾分帧处理细节</a></p>
 <h2 id="集成"><a class="markdownIt-Anchor" href="#集成"></a> 集成</h2>
+<h3 id="sky-scattering"><a class="markdownIt-Anchor" href="#sky-scattering"></a> Sky Scattering</h3>
+<ul>
+<li>基于 Precomputed Atmospheric Scattering [Bruneton07]</li>
+<li>改进自 Physically Based Sky, Atmosphere and Cloud Rendering in Frostbite [Hillaire16]</li>
+<li>支持 earth shadow <em>这啥？</em></li>
+<li>随时间段更新</li>
+<li>Raymarch 之后采样一次，而非每个采样点都采样 Sky Scattering</li>
+</ul>
+<h4 id="light-shaft-god-ray"><a class="markdownIt-Anchor" href="#light-shaft-god-ray"></a> Light Shaft / God Ray</h4>
+<ul>
+<li>分离 Sky Scattering 的可见性项</li>
+<li>每次 Raymarch 累计可见性，通过样本覆盖面积和透射率加权</li>
+<li>Raymarch 之后通过 光线长度进行归一化。</li>
+<li>物理不正确，但是开销小效果好</li>
+</ul>
 
             </div>
             <hr>
