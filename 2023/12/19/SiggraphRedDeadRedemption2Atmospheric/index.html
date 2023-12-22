@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.8k 字
+      1.9k 字
     </span>
   
 
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：December 21, 2023
+                  本文最后更新于：December 22, 2023
                 
               </p>
             
@@ -270,6 +270,7 @@
 <img src="/img/SiggraphRedDeadRedemption2Atmospheric/CloudHeightLUT.png" srcset="/img/loading.gif" lazyload alt="Cloud Height LUT" /></p>
 <p>细节，两张 2D 的位移贴图 + 一张 3D 的噪声贴图结合风速参数。<br />
 <img src="/img/SiggraphRedDeadRedemption2Atmospheric/CloudDetail.png" srcset="/img/loading.gif" lazyload alt="Cloud Detail" /></p>
+<p>在高空还有一层简化过的卷云，不过光照模型是一致的。</p>
 <figure class="highlight c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c">float2 c = SampleCloudMap(ray.p);<br>float3 cloudLut = SampleCloudLUT(altitude);<br><span class="hljs-keyword">float</span> density = smoothstep(g_CloudShape.xz + cloudLut.xy, g_CloudShape.yw + cloudLut.xy, c.xy);<br><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">rescale</span><span class="hljs-params">(vMin, vMax, v)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">return</span> saturate((v – vMin) / (vMax - vMin));<br>&#125;<br>density = rescale(noise, CloudLut.z, density);<br></code></pre></div></td></tr></table></figure>
 <h3 id="雾"><a class="markdownIt-Anchor" href="#雾"></a> 雾</h3>
 <p>全局雾 + 局部雾。一张图覆盖所有可玩区域，存储起始高度，衰减距离和密度。<br />
