@@ -22,6 +22,12 @@
       
       <tag>AtmosphericScattering</tag>
       
+      <tag>Cloud</tag>
+      
+      <tag>Raymarch</tag>
+      
+      <tag>VolumeRendering</tag>
+      
     </tags>
     
   </entry>
@@ -47,7 +53,7 @@
       
       <tag>Procedural</tag>
       
-      <tag>LightProbe</tag>
+      <tag>Probe</tag>
       
       <tag>Impostor</tag>
       
@@ -154,11 +160,17 @@
     
     <tags>
       
+      <tag>RayTracing</tag>
+      
+      <tag>BarycertricCoordinates</tag>
+      
+      <tag>BilinearInterpolation</tag>
+      
+      <tag>Camera</tag>
+      
       <tag>LinearAlgebra</tag>
       
       <tag>MVP</tag>
-      
-      <tag>RayTracing</tag>
       
     </tags>
     
@@ -177,9 +189,9 @@
     
     <tags>
       
-      <tag>Editor</tag>
-      
       <tag>Camera</tag>
+      
+      <tag>Editor</tag>
       
     </tags>
     
@@ -233,8 +245,6 @@
     <tags>
       
       <tag>CPP</tag>
-      
-      <tag>Model</tag>
       
     </tags>
     
@@ -506,8 +516,6 @@
       
       <tag>Rasterization</tag>
       
-      <tag>NormalMap</tag>
-      
     </tags>
     
   </entry>
@@ -594,11 +602,11 @@
       
       <tag>CPP</tag>
       
-      <tag>RayTracing</tag>
-      
       <tag>AntiAliasing</tag>
       
       <tag>Rasterization</tag>
+      
+      <tag>RayTracing</tag>
       
     </tags>
     
