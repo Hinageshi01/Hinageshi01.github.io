@@ -192,6 +192,71 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/12/23/GDCTheRenderingofINSIDE/" target="_self">
+          <img src="/img/GDCTheRenderingofINSIDE/01.png" srcset="/img/loading.gif" lazyload alt="低复杂，高保真：INSIDE 中的渲染">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/12/23/GDCTheRenderingofINSIDE/" target="_self">
+          低复杂，高保真：INSIDE 中的渲染
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/12/23/GDCTheRenderingofINSIDE/" target="_self">
+          
+          
+            
+          
+           原标题
+Low Complexity, High Fidelity: The Rendering of INSIDE
+项目中的各种 Trick 与性能优化，其中颜色抖动在渲染中的应用比较有意思。
+ Dithering
+
+这个问题源于：8 bit 的颜色无法完美还原高精度的渲染结果。
+
+橙线：理想中的原始信号
+蓝线：默认的采样方式（floor），可以看到丢失了精度
+噪点：人为在原始信号上叠加的 [
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-12-23 20:05" pubdate>
+              2023-12-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/GDC/">GDC</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Dithering/">Dithering</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2023/12/19/SiggraphRedDeadRedemption2Atmospheric/" target="_self">
           <img src="/img/SiggraphRedDeadRedemption2Atmospheric/01.png" srcset="/img/loading.gif" lazyload alt="荒野大镖客 2 中的天气系统">
         </a>
@@ -211,15 +276,15 @@
           
             
           
-           物理基础
+           原标题
+Creating the Atmospheric World of Red Dead Redemption 2: A Complete and Integrated Solution
+整套天气系统渲染的实现，包括大气、云雾、二十四小时、不同天气。
+ 物理基础
 
 
 这里只考虑单条光路上的单次散射。
 以单个粒子为视角，当光线与其交互时，大致会发生吸收（转化为热能）、散射和反弹。
-散射向相机的部分被称作 in-scattering，剩余的部分被称作 out-scattering。
-
-out-scattering 会继续作用于其他粒子并造成多重散射，多重散射较为复杂，自处不做考虑。
-以一条光路为视角，远处的粒子发生的 in-scattering 会
+散射向相机的
         </a>
       </p>
 
@@ -281,15 +346,14 @@ out-scattering 会继续作用于其他粒子并造成多重散射，多重散�
           
             
           
-          https://www.youtube.com/watch?v=HnguuY9IRro
+           原标题
+Marvel’s Spider-Man: Procedural Lighting Tools
+程序化布光以及 Probe / Light Grid 分布。
  Open World Tiles
 
 
 将整个世界分成数个 128 x 128 米的 Tile，对于每个 Tile，由数个 JSON 文件描述该 Tile 所引用的资源。
-只有玩家当前所在的和周围的 Tile 会流入内存，其余的 Tile 卸载。
-极远处的渲染由下文会讲到的 Impostor 系统负责。
-
- P
+只有玩家当前所在的和周围的 Tile 会流入内存，其余的 Ti
         </a>
       </p>
 
@@ -629,6 +693,8 @@ tanfovY2=t∣n∣tan\frac{fovY}{
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
+              <a href="/tags/RayTracing/">RayTracing</a>
+            
               <a href="/tags/BarycertricCoordinates/">BarycertricCoordinates</a>
             
               <a href="/tags/BilinearInterpolation/">BilinearInterpolation</a>
@@ -638,8 +704,6 @@ tanfovY2=t∣n∣tan\frac{fovY}{
               <a href="/tags/LinearAlgebra/">LinearAlgebra</a>
             
               <a href="/tags/MVP/">MVP</a>
-            
-              <a href="/tags/RayTracing/">RayTracing</a>
             
           </div>
         
@@ -765,61 +829,6 @@ git branch -a 查看所有分支
               <a href="/tags/GitHub/">GitHub</a>
             
           </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/07/01/Song/" target="_self">
-          <img src="/img/Song/01.png" srcset="/img/loading.gif" lazyload alt="歌单">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/01/Song/" target="_self">
-          歌单
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/07/01/Song/" target="_self">
-          
-          
-            
-          
-           日文
- 术力口
- glow
-
-参考：https://www.bilibili.com/video/BV1Ne4y1j7E7/ （鹿乃）
-
- オノマトペ / 拟声词
-
-参考：https://www.bilibili.com/video/BV1vN411o7Bo/ （长泽陵川）
-升降：+1
-
- 夏に去りし君を想フ / 思念于夏日离去的你
-
-原唱：https://www.bilibili.com/vi
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-01 00:00" pubdate>
-              2023-07-01
-            </time>
-          </div>
-        
-        
         
       </div>
     </article>
