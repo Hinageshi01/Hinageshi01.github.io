@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.9k 字
+      2k 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      22
+      24
        分钟
     </span>
   
@@ -247,7 +247,7 @@
             
             <div class="markdown-body">
               <h2 id="物理基础"><a class="markdownIt-Anchor" href="#物理基础"></a> 物理基础</h2>
-<p><img src="/img/SiggraphRedDeadRedemption2Atmospheric/Scattering.png" srcset="/img/loading.gif" lazyload alt="Scattering" /></p>
+<p><img src="/img/SiggraphRedDeadRedemption2Atmospheric/Scattering1.png" srcset="/img/loading.gif" lazyload alt="Scattering" /></p>
 <ul>
 <li>这里只考虑单条光路上的单次散射。</li>
 <li>以单个粒子为视角，当光线与其交互时，大致会发生吸收（转化为热能）、散射和反弹。</li>
@@ -463,6 +463,26 @@ Raymarch 内存更小但是运行开销更大，剔除了雾, irradiance probe �
 <li>编码为三阶球谐函数</li>
 </ul>
 <div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/img/SiggraphRedDeadRedemption2Atmospheric/SkyIrradianceProbes1.png" srcset="/img/loading.gif" lazyload alt="Sky Irradiance" /></div><div class="group-image-wrap"><img src="/img/SiggraphRedDeadRedemption2Atmospheric/SkyIrradianceProbes2.png" srcset="/img/loading.gif" lazyload alt="With Scattering / Transmittance" /></div><div class="group-image-wrap"><img src="/img/SiggraphRedDeadRedemption2Atmospheric/SkyIrradianceProbes3.png" srcset="/img/loading.gif" lazyload alt="With Direct Light" /></div></div></div>
+<p>优化：</p>
+<ul>
+<li>可视的 Probe 投射 32 条光线，不可见投射 16 条</li>
+<li>每个线程一条射线</li>
+<li>不考虑云的高频噪声侵蚀</li>
+<li>不考虑彩虹 / 闪电</li>
+<li>长步长，无需细化</li>
+<li>Shared memory parallel reduction</li>
+</ul>
+<h3 id="reflection-probes"><a class="markdownIt-Anchor" href="#reflection-probes"></a> Reflection Probes</h3>
+<ul>
+<li>在相机位置生成低分辨率的 Cube Map</li>
+<li>存储 scattering 和 transmittance</li>
+<li>和 Sky Irradiance Probe 一样简化的 Raymarch</li>
+</ul>
+<h3 id="water-reflections"><a class="markdownIt-Anchor" href="#water-reflections"></a> Water Reflections</h3>
+<ul>
+<li>SSR 不包含半透明 / 体积效果</li>
+<li>取而代之使用简化的 Raymarch + temporal blend</li>
+</ul>
 
             </div>
             <hr>
