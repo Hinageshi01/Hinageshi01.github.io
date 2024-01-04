@@ -300,124 +300,6 @@ Virtual Texture
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/04/08/LearnOpenGL/" target="_self">
-          <img src="/img/GL/01.png" srcset="/img/loading.gif" lazyload alt="笔记 LearnOpenGL">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/08/LearnOpenGL/" target="_self">
-          笔记 LearnOpenGL
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/08/LearnOpenGL/" target="_self">
-          
-          
-            
-          
-           序言
-  OpenGL 的学习笔记。
- 模板测试与描边
- API
-
-开启模板测试
-glEnable(GL_STENCIL_TEST);
-清除模板缓冲
-glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-模板位掩码
-glStencilMask(0xFF); // 每一位写入模板缓冲时都保持原样
-gl
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-08 18:17" pubdate>
-              2022-04-08
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CPP/">CPP</a>
-            
-              <a href="/tags/GLSL/">GLSL</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/03/04/EffectiveCpp/" target="_self">
-          <img src="/img/EC/01.png" srcset="/img/loading.gif" lazyload alt="笔记 Effective C++">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/03/04/EffectiveCpp/" target="_self">
-          笔记 Effective C++
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/03/04/EffectiveCpp/" target="_self">
-          
-          
-            
-          
-           序言
-  Effective C++ 的学习笔记。
- 1. 让自己习惯 C++
- 条款 01：视 C++ 为一个语言联邦
-C、Object-Oriented C++、Template C++、STL
- 条款 02：尽量以 const，enum，inline，替换 #define
-
-当写下 #define MY_PIE 3.14，名称 MY_PIE 也许从未被编译器看见，如果此常量产生了一个错误，
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-04 17:50" pubdate>
-              2022-03-04
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CPP/">CPP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/11/27/CppPrimer/" target="_self">
           <img src="/img/CppPrimer/01.png" srcset="/img/loading.gif" lazyload alt="笔记 C++ Primer">
         </a>
@@ -791,6 +673,143 @@ Wsr\frac{W}{s
               <a href="/tags/AntiAliasing/">AntiAliasing</a>
             
               <a href="/tags/Rasterization/">Rasterization</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/08/29/Unity/" target="_self">
+          <img src="/img/Unity/01.png" srcset="/img/loading.gif" lazyload alt="【Archive】背包，卡肉，镜头抖动，有限状态机">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/29/Unity/" target="_self">
+          【Archive】背包，卡肉，镜头抖动，有限状态机
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/29/Unity/" target="_self">
+          
+          
+            
+          
+           背包系统
+  背包 GUI 的实现、ScriptableObject、数据的存储与读取。
+ 层级结构
+
+
+Bag 挂载 BagOnDrag 脚本
+Grid 挂载 Grid Layout Group 组件，使其子物体（Slot）整齐地排放
+Slot 挂载 Slot 脚本，更改其子物体（Item）以实现拖拽
+Item 挂载 ItemOnDrag 脚本和 CanvasGroup 组件，以及作为 but
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-29 12:32" pubdate>
+              2021-08-29
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/AI/">AI</a>
+            
+              <a href="/tags/C/">C#</a>
+            
+              <a href="/tags/Unity/">Unity</a>
+            
+              <a href="/tags/GameDesign/">GameDesign</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/08/19/SunnyLand/" target="_self">
+          <img src="/img/SunnyLand/lg.png" srcset="/img/loading.gif" lazyload alt="【Archive】Sunny Land, a platformmer game">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/19/SunnyLand/" target="_self">
+          【Archive】Sunny Land, a platformmer game
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/19/SunnyLand/" target="_self">
+          
+          
+            
+          
+           序言
+
+使用 Unity 制作的 2D 平台跳跃游戏
+压缩包大小：46MB
+平台：Win
+只有三关，根据游戏经验的不同，完整的游戏时长会在 10min-60min 之间
+百度网盘 提取码: twwx
+蓝奏云
+
+ 一览
+
+
+ 关于关卡设计
+
+            如果您还未进行过游戏，强烈建议体验过后再继续阅读，以免破坏您的游戏体验。
+          
+林田宏一曾提到过任天堂的关卡设计公式：
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-19 23:00" pubdate>
+              2021-08-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Works/">Works</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Unity/">Unity</a>
+            
+              <a href="/tags/GameDesign/">GameDesign</a>
             
           </div>
         
