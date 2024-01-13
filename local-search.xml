@@ -197,8 +197,6 @@
     
     <tags>
       
-      <tag>RayTracing</tag>
-      
       <tag>BarycertricCoordinates</tag>
       
       <tag>BilinearInterpolation</tag>
@@ -208,6 +206,8 @@
       <tag>LinearAlgebra</tag>
       
       <tag>MVP</tag>
+      
+      <tag>RayTracing</tag>
       
     </tags>
     
@@ -540,6 +540,8 @@
       
       <tag>CPP</tag>
       
+      <tag>RayTracing</tag>
+      
       <tag>GLSL</tag>
       
       <tag>Shadow</tag>
@@ -547,8 +549,6 @@
       <tag>JavaScript</tag>
       
       <tag>Reflection</tag>
-      
-      <tag>RayTracing</tag>
       
     </tags>
     
