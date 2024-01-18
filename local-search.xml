@@ -4,11 +4,11 @@
   
   
   <entry>
-    <title>GDCOverWatchECS</title>
+    <title>守望先锋中的 ECS 系统</title>
     <link href="/2024/01/18/GDCOverwatchECS/"/>
     <url>/2024/01/18/GDCOverwatchECS/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h2 id="原标题"><a class="markdownIt-Anchor" href="#原标题"></a> 原标题</h2><p><em>Overwatch Gameplay Architecture and Netcode</em></p><h2 id="world"><a class="markdownIt-Anchor" href="#world"></a> World</h2><ul><li>Component：只保存状态，不含逻辑</li><li>System：只有逻辑，没有数据</li></ul><p>系统按顺序更新（Tick），每个系统访问多个不同的组件，称之为元组（Tuple）。<br />系统不关心实体，只关心具体的组件。</p>]]></content>
     
     
     <categories>
@@ -306,11 +306,11 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>AssetPipeline</tag>
       
       <tag>Assimp</tag>
+      
+      <tag>CPP</tag>
       
     </tags>
     

@@ -18,7 +18,7 @@
   <meta name="author" content="Hinageshi">
   <meta name="keywords" content="">
   
-  <title>GDCOverWatchECS - Hexo</title>
+  <title>守望先锋中的 ECS 系统 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="GDCOverWatchECS">
+            <span class="h2" id="subtitle" title="守望先锋中的 ECS 系统">
               
             </span>
 
@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      0 字
+      70 字
     </span>
   
 
@@ -237,7 +237,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">GDCOverWatchECS</h1>
+            <h1 style="display: none">守望先锋中的 ECS 系统</h1>
             
               <p class="note note-info">
                 
@@ -246,7 +246,16 @@
               </p>
             
             <div class="markdown-body">
-              
+              <h2 id="原标题"><a class="markdownIt-Anchor" href="#原标题"></a> 原标题</h2>
+<p><em>Overwatch Gameplay Architecture and Netcode</em></p>
+<h2 id="world"><a class="markdownIt-Anchor" href="#world"></a> World</h2>
+<ul>
+<li>Component：只保存状态，不含逻辑</li>
+<li>System：只有逻辑，没有数据</li>
+</ul>
+<p>系统按顺序更新（Tick），每个系统访问多个不同的组件，称之为元组（Tuple）。<br />
+系统不关心实体，只关心具体的组件。</p>
+
             </div>
             <hr>
             <div>

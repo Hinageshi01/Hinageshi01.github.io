@@ -193,7 +193,7 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2024/01/18/GDCOverwatchECS/" target="_self">
-          <img src="/img/GDCOverwatchECS/01.jpg" srcset="/img/loading.gif" lazyload alt="GDCOverWatchECS">
+          <img src="/img/GDCOverwatchECS/01.jpg" srcset="/img/loading.gif" lazyload alt="守望先锋中的 ECS 系统">
         </a>
       </div>
     
@@ -201,7 +201,7 @@
       <h1 class="index-header">
         
         <a href="/2024/01/18/GDCOverwatchECS/" target="_self">
-          GDCOverWatchECS
+          守望先锋中的 ECS 系统
         </a>
       </h1>
 
@@ -211,7 +211,16 @@
           
             
           
-          
+           原标题
+Overwatch Gameplay Architecture and Netcode
+ World
+
+Component：只保存状态，不含逻辑
+System：只有逻辑，没有数据
+
+系统按顺序更新（Tick），每个系统访问多个不同的组件，称之为元组（Tuple）。
+系统不关心实体，只关心具体的组件。
+
         </a>
       </p>
 
