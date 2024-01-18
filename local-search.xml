@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>GDCOverWatchECS</title>
+    <link href="/2024/01/18/GDCOverwatchECS/"/>
+    <url>/2024/01/18/GDCOverwatchECS/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>GDC</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>ECS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>低复杂，高保真：INSIDE 中的渲染</title>
     <link href="/2023/12/23/GDCTheRenderingofINSIDE/"/>
     <url>/2023/12/23/GDCTheRenderingofINSIDE/</url>
@@ -197,6 +222,8 @@
     
     <tags>
       
+      <tag>RayTracing</tag>
+      
       <tag>BarycertricCoordinates</tag>
       
       <tag>BilinearInterpolation</tag>
@@ -206,8 +233,6 @@
       <tag>LinearAlgebra</tag>
       
       <tag>MVP</tag>
-      
-      <tag>RayTracing</tag>
       
     </tags>
     
@@ -281,11 +306,11 @@
     
     <tags>
       
+      <tag>CPP</tag>
+      
       <tag>AssetPipeline</tag>
       
       <tag>Assimp</tag>
-      
-      <tag>CPP</tag>
       
     </tags>
     
@@ -607,11 +632,11 @@
       
       <tag>CPP</tag>
       
-      <tag>RayTracing</tag>
-      
       <tag>AntiAliasing</tag>
       
       <tag>Rasterization</tag>
+      
+      <tag>RayTracing</tag>
       
     </tags>
     
