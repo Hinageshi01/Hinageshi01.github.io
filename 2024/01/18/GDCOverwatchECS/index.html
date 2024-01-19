@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      818 字
+      854 字
     </span>
   
 
@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      10
        分钟
     </span>
   
@@ -252,7 +252,8 @@
 <li>Component：只保存状态，不含逻辑</li>
 <li>System：只有逻辑，没有数据</li>
 </ul>
-<p>系统按顺序更新（Tick），每个系统访问多个不同的组件，称之为元组（Tuple）。<br />
+<p>系统按顺序更新（Tick），每个系统访问多个不同的组件，称之为元组（Tuple）<br />
+元组之后被 Sibling 取代了。<br />
 系统不关心实体，只关心具体的组件。</p>
 <h2 id="world"><a class="markdownIt-Anchor" href="#world"></a> World</h2>
 <ul>
@@ -282,11 +283,11 @@
 <h2 id="示例"><a class="markdownIt-Anchor" href="#示例"></a> 示例</h2>
 <p>一个检测玩家挂机行为的 System，这个 System 必须同时取得 ConnectionComponent，InputStreamComponent 和 StatsComponent。<br />
 而对于没有 ConnectionComponent 和 InputStreamComponent 的 AI 玩家则不受这个系统的约束。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PlayerConnectionSystem::Update</span><span class="hljs-params">(<span class="hljs-keyword">float</span> timeStep)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(ConnectionComponent *c : ComponentItr&lt;ConnectionComponent&gt;(m_admin))<br>    &#123;<br>        <span class="hljs-comment">// 从一个具体的 Component 所在的 Entity 上获得指定类型的 Component。</span><br>        InputStreamComponent *is =c-&gt;Sibling&lt;InputStreamComponent&gt;();<br>        StatsComponent *stats = c-&gt;Sibling&lt;StatsComponent&gt;();<br>        <span class="hljs-keyword">if</span> (is-&gt;m_inputThisFrame || stats-&gt;m_didSomethingCoolLately)<br>        &#123;<br>            c-&gt;m_afkTimer = <span class="hljs-number">0.0f</span>;<br>            C-&gt;m_sentAFKMessage = <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            C-&gt;m_afkTimer += timeStep;<br>            <span class="hljs-keyword">if</span> (!c-&gt;m_sentAFKMessage &amp;&amp; c-&gt;m_afkTimer &gt; AFK_MESSAGE_SECONDS)<br>            &#123;<br>                c-&gt;m_sentAFKMessage = <span class="hljs-literal">true</span>;<br>                ConnectionUtil::<span class="hljs-built_in">SendMessage</span>(c-&gt;m_connectionHandle, <span class="hljs-string">&quot;Move scrub!&quot;</span>);<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PlayerConnectionSystem::Update</span><span class="hljs-params">(<span class="hljs-keyword">float</span> timeStep)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(ConnectionComponent *c : ComponentItr&lt;ConnectionComponent&gt;(m_admin))<br>    &#123;<br>        <span class="hljs-comment">// 从一个具体的 Component 所在的 Entity 上获得指定类型的 Component。</span><br>        InputStreamComponent *is = c-&gt;Sibling&lt;InputStreamComponent&gt;();<br>        StatsComponent *stats = c-&gt;Sibling&lt;StatsComponent&gt;();<br>        <span class="hljs-keyword">if</span> (is-&gt;m_inputThisFrame || stats-&gt;m_didSomethingCoolLately)<br>        &#123;<br>            c-&gt;m_afkTimer = <span class="hljs-number">0.0f</span>;<br>            C-&gt;m_sentAFKMessage = <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            C-&gt;m_afkTimer += timeStep;<br>            <span class="hljs-keyword">if</span> (!c-&gt;m_sentAFKMessage &amp;&amp; c-&gt;m_afkTimer &gt; AFK_MESSAGE_SECONDS)<br>            &#123;<br>                c-&gt;m_sentAFKMessage = <span class="hljs-literal">true</span>;<br>                <span class="hljs-comment">// 辅助函数，之后会讲到</span><br>                ConnectionUtil::<span class="hljs-built_in">SendMessage</span>(c-&gt;m_connectionHandle, <span class="hljs-string">&quot;Move scrub!&quot;</span>);<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <h2 id="why-not-oop-it"><a class="markdownIt-Anchor" href="#why-not-oop-it"></a> WHY NOT OOP IT</h2>
 <p>观点：同一份数据在不同视角下的意义是不同的。</p>
 <h2 id="全局变量"><a class="markdownIt-Anchor" href="#全局变量"></a> 全局变量</h2>
-<p>为了避免奇怪的访问方式（比如一个系统通过全局变量拿到另一个系统的指针，当死亡回放时存在两个 World，便存在了两个“全局变量”）<br />
+<p>为了避免奇怪的访问方式（比如一个系统通过全局变量拿到另一个系统的指针，而死亡回放时存在两个 World，便存在了两个“全局变量”）<br />
 可以定义一些仅存在一个实例的 Component，称之为单例组件。存在于一匿名 Entity 上，通常直接通过 World 访问。<br />
 单例组件极少只被单个 System 访问，并且事实上 OW 有百分之四十的 Component 都是单例组件。</p>
 <h2 id="全局行为share-behavior"><a class="markdownIt-Anchor" href="#全局行为share-behavior"></a> 全局行为（Share behavior）</h2>
@@ -301,13 +302,14 @@
 <p>假设有一个会影响很多 Component 的函数，并且允许其在多个地方调用。首先对其本身的任何修改就需要进行大量的测试，其次调用者容易对其真正的复杂度产生误解进而无限制的进行调用。两者放在一起更是让代码很难理解。<br />
 <img src="/img/GDCOverwatchECS/Nightmare.png" srcset="/img/loading.gif" lazyload alt="Nightmare" /><br />
 解决方案：延迟调用<br />
-在原本的调用位置只添加一个包含足够多信息的用于稍后进行真正的调用的记录到 array，最后统一进行处理，这样一来每一帧就只有一个调用会产生明显的副作用了。<br />
+在原本的调用位置只添加一个包含足够多信息的用于稍后进行真正的调用的记录到 array，最后统一进行处理，这样一来每一帧就只有一处调用会产生明显的副作用了。<br />
 我的理解是：复杂度是无法减小的，但是是可以被错误的设计放大的，而我们的设计应当尽量逼近最小的复杂度。<br />
 更多好处：</p>
 <ol>
 <li>数据与指令内存布局连续，访存友好。</li>
 <li>你甚至可以将真正的调用延迟到之后几帧来分摊性能。</li>
 </ol>
+<p>PS：实体的创建是立即的，具体情况具体分析。</p>
 
             </div>
             <hr>

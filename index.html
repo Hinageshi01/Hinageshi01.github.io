@@ -217,12 +217,13 @@ Overwatch Gameplay Architecture and Netcode
 Component：只保存状态，不含逻辑
 System：只有逻辑，没有数据
 
-系统按顺序更新（Tick），每个系统访问多个不同的组件，称之为元组（Tuple）。
+系统按顺序更新（Tick），每个系统访问多个不同的组件，称之为元组（Tuple）
+元组之后被 Sibling 取代了。
 系统不关心实体，只关心具体的组件。
  World
 
 array&lt;System *&gt;
-hash_map&lt;EntityID,
+has
         </a>
       </p>
 
