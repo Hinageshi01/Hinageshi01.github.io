@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      854 字
+      857 字
     </span>
   
 
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：January 19, 2024
+                  本文最后更新于：February 19, 2024
                 
               </p>
             
@@ -259,7 +259,7 @@
 <ul>
 <li>array&lt;System *&gt;</li>
 <li>hash_map&lt;EntityID, Entity *&gt;</li>
-<li>object_pool<Component>*</li>
+<li>object_pool&lt; Component &gt;*</li>
 <li>array&lt;Component <em>&gt;</em></li>
 </ul>
 <h2 id="entity"><a class="markdownIt-Anchor" href="#entity"></a> Entity</h2>
@@ -271,10 +271,10 @@
 <h2 id="component"><a class="markdownIt-Anchor" href="#component"></a> Component</h2>
 <ul>
 <li>void Create(resource *)</li>
-<li>~Component()<br />
-基类，其子类可以重载构造 / 析构函数用于管理资源。<br />
-有一些工具函数，主要为数据的访问接口。</li>
+<li>~Component()</li>
 </ul>
+<p>基类，其子类可以重载构造 / 析构函数用于管理资源。<br />
+有一些工具函数，主要为数据的访问接口。</p>
 <h2 id="system"><a class="markdownIt-Anchor" href="#system"></a> System</h2>
 <ul>
 <li>void Update(float)</li>
