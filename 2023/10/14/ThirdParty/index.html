@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      17
+      16
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 8, 2024
+                  本文最后更新于：April 10, 2024
                 
               </p>
             
@@ -387,19 +387,15 @@ OpenGL 扩展库。</p>
 <h4 id="1-屏蔽这个警告"><a class="markdownIt-Anchor" href="#1-屏蔽这个警告"></a> 1. 屏蔽这个警告</h4>
 <p>为项目设置 <code>_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING</code> 宏。</p>
 <h4 id="2-将-spdlog-更新至-v2x"><a class="markdownIt-Anchor" href="#2-将-spdlog-更新至-v2x"></a> 2. 将 spdlog 更新至 v2.x</h4>
-<p>fmt 已经修复了这个 bug，但 spdlog 作者说为了向后兼容，spdlog v1.x 无法更新 fmt。</p>
+<p>fmt 已经修复了这个 bug，但 spdlog 作者说为了向后兼容，spdlog v1.x 无法更新 fmt。<br />
+v2.x 似乎仍在开发中。</p>
 <h4 id="3-为-spdlog-指定外部的-fmt"><a class="markdownIt-Anchor" href="#3-为-spdlog-指定外部的-fmt"></a> 3. 为 spdlog 指定外部的 fmt</h4>
-<p>开启 <code>SPDLOG_FMT_EXTERNAL</code> 宏，手动更新 fmt。</p>
+<p>开启 <code>SPDLOG_FMT_EXTERNAL</code> 或 <code>SPDLOG_FMT_EXTERNAL_HO</code> 宏，手动更新 fmt。<br />
+spdlog 使用 <code>find_package</code> 查找 fmt，我们需要先生成 fmt，得到 <code>fmt-config.cmake</code> 文件，然后将其所在路径添加至 <code>CMAKE_PREFIX_PATH</code> 或 <code>fmt_DIR</code>，两者都可以用 -D 指令添加。</p>
 <h4 id="4-使用-stdformat-代替-fmt"><a class="markdownIt-Anchor" href="#4-使用-stdformat-代替-fmt"></a> 4. 使用 <code>std::format</code> 代替 fmt</h4>
-<p>开启 <code>SPDLOG_USE_STD_FORMAT</code> 宏即可。<br />
-这个加纯头文件模式挺方便的。</p>
-<h3 id="编译-2"><a class="markdownIt-Anchor" href="#编译-2"></a> 编译</h3>
-<p>spdlog 默认使用了 MD，并且在 CMake 脚本里没有提供切换 MT 的选项。这种情况应该至少有两种解决方案：</p>
-<h4 id="1-修改-cmakelists"><a class="markdownIt-Anchor" href="#1-修改-cmakelists"></a> 1. 修改 CMakeLists</h4>
-<p>使用 <code>CMAKE_MSVC_RUNTIME_LIBRARY</code>，CMake 版本至少需要 1.5 或以上。</p>
-<h4 id="2-修改-sln"><a class="markdownIt-Anchor" href="#2-修改-sln"></a> 2. 修改 .sln</h4>
-<p>先生成 .sln，然后直接用 MSBuild 编译目标，同时用 <code>-p</code> 重写项目的属性。<br />
-如果 MSBuild 不在环境变量里，可以通过 vswhere 找到。</p>
+<p>开启 <code>SPDLOG_USE_STD_FORMAT</code> 宏即可。</p>
+<h3 id="异常"><a class="markdownIt-Anchor" href="#异常"></a> 异常</h3>
+<p><code>SPDLOG_NO_EXCEPTIONS</code></p>
 <h3 id="header-6"><a class="markdownIt-Anchor" href="#header-6"></a> header</h3>
 <p><code>spdlog/include/spdlog/spdlog.h</code></p>
 
