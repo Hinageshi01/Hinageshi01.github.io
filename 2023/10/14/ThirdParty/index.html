@@ -207,7 +207,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      16
+      17
        分钟
     </span>
   
@@ -241,7 +241,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：April 10, 2024
+                  本文最后更新于：April 11, 2024
                 
               </p>
             
@@ -391,7 +391,10 @@ OpenGL 扩展库。</p>
 v2.x 似乎仍在开发中。</p>
 <h4 id="3-为-spdlog-指定外部的-fmt"><a class="markdownIt-Anchor" href="#3-为-spdlog-指定外部的-fmt"></a> 3. 为 spdlog 指定外部的 fmt</h4>
 <p>开启 <code>SPDLOG_FMT_EXTERNAL</code> 或 <code>SPDLOG_FMT_EXTERNAL_HO</code> 宏，手动更新 fmt。<br />
-spdlog 使用 <code>find_package</code> 查找 fmt，我们需要先生成 fmt，得到 <code>fmt-config.cmake</code> 文件，然后将其所在路径添加至 <code>CMAKE_PREFIX_PATH</code> 或 <code>fmt_DIR</code>，两者都可以用 -D 指令添加。</p>
+spdlog 使用 <code>find_package</code> 查找 fmt，我们需要先生成 fmt，得到 <code>fmt-config.cmake</code> 文件，然后将其所在路径添加至 <code>CMAKE_PREFIX_PATH</code> 或 <code>fmt_DIR</code>，两者都可以用 -D 指令添加。<br />
+项目中要包含 fmt 的头文件，记得不要把 spdlog bundled 的 fmt 文件包含进项目。<br />
+在项目内还要手动定义 <code>SPDLOG_FMT_EXTERNAL</code> 和 <code>SPDLOG_COMPILED_LIB</code> 两个宏。<br />
+如果编译 spdlog 时用的是 <code>SPDLOG_FMT_EXTERNAL_HO</code>，项目中要定义 <code>FMT_HEADER_ONLY</code> 宏。</p>
 <h4 id="4-使用-stdformat-代替-fmt"><a class="markdownIt-Anchor" href="#4-使用-stdformat-代替-fmt"></a> 4. 使用 <code>std::format</code> 代替 fmt</h4>
 <p>开启 <code>SPDLOG_USE_STD_FORMAT</code> 宏即可。</p>
 <h3 id="异常"><a class="markdownIt-Anchor" href="#异常"></a> 异常</h3>
